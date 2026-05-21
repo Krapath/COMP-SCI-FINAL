@@ -1,12 +1,12 @@
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics; 
 
 public class Coordinates extends GameObject {
 
     Polygon game;
 
     public Coordinates(Polygon game) {
-        this.game = game;
+        this.game = game; //hi this is a test test test
         setSize(1000, 1000);  // size of the text area
     }
 
