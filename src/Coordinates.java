@@ -6,7 +6,7 @@ public class Coordinates extends GameObject {
     Polygon game;
 
     public Coordinates(Polygon game) {
-        this.game = game; //hi this is a test test test
+        this.game = game;
         setSize(1000, 1000);  // size of the text area
     }
 
