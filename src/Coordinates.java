@@ -17,7 +17,7 @@ public class Coordinates extends GameObject {
         
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics g) {wfwfwfw
         g.setColor(Color.WHITE);
         g.drawString("X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 0, 20);
         double angle = game.getAngle(game.player.getX(), game.player.getY(),game.getMouseX(), game.getMouseY()) * (180/Math.PI);
