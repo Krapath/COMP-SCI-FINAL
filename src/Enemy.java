@@ -1,8 +1,8 @@
 import java.awt.Color;
 public class Enemy extends GameObject {
 
-    static final int SIZE  = 10;
-    static final int SPEED = 1;
+    static int SIZE  = 10;
+    static int SPEED = 1;
 
     Polygon game;
 
