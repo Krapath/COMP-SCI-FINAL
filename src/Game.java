@@ -1,9 +1,9 @@
+
 /*
  * This code is protected under the Gnu General Public License (Copyleft), 2005 by
  * IBM and the Computer Science Teachers of America organization. It may be freely
  * modified and redistributed under educational fair use.
  */
-
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -25,29 +25,31 @@ import javax.swing.Timer;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseMotionListener;
 
 /**
  * An abstract Game class which can be built into Pong.<br>
  * <br>
- * The default controls are for "Player 1" to move left and right with the 
- * 'Z' and 'X' keys, and "Playr 2" to move left and right with the 'N' and
- * 'M' keys.<br>
+ * The default controls are for "Player 1" to move left and right with the 'Z'
+ * and 'X' keys, and "Playr 2" to move left and right with the 'N' and 'M'
+ * keys.<br>
  * <br>
  * Before the Game begins, the <code>setup</code> method is executed. This will
  * allow the programmer to add any objects to the game and set them up. When the
  * game begins, the <code>act</code> method is executed every millisecond. This
  * will allow the programmer to check for user input and respond to it.
  * 
- *  @see GameObject 
+ * @see GameObject
  */
 public abstract class Game extends JFrame {
 	private boolean _isSetup = false;
 	private boolean _initialized = false;
 	private ArrayList _ObjectList = new ArrayList();
 	private Timer _t;
-	
+
 	/**
- 	* <code>true</code> if the 'A' key is being held down
+	 * <code>true</code> if the 'A' key is being held down
 	 */
 	private boolean leftKey = false;
 
@@ -65,15 +67,18 @@ public abstract class Game extends JFrame {
 	 * <code>true</code> if the 'S' key is being held down.
 	 */
 	private boolean downKey = false;
-	
 
 	private boolean mouseLeft = false;
 
+	private int mouseX;
+	private int mouseY;
 
 	public boolean mouseLeftPressed() {
 		return this.mouseLeft;
 
-	}	/**
+	}
+
+	/**
 	 * Returns <code>true</code> if the 'A' key is being pressed down
 	 * 
 	 * @return <code>true</code> if the 'A' key is being pressed down
@@ -81,7 +86,7 @@ public abstract class Game extends JFrame {
 	public boolean AKeyPressed() {
 		return leftKey;
 	}
-	
+
 	/**
 	 * Returns <code>true</code> if the 'D' key is being pressed down
 	 * 
@@ -90,7 +95,7 @@ public abstract class Game extends JFrame {
 	public boolean DKeyPressed() {
 		return rightKey;
 	}
-	
+
 	/**
 	 * Returns <code>true</code> if the 'W' key is being pressed down
 	 * 
@@ -99,7 +104,7 @@ public abstract class Game extends JFrame {
 	public boolean WKeyPressed() {
 		return upKey;
 	}
-	
+
 	/**
 	 * Returns <code>true</code> if the 'S' key is being pressed down
 	 * 
@@ -108,7 +113,15 @@ public abstract class Game extends JFrame {
 	public boolean SKeyPressed() {
 		return downKey;
 	}
-	
+
+	public int getMouseX() {
+		return mouseX;
+	}
+
+	public int getMouseY() {
+		return mouseY;
+	}
+
 	/**
 	 * When implemented, this will allow the programmer to initialize the game
 	 * before it begins running
@@ -119,88 +132,82 @@ public abstract class Game extends JFrame {
 	 * @see GameObject
 	 */
 	public abstract void setup();
-	
+
 	/**
 	 * When the game begins, this method will automatically be executed every
 	 * millisecond
 	 * 
-	 * This may be used as a control method for checking user input and 
+	 * This may be used as a control method for checking user input and
 	 * collision between any game objects
 	 */
 	public abstract void act();
-	
+
 	/**
 	 * Sets up the game and any objects.
 	 *
-	 * This method should never be called by anything other than a <code>main</code>
-	 * method after the frame becomes visible.
+	 * This method should never be called by anything other than a
+	 * <code>main</code> method after the frame becomes visible.
 	 */
 	public void initComponents() {
 		getContentPane().setBackground(Color.black);
 		setup();
 		for (int i = 0; i < _ObjectList.size(); i++) {
-				GameObject o = (GameObject)_ObjectList.get(i);
-				o.repaint();
+			GameObject o = (GameObject) _ObjectList.get(i);
+			o.repaint();
 		}
 		_t.start();
 	}
-	
+
 	/**
 	 * Adds a game object to the screen
 	 * 
 	 * Any added objects will have their <code>act</code> method called every
 	 * millisecond
 	 * 
-	 * @param o		the <code>GameObject</code> to add.
-	 * @see	GameObject#act()
+	 * @param o
+	 *            the <code>GameObject</code> to add.
+	 * @see GameObject#act()
 	 */
 	public void add(GameObject o) {
 		_ObjectList.add(o);
 		getContentPane().add(o);
 	}
-	
+
 	/**
 	 * Removes a game object from the screen
 	 * 
-	 * @param o		the <code>GameObject</code> to remove
-	 * @see	GameObject
+	 * @param o
+	 *            the <code>GameObject</code> to remove
+	 * @see GameObject
 	 */
 	public void remove(GameObject o) {
 		_ObjectList.remove(o);
 		getContentPane().remove(o);
 	}
-	
-
-	
-	public int getMouseX() {
-		return (int) MouseInfo.getPointerInfo().getLocation().getX();
-	}
-
-	public int getMouseY() {
-		return (int) MouseInfo.getPointerInfo().getLocation().getY();
-	}
 
 	public double getAngle(int x1, int y1, int x2, int y2) {
 		return Math.atan2(y2 - y1, x2 - x1);
 	}
-	
+
 	public double getDistance(int x1, int y1, int x2, int y2) {
 		return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
 	}
+
 	/**
 	 * Sets the millisecond delay between calls to <code>act</code> methods.
 	 * 
 	 * Increasing the delay will make the game run "slower." The default delay
 	 * is 1 millisecond.
 	 * 
-	 * @param delay	the number of milliseconds between calls to <code>act</code>
+	 * @param delay
+	 *            the number of milliseconds between calls to <code>act</code>
 	 * @see Game#act()
 	 * @see GameObject#act()
 	 */
 	public void setDelay(int delay) {
 		_t.setDelay(delay);
 	}
-	
+
 	/**
 	 * Sets the background color of the playing field
 	 * 
@@ -211,7 +218,7 @@ public abstract class Game extends JFrame {
 	public void setBackground(Color c) {
 		getContentPane().setBackground(c);
 	}
-	
+
 	/**
 	 * The default constructor for the game.
 	 * 
@@ -221,85 +228,112 @@ public abstract class Game extends JFrame {
 		setSize(400, 400);
 		getContentPane().setBackground(Color.black);
 		getContentPane().setLayout(null);
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menuFile = new JMenu("File");
-        JMenuItem menuFileExit = new JMenuItem("Exit");
-        menuBar.add(menuFile);
-        menuFile.add(menuFileExit);
-        setJMenuBar(menuBar);
-        setTitle("Pong");
-               
-        // Add window listener.
-        addWindowListener (
-            new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
-                    System.exit(0);
-                }
-            }
-        );
-       menuFileExit.addActionListener( 
-       		new ActionListener() {
-       			public void actionPerformed(ActionEvent e) {
-       				System.exit(0);
-       			}
-       		}
-       	);
-       _t = new Timer(1, new ActionListener() {
-       		public void actionPerformed(ActionEvent e) {
-   				act();
-   				for (int i = 0; i < _ObjectList.size(); i++) {
-   					GameObject o = (GameObject)_ObjectList.get(i);
-   					o.act();
-   				}
-       		}
-       });
-       addKeyListener(new KeyListener() {
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menuFile = new JMenu("File");
+		JMenuItem menuFileExit = new JMenuItem("Exit");
+		menuBar.add(menuFile);
+		menuFile.add(menuFileExit);
+		setJMenuBar(menuBar);
+		setTitle("Pong");
+
+		// Add window listener.
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		menuFileExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		_t = new Timer(1, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				act();
+				for (int i = 0; i < _ObjectList.size(); i++) {
+					GameObject o = (GameObject) _ObjectList.get(i);
+					o.act();
+				}
+			}
+		});
+		addKeyListener(new KeyListener() {
 			public void keyTyped(KeyEvent e) {
 			}
-	
+
 			public void keyPressed(KeyEvent e) {
 				char pressed = Character.toUpperCase(e.getKeyChar());
 				switch (pressed) {
-					case 'A' : leftKey = true; break;
-					case 'D' : rightKey = true; break;
-					case 'W' : upKey = true; break;
-					case 'S' : downKey = true; break;
+				case 'A':
+					leftKey = true;
+					break;
+				case 'D':
+					rightKey = true;
+					break;
+				case 'W':
+					upKey = true;
+					break;
+				case 'S':
+					downKey = true;
+					break;
 				}
 			}
-	
+
 			public void keyReleased(KeyEvent e) {
 				char released = Character.toUpperCase(e.getKeyChar());
 				switch (released) {
-					case 'A' : leftKey = false; break;
-					case 'D' : rightKey = false; break;
-					case 'W' : upKey = false; break;
-					case 'S' : downKey = false; break;
+				case 'A':
+					leftKey = false;
+					break;
+				case 'D':
+					rightKey = false;
+					break;
+				case 'W':
+					upKey = false;
+					break;
+				case 'S':
+					downKey = false;
+					break;
 				}
 			}
-		
 
-				
-       }); 
-	   addMouseListener(new MouseListener() {
+		});
+		addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e) {
-				
+
 			}
+
 			public void mousePressed(MouseEvent e) {
-						Game.this.mouseLeft = true;
+				Game.this.mouseLeft = true;
 
 			}
+
 			public void mouseReleased(MouseEvent e) {
-						Game.this.mouseLeft = false;
+				Game.this.mouseLeft = false;
 
 			}
+
 			public void mouseEntered(MouseEvent e) {
 			}
-			public void mouseExited(MouseEvent e) {
-			}	
-		});					
 
-    }
-	
+			public void mouseExited(MouseEvent e) {
+			}
+
+		});
+		addMouseMotionListener(new MouseMotionListener() {
+
+
+			public void mouseMoved(MouseEvent e) {
+				mouseX = e.getX();
+				mouseY = e.getY();
+			}
+			public void mouseDragged(MouseEvent e) {
+				mouseX = e.getX();
+				mouseY = e.getY();
+			}
+		});
+
+	}
+
 	/**
 	 * Starts updates to the game
 	 *
@@ -310,7 +344,7 @@ public abstract class Game extends JFrame {
 	public void startGame() {
 		_t.start();
 	}
-	
+
 	/**
 	 * Stops updates to the game
 	 *
@@ -321,7 +355,7 @@ public abstract class Game extends JFrame {
 	public void stopGame() {
 		_t.stop();
 	}
-	
+
 	/**
 	 * Displays a dialog that says "Player 1 Wins!"
 	 *
@@ -330,25 +364,25 @@ public abstract class Game extends JFrame {
 		_WinDialog d = new _WinDialog(this, "Player 1 Wins!");
 		d.setVisible(true);
 	}
-	
+
 	/**
 	 * Displays a dialog that says "Player 2 Wins!"
 	 *
 	 */
 	public void p2Wins() {
 		_WinDialog d = new _WinDialog(this, "Player 2 Wins!");
-		d.setVisible(true);	
+		d.setVisible(true);
 	}
-	
+
 	/**
 	 * Gets the pixel width of the visible playing field
 	 * 
-	 * @return	a width in pixels
+	 * @return a width in pixels
 	 */
 	public int getFieldWidth() {
 		return getContentPane().getBounds().width;
 	}
-	
+
 	/**
 	 * Gets the pixel height of the visible playing field
 	 * 
@@ -357,9 +391,10 @@ public abstract class Game extends JFrame {
 	public int getFieldHeight() {
 		return getContentPane().getBounds().height;
 	}
-	
+
 	class _WinDialog extends JDialog {
 		JButton ok = new JButton("OK");
+
 		_WinDialog(JFrame owner, String title) {
 			super(owner, title);
 			Rectangle r = owner.getBounds();
@@ -371,6 +406,6 @@ public abstract class Game extends JFrame {
 					_WinDialog.this.setVisible(false);
 				}
 			});
-		}		
+		}
 	}
 }
