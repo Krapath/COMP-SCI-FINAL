@@ -31,6 +31,7 @@ public class Polygon extends Game {
 			add(enemy);
 			enemies.add(enemy);
 		}
+
 	}
 
 	public static void main(String[] args) {
