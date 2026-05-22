@@ -1,25 +1,32 @@
+import java.util.Random;
 import java.awt.Color;
 public class Enemy extends GameObject {
-
-    static int SIZE  = 10;
-    static int SPEED = 1;
+    Random r = new Random();
+    static int size  = 25;
+    static int speed = 1;
+    static int health = 3;
 
     Polygon game;
 
     public Enemy(Polygon game) {
         this.game = game;
-        setSize(SIZE, SIZE);
-        setColor(Color.RED);
+        setSize(size, size);
+        setColor(Color.GREEN);
+        int x = r.nextInt(game.getWindowWidth()-size);
+        int y = r.nextInt(game.getWindowHeight()-size);
+        setLocation(x, y);
+
+
     }
 
     public void act() {
         int x = getX();
         int y = getY();
 
-        if (x < game.player.getX()) x += SPEED;
-        if (x > game.player.getX()) x -= SPEED;
-        if (y < game.player.getY()) y += SPEED;
-        if (y > game.player.getY()) y -= SPEED;
+        if (x < game.player.getX()) x += speed;
+        if (x > game.player.getX()) x -= speed;
+        if (y < game.player.getY()) y += speed;
+        if (y > game.player.getY()) y -= speed;
 
         setX(x);
         setY(y);

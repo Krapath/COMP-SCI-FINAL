@@ -10,7 +10,6 @@ public class Polygon extends Game {
 	public void setup() {
 		setDelay(16); // 60fps
 		setTitle("Polygon");
-		setSize(1000, 1000);
 		player = new Player(this);
 		player.setLocation(335, 225); // middle
 		add(player);
@@ -21,6 +20,7 @@ public class Polygon extends Game {
 
 	public void act() {
 		if (mouseLeftPressed()) {
+			
 			projectile = new Projectile(this);
 			add(projectile);
 			projectiles.add(projectile);

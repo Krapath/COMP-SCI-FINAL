@@ -22,10 +22,11 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.Timer;
+import java.awt.Toolkit;
+import java.awt.Dimension;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseMotionListener;
 
 /**
@@ -47,7 +48,9 @@ public abstract class Game extends JFrame {
 	private boolean _initialized = false;
 	private ArrayList _ObjectList = new ArrayList();
 	private Timer _t;
-
+	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	private int windowWidth = (int) screenSize.getWidth();
+	private int windowHeight = (int) screenSize.getHeight();
 	/**
 	 * <code>true</code> if the 'A' key is being held down
 	 */
@@ -76,6 +79,14 @@ public abstract class Game extends JFrame {
 	public boolean mouseLeftPressed() {
 		return this.mouseLeft;
 
+	}
+	
+	public int getWindowWidth() {
+		return windowWidth;
+	}
+
+	public int getWindowHeight() {
+		return windowHeight;
 	}
 
 	/**
@@ -207,6 +218,13 @@ public abstract class Game extends JFrame {
 	public void setDelay(int delay) {
 		_t.setDelay(delay);
 	}
+	/*
+	 * Delays the code for a specified number of in game ticks
+	 * @param delay the number of milliseconds to delay
+	 */
+	public void delay(int delay) {
+
+	}
 
 	/**
 	 * Sets the background color of the playing field
@@ -225,16 +243,11 @@ public abstract class Game extends JFrame {
 	 * The default window size is 400x400
 	 */
 	public Game() {
-		setSize(400, 400);
+		setSize(getWindowWidth(), getWindowHeight());
 		getContentPane().setBackground(Color.black);
 		getContentPane().setLayout(null);
-		JMenuBar menuBar = new JMenuBar();
-		JMenu menuFile = new JMenu("File");
-		JMenuItem menuFileExit = new JMenuItem("Exit");
-		menuBar.add(menuFile);
-		menuFile.add(menuFileExit);
-		setJMenuBar(menuBar);
-		setTitle("Pong");
+		setUndecorated(true);// removes title bar and borders
+		setTitle("Polygon");
 
 		// Add window listener.
 		addWindowListener(new WindowAdapter() {
@@ -242,11 +255,7 @@ public abstract class Game extends JFrame {
 				System.exit(0);
 			}
 		});
-		menuFileExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		});
+
 		_t = new Timer(1, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				act();
@@ -275,7 +284,12 @@ public abstract class Game extends JFrame {
 				case 'S':
 					downKey = true;
 					break;
+				case 27: // escape to close game
+					System.exit(0);
 				}
+
+
+
 			}
 
 			public void keyReleased(KeyEvent e) {
@@ -360,19 +374,7 @@ public abstract class Game extends JFrame {
 	 * Displays a dialog that says "Player 1 Wins!"
 	 *
 	 */
-	public void p1Wins() {
-		_WinDialog d = new _WinDialog(this, "Player 1 Wins!");
-		d.setVisible(true);
-	}
 
-	/**
-	 * Displays a dialog that says "Player 2 Wins!"
-	 *
-	 */
-	public void p2Wins() {
-		_WinDialog d = new _WinDialog(this, "Player 2 Wins!");
-		d.setVisible(true);
-	}
 
 	/**
 	 * Gets the pixel width of the visible playing field
@@ -392,20 +394,5 @@ public abstract class Game extends JFrame {
 		return getContentPane().getBounds().height;
 	}
 
-	class _WinDialog extends JDialog {
-		JButton ok = new JButton("OK");
-
-		_WinDialog(JFrame owner, String title) {
-			super(owner, title);
-			Rectangle r = owner.getBounds();
-			setSize(200, 100);
-			setLocation(r.x + r.width / 2 - 100, r.y + r.height / 2 - 50);
-			getContentPane().add(ok);
-			ok.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					_WinDialog.this.setVisible(false);
-				}
-			});
-		}
-	}
+	
 }
