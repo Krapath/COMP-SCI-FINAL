@@ -27,6 +27,7 @@ public class Coordinates extends GameObject {
         if (angle < 0){ // display angle as a positive value between 0 and 360
         	angle+=360;
         }
+        
         g.drawString("ANGLE:" + angle , 10, 60);
         g.setColor(Color.RED);
 

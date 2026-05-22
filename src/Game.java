@@ -207,7 +207,7 @@ public abstract class Game extends JFrame {
 	/**
 	 * Sets the millisecond delay between calls to <code>act</code> methods.
 	 * 
-	 * Increasing the delay will make the game run "slower." The default delay
+	 * Increasisg the delay will make the game run "slower." The default delay
 	 * is 1 millisecond.
 	 * 
 	 * @param delay
@@ -317,12 +317,16 @@ public abstract class Game extends JFrame {
 			}
 
 			public void mousePressed(MouseEvent e) {
-				Game.this.mouseLeft = true;
+				if (e.getButton() == 1) {
+					Game.this.mouseLeft = true;
+				} 
 
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				Game.this.mouseLeft = false;
+				if (e.getButton() == 1) {
+					Game.this.mouseLeft = false;
+				} 
 
 			}
 

@@ -2,7 +2,7 @@ import java.util.Random;
 import java.awt.Color;
 public class Enemy extends GameObject {
     Random r = new Random();
-    pub`lic int size  = 25;
+    public int size  = 25;
     public int speed = 1;
     public int health = 3;
 

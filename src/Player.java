@@ -3,7 +3,8 @@ import java.awt.Color;
 public class Player extends GameObject {
 
     static final int SIZE  = 30;
-    static final int SPEED = 3;
+    static final int SPEED = 30;
+    static int attackDelay = 0;
 
     Polygon game;
 
@@ -14,6 +15,7 @@ public class Player extends GameObject {
     }
 
     public void act() {
+        attackDelay++;
         int x = getX();
         int y = getY();
 

@@ -6,6 +6,7 @@ public class Projectile extends GameObject {
     double yVel;
     int distanceTraveled = 0;
     int damage = 1;
+
     public Projectile(Polygon game) {
         this.game = game;
         setLocation(game.player.getX()+10, game.player.getY()+10); // update position

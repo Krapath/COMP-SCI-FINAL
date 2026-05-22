@@ -20,13 +20,15 @@ public class Polygon extends Game {
 
 	public void act() {
 		if (mouseLeftPressed()) {
-			
-			projectile = new Projectile(this);
-			add(projectile);
-			projectiles.add(projectile);
+			if (Player.attackDelay > 5) {	
+				Player.attackDelay = 0;
+				projectile = new Projectile(this);
+				add(projectile);
+				projectiles.add(projectile);
+			}
 		}
 
-		if (r.nextInt(300) < 1) { // 0.33% chance each tick to spawn an enemy
+		if (r.nextInt(300) < 50) { // 0.33% chance each tick to spawn an enemy
 			enemy = new Enemy(this);
 			add(enemy);
 			enemies.add(enemy);
