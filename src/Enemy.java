@@ -5,6 +5,7 @@ public class Enemy extends GameObject {
     public int size  = 25;
     public int speed = 1;
     public int health = 3;
+    public int enemyDamage = 1;
 
     Polygon game;
 

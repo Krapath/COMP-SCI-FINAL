@@ -5,6 +5,7 @@ public class Player extends GameObject {
     static final int SIZE  = 30;
     static final int SPEED = 30;
     static int attackDelay = 0;
+    int health = 20;
 
     Polygon game;
 
@@ -32,5 +33,18 @@ public class Player extends GameObject {
 
         setX(x);
         setY(y);
+        for (int i = 0; i < game.enemies.size(); i++) {
+        if (collides(game.enemies.get(i))) {
+                game.player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
+                game.remove(game.enemies.get(i)); // remove enemy if health is depleted
+                game.enemies.remove(i);
+           
+                break; // exit loop after collision
+            }
+        }
+
+        if (game.player.health <= 0) {
+          game.player.setColor(Color.GRAY); // change player color to gray when health is depleted
+        }
     }
 }
