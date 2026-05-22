@@ -2,9 +2,9 @@ import java.util.Random;
 import java.awt.Color;
 public class Enemy extends GameObject {
     Random r = new Random();
-    static int size  = 25;
-    static int speed = 1;
-    static int health = 3;
+    pub`lic int size  = 25;
+    public int speed = 1;
+    public int health = 3;
 
     Polygon game;
 

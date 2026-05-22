@@ -35,7 +35,7 @@ public class Polygon extends Game {
 	}
 
 	public static void main(String[] args) {
-		Polygon game = new Polygon();
+		Polygon game = new Polygon();//	
 		game.setVisible(true);
 		game.initComponents();
 	}
