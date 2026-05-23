@@ -1,3 +1,11 @@
+
+/*
+ * Contributors: Hugo To, Raymond Tan, Mohammad Sadeghi
+ * Start date: 5/19/2026
+ * End date: 
+ * Project: Polygons - a roguelike top-down shooter.
+ */
+
 import java.util.Random;
 import java.util.ArrayList;
 public class Polygon extends Game {
