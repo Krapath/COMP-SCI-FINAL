@@ -9,11 +9,11 @@ public class Projectile extends GameObject {
 
     public Projectile(Polygon game) {
         this.game = game;
-        setLocation(game.player.getX()+10, game.player.getY()+10); // update position
+        setLocation(game.player.getX()+game.player.size/3, game.player.getY()+game.player.size/3); // update position
         setSize(10, 10); // size of the projectile
         setColor(Color.YELLOW);
         if (game.mouseLeftPressed()){
-                double angle = game.getAngle(game.player.getX()+15, game.player.getY()+15,game.getMouseX(), game.getMouseY());
+                double angle = game.getAngle(game.player.getX()+game.player.size/2, game.player.getY()+game.player.size/2,game.getMouseX(), game.getMouseY());
                 double speed = 20; // adjust as needed
                 xVel = speed * Math.cos(angle);
                 yVel = speed * Math.sin(angle);
@@ -35,7 +35,15 @@ public class Projectile extends GameObject {
 
                 game.enemies.get(i).setColor(Color.RED);
 
+                int enemyX = game.enemies.get(i).getX();
+                int enemyY = game.enemies.get(i).getY();
                 if (game.enemies.get(i).health <= 0) {
+
+
+                    XpOrb xp = new XpOrb(enemyX, enemyY, game); // create an xp orb at the location of the defeated enemy
+                    game.add(xp);// add the xp orb to the game
+                    game.xpOrbs.add(xp); // add the xp orb to the list
+                    
                     game.remove(game.enemies.get(i)); // remove enemy if health is depleted
                     game.enemies.remove(i); // remove enemy from the list
                 }

@@ -2,16 +2,20 @@ import java.awt.Color;
 
 public class Player extends GameObject {
 
-    static final int SIZE  = 30;
-    static final int SPEED = 30;
-    static int attackDelay = 0;
-    int health = 20;
+    public int size;
+    public int speed;
+
+    public int attackDelay = 0;
+    public int health = 20;
+    public int score = 0;
 
     Polygon game;
 
     public Player(Polygon game) {
         this.game = game;
-        setSize(SIZE, SIZE);
+        size  = (game.getWindowWidth()+game.getWindowHeight())/100; // player size is 1/100 of the entire window
+        speed = (game.getWindowWidth()+game.getWindowHeight())/200; // speed is 1/100 of the entire window size
+        setSize(size, size);
         setColor(Color.BLUE);
     }
 
@@ -20,16 +24,16 @@ public class Player extends GameObject {
         int x = getX();
         int y = getY();
 
-        if (game.AKeyPressed()) x -= SPEED;
-        if (game.DKeyPressed()) x += SPEED;
-        if (game.WKeyPressed()) y -= SPEED;
-        if (game.SKeyPressed()) y += SPEED;
+        if (game.AKeyPressed()) x -= speed;
+        if (game.DKeyPressed()) x += speed;
+        if (game.WKeyPressed()) y -= speed;
+        if (game.SKeyPressed()) y += speed;
 
         // make sure it stays in bounds
         if (x < 0) x = 0;
-        if (x > game.getFieldWidth() - SIZE) x = game.getFieldWidth() - SIZE;
+        if (x > game.getFieldWidth() - size) x = game.getFieldWidth() - size;
         if (y < 0) y = 0;
-        if (y > game.getFieldHeight() - SIZE) y = game.getFieldHeight() - SIZE;
+        if (y > game.getFieldHeight() - size) y = game.getFieldHeight() - size;
 
         setX(x);
         setY(y);
@@ -47,4 +51,5 @@ public class Player extends GameObject {
           game.player.setColor(Color.GRAY); // change player color to gray when health is depleted
         }
     }
+    
 }

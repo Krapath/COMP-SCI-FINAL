@@ -1,11 +1,10 @@
 import java.awt.Color;
 import java.awt.Graphics; 
 
-public class Coordinates extends GameObject {
-
+public class DisplayDebug extends GameObject {
     Polygon game;
 
-    public Coordinates(Polygon game) {
+    public DisplayDebug(Polygon game) {
         this.game = game; //hi this is a test test test
         setSize(game.getWindowWidth(), game.getWindowHeight());  // size of the text area
     }
@@ -18,6 +17,8 @@ public class Coordinates extends GameObject {
 
     public void paint(Graphics g) {
         g.setColor(Color.WHITE);
+        
+        // draw mouse and player coordinates
         g.drawString("MOUSE    X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 10, 20);
         g.drawString("PLAYER   X:" + game.player.getX() + "  Y:" + game.player.getY(), 10, 40);
 
@@ -28,11 +29,19 @@ public class Coordinates extends GameObject {
         	angle+=360;
         }
         
+        // display the number of enemies and hp
+        g.drawString("ENEMIES: " + game.enemies.size(), 10, 80);
+        g.drawString("HP: " + game.player.health, 10, 100);
+
+        // display the players current score
+        g.drawString("SCORE: " + game.player.score, 10, 120);
+
+        // display the mouse curstor as a red rectangle 
         g.drawString("ANGLE:" + angle , 10, 60);
         g.setColor(Color.RED);
-
         g.drawRect(game.getMouseX(),game.getMouseY(),15,15);        
       
+
 
     }
 }

@@ -70,7 +70,9 @@ public abstract class Game extends JFrame {
 	 * <code>true</code> if the 'S' key is being held down.
 	 */
 	private boolean downKey = false;
-
+	/**
+	 * <code>true</code> if the mouse left button is being held down or clicked.
+	 */
 	private boolean mouseLeft = false;
 
 	private int mouseX;
@@ -91,7 +93,6 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Returns <code>true</code> if the 'A' key is being pressed down
-	 * 
 	 * @return <code>true</code> if the 'A' key is being pressed down
 	 */
 	public boolean AKeyPressed() {
@@ -100,7 +101,6 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Returns <code>true</code> if the 'D' key is being pressed down
-	 * 
 	 * @return <code>true</code> if the 'D' key is being pressed down
 	 */
 	public boolean DKeyPressed() {
@@ -109,7 +109,6 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Returns <code>true</code> if the 'W' key is being pressed down
-	 * 
 	 * @return <code>true</code> if the 'W' key is being pressed down
 	 */
 	public boolean WKeyPressed() {
@@ -118,7 +117,6 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Returns <code>true</code> if the 'S' key is being pressed down
-	 * 
 	 * @return <code>true</code> if the 'S' key is being pressed down
 	 */
 	public boolean SKeyPressed() {
@@ -136,10 +134,8 @@ public abstract class Game extends JFrame {
 	/**
 	 * When implemented, this will allow the programmer to initialize the game
 	 * before it begins running
-	 * 
 	 * Adding objects to the game and setting their initial positions should be
 	 * done here.
-	 * 
 	 * @see GameObject
 	 */
 	public abstract void setup();
@@ -147,15 +143,13 @@ public abstract class Game extends JFrame {
 	/**
 	 * When the game begins, this method will automatically be executed every
 	 * millisecond
-	 * 
 	 * This may be used as a control method for checking user input and
 	 * collision between any game objects
 	 */
 	public abstract void act();
 
 	/**
-	 * Sets up the game and any objects.
-	 *
+	 * Sets up the game and any objects
 	 * This method should never be called by anything other than a
 	 * <code>main</code> method after the frame becomes visible.
 	 */
@@ -171,12 +165,10 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Adds a game object to the screen
-	 * 
 	 * Any added objects will have their <code>act</code> method called every
 	 * millisecond
-	 * 
 	 * @param o
-	 *            the <code>GameObject</code> to add.
+	 * the <code>GameObject</code> to add.
 	 * @see GameObject#act()
 	 */
 	public void add(GameObject o) {
@@ -186,9 +178,8 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Removes a game object from the screen
-	 * 
 	 * @param o
-	 *            the <code>GameObject</code> to remove
+	 * the <code>GameObject</code> to remove
 	 * @see GameObject
 	 */
 	public void remove(GameObject o) {
@@ -218,19 +209,10 @@ public abstract class Game extends JFrame {
 	public void setDelay(int delay) {
 		_t.setDelay(delay);
 	}
-	/*
-	 * Delays the code for a specified number of in game ticks
-	 * @param delay the number of milliseconds to delay
-	 */
-	public void delay(int delay) {
-
-	}
 
 	/**
 	 * Sets the background color of the playing field
-	 * 
 	 * The default color is black
-	 * 
 	 * @see java.awt.Color
 	 */
 	public void setBackground(Color c) {
@@ -239,7 +221,6 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * The default constructor for the game.
-	 * 
 	 * The default window size is 400x400
 	 */
 	public Game() {
