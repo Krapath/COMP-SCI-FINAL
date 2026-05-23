@@ -2,8 +2,8 @@ import java.util.Random;
 import java.awt.Color;
 public class Enemy extends GameObject {
     Random r = new Random();
-    public int size;
-    public int speed;
+    public int size  = 25;
+    public int speed = 1;
     public int health = 3;
     public int enemyDamage = 1;
     public int displayOld = 0; //used to see enemies that have been alive older
@@ -24,19 +24,16 @@ public class Enemy extends GameObject {
         } while ((Math.abs(game.player.getX() - x) < (game.getWindowWidth()+game.getWindowHeight())/100) || (Math.abs(game.player.getY() - y) < (game.getWindowWidth()+game.getWindowHeight())/100)); // ensures that the enemy does not too close to the player
 
         setLocation(x, y);
-
-
     }
 
     public void act() {
         int x = getX();
         int y = getY();
-
-        if (x < game.player.getX()) x += speed;
-        if (x > game.player.getX()) x -= speed;
-        if (y < game.player.getY()) y += speed;
-        if (y > game.player.getY()) y -= speed;
-
+        int playerX = game.player.getX();
+        int playerY = game.player.getY();
+        double playerAngle = game.getAngle(x, y, playerX, playerY);
+        x += (int)Math.ceil(Math.cos(playerAngle) * speed);
+        y += (int)Math.ceil(Math.sin(playerAngle) * speed);
         setX(x);
         setY(y);
 
