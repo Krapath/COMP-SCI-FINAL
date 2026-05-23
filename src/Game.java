@@ -74,7 +74,6 @@ public abstract class Game extends JFrame {
 	 * <code>true</code> if the mouse left button is being held down or clicked.
 	 */
 	private boolean mouseLeft = false;
-
 	private int mouseX;
 	private int mouseY;
 
@@ -82,7 +81,7 @@ public abstract class Game extends JFrame {
 		return this.mouseLeft;
 
 	}
-	
+
 	public int getWindowWidth() {
 		return windowWidth;
 	}
@@ -93,6 +92,7 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Returns <code>true</code> if the 'A' key is being pressed down
+	 * 
 	 * @return <code>true</code> if the 'A' key is being pressed down
 	 */
 	public boolean AKeyPressed() {
@@ -101,6 +101,7 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Returns <code>true</code> if the 'D' key is being pressed down
+	 * 
 	 * @return <code>true</code> if the 'D' key is being pressed down
 	 */
 	public boolean DKeyPressed() {
@@ -109,6 +110,7 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Returns <code>true</code> if the 'W' key is being pressed down
+	 * 
 	 * @return <code>true</code> if the 'W' key is being pressed down
 	 */
 	public boolean WKeyPressed() {
@@ -117,6 +119,7 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Returns <code>true</code> if the 'S' key is being pressed down
+	 * 
 	 * @return <code>true</code> if the 'S' key is being pressed down
 	 */
 	public boolean SKeyPressed() {
@@ -136,6 +139,7 @@ public abstract class Game extends JFrame {
 	 * before it begins running
 	 * Adding objects to the game and setting their initial positions should be
 	 * done here.
+	 * 
 	 * @see GameObject
 	 */
 	public abstract void setup();
@@ -167,8 +171,9 @@ public abstract class Game extends JFrame {
 	 * Adds a game object to the screen
 	 * Any added objects will have their <code>act</code> method called every
 	 * millisecond
+	 * 
 	 * @param o
-	 * the <code>GameObject</code> to add.
+	 *          the <code>GameObject</code> to add.
 	 * @see GameObject#act()
 	 */
 	public void add(GameObject o) {
@@ -178,8 +183,9 @@ public abstract class Game extends JFrame {
 
 	/**
 	 * Removes a game object from the screen
+	 * 
 	 * @param o
-	 * the <code>GameObject</code> to remove
+	 *          the <code>GameObject</code> to remove
 	 * @see GameObject
 	 */
 	public void remove(GameObject o) {
@@ -202,7 +208,7 @@ public abstract class Game extends JFrame {
 	 * is 1 millisecond.
 	 * 
 	 * @param delay
-	 *            the number of milliseconds between calls to <code>act</code>
+	 *              the number of milliseconds between calls to <code>act</code>
 	 * @see Game#act()
 	 * @see GameObject#act()
 	 */
@@ -213,6 +219,7 @@ public abstract class Game extends JFrame {
 	/**
 	 * Sets the background color of the playing field
 	 * The default color is black
+	 * 
 	 * @see java.awt.Color
 	 */
 	public void setBackground(Color c) {
@@ -253,41 +260,39 @@ public abstract class Game extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				char pressed = Character.toUpperCase(e.getKeyChar());
 				switch (pressed) {
-				case 'A':
-					leftKey = true;
-					break;
-				case 'D':
-					rightKey = true;
-					break;
-				case 'W':
-					upKey = true;
-					break;
-				case 'S':
-					downKey = true;
-					break;
-				case 27: // escape to close game
-					System.exit(0);
+					case 'A':
+						leftKey = true;
+						break;
+					case 'D':
+						rightKey = true;
+						break;
+					case 'W':
+						upKey = true;
+						break;
+					case 'S':
+						downKey = true;
+						break;
+					case 27: // escape to close game
+						System.exit(0);
 				}
-
-
 
 			}
 
 			public void keyReleased(KeyEvent e) {
 				char released = Character.toUpperCase(e.getKeyChar());
 				switch (released) {
-				case 'A':
-					leftKey = false;
-					break;
-				case 'D':
-					rightKey = false;
-					break;
-				case 'W':
-					upKey = false;
-					break;
-				case 'S':
-					downKey = false;
-					break;
+					case 'A':
+						leftKey = false;
+						break;
+					case 'D':
+						rightKey = false;
+						break;
+					case 'W':
+						upKey = false;
+						break;
+					case 'S':
+						downKey = false;
+						break;
 				}
 			}
 
@@ -300,14 +305,14 @@ public abstract class Game extends JFrame {
 			public void mousePressed(MouseEvent e) {
 				if (e.getButton() == 1) {
 					Game.this.mouseLeft = true;
-				} 
+				}
 
 			}
 
 			public void mouseReleased(MouseEvent e) {
 				if (e.getButton() == 1) {
 					Game.this.mouseLeft = false;
-				} 
+				}
 
 			}
 
@@ -320,11 +325,11 @@ public abstract class Game extends JFrame {
 		});
 		addMouseMotionListener(new MouseMotionListener() {
 
-
 			public void mouseMoved(MouseEvent e) {
 				mouseX = e.getX();
 				mouseY = e.getY();
 			}
+
 			public void mouseDragged(MouseEvent e) {
 				mouseX = e.getX();
 				mouseY = e.getY();
@@ -360,7 +365,6 @@ public abstract class Game extends JFrame {
 	 *
 	 */
 
-
 	/**
 	 * Gets the pixel width of the visible playing field
 	 * 
@@ -379,5 +383,4 @@ public abstract class Game extends JFrame {
 		return getContentPane().getBounds().height;
 	}
 
-	
 }

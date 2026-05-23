@@ -21,6 +21,7 @@ public class Projectile extends GameObject {
     }
 
     public void act() { 
+        if (game.choosingBuff) return;// projectiles do not move or collide with enemies while the player is choosing a buff
         distanceTraveled += Math.sqrt(xVel * xVel + yVel * yVel); // update distance traveled
         setLocation(getX() + (int)xVel, getY() + (int)yVel); // update position
 

@@ -20,6 +20,7 @@ public class Player extends GameObject {
     }
 
     public void act() {
+        if (game.choosingBuff) return;
         attackDelay++;
         int x = getX();
         int y = getY();

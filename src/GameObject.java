@@ -55,7 +55,16 @@ public abstract class GameObject extends JComponent {
 	public int getY() {
 		return getLocation().y;
 	}
-	
+	/*
+	 * Checks if the object contains a point
+	 * 
+	 * @param x		the x coordinate of the point
+	 * @param y		the y coordinate of the point
+	 * @return		<code>true</code> if the object contains the point
+	 */
+	public boolean contains(int x, int y) {
+		return getBounds().contains(x, y);
+	}
 	/**
 	 * Sets the x (horizontal) position of this object
 	 * 

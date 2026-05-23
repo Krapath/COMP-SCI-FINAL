@@ -11,6 +11,7 @@ public class Enemy extends GameObject {
     Polygon game;
 
     public Enemy(Polygon game) {
+        
         this.game = game;
         setSize(size, size);
         setColor(Color.GREEN);
@@ -25,6 +26,7 @@ public class Enemy extends GameObject {
     }
 
     public void act() {
+        if (game.choosingBuff) return;
         int x = getX();
         int y = getY();
         int playerX = game.player.getX();
