@@ -35,7 +35,7 @@ public class DisplayDebug extends GameObject {
 
         // display the players current score
         g.drawString("SCORE: " + game.player.score, 10, 120);
-
+        
         // display the mouse curstor as a red rectangle 
         g.drawString("ANGLE:" + angle , 10, 60);
         g.setColor(Color.RED);
