@@ -46,7 +46,7 @@ public class PowerUp extends GameObject {
             wasPressed = true;
         }
         //apply the buff and remove the powerups if the player clicks on a powerup and releases the mouse button while still hovering over the same powerup
-        if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) { 
+        if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {  // TODO: turn into a method in game class for other application besides powerups (ex. clicking a "start game" button on the main menu)
             if (buffType == 0)
                 game.player.health += 5;
             else if (buffType == 1)
