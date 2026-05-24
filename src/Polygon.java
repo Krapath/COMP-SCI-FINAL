@@ -70,5 +70,7 @@ public class Polygon extends Game {
 		Polygon game = new Polygon();//	
 		game.setVisible(true);
 		game.initComponents();
+		MainMenu menu = new MainMenu(game);//comment this out if you don't want the main menu to pop up
+		menu.setUp();//comment this out if you don't want the main menu to pop up
 	}
 }
