@@ -5,7 +5,6 @@
  * End date: 
  * Project: Polygons - a roguelike top-down shooter.
  */
-
 import java.util.Random;
 
 import javax.swing.ImageIcon; //remove later
@@ -21,7 +20,7 @@ public class Polygon extends Game {
     Enemy enemy;
     public boolean choosingBuff = false;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-    ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
     ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 
@@ -36,7 +35,6 @@ public class Polygon extends Game {
         ImageIcon test = new ImageIcon("8.webp");
         //getContentPane().setBackground(test);//remove later
 
-
     }
 
     public void act() {
@@ -44,7 +42,7 @@ public class Polygon extends Game {
             return; // pause the game while choosing a buff(lock the game)
         }
         if (mouseLeftPressed()) {
-            if (player.attackDelay > 5) {
+            if (player.attackDelay > 10) {
                 player.attackDelay = 0;
                 projectile = new Projectile(this);
                 add(projectile);
@@ -52,7 +50,7 @@ public class Polygon extends Game {
             }
         }
 
-        if (r.nextInt(300) < 20) { // 0.33% chance each tick to spawn an enemy
+        if (r.nextInt(300) < 5) { // 0.33% chance each tick to spawn an enemy
             enemy = new Enemy(this);
             add(enemy);
             enemies.add(enemy);
