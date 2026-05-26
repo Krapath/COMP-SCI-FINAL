@@ -5,7 +5,12 @@
  * End date: 
  * Project: Polygons - a roguelike top-down shooter.
  */
+
 import java.util.Random;
+
+import javax.swing.ImageIcon; //remove later
+
+import java.awt.Color;//remove later
 import java.util.ArrayList;
 
 public class Polygon extends Game {
@@ -27,6 +32,10 @@ public class Polygon extends Game {
         player.setLocation(335, 225); // middle
         add(player);
         add(new DisplayDebug(this));
+
+        ImageIcon test = new ImageIcon("8.webp");
+        //getContentPane().setBackground(test);//remove later
+
 
     }
 
