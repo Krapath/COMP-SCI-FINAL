@@ -5,8 +5,8 @@ import java.util.Random;
 public class Enemy extends GameObject {
 
     Random r = new Random();
-    public int size = 25;
-    public int speed = 2;
+    public int size = 50;
+    public int speed = 5;
     public int health = 3;
     public int enemyDamage = 1;
     public int displayOld = 0; //used to see enemies that have been alive older
@@ -30,7 +30,7 @@ public class Enemy extends GameObject {
             //this code does not work with enemies of different sizes. Fix if variable enemy sizes.
             for (int i = 0; i < game.enemies.size(); i++) { //ensures enemies dont spawn directly on top of each other
                 Enemy other = game.enemies.get(i);
-                if (other != this && other.getY() > y + 25 && other.getY() < y && other.getX() > x + 25 && other.getX() < x) {
+                if (other != this && other.getY() > y + size && other.getY() < y && other.getX() > x + size && other.getX() < x) {
                     collided = true;
                 }
             }
@@ -55,19 +55,20 @@ public class Enemy extends GameObject {
             Enemy other = game.enemies.get(i);
 
             if (collides(other) && other != this) { //if touching another enemy, moves this enemy away from the other one.
+                setColor(Color.RED);
                 int enemyX = game.enemies.get(i).getX();
                 int enemyY = game.enemies.get(i).getY();
                 double enemyAngle = game.getAngle(x, y, enemyX, enemyY);
-                x -= (int) (Math.cos(enemyAngle) * 1.5 * speed);
-                y -= (int) (Math.sin(enemyAngle) * 1.5 * speed);
+                x -= (int) (Math.cos(enemyAngle) * 25);
+                y -= (int) (Math.sin(enemyAngle) * 25);
                 collided = true;
                 break;
             }
         }
-        if (!collided) { //if not touching another enemy, chase player.
+       // if (!collided) { //if not touching another enemy, chase player.
             x += (int) (Math.cos(playerAngle) * speed);
             y += (int) (Math.sin(playerAngle) * speed);
-        }
+        //}
 
         setX(x);
         setY(y);

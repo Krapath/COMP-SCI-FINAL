@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics; 
 
-public class DisplayDebug extends GameObject {
+public class DisplayDebug extends GameObject{
     Polygon game;
 
     public DisplayDebug(Polygon game) {
