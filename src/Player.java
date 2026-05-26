@@ -25,6 +25,7 @@ public class Player extends GameObject {
         int x = getX();
         int y = getY();
 
+        //setSize(size, size);
         if (game.AKeyPressed()) x -= speed;
         if (game.DKeyPressed()) x += speed;
         if (game.WKeyPressed()) y -= speed;

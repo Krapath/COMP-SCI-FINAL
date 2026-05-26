@@ -59,8 +59,8 @@ public class Enemy extends GameObject {
                 int enemyX = game.enemies.get(i).getX();
                 int enemyY = game.enemies.get(i).getY();
                 double enemyAngle = game.getAngle(x, y, enemyX, enemyY);
-                x -= (int) (Math.cos(enemyAngle) * 25);
-                y -= (int) (Math.sin(enemyAngle) * 25);
+                x -= (int) (Math.cos(enemyAngle) * 10);
+                y -= (int) (Math.sin(enemyAngle) * 10);
                 collided = true;
                 break;
             }
