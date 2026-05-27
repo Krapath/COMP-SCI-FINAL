@@ -2,6 +2,9 @@ import java.util.Random;
 import java.awt.Color;
 import java.awt.Graphics;
 
+@SuppressWarnings("unused")
+
+//TODO: maybe just use paint 
 public class PowerUp extends GameObject {
     Random r = new Random();
     Polygon game;
@@ -16,7 +19,7 @@ public class PowerUp extends GameObject {
         setColor(Color.BLUE);
         setLocation(x, y);
 
-        switch (r.nextInt(3)) {
+        switch (r.nextInt(4)) {
             case 0:
                 setColor(Color.RED);
                 buffType = 0; // health buff
@@ -28,6 +31,10 @@ public class PowerUp extends GameObject {
             case 2:
                 setColor(Color.BLUE);
                 buffType = 2; // attack speed buff
+                break;
+            case 3:
+                setColor(Color.YELLOW);
+                buffType = 3; // size buff
                 break;
         }
 
@@ -52,7 +59,9 @@ public class PowerUp extends GameObject {
             else if (buffType == 1)
                 game.player.speed += 1;
             else if (buffType == 2)
-                game.player.size += 5;
+                game.player.attackDelay += 5;
+            else if (buffType == 3)
+                Projectile.chainLightningActive = true; // set chain lightning active for all projectiles, will be reset to false at the end of the next time the player chooses a buff
 
             for (int i = 0; i < game.powerUps.size(); i++) { // remove all powerups from the game
                 game.remove(game.powerUps.get(i));

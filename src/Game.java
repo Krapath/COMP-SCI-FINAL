@@ -28,6 +28,7 @@ import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+@SuppressWarnings("unused")
 
 /**
  * An abstract Game class which can be built into Pong.<br>

@@ -74,7 +74,7 @@ public class Enemy extends GameObject {
         setY(y);
 
         displayOld += 1;
-        if (displayOld > 60) {
+        if (displayOld > 600) { // for debug
             displayOld = 0;
             setColor(Color.ORANGE);
         }

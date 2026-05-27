@@ -10,14 +10,12 @@ public class Glaive extends GameObject {
     //double yVel;
     //int distanceTraveled = 0;
     int damage = 1;
-    int pierceCount = 60;
+    int pierceCooldown = 60; // the amount of frames for each act
     Double angle = 0.05;
     int radius = 80;
     Double speed = 0.05;
-    int pierceDelay = 0;
-    ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
-
-    //ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
+    int pierceTimer = 0; // the current timer for pierce
+    ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); // TODO: maybe make universal for other buffs
     public Glaive(Polygon game) {
         this.game = game;
         setLocation(game.player.getX() + 80, game.player.getY() + 80); // update position
@@ -74,11 +72,11 @@ public class Glaive extends GameObject {
                 }
             }
 
-            if (pierceDelay == pierceCount) {
-                pierceDelay = 0;
+            if (pierceTimer == pierceCooldown) { // if the pierce cooldown has been reached, reset the pierce timer and clear the list of hit enemies
+                pierceTimer = 0;
                 hitEnemies.clear();
             } else {
-                pierceDelay++;
+                pierceTimer++;
             }
         }
 

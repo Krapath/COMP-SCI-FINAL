@@ -10,6 +10,7 @@ public class Projectile extends GameObject {
     int distanceTraveled = 0;
     int damage = 1;
     int pierceCount = 3;
+    static boolean chainLightningActive = true; // static so all projectiles have property
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
     public Projectile(Polygon game) {
@@ -17,12 +18,12 @@ public class Projectile extends GameObject {
         setLocation(game.player.getX() + game.player.size / 3, game.player.getY() + game.player.size / 3); // update position
         setSize(10, 10); // size of the projectile
         setColor(Color.YELLOW);
-        if (game.mouseLeftPressed()) {
-            double angle = game.getAngle(game.player.getX() + game.player.size / 2, game.player.getY() + game.player.size / 2, game.getMouseX(), game.getMouseY());
-            double speed = 20; // adjust as needed
-            xVel = speed * Math.cos(angle);
-            yVel = speed * Math.sin(angle);
-        }
+        
+        double angle = game.getAngle(game.player.getX() + game.player.size / 2, game.player.getY() + game.player.size / 2, game.getMouseX(), game.getMouseY());
+        double speed = 20; // adjust as needed
+        xVel = speed * Math.cos(angle);
+        yVel = speed * Math.sin(angle);
+    
     }
 
     public void act() {
@@ -40,6 +41,7 @@ public class Projectile extends GameObject {
 
         for (int i = 0; i < game.enemies.size(); i++) {
             if (collides(game.enemies.get(i))) {
+
                 boolean hit = false;
 
                 for (int j = 0; j < hitEnemies.size(); j++) { //if enemy already hit, dont hit again.
@@ -57,13 +59,16 @@ public class Projectile extends GameObject {
 
                     int enemyX = game.enemies.get(i).getX();
                     int enemyY = game.enemies.get(i).getY();
-
+                    if (chainLightningActive && pierceCount == 2) { // if chain lightning is active and this is the first enemy hit, activate chain lightning 
+                    game.lightning = new ChainLightning(game.enemies.get(i), game);
+                    game.add(game.lightning);
+                    }
                     if (game.enemies.get(i).health <= 0) {
 
                         XpOrb xp = new XpOrb(enemyX, enemyY, game); // create an xp orb at the location of the defeated enemy
                         game.add(xp);// add the xp orb to the game
                         game.xpOrbs.add(xp); // add the xp orb to the list
-
+         
                         //if (hitEnemies.contains(game.enemies.get(i))) {
                         hitEnemies.remove(game.enemies.get(i));
                         // }
