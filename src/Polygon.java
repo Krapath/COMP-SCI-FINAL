@@ -18,6 +18,7 @@ public class Polygon extends Game {
     Enemy enemy;
     Glaive glaive;
     ChainLightning lightning;
+    AtGMissileMk1 atgMissile;
     public boolean choosingBuff = false;
     public boolean onMainMenu = true; //toggle this if you don't want to see the main menu every time you run the game for testing purposes
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -28,11 +29,12 @@ public class Polygon extends Game {
 
 
     public void setup() {
-        if(onMainMenu) {
+        /*if(onMainMenu) {
             //just a dummy object to hold the main menu background image and spawn the buttons, since the main menu is basically just a different "game state" of the same game rather than a separate class
             MainMenu menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
             menuController.spawnMyBoxes(this);
         }
+        */
         setDelay(16); // 60fps
         setTitle("Polygon");
 

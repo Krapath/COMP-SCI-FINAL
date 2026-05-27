@@ -1,4 +1,4 @@
-import java.awt.Color;
+/*import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -90,3 +90,4 @@ public class MainMenu extends GameObject {
         wasPressed = false; // reset wasPressed for the next time the player chooses a buff
     }
 }
+    */
