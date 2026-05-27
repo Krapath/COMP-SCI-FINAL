@@ -2,6 +2,9 @@ import java.awt.Color;
 public class XpOrb extends GameObject {
     Polygon game;
 
+    // TODO: scale to window size instead of hardcoding values
+    int speed = 5; // maybe accelerate as it gets closer to player
+    int distanceAttraction = 100; // the distance at which the xp orb starts moving towards the player, can be adjusted for better gameplay
     public XpOrb(int enemyX, int enemyY, Polygon game) {
         this.game = game;
         setLocation(enemyX, enemyY); // update position
@@ -15,11 +18,11 @@ public class XpOrb extends GameObject {
         // check for collision with player
         int xpX=getX();
         int xpY=getY();
-        if ((Math.abs(game.player.getX() - xpX) <= 50) && (Math.abs(game.player.getY() - xpY) <= 50)){// only move towards the player if the xp orb is close to player
-            if (xpX < game.player.getX()) xpX += 1;
-            if (xpX > game.player.getX()) xpX -= 1;
-            if (xpY < game.player.getY()) xpY += 1;
-            if (xpY > game.player.getY()) xpY -= 1;
+        if ((Math.abs(game.player.getX() - xpX) <= distanceAttraction) && (Math.abs(game.player.getY() - xpY) <= distanceAttraction)){// only move towards the player if the xp orb is close to player
+            if (xpX < game.player.getX()) xpX += speed;
+            if (xpX > game.player.getX()) xpX -= speed;
+            if (xpY < game.player.getY()) xpY += speed;
+            if (xpY > game.player.getY()) xpY -= speed;
 
             setX(xpX);
             setY(xpY);

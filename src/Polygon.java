@@ -6,6 +6,7 @@
  * Project: Polygons - a roguelike top-down shooter.
  */
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.awt.Color;
 
@@ -16,11 +17,14 @@ public class Polygon extends Game {
     Projectile projectile;
     Enemy enemy;
     Glaive glaive;
+    ChainLightning lightning;
     public boolean choosingBuff = false;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
     ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
+    HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); // the enemies that have been hit and the timer for each enemy to be hit again
+
 
     public void setup() {
 // 1. Create the controller (Do NOT use game.add() on this line)
@@ -38,6 +42,7 @@ public class Polygon extends Game {
         add(new DisplayDebug(this));
         glaive = new Glaive(this);
         add(glaive);
+
     }
 
     public void act() {
@@ -53,6 +58,7 @@ public class Polygon extends Game {
                 projectiles.add(projectile);
             }
         }
+
 
         if (r.nextInt(300) < 20) { // 0.33% chance each tick to spawn an enemy
             enemy = new Enemy(this);
