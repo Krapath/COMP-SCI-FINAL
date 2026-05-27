@@ -21,9 +21,7 @@ public class Player extends GameObject {
     }
 
     public void act() {
-        if (game.choosingBuff) {
-            return;
-        }
+        if (game.choosingBuff) return;// player does not move or collide with enemies while the player is choosing a buff
         attackDelay++;
         int x = getX();
         int y = getY();

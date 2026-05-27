@@ -3,19 +3,21 @@ import java.awt.Color;
 import java.util.Random;
 
 public class Enemy extends GameObject {
+    Polygon game;
 
     Random r = new Random();
-    public int size = 50;
-    public int speed = 5;
+    public int size;
+    public int speed;
     public int health = 3;
     public int enemyDamage = 1;
     public int displayOld = 0; //used to see enemies that have been alive older
 
-    Polygon game;
 
     public Enemy(Polygon game) {
 
         this.game = game;
+        size =(game.getWindowWidth() + game.getWindowHeight()) / 80; // enemy size is 1/100 of the entire window
+        speed =(game.getWindowWidth() + game.getWindowHeight()) / 500; // speed is 1/100 of the entire window size
         setSize(size, size);
         setColor(Color.GREEN);
         int x;
