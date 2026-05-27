@@ -5,12 +5,8 @@
  * End date: 
  * Project: Polygons - a roguelike top-down shooter.
  */
-import java.util.Random;
-
-import javax.swing.ImageIcon; //remove later
-
-import java.awt.Color;//remove later
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Polygon extends Game {
 
@@ -32,6 +28,7 @@ public class Polygon extends Game {
         player.setLocation(335, 225); // middle
         add(player);
         add(new DisplayDebug(this));
+<<<<<<< HEAD
 
         ImageIcon test = new ImageIcon("8.webp");
         //getContentPane().setBackground(test);//remove later
@@ -39,6 +36,8 @@ public class Polygon extends Game {
         glaive = new Glaive(this);
         add(glaive);
 
+=======
+>>>>>>> 52632fb0b239ce8f6f3ac43bb3842141cb54e7c1
     }
 
     public void act() {
@@ -64,7 +63,7 @@ public class Polygon extends Game {
             add(enemy);
             enemies.add(enemy);
         }
-        if (player.health <= 0) { //stops if dies
+        if (player.health <= 0) { // stops if dies
             stopGame();
         }
 
@@ -84,7 +83,7 @@ public class Polygon extends Game {
     }
 
     public static void main(String[] args) {
-        Polygon game = new Polygon();//	
+        Polygon game = new Polygon();//
         game.setVisible(true);
         game.initComponents();
     }
