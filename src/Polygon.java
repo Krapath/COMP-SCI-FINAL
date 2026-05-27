@@ -18,6 +18,7 @@ public class Polygon extends Game {
     Player player;
     Projectile projectile;
     Enemy enemy;
+    Glaive glaive;
     public boolean choosingBuff = false;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
@@ -35,9 +36,17 @@ public class Polygon extends Game {
         ImageIcon test = new ImageIcon("8.webp");
         //getContentPane().setBackground(test);//remove later
 
+        glaive = new Glaive(this);
+        add(glaive);
+
     }
 
     public void act() {
+
+        if (glaive != null) {
+            glaive.act();
+        }
+
         if (choosingBuff) {
             return; // pause the game while choosing a buff(lock the game)
         }
@@ -50,7 +59,7 @@ public class Polygon extends Game {
             }
         }
 
-        if (r.nextInt(300) < 5) { // 0.33% chance each tick to spawn an enemy
+        if (r.nextInt(300) < 20) { // 0.33% chance each tick to spawn an enemy
             enemy = new Enemy(this);
             add(enemy);
             enemies.add(enemy);

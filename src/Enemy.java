@@ -55,7 +55,7 @@ public class Enemy extends GameObject {
             Enemy other = game.enemies.get(i);
 
             if (collides(other) && other != this) { //if touching another enemy, moves this enemy away from the other one.
-                setColor(Color.RED);
+                //setColor(Color.RED);
                 int enemyX = game.enemies.get(i).getX();
                 int enemyY = game.enemies.get(i).getY();
                 double enemyAngle = game.getAngle(x, y, enemyX, enemyY);
@@ -65,9 +65,9 @@ public class Enemy extends GameObject {
                 break;
             }
         }
-       // if (!collided) { //if not touching another enemy, chase player.
-            x += (int) (Math.cos(playerAngle) * speed);
-            y += (int) (Math.sin(playerAngle) * speed);
+        // if (!collided) { //if not touching another enemy, chase player.
+        x += (int) (Math.cos(playerAngle) * speed);
+        y += (int) (Math.sin(playerAngle) * speed);
         //}
 
         setX(x);
