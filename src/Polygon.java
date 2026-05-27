@@ -28,23 +28,12 @@ public class Polygon extends Game {
         player.setLocation(335, 225); // middle
         add(player);
         add(new DisplayDebug(this));
-<<<<<<< HEAD
-
-        ImageIcon test = new ImageIcon("8.webp");
-        //getContentPane().setBackground(test);//remove later
 
         glaive = new Glaive(this);
         add(glaive);
-
-=======
->>>>>>> 52632fb0b239ce8f6f3ac43bb3842141cb54e7c1
     }
 
     public void act() {
-
-        if (glaive != null) {
-            glaive.act();
-        }
 
         if (choosingBuff) {
             return; // pause the game while choosing a buff(lock the game)
