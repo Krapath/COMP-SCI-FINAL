@@ -5,6 +5,7 @@
  * End date: 
  * Project: Polygons - a roguelike top-down shooter.
  */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -18,6 +19,7 @@ public class Polygon extends Game {
     Glaive glaive;
     ChainLightning lightning;
     public boolean choosingBuff = false;
+    public boolean onMainMenu = true; //toggle this if you don't want to see the main menu every time you run the game for testing purposes
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
@@ -26,9 +28,11 @@ public class Polygon extends Game {
 
 
     public void setup() {
-    MainMenu menuController = new MainMenu(this, "dummy.png");
-    menuController.spawnMyBoxes(this);
-
+        if(onMainMenu) {
+            //just a dummy object to hold the main menu background image and spawn the buttons, since the main menu is basically just a different "game state" of the same game rather than a separate class
+            MainMenu menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
+            menuController.spawnMyBoxes(this);
+        }
         setDelay(16); // 60fps
         setTitle("Polygon");
 

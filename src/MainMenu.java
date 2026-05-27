@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -8,12 +7,16 @@ import javax.swing.ImageIcon;
 public class MainMenu extends GameObject {
 
     private Image boxImage;
+    private String buttonName;
+    Polygon game;
 
     // The constructor for the dummy object
-    public MainMenu(Polygon game, String imagePath) {
+    public MainMenu(Polygon game, String imagePath,String buttonName) {
         // Loads the specific image file path passed into it
         setSize(0, 0);
         this.boxImage = new ImageIcon(imagePath).getImage();
+        this.game = game;
+        this.buttonName = buttonName;
     }
 
     // Actual method to spawn the boxes
@@ -22,33 +25,33 @@ public class MainMenu extends GameObject {
         int ySlots = game.getWindowHeight() / 9; // gets even splits for the boxes
         int yShift = game.getWindowHeight() / 25; // shifts the boxes up a bit so they look better
 
-        //sets up width and height for the boxes based on the window size
+        // sets up width and height for the boxes based on the window size
         int w = game.getWindowWidth() / 2;
         int h = game.getWindowWidth() / 10;
 
-        //play button
-        MainMenu playButton = new MainMenu(game, "Images\\MainMenu\\PlayButton.png");
+        // play button
+        MainMenu playButton = new MainMenu(game, "Images\\MainMenu\\PlayButton.png","Play");
         playButton.setSize(w, h);
         playButton.setColor(Color.RED);
         playButton.setLocation(centerX, ySlots - yShift);
         game.add(playButton);
 
-        //tutorial button
-        MainMenu tutorialButton = new MainMenu(game, "Images\\MainMenu\\TutorialButton.png");
+        // tutorial button
+        MainMenu tutorialButton = new MainMenu(game, "Images\\MainMenu\\TutorialButton.png","Tutorial");
         tutorialButton.setSize(w, h);
         tutorialButton.setColor(Color.RED);
         tutorialButton.setLocation(centerX, ySlots * 3 - yShift);
         game.add(tutorialButton);
 
-        //settings button
-        MainMenu settings = new MainMenu(game, "Images\\MainMenu\\SettingsButton.png");
+        // settings button
+        MainMenu settings = new MainMenu(game, "Images\\MainMenu\\SettingsButton.png","Settings");
         settings.setSize(w, h);
         settings.setColor(Color.RED);
         settings.setLocation(centerX, ySlots * 5 - yShift);
         game.add(settings);
 
-        //exit button
-        MainMenu exitButton = new MainMenu(game, "Images\\MainMenu\\ExitButton.png");
+        // exit button
+        MainMenu exitButton = new MainMenu(game, "Images\\MainMenu\\ExitButton.png","Exit");
         exitButton.setSize(w, h);
         exitButton.setColor(Color.RED);
         exitButton.setLocation(centerX, ySlots * 7 - yShift);
@@ -57,13 +60,24 @@ public class MainMenu extends GameObject {
 
     @Override
     public void paint(Graphics g) {
-        super.paint(g); //paimts the background first
-        //adds the image on top of the background
+        super.paint(g); // paints the background first
+        // adds the image on top of the background
         if (boxImage != null) {
             g.drawImage(boxImage, 0, 0, getWidth(), getHeight(), null);
-        } 
+        }
     }
 
     public void act() {
+        if (!game.onMainMenu) {
+            return; // only check for button clicks if we're on the main menu
+        }
+        if (game.mouseLeftPressed()) {
+            int x = game.getMouseX();
+            int y = game.getMouseY();
+            // play button
+            if (contains(x, y) && buttonName.equals("Play")) {
+                System.out.println("hi");
+            }
+        }
     }
 }
