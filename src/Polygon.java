@@ -46,7 +46,7 @@ public class Polygon extends Game {
     }
 
     public void act() {
-
+        
         if (choosingBuff) {
             return; // pause the game while choosing a buff(lock the game)
         }

@@ -67,17 +67,26 @@ public class MainMenu extends GameObject {
         }
     }
 
+    public boolean readyToApply = false;
+    public boolean wasPressed = false;
+
     public void act() {
         if (!game.onMainMenu) {
             return; // only check for button clicks if we're on the main menu
         }
-        if (game.mouseLeftPressed()) {
-            int x = game.getMouseX();
-            int y = game.getMouseY();
-            // play button
-            if (contains(x, y) && buttonName.equals("Play")) {
-                System.out.println("hi");
-            }
+        int x = game.getMouseX();
+        int y = game.getMouseY();
+        if (!game.mouseLeftPressed()) {
+            readyToApply = true; // the buff should be applied on mouse release if the mouse was pressed while hovering over this powerup
         }
+        if (game.mouseLeftPressed() && contains(x, y) && readyToApply) {
+            wasPressed = true;
+        }
+        //apply the buff and remove the powerups if the player clicks on a powerup and releases the mouse button while still hovering over the same powerup
+        if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply&& buttonName.equals("Play")) {
+            game.onMainMenu = false; // start the game if the play button is clicked
+        }
+        readyToApply = false; // reset readyToApply for the next time the player chooses a buff
+        wasPressed = false; // reset wasPressed for the next time the player chooses a buff
     }
 }
