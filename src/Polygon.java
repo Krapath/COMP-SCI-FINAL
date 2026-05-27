@@ -7,6 +7,7 @@
  */
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.Color;
 
 public class Polygon extends Game {
 
@@ -22,13 +23,19 @@ public class Polygon extends Game {
     ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 
     public void setup() {
+       // 1. Create a dummy instance of MainMenu just to access the method
+        MainMenu menuController = new MainMenu(this);
+
+        // 2. Call your method to spawn and add the two boxes to the game screen
+        menuController.spawnMyBoxes(this);
+
         setDelay(16); // 60fps
         setTitle("Polygon");
+
         player = new Player(this);
         player.setLocation(335, 225); // middle
         add(player);
         add(new DisplayDebug(this));
-
         glaive = new Glaive(this);
         add(glaive);
     }
@@ -72,7 +79,7 @@ public class Polygon extends Game {
     }
 
     public static void main(String[] args) {
-        Polygon game = new Polygon();//
+        Polygon game = new Polygon();
         game.setVisible(true);
         game.initComponents();
     }
