@@ -23,11 +23,11 @@ public class Polygon extends Game {
     ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 
     public void setup() {
-       // 1. Create a dummy instance of MainMenu just to access the method
-        MainMenu menuController = new MainMenu(this);
+// 1. Create the controller (Do NOT use game.add() on this line)
+    MainMenu menuController = new MainMenu(this);
 
-        // 2. Call your method to spawn and add the two boxes to the game screen
-        menuController.spawnMyBoxes(this);
+    // 2. Call the method to spawn the actual visible boxes
+    menuController.spawnMyBoxes(this);
 
         setDelay(16); // 60fps
         setTitle("Polygon");
