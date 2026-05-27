@@ -8,7 +8,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.awt.Color;
 
 public class Polygon extends Game {
 
@@ -27,10 +26,7 @@ public class Polygon extends Game {
 
 
     public void setup() {
-// 1. Create the controller (Do NOT use game.add() on this line)
     MainMenu menuController = new MainMenu(this);
-
-    // 2. Call the method to spawn the actual visible boxes
     menuController.spawnMyBoxes(this);
 
         setDelay(16); // 60fps
