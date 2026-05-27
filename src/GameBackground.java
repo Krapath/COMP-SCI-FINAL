@@ -1,17 +1,30 @@
+/* yo this shit is actually so hard idk how the fuck to do it.
 import java.awt.Graphics;
-import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 
-public class GameBackground extends JPanel {
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        ImageIcon backgroundOne = new ImageIcon("C:\\Users\\magic\\OneDrive\\Documents\\GitHub\\COMP-SCI-FINAL\\Images\\Background\\Background_One.png");
-        backgroundOne.paintIcon(this,g, 0, 0);
-        g.fillRect(0, 0, getWidth(), getHeight());
+public class GameBackground extends GameObject {
+    private Polygon game;
+    private ImageIcon backgroundImage;
+
+    public GameBackground(Polygon game) {
+        this.game = game;
+        setLocation(0, 0);
+        setSize(game.getWindowWidth(), game.getWindowHeight());
+        backgroundImage = new ImageIcon("Images/Background/Background_One.png");
     }
-public void setup() {
+
+    public void setup() {
     }
 
     public void act() {
     }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
+        if (backgroundImage != null) {
+            backgroundImage.paintIcon(this, g, 0, 0);
+        }
+    }
 }
+*/
