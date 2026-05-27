@@ -26,7 +26,7 @@ public class Polygon extends Game {
 
 
     public void setup() {
-    MainMenu menuController = new MainMenu(this);
+    MainMenu menuController = new MainMenu(this, "dummy.png");
     menuController.spawnMyBoxes(this);
 
         setDelay(16); // 60fps
