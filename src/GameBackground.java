@@ -1,30 +1,23 @@
-/* yo this shit is actually so hard idk how the fuck to do it.
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
-public class GameBackground extends GameObject {
-    private Polygon game;
-    private ImageIcon backgroundImage;
-
-    public GameBackground(Polygon game) {
-        this.game = game;
-        setLocation(0, 0);
-        setSize(game.getWindowWidth(), game.getWindowHeight());
-        backgroundImage = new ImageIcon("Images/Background/Background_One.png");
-    }
+public class GameBackground extends Game {
+    //Image[] backgroundImages = new Image[5];
 
     public void setup() {
+        getContentPane().setBackground(Color.white);
     }
-
     public void act() {
     }
+    
+
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void paint(Graphics g) {
+        super.paint(g); 
         
-        if (backgroundImage != null) {
-            backgroundImage.paintIcon(this, g, 0, 0);
-        }
     }
 }
-*/
