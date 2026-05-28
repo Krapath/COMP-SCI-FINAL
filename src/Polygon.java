@@ -19,6 +19,7 @@ public class Polygon extends Game {
     Glaive glaive;
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
+    MainMenu menuController;
     public boolean choosingBuff = false;
     public boolean onMainMenu = true;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -26,13 +27,15 @@ public class Polygon extends Game {
     ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
     ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); // the enemies that have been hit and the timer for each enemy to be hit again
+    ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
 
 
     public void setup() {
 
         //just a dummy object to hold the main menu background image and spawn the buttons, since the main menu is basically just a different "game state" of the same game rather than a separate class
-        MainMenu menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
+        menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
         menuController.spawnMyBoxes(this);
+        add(menuController);
         
         setDelay(16); // 60fps
         setTitle("Polygon");
@@ -40,6 +43,7 @@ public class Polygon extends Game {
         player = new Player(this);
         player.setLocation(335, 225); // middle
         add(player);
+
         add(new DisplayDebug(this));
         glaive = new Glaive(this);
         add(glaive);
