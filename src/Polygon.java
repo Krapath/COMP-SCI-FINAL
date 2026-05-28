@@ -56,8 +56,8 @@ public class Polygon extends Game {
             return; // pause the game while choosing a buff or on main menu(lock the game)
         }
         if (mouseLeftPressed()) {
-            if (player.attackDelay > 10) {
-                player.attackDelay = 0;
+            if (Player.attackDelay > 10) {
+                Player.attackDelay = 0;
                 projectile = new Projectile(this);
                 add(projectile);
                 projectiles.add(projectile);
@@ -70,11 +70,11 @@ public class Polygon extends Game {
             add(enemy);
             enemies.add(enemy);
         }
-        if (player.health <= 0) { // stops if dies
+        if (Player.health <= 0) { // stops if dies
             stopGame();
         }
 
-        if (player.score >= 5) { // spawns a powerup when the player reaches level 5
+        if (Player.score >= 5) { // spawns a powerup when the player reaches level 5
             choosingBuff = true;
             int centeredY = getWindowHeight() / 2 - getWindowHeight() / 6;
             powerUps.add(new PowerUp(getWindowWidth() / 4 - getWindowWidth() / 10, centeredY, this));
@@ -83,7 +83,7 @@ public class Polygon extends Game {
             for (PowerUp p : powerUps) {
                 add(p);
             }
-            player.score = 0; // reset score after spawning powerup
+            Player.score = 0; // reset score after spawning powerup
 
         }
 

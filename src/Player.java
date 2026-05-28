@@ -3,12 +3,12 @@ import java.awt.Color;
 
 public class Player extends GameObject {
 
-    public int size;
-    public int speed;
-
-    public int attackDelay = 0;
-    public int health = 20;
-    public int score = 0;
+	static int size;
+    static int speed;
+    static int attackDelay = 0;
+    static int health = 20;
+    static int maxHealth = 20;
+    static int score = 0;
 
     Polygon game;
 

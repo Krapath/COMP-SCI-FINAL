@@ -31,16 +31,19 @@ public class DisplayDebug extends GameObject{
         
         // display the number of enemies and hp
         g.drawString("ENEMIES: " + game.enemies.size(), 10, 80);
-        g.drawString("HP: " + game.player.health, 10, 100);
+        g.drawString("HP: " + Player.health, 10, 100);
 
         // display the players current score
-        g.drawString("SCORE: " + game.player.score, 10, 120);
+        g.drawString("SCORE: " + Player.score, 10, 120);
         
         // display the mouse cursor as a red rectangle 
         g.drawString("ANGLE:" + angle , 10, 60);
         g.setColor(Color.RED);
         g.drawRect(game.getMouseX(),game.getMouseY(),15,15);        
       
+        // draw healthbar
+        
+        g.drawRect(10, 140+((Player.maxHealth-Player.health)*5), 20, 5*Player.health);
 
 
     }
