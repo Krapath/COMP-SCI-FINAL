@@ -43,7 +43,7 @@ public class Enemy extends GameObject {
     }
 
     public void act() {
-        if (game.choosingBuff) {
+        if (game.gamePause) {
             return;
         }
         int x = getX();

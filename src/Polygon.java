@@ -20,8 +20,7 @@ public class Polygon extends Game {
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
-    public boolean choosingBuff = false;
-    public boolean onMainMenu = true;
+    public boolean gamePause = true;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
@@ -36,23 +35,23 @@ public class Polygon extends Game {
         menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
         menuController.spawnMyBoxes(this);
         add(menuController);
-        
-        setDelay(16); // 60fps
-        setTitle("Polygon");
-
         player = new Player(this);
         player.setLocation(335, 225); // middle
         add(player);
+        player.setVisible(false);//kind of a bad way to do this, I want player to be gone while menu is open but wtvr
 
         add(new DisplayDebug(this));
         glaive = new Glaive(this);
         add(glaive);
+        glaive.setVisible(false);//kind of a bad way to do this, I want player to be gone while menu is open but wtvr
 
+        setDelay(16); // 60fps
+        setTitle("Polygon");
     }
 
     public void act() {
         
-        if (choosingBuff) {
+        if (gamePause) {
             return; // pause the game while choosing a buff or on main menu(lock the game)
         }
         if (mouseLeftPressed()) {
@@ -75,7 +74,7 @@ public class Polygon extends Game {
         }
 
         if (Player.score >= 5) { // spawns a powerup when the player reaches level 5
-            choosingBuff = true;
+            gamePause = true;
             int centeredY = getWindowHeight() / 2 - getWindowHeight() / 6;
             powerUps.add(new PowerUp(getWindowWidth() / 4 - getWindowWidth() / 10, centeredY, this));
             powerUps.add(new PowerUp(getWindowWidth() / 4 * 2 - getWindowWidth() / 10, centeredY, this));

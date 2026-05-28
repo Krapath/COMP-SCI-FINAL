@@ -71,7 +71,7 @@ public class ChainLightning extends GameObject {
     
     // will handle the drawing of the chain lightning, will draw a line from the enemy to the first target, then from each target to the next target in the chain
     public void paint(Graphics g) {
-        if (game.choosingBuff) return;// projectiles do not move or collide with enemies while the player is choosing a buff
+        if (game.gamePause) return;// projectiles do not move or collide with enemies while the player is choosing a buff
         
         //Link for 2d line graphics: https://stackoverflow.com/questions/16995308
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
@@ -113,7 +113,7 @@ public class ChainLightning extends GameObject {
     
 
     public void act() { // no need for movement code since the chain lightning jumps from enemy to enemy, immediately
-        if (game.choosingBuff) {
+        if (game.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
 

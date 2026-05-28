@@ -1,7 +1,7 @@
 import java.awt.Color;
-import java.util.ArrayList;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
@@ -76,7 +76,7 @@ public class MainMenu extends GameObject {
     public boolean wasPressed = false;
 
     public void act() {
-        if (!game.onMainMenu) {
+        if (!game.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
         int x = game.getMouseX();
@@ -96,8 +96,9 @@ public class MainMenu extends GameObject {
         		game.remove(m);
         	}
     		menuButtons.clear(); // clears the entire list
-            System.out.println("Play button clicked");
-            //game.onMainMenu = false; 
+            game.player.setVisible(true); // makes the player visible again, since the player is technically still there just invisible
+            game.glaive.setVisible(true);
+            game.gamePause = false; // resumes the game
         }
         readyToApply = false;
         wasPressed = false; 

@@ -30,7 +30,7 @@ public class Projectile extends GameObject {
     }
 
     public void act() {
-        if (game.choosingBuff) {
+        if (game.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing
                    // a buff
 

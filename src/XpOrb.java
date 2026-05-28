@@ -14,7 +14,7 @@ public class XpOrb extends GameObject {
 
 
     public void act() {
-        if (game.choosingBuff) return; // xp orbs do not move or collide with the player while the player is choosing a buff
+        if (game.gamePause) return; // xp orbs do not move or collide with the player while the player is choosing a buff
         // check for collision with player
         int xpX=getX();
         int xpY=getY();
