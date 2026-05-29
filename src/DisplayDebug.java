@@ -1,16 +1,51 @@
 import java.awt.Color;
 import java.awt.Graphics; 
+import java.awt.Font;
+import java.awt.FontMetrics;
 
 public class DisplayDebug extends GameObject{
     Polygon game;
-
+    static int []xPoints;
+    static int []yPoints;
+    static int nPoints;
+    static int posX;
+    static int posY;
+    static int radius;
+    private Font pixelFont;
     public DisplayDebug(Polygon game) {
         this.game = game; //hi this is a test test test
         setSize(game.getWindowWidth(), game.getWindowHeight());  // size of the text area
+        radius = (game.getWindowWidth()+game.getWindowHeight())/75;
+        posX = (int) (game.getWindowWidth() - radius*(1.75));
+        posY = (int) (0 + radius*(1.75));
+        try {
+            java.io.File fontFile = new java.io.File("Fonts/PressStart2P-Regular.ttf"); 
+            pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(50f);
+        } catch (Exception e) {
+            // Fallback to basic monospaced if the file is missing
+            pixelFont = new Font("Monospaced", Font.BOLD, 100);
+            e.printStackTrace();
+        }
     }
 
     public void act() {
         // reposition every tick so text stays in corner
+   	 double angle = Math.PI/2;
+	     xPoints = new int [Player.health+2];
+	     yPoints = new int [Player.health+2];
+
+    	for (int i =0; i < xPoints.length;i++){
+    	 
+         double x = (radius * Math.cos(angle)+ posX );
+         double y = (radius * Math.sin(angle)+ posY);
+         angle+= Math.PI*2/(Player.health+2);
+         
+         xPoints[i]= (int)(x+0.5);
+         yPoints[i]= (int)(y+0.5);
+         
+    	}
+         nPoints = Player.health+2;
+         
         repaint();  // redraws this object every tick
         
     }
@@ -18,6 +53,8 @@ public class DisplayDebug extends GameObject{
     public void paint(Graphics g) {
         g.setColor(Color.WHITE);
         
+        String health = String.valueOf(Player.health);
+
         // draw mouse and player coordinates
         g.drawString("MOUSE    X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 10, 20);
         g.drawString("PLAYER   X:" + game.player.getX() + "  Y:" + game.player.getY(), 10, 40);
@@ -42,9 +79,24 @@ public class DisplayDebug extends GameObject{
         g.drawRect(game.getMouseX(),game.getMouseY(),15,15);        
       
         // draw healthbar
-        
-        g.drawRect(10, 140+((Player.maxHealth-Player.health)*5), 20, 5*Player.health);
+        if (xPoints != null && yPoints != null) {
+            g.drawPolygon(xPoints, yPoints, nPoints);
+            g.setFont(pixelFont);
+            FontMetrics metrics = g.getFontMetrics(pixelFont);
+            
+
+            int textWidth = metrics.stringWidth(health);
+            int textHeight = metrics.getHeight();
+            
+            int healthX = posX - textWidth / 2;
+            int healthY = posY + (metrics.getAscent() - metrics.getDescent()) / 2;
+            
+            g.drawString(health,healthX,healthY);
+        }
 
 
     }
 }
+
+
+
