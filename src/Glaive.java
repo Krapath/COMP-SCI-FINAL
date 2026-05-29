@@ -30,8 +30,8 @@ public class Glaive extends GameObject {
 
         angle += speed;
 
-        int x = (int) (radius * Math.cos(angle) + game.player.getX()) - size / 2;
-        int y = (int) (radius * Math.sin(angle) + game.player.getY()) - size / 2;
+        int x = (int) (radius * Math.cos(angle) + game.player.getX()) - size / 2 + Player.size / 2;
+        int y = (int) (radius * Math.sin(angle) + game.player.getY()) - size / 2 + Player.size / 2;
         setX(x);
         setY(y);
 
