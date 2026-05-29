@@ -20,6 +20,8 @@ public class Polygon extends Game {
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
+    GameBackground background;
+    YonduArrow yonduArrow;
     static boolean gamePause = true;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
@@ -35,21 +37,31 @@ public class Polygon extends Game {
         menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
         menuController.spawnMyBoxes(this);
         add(menuController);
+        //changes the game background
+        background = new GameBackground();
+        background.changeBackground(this);
+        add(background);
+        //creates the player
         player = new Player(this);
         player.setLocation(335, 225); // middle
         add(player);
-        player.setVisible(false);//kind of a bad way to do this, I want player to be gone while menu is open but wtvr
-
+        //creates debugger
         add(new DisplayDebug(this));
+        //creates glaive
         glaive = new Glaive(this);
         add(glaive);
-        glaive.setVisible(false);//kind of a bad way to do this, I want player to be gone while menu is open but wtvr
+        //creates yondu arrow
+        yonduArrow = new YonduArrow(this);
+        add(yonduArrow);
 
         setDelay(16); // 60fps
         setTitle("Polygon");
     }
 
     public void act() {
+
+
+
         
         if (gamePause) {
             return; // pause the game while choosing a buff or on main menu(lock the game)

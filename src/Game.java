@@ -231,6 +231,7 @@ public abstract class Game extends JFrame {
 	 * The default constructor for the game.
 	 * The default window size is 400x400
 	 */
+
 	public Game() {
 		setSize(getWindowWidth(), getWindowHeight());
 		getContentPane().setBackground(Color.black);
@@ -238,7 +239,7 @@ public abstract class Game extends JFrame {
 		setUndecorated(true);// removes title bar and borders
 		setTitle("Polygon");
 
-		// Add window listener.
+		// Add window listener.\]
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);

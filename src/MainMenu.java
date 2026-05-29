@@ -69,7 +69,7 @@ public class MainMenu extends GameObject {
     @Override
     public void paint(Graphics g) {
         super.paint(g); // paints the background first
-        
+
         // adds the image on top of the background
         if (boxImage != null) {
             g.drawImage(boxImage, 0, 0, getWidth(), getHeight(), null);
@@ -100,8 +100,6 @@ public class MainMenu extends GameObject {
         		game.remove(m);
         	}
     		menuButtons.clear(); // clears the entire list
-            game.player.setVisible(true); // makes the player visible again, since the player is technically still there just invisible
-            game.glaive.setVisible(true);
             game.gamePause = false; // resumes the game
         }
         readyToApply = false;
