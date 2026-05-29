@@ -20,6 +20,7 @@ public class Polygon extends Game {
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
+    public Methods method;
     static boolean gamePause = true;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
@@ -40,6 +41,8 @@ public class Polygon extends Game {
         add(player);
         player.setVisible(false);//kind of a bad way to do this, I want player to be gone while menu is open but wtvr
 
+        method = new Methods(this);
+        
         add(new DisplayDebug(this));
         glaive = new Glaive(this);
         add(glaive);

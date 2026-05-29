@@ -11,6 +11,7 @@ public class Enemy extends GameObject {
     public int health = 3;
     public int enemyDamage = 1;
     public int displayOld = 0; //used to see enemies that have been alive older
+    double x, y;
 
 
     public Enemy(Polygon game) {
@@ -46,34 +47,36 @@ public class Enemy extends GameObject {
         if (game.gamePause) {
             return;
         }
-        int x = getX();
-        int y = getY();
+        x = getX();
+        y = getY();
         boolean collided = false;
         int playerX = game.player.getX();
         int playerY = game.player.getY();
-        double playerAngle = game.getAngle(x, y, playerX, playerY);
+        double playerAngle = Math.atan2(Player.y-y, Player.x-x);
+        
 
         for (int i = 0; i < game.enemies.size(); i++) {
             Enemy other = game.enemies.get(i);
 
             if (collides(other) && other != this) { //if touching another enemy, moves this enemy away from the other one.
                 //setColor(Color.RED);
-                int enemyX = game.enemies.get(i).getX();
-                int enemyY = game.enemies.get(i).getY();
-                double enemyAngle = game.getAngle(x, y, enemyX, enemyY);
-                x -= (int) (Math.cos(enemyAngle) * 10);
-                y -= (int) (Math.sin(enemyAngle) * 10);
+                double enemyX = game.enemies.get(i).x;
+                double enemyY = game.enemies.get(i).y;
+                double enemyAngle = Math.atan2(enemyY-y, enemyX-x);
+                
+                x -= (Math.cos(enemyAngle) * 10.0);
+                y -= (Math.sin(enemyAngle) * 10.0);
                 collided = true;
                 break;
             }
         }
         // if (!collided) { //if not touching another enemy, chase player.
-        x += (int) (Math.cos(playerAngle) * speed);
-        y += (int) (Math.sin(playerAngle) * speed);
+        x += (Math.cos(playerAngle) * speed);
+        y += (Math.sin(playerAngle) * speed);
         //}
 
-        setX(x);
-        setY(y);
+        setX((int)(x + 0.5));
+        setY((int)(y + 0.5));
 
         displayOld += 1;
         if (displayOld > 600) { // for debug
