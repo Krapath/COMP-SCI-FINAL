@@ -35,8 +35,7 @@ public class Glaive extends GameObject {
         setX(x);
         setY(y);
 
-        //distanceTraveled += Math.sqrt(xVel * xVel + yVel * yVel); // update distance traveled
-        //setLocation(getX() + (int) xVel, getY() + (int) yVel); // update position
+        
         for (int i = 0; i < game.enemies.size(); i++) {
             if (collides(game.enemies.get(i))) {
                 boolean hit = false;

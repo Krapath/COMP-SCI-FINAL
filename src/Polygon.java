@@ -20,7 +20,7 @@ public class Polygon extends Game {
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
-    public boolean gamePause = true;
+    static boolean gamePause = true;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
