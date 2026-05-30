@@ -11,9 +11,9 @@ public class Player extends GameObject {
     static int score = 0;
     static double x, y;
 
-    Polygon game;
+    PolygonGame game;
 
-    public Player(Polygon game) {
+    public Player(PolygonGame game) {
         this.game = game;
         size = (game.getWindowWidth() + game.getWindowHeight()) / 100; // player size is 1/100 of the entire window
         speed = (game.getWindowWidth() + game.getWindowHeight()) / 200; // speed is 1/100 of the entire window size
@@ -24,7 +24,7 @@ public class Player extends GameObject {
     }
 
     public void act() {
-        if (Polygon.gamePause) return;// player does not move or collide with enemies while the player is choosing a buff
+        if (PolygonGame.gamePause) return;// player does not move or collide with enemies while the player is choosing a buff
         attackDelay++;
 
 

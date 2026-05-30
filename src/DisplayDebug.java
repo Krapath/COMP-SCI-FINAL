@@ -4,7 +4,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 
 public class DisplayDebug extends GameObject{
-    Polygon game;
+    PolygonGame game;
     static int []xPoints;
     static int []yPoints;
     static int nPoints;
@@ -12,7 +12,7 @@ public class DisplayDebug extends GameObject{
     static int posY;
     static double radius;
     private Font pixelFont;
-    public DisplayDebug(Polygon game) {
+    public DisplayDebug(PolygonGame game) {
         this.game = game; //hi this is a test test test
         setSize(game.getWindowWidth(), game.getWindowHeight());  // size of the text area
         radius = (game.getWindowWidth()+game.getWindowHeight())/75;

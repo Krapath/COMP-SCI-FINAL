@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.util.Random;
 
 public class Enemy extends GameObject {
-    Polygon game;
+    PolygonGame game;
 
     Random r = new Random();
     public int size;
@@ -14,7 +14,7 @@ public class Enemy extends GameObject {
     double x, y;
 
 
-    public Enemy(Polygon game) {
+    public Enemy(PolygonGame game) {
 
         this.game = game;
         size =(game.getWindowWidth() + game.getWindowHeight()) / 80; // enemy size is 1/100 of the entire window
@@ -58,7 +58,7 @@ public class Enemy extends GameObject {
     }
 
     public void act() {
-        if (Polygon.gamePause) {
+        if (PolygonGame.gamePause) {
             return;
         }
         x = getX();

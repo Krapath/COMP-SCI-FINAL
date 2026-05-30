@@ -8,7 +8,7 @@ import java.util.Random;
 public class YonduArrow extends GameObject {
     Random r = new Random();
     int size = 50;
-    Polygon game;
+    PolygonGame game;
     int damage = 1;
     int pierceCooldown = 60;
     Double angle = 0.20;
@@ -39,7 +39,7 @@ public class YonduArrow extends GameObject {
     int tipWidth = 15;
     int tipHeight = 20;
 
-    public YonduArrow(Polygon game) {
+    public YonduArrow(PolygonGame game) {
         this.game = game;
         setSize(game.getWindowWidth(), game.getWindowHeight()); // full screen so nothing clips
         setLocation(0, 0);
@@ -74,7 +74,7 @@ public class YonduArrow extends GameObject {
     }
 
     public void act() {
-        if (Polygon.gamePause)
+        if (PolygonGame.gamePause)
             return;
 
         repaint();
@@ -211,6 +211,8 @@ public class YonduArrow extends GameObject {
 
     // hitbox is a rotated rectangle, this function checks if the enemy collides
     // with that rectangle still very buggy
+
+    // custom collision detection for rotating rectangle hitbox, does not use the built in collides function since that is just a bounding box and does not rotate with the arrow
     boolean arrowHits(Enemy e) {
         double ex = e.getX() + e.size / 2.0;
         double ey = e.getY() + e.size / 2.0;

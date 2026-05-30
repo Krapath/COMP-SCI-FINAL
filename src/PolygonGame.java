@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Polygon extends Game {
+public class PolygonGame extends Game {
 
     Random r = new Random();
     Player player;
@@ -20,7 +20,7 @@ public class Polygon extends Game {
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
-    GameBackground background;
+    GameBackgroundGood background;
     YonduArrow yonduArrow;
     public Methods method;
     static boolean gamePause = true;
@@ -34,8 +34,7 @@ public class Polygon extends Game {
 
     public void setup() {
         // changes the game background
-        background = new GameBackground();
-        background.changeBackground(this, "Images/Background/BackgroundFrameOne.png");
+        background = new GameBackgroundGood(this);
         add(background);
         // creates a dummy constructor for the main menu buttons to use to spawn the buttons
         menuController = new MainMenu(this, "", "");
@@ -102,7 +101,7 @@ public class Polygon extends Game {
     }
 
     public static void main(String[] args) {
-        Polygon game = new Polygon();
+        PolygonGame game = new PolygonGame();
         game.setVisible(true);
         game.initComponents();
     }

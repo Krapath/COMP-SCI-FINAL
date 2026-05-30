@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Glaive extends GameObject {
 
     int size = 20;
-    Polygon game;
+    PolygonGame game;
     //double xVel;
     //double yVel;
     //int distanceTraveled = 0;
@@ -16,7 +16,7 @@ public class Glaive extends GameObject {
     Double speed = 0.05;
     int pierceTimer = 0; // the current timer for pierce
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); // TODO: maybe make universal for other buffs
-    public Glaive(Polygon game) {
+    public Glaive(PolygonGame game) {
         this.game = game;
         setLocation(game.player.getX() + 80, game.player.getY() + 80); // update position
         setSize(size, size); // size of the projectile
@@ -24,7 +24,7 @@ public class Glaive extends GameObject {
     }
 
     public void act() {
-        if (Polygon.gamePause) {
+        if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
 

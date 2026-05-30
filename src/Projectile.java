@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Projectile extends GameObject {
 
-    Polygon game;
+    PolygonGame game;
     double xVel;
     double yVel;
     int distanceTraveled = 0;
@@ -14,7 +14,7 @@ public class Projectile extends GameObject {
     static boolean atgMissileActive = false; // static so all projectiles have property
     public ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
-    public Projectile(Polygon game) {
+    public Projectile(PolygonGame game) {
         this.game = game;
         setLocation(game.player.getX() + Player.size / 3, game.player.getY() + Player.size / 3); // update
                                                                                                    // position
@@ -30,7 +30,7 @@ public class Projectile extends GameObject {
     }
 
     public void act() {
-        if (Polygon.gamePause) {
+        if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing
                    // a buff
 

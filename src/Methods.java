@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Methods extends GameObject {
 
-    Polygon game;
+    PolygonGame game;
 
-    public Methods (Polygon game) {
+    public Methods (PolygonGame game) {
         this.game = game;
     }
 

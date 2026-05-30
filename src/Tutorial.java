@@ -8,7 +8,7 @@ public class Tutorial extends GameObject {
                                                                         // entire class
     private Image boxImage;
     private String buttonName;
-    Polygon game;
+    PolygonGame game;
 
     public void act() {
 

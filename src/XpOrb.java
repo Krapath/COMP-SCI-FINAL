@@ -2,12 +2,12 @@ import java.awt.Color;
 @SuppressWarnings("unused")
 
 public class XpOrb extends GameObject {
-    Polygon game;
+    PolygonGame game;
 
     // TODO: scale to window size instead of hardcoding values
     int speed = 5; // maybe accelerate as it gets closer to player
     int distanceAttraction = 100; // the distance at which the xp orb starts moving towards the player, can be adjusted for better gameplay
-    public XpOrb(int enemyX, int enemyY, Polygon game) {
+    public XpOrb(int enemyX, int enemyY, PolygonGame game) {
         this.game = game;
         setLocation(enemyX, enemyY); // update position
         setSize(10, 10);
@@ -16,7 +16,7 @@ public class XpOrb extends GameObject {
 
 
     public void act() {
-        if (Polygon.gamePause) return; // xp orbs do not move or collide with the player while the player is choosing a buff
+        if (PolygonGame.gamePause) return; // xp orbs do not move or collide with the player while the player is choosing a buff
         // check for collision with player
         int xpX=getX();
         int xpY=getY();

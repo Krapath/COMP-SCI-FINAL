@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class AtGMissileMk1 extends GameObject {
     Random r = new Random();
-    Polygon game;
+    PolygonGame game;
     public double randomAngle = r.nextDouble() * Math.PI * 2;
     int size;
     int damage = 1;
@@ -21,7 +21,7 @@ public class AtGMissileMk1 extends GameObject {
     public int randomEnemy;
     Enemy target;
 
-    public AtGMissileMk1(Polygon game) {
+    public AtGMissileMk1(PolygonGame game) {
         this.game = game;
         size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // projectile size is 1/100 of the entire window
         radius = size; // the radius of the spiral, can be adjusted for a tighter or looser spiral
@@ -39,7 +39,7 @@ public class AtGMissileMk1 extends GameObject {
 
     public void act() {
 
-        if (Polygon.gamePause)
+        if (PolygonGame.gamePause)
             return; // projectiles do not move or collide with enemies while the player is choosing
                     // a buff
 

@@ -16,7 +16,7 @@ public class ChainLightning extends GameObject {
 
     Random r = new Random();
     double randomAngleStatic = r.nextDouble();
-    Polygon game;   
+    PolygonGame game;   
     int damage = 1;
     int chainCount = 3;
     int chainRange;
@@ -28,7 +28,7 @@ public class ChainLightning extends GameObject {
     
     
     // will handle the math and logic for the chain lightning buff, only incremments number values and checks for collisions, the actual drawing of the lightning will be handled in the draw method
-    public ChainLightning(Enemy enemy, Polygon game) {
+    public ChainLightning(Enemy enemy, PolygonGame game) {
         this.game = game;
         chainRange = (game.getWindowWidth() + game.getWindowHeight()) / 2 / 10; // the range that the chain lightning can jump to the next target, can be adjusted for more or less range
         setSize(game.getWindowWidth(), game.getWindowHeight()); // make the canvas size of the entire window so it can draw lightning anywhere
@@ -71,7 +71,7 @@ public class ChainLightning extends GameObject {
     
     // will handle the drawing of the chain lightning, will draw a line from the enemy to the first target, then from each target to the next target in the chain
     public void paint(Graphics g) {
-        if (Polygon.gamePause) return;// projectiles do not move or collide with enemies while the player is choosing a buff
+        if (PolygonGame.gamePause) return;// projectiles do not move or collide with enemies while the player is choosing a buff
         
         //Link for 2d line graphics: https://stackoverflow.com/questions/16995308
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
@@ -111,7 +111,7 @@ public class ChainLightning extends GameObject {
     
 
     public void act() { // no need for movement code since the chain lightning jumps from enemy to enemy, immediately
-        if (Polygon.gamePause) {
+        if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
 

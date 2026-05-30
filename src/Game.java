@@ -278,10 +278,10 @@ public abstract class Game extends JFrame {
 					case 27: // escape to close game
 						System.exit(0);
 					case 'P':
-						Polygon.gamePause = true;
+						PolygonGame.gamePause = true;
 						break;
 					case 'L':
-						Polygon.gamePause = false;
+						PolygonGame.gamePause = false;
 						break;
 
 				}

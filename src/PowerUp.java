@@ -7,12 +7,12 @@ import java.awt.Graphics;
 //TODO: maybe just use paint 
 public class PowerUp extends GameObject {
     Random r = new Random();
-    Polygon game;
+    PolygonGame game;
     public int buffType;
     public boolean readyToApply = false; // whether the buff should be applied on mouse release
     public boolean wasPressed = false; // whether the mouse was pressed while hovering over this powerup (used to prevent applying the buff if the player clicks on a powerup and then drags the mouse away before releasing)
 
-    public PowerUp(int x, int y, Polygon game) {
+    public PowerUp(int x, int y, PolygonGame game) {
 
         this.game = game;
         setSize(game.getWindowWidth() / 5, game.getWindowHeight() / 3);
@@ -41,7 +41,7 @@ public class PowerUp extends GameObject {
     }
 
     public void act() {
-        if (!Polygon.gamePause)
+        if (!PolygonGame.gamePause)
             return; // powerups only work while the player is choosing a buff (optimize)
 
         int x = game.getMouseX();
@@ -68,7 +68,7 @@ public class PowerUp extends GameObject {
             }
 
             game.powerUps.clear(); // clear the list of powerups
-            Polygon.gamePause = false; // allow the game to continue
+            PolygonGame.gamePause = false; // allow the game to continue
             readyToApply = false; // reset readyToApply for the next time the player chooses a buff
             wasPressed = false; // reset wasPressed for the next time the player chooses a buff
 
