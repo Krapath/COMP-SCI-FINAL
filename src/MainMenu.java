@@ -14,7 +14,6 @@ public class MainMenu extends GameObject {
 
     // The constructor for the dummy object
     public MainMenu(Polygon game, String imagePath, String buttonName) {
-        setSize(0, 0);
         this.boxImage = new ImageIcon(imagePath).getImage();
         this.game = game;
         this.buttonName = buttonName;
@@ -101,6 +100,8 @@ public class MainMenu extends GameObject {
                 }
                 menuButtons.clear(); // clears the entire list
                 Polygon.gamePause = false; // resumes the game
+                //add player and abilities
+                game.spawnGame();
             }
             if (buttonName.equals("Tutorial")) {
                 for (MainMenu m : menuButtons) { // removes all the buttons in the list from game

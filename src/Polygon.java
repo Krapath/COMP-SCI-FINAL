@@ -37,14 +37,20 @@ public class Polygon extends Game {
         background = new GameBackground();
         background.changeBackground(this, "Images/Background/BackgroundFrameOne.png");
         add(background);
-        // creates the player
-        player = new Player(this);
-        player.setLocation(335, 225); // middle
-        add(player);
         // creates a dummy constructor for the main menu buttons to use to spawn the buttons
         menuController = new MainMenu(this, "", "");
         menuController.spawnMyBoxes(this);
         add(menuController);
+        
+        setDelay(16); // 60fps
+        setTitle("Polygon");
+    }
+    // spawns player object when method is called, only used in main menu
+    public void spawnGame(){
+        // creates the player
+        player = new Player(this);
+        player.setLocation(getWindowWidth() /2, getWindowHeight() / 2); // middle
+        add(player);
         // creates methods helper used by projectiles and other game logic
         method = new Methods(this);
         // creates debugger
@@ -55,8 +61,6 @@ public class Polygon extends Game {
         // creates yondu arrow
         yonduArrow = new YonduArrow(this);
         add(yonduArrow);
-        setDelay(16); // 60fps
-        setTitle("Polygon");
     }
 
     public void act() {

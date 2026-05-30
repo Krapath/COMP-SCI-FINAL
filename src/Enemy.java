@@ -25,7 +25,7 @@ public class Enemy extends GameObject {
         int y;
         boolean collided = false;
         do {
-            /* 
+            /* old system remove if you wish
             do {
                 x = r.nextInt(game.getWindowWidth() - size);
                 y = r.nextInt(game.getWindowHeight() - size);
