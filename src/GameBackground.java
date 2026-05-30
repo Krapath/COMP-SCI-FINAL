@@ -1,7 +1,5 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 
@@ -13,6 +11,7 @@ public class GameBackground extends GameObject {
     public void changeBackground(Polygon game,String imagePath) {
         this.game = game;
         this.backgroundImage = new ImageIcon(imagePath).getImage();
+        setSize(game.getWindowWidth(), game.getWindowHeight());
     }
     public void act() {
     }

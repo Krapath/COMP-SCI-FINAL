@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.swing.JLayeredPane;
+
 public class Polygon extends Game {
 
     Random r = new Random();
@@ -40,7 +42,7 @@ public class Polygon extends Game {
         //creates the player
         player = new Player(this);
         player.setLocation(335, 225); // middle
-        add(player);
+       add(player);
         //just a dummy object to hold the main menu background image and spawn the buttons, since the main menu is basically just a different "game state" of the same game rather than a separate class
         menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
         menuController.spawnMyBoxes(this);
@@ -55,7 +57,6 @@ public class Polygon extends Game {
         //creates yondu arrow
         yonduArrow = new YonduArrow(this);
         add(yonduArrow);
-
         setDelay(16); // 60fps
         setTitle("Polygon");
     }

@@ -179,7 +179,8 @@ public abstract class Game extends JFrame {
 	 */
 	public void add(GameObject o) {
 		_ObjectList.add(o);
-		getContentPane().add(o);
+		//index zero adds all new content planes straight to the front.
+		getContentPane().add(o, 0);
 	}
 
 	/**
