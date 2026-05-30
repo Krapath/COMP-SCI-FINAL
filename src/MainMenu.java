@@ -23,13 +23,15 @@ public class MainMenu extends GameObject {
      * Spawns the boxes for the main menu.
      */
     public void spawnMyBoxes(PolygonGame game) {
-        int centerX = game.getWindowWidth() / 2 - game.getWindowWidth() / 4; // center the boxes horizontally
-        int ySlots = game.getWindowHeight() / 9; // gets even splits for the boxes
-        int yShift = game.getWindowHeight() / 25; // shifts the boxes up a bit so they look better
-
         // sets up width and height for the boxes based on the window size
         int w = game.getWindowWidth() / 2;
         int h = game.getWindowWidth() / 10;
+
+        int centerX = (game.getWindowWidth() - w) / 2; // center the boxes horizontally
+        int ySlots = game.getWindowHeight() / 9; // gets even splits for the boxes
+        int yShift = game.getWindowHeight() / 25; // shifts the boxes up a bit so they look better
+
+
 
         // play button
         MainMenu playButton = new MainMenu(game, "Images\\MainMenu\\PlayButton.png", "Play");
@@ -108,6 +110,8 @@ public class MainMenu extends GameObject {
                     game.remove(m);
                 }
                 menuButtons.clear(); // clears the entire list
+                //tutorial setup
+                //game.tutorialController.spawnTutorial(game);
             }
             readyToApply = false;
             wasPressed = false;

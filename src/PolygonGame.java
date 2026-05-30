@@ -20,6 +20,7 @@ public class PolygonGame extends Game {
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
+    Tutorial tutorialController;
     GameBackground background;
     YonduArrow yonduArrow;
     public Methods method;
@@ -40,6 +41,10 @@ public class PolygonGame extends Game {
         menuController = new MainMenu(this, "", "");
         menuController.spawnMyBoxes(this);
         add(menuController);
+        // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
+        tutorialController = new Tutorial(this, "");
+        tutorialController.spawnTutorial(this);
+        add(tutorialController);
         
         setDelay(16); // 60fps
         setTitle("Polygon");
