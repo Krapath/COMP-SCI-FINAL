@@ -20,7 +20,7 @@ public class PolygonGame extends Game {
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
-    GameBackgroundGood background;
+    GameBackground background;
     YonduArrow yonduArrow;
     public Methods method;
     static boolean gamePause = true;
@@ -34,7 +34,7 @@ public class PolygonGame extends Game {
 
     public void setup() {
         // changes the game background
-        background = new GameBackgroundGood(this);
+        background = new GameBackground(this);
         add(background);
         // creates a dummy constructor for the main menu buttons to use to spawn the buttons
         menuController = new MainMenu(this, "", "");
