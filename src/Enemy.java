@@ -26,8 +26,8 @@ public class Enemy extends GameObject {
         boolean collided = false;
         do {
             do {
-                x = r.nextInt(game.getWindowWidth() - size);
-                y = r.nextInt(game.getWindowHeight() - size);
+                x = r.nextInt((int)(game.getWindowWidth()*1.1 - size));
+                y = r.nextInt((int)(game.getWindowHeight()*1.1 - size));
             } while ((Math.abs(game.player.getX() - x) < (game.getWindowWidth() + game.getWindowHeight()) / 100) || (Math.abs(game.player.getY() - y) < (game.getWindowWidth() + game.getWindowHeight()) / 100)); // ensures that the enemy does not too close to the player
 
             //this code does not work with enemies of different sizes. Fix if variable enemy sizes.
@@ -38,9 +38,7 @@ public class Enemy extends GameObject {
                 }
             }
         } while (collided); //permits the spawn location if not on top of another enemy.
-
         setLocation(x, y);
-
     }
 
     public void act() {

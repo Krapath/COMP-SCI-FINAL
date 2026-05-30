@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import javax.swing.JLayeredPane;
-
 public class Polygon extends Game {
 
     Random r = new Random();
@@ -30,31 +28,31 @@ public class Polygon extends Game {
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
     ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
-    HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); // the enemies that have been hit and the timer for each enemy to be hit again
+    HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); // the enemies that have been hit and the timer
+                                                                        // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
 
-
     public void setup() {
-        //changes the game background
+        // changes the game background
         background = new GameBackground();
         background.changeBackground(this, "Images/Background/BackgroundFrameOne.png");
         add(background);
-        //creates the player
+        // creates the player
         player = new Player(this);
         player.setLocation(335, 225); // middle
-       add(player);
-        //just a dummy object to hold the main menu background image and spawn the buttons, since the main menu is basically just a different "game state" of the same game rather than a separate class
-        menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
+        add(player);
+        // creates a dummy constructor for the main menu buttons to use to spawn the buttons
+        menuController = new MainMenu(this, "", "");
         menuController.spawnMyBoxes(this);
         add(menuController);
-        //creates methods helper used by projectiles and other game logic
+        // creates methods helper used by projectiles and other game logic
         method = new Methods(this);
-        //creates debugger
+        // creates debugger
         add(new DisplayDebug(this));
-        //creates glaive
+        // creates glaive
         glaive = new Glaive(this);
         add(glaive);
-        //creates yondu arrow
+        // creates yondu arrow
         yonduArrow = new YonduArrow(this);
         add(yonduArrow);
         setDelay(16); // 60fps
@@ -63,9 +61,6 @@ public class Polygon extends Game {
 
     public void act() {
 
-
-
-        
         if (gamePause) {
             return; // pause the game while choosing a buff or on main menu(lock the game)
         }
@@ -77,7 +72,6 @@ public class Polygon extends Game {
                 projectiles.add(projectile);
             }
         }
-
 
         if (r.nextInt(300) < 20) { // 0.33% chance each tick to spawn an enemy
             enemy = new Enemy(this);
