@@ -8,7 +8,7 @@ public class Enemy extends GameObject {
     Random r = new Random();
     public int size;
     public int speed;
-    public int health = 3;
+    public int health=3;
     public int enemyDamage = 1;
     public int displayOld = 0; //used to see enemies that have been alive older
     double x, y;

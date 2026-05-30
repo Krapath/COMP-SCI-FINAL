@@ -7,7 +7,8 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import javax.swing.JComponent;
 
 /**
@@ -21,7 +22,8 @@ import javax.swing.JComponent;
  */
 public abstract class GameObject extends JComponent {
 	Color c = Color.white;
-	
+	public double spriteAngle = 0;
+
 	/**
 	 * Sets the pixel width and height of the object
 	 * 
@@ -103,9 +105,12 @@ public abstract class GameObject extends JComponent {
 	 * Child classes should not implement or override this method.
 	 */
 	public void paint(Graphics g) {
-		Rectangle r = getBounds();
-		g.setColor(c);
-		g.fillRect(0, 0, (int)r.getWidth(), (int)r.getHeight());
+		Graphics2D g2d = (Graphics2D) g;
+		AffineTransform at = new AffineTransform();
+		at.rotate(spriteAngle, getWidth() / 2.0, getHeight() / 2.0);
+		g2d.transform(at);
+		g2d.setColor(c);
+		g2d.fillRect(0, 0, getWidth(), getHeight());
 	}
 	
 	/**

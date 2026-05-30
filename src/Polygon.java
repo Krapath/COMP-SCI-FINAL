@@ -33,19 +33,18 @@ public class Polygon extends Game {
 
 
     public void setup() {
-
-        //just a dummy object to hold the main menu background image and spawn the buttons, since the main menu is basically just a different "game state" of the same game rather than a separate class
-        menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
-        menuController.spawnMyBoxes(this);
-        add(menuController);
         //changes the game background
         background = new GameBackground();
-        background.changeBackground(this);
+        background.changeBackground(this, "Images/Background/BackgroundFrameOne.png");
         add(background);
         //creates the player
         player = new Player(this);
         player.setLocation(335, 225); // middle
         add(player);
+        //just a dummy object to hold the main menu background image and spawn the buttons, since the main menu is basically just a different "game state" of the same game rather than a separate class
+        menuController = new MainMenu(this, "Images\\MainMenu\\MainMenuBackground.png","dummy");
+        menuController.spawnMyBoxes(this);
+        add(menuController);
         //creates methods helper used by projectiles and other game logic
         method = new Methods(this);
         //creates debugger

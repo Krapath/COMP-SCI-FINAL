@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 public class MainMenu extends GameObject {
-	private static ArrayList<MainMenu> menuButtons = new ArrayList<>();    // list for the actual buttons, shared aross the entire class   
+    private static ArrayList<MainMenu> menuButtons = new ArrayList<>(); // list for the actual buttons, shared aross the
+                                                                        // entire class
     private Image boxImage;
     private String buttonName;
     Polygon game;
 
     // The constructor for the dummy object
-    public MainMenu(Polygon game, String imagePath,String buttonName) {
+    public MainMenu(Polygon game, String imagePath, String buttonName) {
         setSize(0, 0);
         this.boxImage = new ImageIcon(imagePath).getImage();
         this.game = game;
@@ -21,7 +22,6 @@ public class MainMenu extends GameObject {
 
     /**
      * Spawns the boxes for the main menu.
-     * @param game
      */
     public void spawnMyBoxes(Polygon game) {
         int centerX = game.getWindowWidth() / 2 - game.getWindowWidth() / 4; // center the boxes horizontally
@@ -33,7 +33,7 @@ public class MainMenu extends GameObject {
         int h = game.getWindowWidth() / 10;
 
         // play button
-        MainMenu playButton = new MainMenu(game, "Images\\MainMenu\\PlayButton.png","Play");
+        MainMenu playButton = new MainMenu(game, "Images\\MainMenu\\PlayButton.png", "Play");
         playButton.setSize(w, h);
         playButton.setColor(Color.RED);
         playButton.setLocation(centerX, ySlots - yShift);
@@ -41,7 +41,7 @@ public class MainMenu extends GameObject {
         menuButtons.add(playButton);
 
         // tutorial button
-        MainMenu tutorialButton = new MainMenu(game, "Images\\MainMenu\\TutorialButton.png","Tutorial");
+        MainMenu tutorialButton = new MainMenu(game, "Images\\MainMenu\\TutorialButton.png", "Tutorial");
         tutorialButton.setSize(w, h);
         tutorialButton.setColor(Color.RED);
         tutorialButton.setLocation(centerX, ySlots * 3 - yShift);
@@ -49,7 +49,7 @@ public class MainMenu extends GameObject {
         menuButtons.add(tutorialButton);
 
         // settings button
-        MainMenu settings = new MainMenu(game, "Images\\MainMenu\\SettingsButton.png","Settings");
+        MainMenu settings = new MainMenu(game, "Images\\MainMenu\\SettingsButton.png", "Settings");
         settings.setSize(w, h);
         settings.setColor(Color.RED);
         settings.setLocation(centerX, ySlots * 5 - yShift);
@@ -57,7 +57,7 @@ public class MainMenu extends GameObject {
         menuButtons.add(settings);
 
         // exit button
-        MainMenu exitButton = new MainMenu(game, "Images\\MainMenu\\ExitButton.png","Exit");
+        MainMenu exitButton = new MainMenu(game, "Images\\MainMenu\\ExitButton.png", "Exit");
         exitButton.setSize(w, h);
         exitButton.setColor(Color.RED);
         exitButton.setLocation(centerX, ySlots * 7 - yShift);
@@ -68,7 +68,7 @@ public class MainMenu extends GameObject {
 
     @Override
     public void paint(Graphics g) {
-        super.paint(g); // paints the background first
+        super.paint(g); // paints the background first of the button first
 
         // adds the image on top of the background
         if (boxImage != null) {
@@ -85,30 +85,34 @@ public class MainMenu extends GameObject {
         }
         int x = game.getMouseX();
         int y = game.getMouseY();
-        //ensure that clicking works properly
+        // ensure that clicking works properly
         if (!game.mouseLeftPressed()) {
-            readyToApply = true; 
+            readyToApply = true;
         }
         if (game.mouseLeftPressed() && contains(x, y) && readyToApply) {
             wasPressed = true;
         }
-        
+
         if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {
-        
-        if (buttonName.equals("Play")) {
-        	for (MainMenu m : menuButtons){ // removes all the buttons in the list from game
-        		game.remove(m);
-        	}
-    		menuButtons.clear(); // clears the entire list
-            Polygon.gamePause = false; // resumes the game
+
+            if (buttonName.equals("Play")) {
+                for (MainMenu m : menuButtons) { // removes all the buttons in the list from game
+                    game.remove(m);
+                }
+                menuButtons.clear(); // clears the entire list
+                Polygon.gamePause = false; // resumes the game
+            }
+            if (buttonName.equals("Tutorial")) {
+                for (MainMenu m : menuButtons) { // removes all the buttons in the list from game
+                    game.remove(m);
+                }
+                menuButtons.clear(); // clears the entire list
+            }
+            readyToApply = false;
+            wasPressed = false;
         }
-        readyToApply = false;
-        wasPressed = false; 
-    }
-    if (!game.mouseLeftPressed()) {
-        wasPressed = false;
-    }
+        if (!game.mouseLeftPressed()) {
+            wasPressed = false;
+        }
     }
 }
-
-

@@ -2,28 +2,25 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
 
 public class GameBackground extends GameObject {
     //set variables
-    Image[] backgroundImages = new Image[5];
+    //Image[] backgroundImages = new Image[5];
     Polygon game;
-    boolean testerrrr = false;
-    
-    public void changeBackground(Polygon game){
+    private Image backgroundImage;
+    public void changeBackground(Polygon game,String imagePath) {
         this.game = game;
+        this.backgroundImage = new ImageIcon(imagePath).getImage();
     }
-
     public void act() {
-
-
     }
-    
-
     @Override
     public void paint(Graphics g) {
         super.paint(g); 
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        } 
     }
 }
