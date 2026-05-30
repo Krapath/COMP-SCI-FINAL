@@ -3,12 +3,17 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 
+/*
+ * THIS BACKGROUND CLASS IS NOT USED ANYMORE, IT HAS BEEN REPLACED BY GAMEBACKGROUNGGOOD, 
+ * DRAWS ALL OF THE IMAGES NATIVELY
+ */
+
 public class GameBackground extends GameObject {
     //set variables
     //Image[] backgroundImages = new Image[5];
-    Polygon game;
+    PolygonGame game;
     private Image backgroundImage;
-    public void changeBackground(Polygon game,String imagePath) {
+    public void changeBackground(PolygonGame game,String imagePath) {
         this.game = game;
         this.backgroundImage = new ImageIcon(imagePath).getImage();
         setSize(game.getWindowWidth(), game.getWindowHeight());

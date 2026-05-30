@@ -10,10 +10,10 @@ public class MainMenu extends GameObject {
                                                                         // entire class
     private Image boxImage;
     private String buttonName;
-    Polygon game;
+    PolygonGame game;
 
     // The constructor for the dummy object
-    public MainMenu(Polygon game, String imagePath, String buttonName) {
+    public MainMenu(PolygonGame game, String imagePath, String buttonName) {
         this.boxImage = new ImageIcon(imagePath).getImage();
         this.game = game;
         this.buttonName = buttonName;
@@ -22,7 +22,7 @@ public class MainMenu extends GameObject {
     /**
      * Spawns the boxes for the main menu.
      */
-    public void spawnMyBoxes(Polygon game) {
+    public void spawnMyBoxes(PolygonGame game) {
         int centerX = game.getWindowWidth() / 2 - game.getWindowWidth() / 4; // center the boxes horizontally
         int ySlots = game.getWindowHeight() / 9; // gets even splits for the boxes
         int yShift = game.getWindowHeight() / 25; // shifts the boxes up a bit so they look better
@@ -79,7 +79,7 @@ public class MainMenu extends GameObject {
     public boolean wasPressed = false;
 
     public void act() {
-        if (!Polygon.gamePause) {
+        if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
         int x = game.getMouseX();
@@ -99,7 +99,7 @@ public class MainMenu extends GameObject {
                     game.remove(m);
                 }
                 menuButtons.clear(); // clears the entire list
-                Polygon.gamePause = false; // resumes the game
+                PolygonGame.gamePause = false; // resumes the game
                 //add player and abilities
                 game.spawnGame();
             }

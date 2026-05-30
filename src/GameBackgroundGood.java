@@ -16,7 +16,8 @@ public class GameBackgroundGood extends GameObject {
     ArrayList<Polygon> hexagons = new ArrayList<>();
     ArrayList<Integer> hexagonBrightness = new ArrayList<>();
     ArrayList<Boolean> fading = new ArrayList<>();
-    
+
+    boolean dynamicBackground = false; // can be set to false for a static background, true for a dynamic background with fading hexagons
     int polygonSize;
     int fadeTimer = 0; // timer to control fade effect
     int fadeDelay = 4; // can be adjusted for a faster or slower fade effect
@@ -59,11 +60,11 @@ public class GameBackgroundGood extends GameObject {
     }
     // method to draw a hexagon given the center coordinates and size
     public Polygon drawHexagon(int x, int y, int size) {
-        // for rounding issues with hexagon
-        int v = (int) Math.round(size * Math.sqrt(3) / 2);
+        // find the vertical distance from the center using special triangle rules
+        int verticalDistance = (int) Math.round(size * Math.sqrt(3) / 2); 
         int halfSize = (int) Math.round(size / 2.0);
         int[] xPoints = { x - size, x - halfSize, x + halfSize, x + size, x + halfSize, x - halfSize };
-        int[] yPoints = { y, y - v, y - v, y, y + v, y + v };
+        int[] yPoints = { y, y - verticalDistance, y - verticalDistance, y, y + verticalDistance, y + verticalDistance };
         return new Polygon(xPoints, yPoints, 6);
         
     }
@@ -76,35 +77,46 @@ public class GameBackgroundGood extends GameObject {
 
         fadeTimer++;
         boolean canFade = true;
+        if (dynamicBackground){
 
-        if (fadeTimer > fadeDelay) {
-            fadeTimer = 0; // cap fade amount to prevent it from being too fast
-        } else {
-            canFade = false;
-        }
-        
-        for (int i = 0; i < hexagons.size(); i++) {
-            Polygon p = hexagons.get(i);
-
-            if (canFade) {
-                if (fading.get(i)) {
-                    if (hexagonBrightness.get(i) < 40) {
-                        hexagonBrightness.set(i, hexagonBrightness.get(i) + 1); // increase opacity of hexagon until it reaches the maximum opacity, can be adjusted for a faster or slower fade in effect
-                    } else {
-                        fading.set(i, false);
-                    }
-                } else {
-                    if (hexagonBrightness.get(i) > 30) {
-                        hexagonBrightness.set(i, hexagonBrightness.get(i) - 1); // decrease opacity of hexagon until it reaches the minimum opacity, can be adjusted for a faster or slower fade out effect
-                    } else {
-                        fading.set(i, true);
-                    }
-                }
-
+            if (fadeTimer > fadeDelay) {
+                fadeTimer = 0; // cap fade amount to prevent it from being too fast
+            } else {
+                canFade = false;
             }
-           
-            g2d.setColor(new Color(hexagonBrightness.get(i), hexagonBrightness.get(i), hexagonBrightness.get(i))); // set color of hexagon with varying opacity
-            g2d.fillPolygon(p);
+            
+            for (int i = 0; i < hexagons.size(); i++) {
+                Polygon p = hexagons.get(i);
+
+                //black and white
+                if (canFade) {
+                    if (fading.get(i)) {
+                        if (hexagonBrightness.get(i) < 50) {
+                            hexagonBrightness.set(i, hexagonBrightness.get(i) + 1); // increase opacity of hexagon until it reaches the maximum opacity, can be adjusted for a faster or slower fade in effect
+                        } else {
+                            fading.set(i, false);
+                        }
+                    } else {
+                        if (hexagonBrightness.get(i) > 40) {
+                            hexagonBrightness.set(i, hexagonBrightness.get(i) - 1); // decrease opacity of hexagon until it reaches the minimum opacity, can be adjusted for a faster or slower fade out effect
+                        } else {
+                            fading.set(i, true);
+                        }
+                    }
+
+                }
+                    
+                g2d.setColor(new Color(hexagonBrightness.get(i), hexagonBrightness.get(i), hexagonBrightness.get(i))); // set color of hexagon with varying opacity
+                g2d.fillPolygon(p);
+                }
+        
+
+        } else {
+            for (int i = 0; i < hexagons.size(); i++) {
+                Polygon p = hexagons.get(i);
+                g2d.setColor(new Color(hexagonBrightness.get(i), hexagonBrightness.get(i), hexagonBrightness.get(i))); // set color of hexagon with varying opacity
+                g2d.fillPolygon(p);
+            }
         }
     }
 }
