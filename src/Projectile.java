@@ -16,13 +16,13 @@ public class Projectile extends GameObject {
 
     public Projectile(Polygon game) {
         this.game = game;
-        setLocation(game.player.getX() + game.player.size / 3, game.player.getY() + game.player.size / 3); // update
-                                                                                                           // position
+        setLocation(game.player.getX() + Player.size / 3, game.player.getY() + Player.size / 3); // update
+                                                                                                   // position
         setSize(10, 10); // size of the projectile
         setColor(Color.YELLOW);
 
-        double angle = game.getAngle(game.player.getX() + game.player.size / 2,
-                game.player.getY() + game.player.size / 2, game.getMouseX(), game.getMouseY());
+        double angle = game.getAngle(game.player.getX() + Player.size / 2,
+                game.player.getY() + Player.size / 2, game.getMouseX(), game.getMouseY());
         double speed = 20; // adjust as needed
         xVel = speed * Math.cos(angle);
         yVel = speed * Math.sin(angle);
@@ -30,7 +30,7 @@ public class Projectile extends GameObject {
     }
 
     public void act() {
-        if (game.gamePause) {
+        if (Polygon.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing
                    // a buff
 

@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
+@SuppressWarnings("unused")
 
 public class AtGMissileMk1 extends GameObject {
     Random r = new Random();
@@ -38,7 +39,7 @@ public class AtGMissileMk1 extends GameObject {
 
     public void act() {
 
-        if (game.gamePause)
+        if (Polygon.gamePause)
             return; // projectiles do not move or collide with enemies while the player is choosing
                     // a buff
 

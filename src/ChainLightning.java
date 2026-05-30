@@ -71,7 +71,7 @@ public class ChainLightning extends GameObject {
     
     // will handle the drawing of the chain lightning, will draw a line from the enemy to the first target, then from each target to the next target in the chain
     public void paint(Graphics g) {
-        if (game.gamePause) return;// projectiles do not move or collide with enemies while the player is choosing a buff
+        if (Polygon.gamePause) return;// projectiles do not move or collide with enemies while the player is choosing a buff
         
         //Link for 2d line graphics: https://stackoverflow.com/questions/16995308
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
@@ -92,9 +92,7 @@ public class ChainLightning extends GameObject {
             if (distance > 20){
                 double randomAngle = r.nextDouble() * 2 * Math.PI; // random angle for the offset
                 int randomness = (int) (distance/2); // the maximum distance of the random offset, can be adjusted for more or less randomness
-                
-                // TODO: decide on two types of lightning
-                
+                                
 
                 int offsetX = (int) (Math.cos(randomAngle) * randomness); // random offset in the x direction 
                 int offsetY = (int) (Math.sin(randomAngle) * randomness); // random offset in the y 
@@ -113,7 +111,7 @@ public class ChainLightning extends GameObject {
     
 
     public void act() { // no need for movement code since the chain lightning jumps from enemy to enemy, immediately
-        if (game.gamePause) {
+        if (Polygon.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
 

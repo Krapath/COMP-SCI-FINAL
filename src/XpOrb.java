@@ -1,4 +1,6 @@
 import java.awt.Color;
+@SuppressWarnings("unused")
+
 public class XpOrb extends GameObject {
     Polygon game;
 
@@ -14,7 +16,7 @@ public class XpOrb extends GameObject {
 
 
     public void act() {
-        if (game.gamePause) return; // xp orbs do not move or collide with the player while the player is choosing a buff
+        if (Polygon.gamePause) return; // xp orbs do not move or collide with the player while the player is choosing a buff
         // check for collision with player
         int xpX=getX();
         int xpY=getY();
@@ -29,7 +31,7 @@ public class XpOrb extends GameObject {
         } 
         
         if (collides(game.player)) {
-            game.player.score += 1; // increase player score on collision
+            Player.score += 1; // increase player score on collision
             game.remove(this); // remove xp orb after collision
         }
     }

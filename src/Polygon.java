@@ -46,6 +46,8 @@ public class Polygon extends Game {
         player = new Player(this);
         player.setLocation(335, 225); // middle
         add(player);
+        //creates methods helper used by projectiles and other game logic
+        method = new Methods(this);
         //creates debugger
         add(new DisplayDebug(this));
         //creates glaive

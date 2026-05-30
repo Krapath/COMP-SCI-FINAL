@@ -24,7 +24,7 @@ public class Player extends GameObject {
     }
 
     public void act() {
-        if (game.gamePause) return;// player does not move or collide with enemies while the player is choosing a buff
+        if (Polygon.gamePause) return;// player does not move or collide with enemies while the player is choosing a buff
         attackDelay++;
 
 
@@ -74,7 +74,7 @@ public class Player extends GameObject {
 
         for (int i = 0; i < game.enemies.size(); i++) {
             if (collides(game.enemies.get(i))) {
-                game.player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
+                Player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
                 game.remove(game.enemies.get(i)); // remove enemy if health is depleted
                 game.enemies.remove(i);
 
@@ -82,7 +82,7 @@ public class Player extends GameObject {
             }
         }
 
-        if (game.player.health <= 0) {
+        if (Player.health <= 0) {
             game.player.setColor(Color.GRAY); // change player color to gray when health is depleted
         }
     }

@@ -24,23 +24,28 @@ public class YonduArrow extends GameObject {
     public YonduArrow(Polygon game) {
         this.game = game;
         setLocation(game.player.getX() + 100, game.player.getY() + 100); // update position
-        setSize(size, size*15); // size of the projectile
+        int baseSize = size * 15;
+
+        setSize(size*2, size*15); // size of the projectile
+        int safeSize = (int) Math.ceil(baseSize * Math.sqrt(2));
+        setSize(safeSize, safeSize);
         setColor(Color.YELLOW);
     }
 
     public void act() {
-        if (game.gamePause) {
+        if (Polygon.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
         
 
-        /* 
+         
         if (rotationTimer>0){}
 
         angle += speed;
 
         int x = (int) (radius * Math.cos(angle) + game.player.getX()) - size / 2 + Player.size / 2;
         int y = (int) (radius * Math.sin(angle) + game.player.getY()) - size / 2 + Player.size / 2;
+        rotate(Math.toRadians(10));       
         setX(x);
         setY(y);
 
@@ -89,6 +94,6 @@ public class YonduArrow extends GameObject {
         }
 
         // move the projectile according to its velocity
-        */
+        
     }
 }

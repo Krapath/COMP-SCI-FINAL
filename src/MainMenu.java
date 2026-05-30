@@ -80,7 +80,7 @@ public class MainMenu extends GameObject {
     public boolean wasPressed = false;
 
     public void act() {
-        if (!game.gamePause) {
+        if (!Polygon.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
         int x = game.getMouseX();
@@ -100,7 +100,7 @@ public class MainMenu extends GameObject {
         		game.remove(m);
         	}
     		menuButtons.clear(); // clears the entire list
-            game.gamePause = false; // resumes the game
+            Polygon.gamePause = false; // resumes the game
         }
         readyToApply = false;
         wasPressed = false; 

@@ -44,7 +44,7 @@ public class Enemy extends GameObject {
     }
 
     public void act() {
-        if (game.gamePause) {
+        if (Polygon.gamePause) {
             return;
         }
         x = getX();

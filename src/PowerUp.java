@@ -41,7 +41,7 @@ public class PowerUp extends GameObject {
     }
 
     public void act() {
-        if (!game.gamePause)
+        if (!Polygon.gamePause)
             return; // powerups only work while the player is choosing a buff (optimize)
 
         int x = game.getMouseX();
@@ -68,7 +68,7 @@ public class PowerUp extends GameObject {
             }
 
             game.powerUps.clear(); // clear the list of powerups
-            game.gamePause = false; // allow the game to continue
+            Polygon.gamePause = false; // allow the game to continue
             readyToApply = false; // reset readyToApply for the next time the player chooses a buff
             wasPressed = false; // reset wasPressed for the next time the player chooses a buff
 

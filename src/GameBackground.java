@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
+
 public class GameBackground extends GameObject {
     //set variables
     Image[] backgroundImages = new Image[5];
