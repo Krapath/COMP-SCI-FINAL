@@ -22,6 +22,7 @@ public class Polygon extends Game {
     MainMenu menuController;
     GameBackground background;
     YonduArrow yonduArrow;
+    public Methods method;
     static boolean gamePause = true;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
