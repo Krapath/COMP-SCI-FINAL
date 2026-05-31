@@ -77,8 +77,8 @@ public class MainMenu extends GameObject {
         }
     }
 
-    public boolean readyToApply = false;
-    public boolean wasPressed = false;
+    boolean readyToApply = false;
+    boolean wasPressed = false;
 
     public void act() {
         if (!PolygonGame.gamePause) {
