@@ -39,13 +39,13 @@ public class Methods extends GameObject {
                     int enemyY = game.enemies.get(i).getY();
 
                     // If chain lightning is active and this is the first enemy hit, activate it
-                    if (Projectile.chainLightningActive && pierceCount == 2) { 
+                    if (Player.chainLightningActive && pierceCount == 2) { 
                         game.lightning = new ChainLightning(game.enemies.get(i), game);
                         game.add(game.lightning);
                     }
 
                     // If ATG missile is active, spawn a missile when the first enemy is hit
-                    if (Projectile.atgMissileActive && pierceCount == 2) { 
+                    if (Player.atgMissileActive && pierceCount == 2) { 
                         game.atgMissile = new AtGMissileMk1(game);
                         game.add(game.atgMissile);
                     }

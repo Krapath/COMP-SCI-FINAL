@@ -10,8 +10,7 @@ public class Projectile extends GameObject {
     int distanceTraveled = 0;
     int damage = 1;
     int pierceCount = 2;
-    static boolean chainLightningActive = false; // static so all projectiles have property
-    static boolean atgMissileActive = false; // static so all projectiles have property
+
     public ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
     public Projectile(PolygonGame game) {

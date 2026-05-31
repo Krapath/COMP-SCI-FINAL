@@ -58,7 +58,7 @@ public class DisplayDebug extends GameObject{
         // System.out.println(y);
         // System.out.println(angle);
 
-         healthAngle+= Math.PI*2/(Player.health+2);
+        healthAngle+= Math.PI*2/(Player.health+2);
          
     	}
     
@@ -97,8 +97,8 @@ public class DisplayDebug extends GameObject{
 
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
-        g.setColor(Color.WHITE);
         
+        g.setColor(Color.WHITE);
         String health = String.valueOf(Player.health);
         String level = String.valueOf(Player.level);
 
@@ -165,6 +165,10 @@ public class DisplayDebug extends GameObject{
             int levelY = posYLevel + textHeight/2;
                         
             g.drawString(level,levelX,levelY);
+        }
+        if (PolygonGame.choosingBuff) {
+            g2d.setColor(new Color(0, 0, 0, 120));
+            g2d.fillRect(0, 0, getWidth(), getHeight());
         }
 
 

@@ -98,6 +98,11 @@ public abstract class GameObject extends JComponent {
 	public void setColor(Color c) {
 		this.c = c;
 	}
+	/*getter for color
+	 */
+	public Color getColor() {
+    return c;
+	}	
 	
 	/**
 	 * Paints the object on the screen. This is called automatically.

@@ -20,11 +20,13 @@ public class PolygonGame extends Game {
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
+    DisplayDebug debug;
     Tutorial tutorialController;
     GameBackground background;
     YonduArrow yonduArrow;
     public Methods method;
     static boolean gamePause = true;
+    static boolean choosingBuff = false;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
@@ -57,13 +59,10 @@ public class PolygonGame extends Game {
         // creates methods helper used by projectiles and other game logic
         method = new Methods(this);
         // creates debugger
-        add(new DisplayDebug(this));
-        // creates glaive
-        glaive = new Glaive(this);
-        add(glaive);
-        // creates yondu arrow
-        yonduArrow = new YonduArrow(this);
-        add(yonduArrow);
+        debug = new DisplayDebug(this);
+        add(debug);
+
+
     }
 
     public void act() {
@@ -71,6 +70,9 @@ public class PolygonGame extends Game {
         if (gamePause) {
             return; // pause the game while choosing a buff or on main menu(lock the game)
         }
+        if (debug != null) {
+            getContentPane().setComponentZOrder(debug, 0);
+}
         if (mouseLeftPressed()) {
             if (Player.attackDelay > 10) {
                 Player.attackDelay = 0;
@@ -101,6 +103,7 @@ public class PolygonGame extends Game {
             Player.xp = 0; // reset score after spawning powerup
             Player.level+=1;
             Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
+            choosingBuff = true;
 
         }
 
