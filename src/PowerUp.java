@@ -19,11 +19,14 @@ public class PowerUp extends GameObject {
     public int posXBuff;
     public int posYBuff;
     public int nPointsBuff;
+
     public double radius;
     private Font pixelFont;
     String buff;
     int [] buffArray = new int[7];
-    
+
+    static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow"};
+    static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA, Color.CYAN};
 
     public PowerUp(int x, int y, PolygonGame game) {
 
@@ -33,9 +36,12 @@ public class PowerUp extends GameObject {
         radius = (game.getWindowWidth()+game.getWindowHeight())/75;
         posXBuff = (game.getWindowWidth() / 5) / 2;
         posYBuff = (int)((game.getWindowHeight() / 3) / 2+radius);
+
+       setColor(buffColors[buffType]);
+        buffType = r.nextInt(buffNames.length);
+        
         setColor(Color.BLUE);
         setLocation(x, y);
-
         try {
             java.io.File fontFile = new java.io.File("Fonts/PressStart2P-Regular.ttf"); 
             pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((int)radius/2f);
@@ -76,8 +82,49 @@ public class PowerUp extends GameObject {
                 buffType = 6;
                 break;
         }
-        buff = String.valueOf(buffArray[buffType]);
 
+    }
+    //TODO: Change buffs to a method
+    public void applyBuff(int buffType){
+        switch (buffType) {
+            case 0:
+                Player.health += 5;
+                break;
+
+            case 1:
+                Player.speed += 1;
+                break;
+
+            case 2:
+                Player.attackDelay += 1;
+                break;
+
+            case 3:
+                if (!Player.chainLightningActive) {
+                    Player.chainLightningActive = true;
+                }
+                break;
+
+            case 4:
+                if (!Player.atgMissileActive) {
+                    Player.atgMissileActive = true;
+                }
+                break;
+
+            case 5:
+                if (!Player.glaiveActive) {
+                    game.glaive = new Glaive(game);
+                    add(game.glaive);
+                }
+                break;
+
+            case 6:
+                if (!Player.yonduArrowActive) {
+                    game.yonduArrow = new YonduArrow(game);
+                    add(game.yonduArrow);
+                }
+                break;
+        }
     }
   
     public void paint(Graphics g) {
@@ -161,32 +208,7 @@ public class PowerUp extends GameObject {
 
         //apply the buff and remove the powerups if the player clicks on a powerup and releases the mouse button while still hovering over the same powerup
         if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {  // TODO: turn into a method in game class for other application besides powerups (ex. clicking a "start game" button on the main menu)
-            buffArray[buffType]++;
-            if (buffType == 0)
-                Player.health += 5;
-            else if (buffType == 1)
-                Player.speed += 1;
-            else if (buffType == 2)
-                Player.attackDelay += 1;
-            else if (buffType == 3)
-                if (!Player.chainLightningActive){
-                Player.chainLightningActive = true; // set chain lightning active for all projectiles, will be reset to false at the end of the next time the player chooses a buff
-                }
-            else if (buffType == 4){
-                if(!Player.atgMissileActive){
-                Player.atgMissileActive = true;
-                }
-            }
-            else if (buffType == 5){
-                if (!Player.glaiveActive){
-                game.glaive = new Glaive(game);
-                add(game.glaive);
-                }
-            }   
-            else if (buffType == 6){
-                game.yonduArrow = new YonduArrow(game);
-                add(game.yonduArrow);
-            }   
+            applyBuff(buffType);
 
             for (int i = 0; i < game.powerUps.size(); i++) { // remove all powerups from the game
                 game.remove(game.powerUps.get(i));

@@ -142,7 +142,7 @@ public class YonduArrow extends GameObject {
                 spriteAngle = Math.atan2(dy, dx) + Math.PI / 2;
             }
 
-            if (aimingTimer == 0) {
+            if (aimingTimer == 0 && closestTarget !=null) {
                 //save the target angle from teh enemy to the arrow
                 targetAngle = Math.atan2(
                 closestTarget.getY() + closestTarget.size / 2.0 - arrowCY,
