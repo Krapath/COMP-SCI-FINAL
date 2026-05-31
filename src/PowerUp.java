@@ -12,6 +12,7 @@ public class PowerUp extends GameObject {
     public boolean readyToApply = false; // whether the buff should be applied on mouse release
     public boolean wasPressed = false; // whether the mouse was pressed while hovering over this powerup (used to prevent applying the buff if the player clicks on a powerup and then drags the mouse away before releasing)
 
+    
     public PowerUp(int x, int y, PolygonGame game) {
 
         this.game = game;

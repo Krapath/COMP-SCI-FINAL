@@ -9,7 +9,11 @@ public class Player extends GameObject {
     static int health = 20;
     static int maxHealth = 20;
     static int score = 0;
+    static int xp = 0;
     static double x, y;
+    static int level =1;
+
+    static double xpReq=5*level*Math.log(level + 1);
 
     PolygonGame game;
 

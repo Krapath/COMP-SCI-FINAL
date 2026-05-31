@@ -89,7 +89,7 @@ public class PolygonGame extends Game {
             stopGame();
         }
 
-        if (Player.score >= 5) { // spawns a powerup when the player reaches level 5
+        if (Player.xp >= Player.xpReq) { // spawns a powerup when the player reaches level 5
             gamePause = true;
             int centeredY = getWindowHeight() / 2 - getWindowHeight() / 6;
             powerUps.add(new PowerUp(getWindowWidth() / 4 - getWindowWidth() / 10, centeredY, this));
@@ -98,7 +98,9 @@ public class PolygonGame extends Game {
             for (PowerUp p : powerUps) {
                 add(p);
             }
-            Player.score = 0; // reset score after spawning powerup
+            Player.xp = 0; // reset score after spawning powerup
+            Player.level+=1;
+            Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
 
         }
 

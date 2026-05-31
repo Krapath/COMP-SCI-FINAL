@@ -32,6 +32,7 @@ public class XpOrb extends GameObject {
         
         if (collides(game.player)) {
             Player.score += 1; // increase player score on collision
+            Player.xp+=1;
             game.remove(this); // remove xp orb after collision
         }
     }

@@ -2,14 +2,22 @@ import java.awt.Color;
 import java.awt.Graphics; 
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.BasicStroke;
 
 public class DisplayDebug extends GameObject{
     PolygonGame game;
-    static int []xPoints;
-    static int []yPoints;
-    static int nPoints;
-    static int posX;
-    static int posY;
+    static int []xPointsHealth;
+    static int []yPointsHealth;
+    static int []xPointsLevel;
+    static int []yPointsLevel;
+    
+    static int nPointsHealth;
+    static int nPointsLevel;
+    static int posXHealth;
+    static int posYHealth;
+    static int posXLevel;
+    static int posYLevel;
     static double radius;
     private Font pixelFont;
     public DisplayDebug(PolygonGame game) {
@@ -27,43 +35,72 @@ public class DisplayDebug extends GameObject{
         }
     }
 
+    //TODO: make the level and the health bar thing a method probably
+
     public void act() {
         // reposition every tick so text stays in corner
-   	 double angle = Math.PI/2;
-	     xPoints = new int [Player.health+2];
-	     yPoints = new int [Player.health+2];
-	     posX = (int) (game.getWindowWidth() - radius*(2));
-	     posY = (int) (0 + radius*(2));
-    	for (int i =0; i < xPoints.length;i++){
+   	    double healthAngle = Math.PI/2;
+	     xPointsHealth = new int [Player.health+2];
+	     yPointsHealth = new int [Player.health+2];
+	     posXHealth = (int) (game.getWindowWidth() - radius*(2));
+	     posYHealth = (int) (0 + radius*(2));
+    	for (int i =0; i < xPointsHealth.length;i++){
     	 
-         double x = (radius * Math.cos(angle)+ posX );
-         double y = (radius * Math.sin(angle)+ posY);
+         double x = (radius * Math.cos(healthAngle)+ posXHealth );
+         double y = (radius * Math.sin(healthAngle)+ posYHealth);
          
         
          
-         xPoints[i]= (int) Math.round(x+0.0001);
-         yPoints[i]= (int) Math.round(y+0.0001);
+         xPointsHealth[i]= (int) Math.round(x+0.0001);
+         yPointsHealth[i]= (int) Math.round(y+0.0001);
+
         // System.out.println(" values:" + yPoints[i]);
         // System.out.println(y);
         // System.out.println(angle);
-         angle+= Math.PI*2/(Player.health+2);
+
+         healthAngle+= Math.PI*2/(Player.health+2);
+         
+    	}
+    
+        nPointsHealth = Player.health+2;
+
+        
+         double levelAngle = Math.PI/2;
+	     xPointsLevel = new int [Player.level+2];
+	     yPointsLevel = new int [Player.level+2];
+	     posXLevel = (int) (game.getWindowWidth() - radius*(2));
+	     posYLevel = (int) (0 + radius*(5));
+    	 for (int i =0; i < xPointsLevel.length;i++){
+    	 
+         double x = (radius * Math.cos(-levelAngle)+ posXLevel);
+         double y = (radius * Math.sin(-levelAngle)+ posYLevel);
+         
+        
+         
+         xPointsLevel[i]= (int) Math.round(x+0.0001);
+         yPointsLevel[i]= (int) Math.round(y+0.0001);
+
+        // System.out.println(" values:" + yPoints[i]);
+        // System.out.println(y);
+        // System.out.println(angle);
+
+         levelAngle+= Math.PI*2/(Player.level+2);
          
     	}
     	
-    	for (int i =0; i < xPoints.length;i++){
-       	 
-            
-       	}
-         nPoints = Player.health+2;
-         
+        nPointsLevel = Player.level+2;
+
+
         repaint();  // redraws this object every tick
         
     }
 
     public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
         g.setColor(Color.WHITE);
         
         String health = String.valueOf(Player.health);
+        String level = String.valueOf(Player.level);
 
         // draw mouse and player coordinates
         g.drawString("MOUSE    X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 10, 20);
@@ -82,28 +119,52 @@ public class DisplayDebug extends GameObject{
 
         // display the players current score
         g.drawString("SCORE: " + Player.score, 10, 120);
+        // display the players xp and xp required to level up
+        g.drawString("XP: " + Player.xp+ "/" + Player.xpReq, 10, 140);
+
+        // display the players level
+        g.drawString("LEVEL: " + Player.level,10,160);
+
         
         // display the mouse cursor as a red rectangle 
         g.drawString("ANGLE:" + angle , 10, 60);
         g.setColor(Color.RED);
-        g.drawRect(game.getMouseX(),game.getMouseY(),15,15);        
+        g.drawRect(game.getMouseX(),game.getMouseY(),15,15);    
+        
+
       
         // draw healthbar
-        if (xPoints != null && yPoints != null) {
-            g.drawPolygon(xPoints, yPoints, nPoints);
-            g.setFont(pixelFont);
+        if (xPointsHealth != null && yPointsHealth != null) {
+            g2d.setStroke(new BasicStroke(4)); // set line thickness for the lightning
+            g2d.drawPolygon(xPointsHealth, yPointsHealth, nPointsHealth);
+            g2d.setFont(pixelFont);
             FontMetrics metrics = g.getFontMetrics(pixelFont);
             
 
             int textWidth = metrics.stringWidth(health);
             int textHeight = metrics.getAscent();
             
-            int healthX = posX - textWidth/2 + 1;
-            int healthY = posY + textHeight/2;
-            
-            //System.out.println(healthX + " " + healthY);
-            
+            int healthX = posXHealth - textWidth/2 + 1;
+            int healthY = posYHealth + textHeight/2;
+                        
             g.drawString(health,healthX,healthY);
+        }
+
+        if (xPointsLevel != null && yPointsLevel != null) {
+            g2d.setStroke(new BasicStroke(4)); // set line thickness for the lightning
+            g2d.setColor(Color.CYAN);
+            g2d.drawPolygon(xPointsLevel, yPointsLevel, nPointsLevel);
+            g2d.setFont(pixelFont);
+            FontMetrics metrics = g.getFontMetrics(pixelFont);
+            
+
+            int textWidth = metrics.stringWidth(level);
+            int textHeight = metrics.getAscent();
+            
+            int levelX = posXLevel - textWidth/2 + 1;
+            int levelY = posYLevel + textHeight/2;
+                        
+            g.drawString(level,levelX,levelY);
         }
 
 
