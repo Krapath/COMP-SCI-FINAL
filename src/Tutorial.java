@@ -76,7 +76,7 @@ public class Tutorial extends GameObject {
 
         if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {
 
-            if (buttonName.equals("Back")) {
+            if (buttonName.equals("Back`")) {
                 for (Tutorial m : tutorialButtons) { // removes all the buttons in the list from game
                     game.remove(m);
                 }
