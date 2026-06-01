@@ -1,8 +1,10 @@
 
 import java.awt.Color;
-
+import java.util.Random;
 public class Player extends GameObject {
-
+	
+	Random r = new Random();
+	
     static int size;
     static int speed;
     static int attackDelay = 0;
@@ -24,6 +26,7 @@ public class Player extends GameObject {
         this.game = game;
         size = (game.getWindowWidth() + game.getWindowHeight()) / 100; // player size is 1/100 of the entire window
         speed = (game.getWindowWidth() + game.getWindowHeight()) / 200; // speed is 1/100 of the entire window size
+        setLocation(r.nextInt(game.getWindowWidth()), r.nextInt(game.getWindowHeight())); // middle
         setSize(size, size);
         setColor(Color.BLUE);
         x = getX();
