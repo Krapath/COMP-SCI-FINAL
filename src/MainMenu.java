@@ -202,7 +202,12 @@ public class MainMenu extends GameObject {
                     game.remove(m);
                 }
                 menuButtons.clear(); // clears the entire list
+                //start the game
                 PolygonGame.gamePause = false; // resumes the game
+                //start animation
+                SpawnAnimation spawnDummy = new SpawnAnimation(game, 0,0);
+                spawnDummy.spawnAnimation(game);
+                game.add(spawnDummy);
                 //add player and abilities
                 game.spawnGame();
             }
