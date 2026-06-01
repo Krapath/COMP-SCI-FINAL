@@ -57,7 +57,6 @@ public class PolygonGame extends Game {
     public void spawnGame() {
         // creates the player
         player = new Player(this);
-        player.setLocation(getWindowWidth() / 2, getWindowHeight() / 2); // middle
         add(player);
         // creates methods helper used by projectiles and other game logic
         method = new Methods(this);

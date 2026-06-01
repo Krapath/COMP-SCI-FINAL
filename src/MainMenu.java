@@ -67,7 +67,7 @@ public class MainMenu extends GameObject {
 
         int centerX = (game.getWindowWidth() - w) / 2; // center the boxes horizontally
         int ySlots = (int)(game.getWindowHeight() / 9 / sizeMultiplier); // gets even splits for the boxes
-        int yShift = (int)(-(game.getWindowHeight() / 25.0 * ((sizeMultiplier - 1) * 3))); // shifts the boxes up a bit so they look better
+        int yShift = (int)(-(game.getWindowHeight() / 25.0 * ((sizeMultiplier - 1) * 2))); // shifts the boxes up a bit so they look better
 
 
         // play button
