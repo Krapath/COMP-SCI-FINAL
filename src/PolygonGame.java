@@ -5,7 +5,6 @@
  * End date: 
  * Project: Polygons - a roguelike top-down shooter.
  */
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -16,7 +15,9 @@ public class PolygonGame extends Game {
     Player player;
     Projectile projectile;
     Enemy enemy;
-    Glaive glaive;
+    Glaive glaive0;
+    Glaive glaive1;
+    Glaive glaive2;
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
@@ -32,7 +33,7 @@ public class PolygonGame extends Game {
     ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
     ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); // the enemies that have been hit and the timer
-                                                                        // for each enemy to be hit again
+    // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
 
     public void setup() {
@@ -46,22 +47,22 @@ public class PolygonGame extends Game {
         // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
         tutorialController = new Tutorial(this, "");
         add(tutorialController);
-        
+
         setDelay(16); // 60fps
         setTitle("Polygon");
     }
+
     // spawns player object when method is called, only used in main menu
-    public void spawnGame(){
+    public void spawnGame() {
         // creates the player
         player = new Player(this);
-        player.setLocation(getWindowWidth() /2, getWindowHeight() / 2); // middle
+        player.setLocation(getWindowWidth() / 2, getWindowHeight() / 2); // middle
         add(player);
         // creates methods helper used by projectiles and other game logic
         method = new Methods(this);
         // creates debugger
         debug = new DisplayDebug(this);
         add(debug);
-
 
     }
 
@@ -72,7 +73,7 @@ public class PolygonGame extends Game {
         }
         if (debug != null) {
             getContentPane().setComponentZOrder(debug, 0);
-}
+        }
         if (mouseLeftPressed()) {
             if (Player.attackDelay > 10) {
                 Player.attackDelay = 0;
@@ -101,7 +102,7 @@ public class PolygonGame extends Game {
                 add(p);
             }
             Player.xp = 0; // reset score after spawning powerup
-            Player.level+=1;
+            Player.level += 1;
             Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
             choosingBuff = true;
 

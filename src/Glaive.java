@@ -4,20 +4,22 @@ import java.util.ArrayList;
 
 public class Glaive extends GameObject {
 
-    int size = 20;
+    int size = (int) (Player.size / 1.5);
     PolygonGame game;
     //double xVel;
     //double yVel;
     //int distanceTraveled = 0;
     int damage = 1;
     int pierceCooldown = 60; // the amount of frames for each act
-    Double angle = 0.05;
-    int radius = 80;
-    Double speed = 0.05;
+    Double angle = 0.0;
+    int radius = 100;
+    Double speed = 1.0;
     int pierceTimer = 0; // the current timer for pierce
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); // TODO: maybe make universal for other buffs
-    public Glaive(PolygonGame game) {
+
+    public Glaive(PolygonGame game, double startingAngle) {
         this.game = game;
+        angle = startingAngle;
         setLocation(game.player.getX() + 80, game.player.getY() + 80); // update position
         setSize(size, size); // size of the projectile
         setColor(Color.RED);
@@ -28,14 +30,13 @@ public class Glaive extends GameObject {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
 
-        angle += speed;
+        angle += speed * Player.speed / 100.0;
 
-        int x = (int) (radius * Math.cos(angle) + game.player.getX()) - size / 2 + Player.size / 2;
-        int y = (int) (radius * Math.sin(angle) + game.player.getY()) - size / 2 + Player.size / 2;
-        setX(x);
-        setY(y);
+        double x = (radius * Math.cos(angle) + game.player.getX()) - size / 2 + Player.size / 2;
+        double y = (radius * Math.sin(angle) + game.player.getY()) - size / 2 + Player.size / 2;
+        setX((int) (x + 0.5));
+        setY((int) (y + 0.5));
 
-        
         for (int i = 0; i < game.enemies.size(); i++) {
             if (collides(game.enemies.get(i))) {
                 boolean hit = false;

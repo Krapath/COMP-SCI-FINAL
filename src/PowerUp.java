@@ -1,14 +1,17 @@
-import java.util.Random;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.Random;
+
 @SuppressWarnings("unused")
 
 //TODO: maybe just use paint 
 public class PowerUp extends GameObject {
+
     Random r = new Random();
     PolygonGame game;
     public int buffType;
@@ -23,38 +26,36 @@ public class PowerUp extends GameObject {
     public double radius;
     private Font pixelFont;
     String buff;
-    static int [] buffArray = new int[7];
+    static int[] buffArray = new int[7];
 
     static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow"};
     static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA, Color.CYAN};
 
     public PowerUp(int x, int y, PolygonGame game) {
 
-
         this.game = game;
         setSize(game.getWindowWidth() / 5, game.getWindowHeight() / 3);
-        radius = (game.getWindowWidth()+game.getWindowHeight())/75;
+        radius = (game.getWindowWidth() + game.getWindowHeight()) / 75;
         posXBuff = (game.getWindowWidth() / 5) / 2;
-        posYBuff = (int)((game.getWindowHeight() / 3) / 2+radius);
+        posYBuff = (int) ((game.getWindowHeight() / 3) / 2 + radius);
 
         setLocation(x, y);
         buffType = r.nextInt(buffNames.length);
         setColor(buffColors[buffType]);
 
         try {
-            java.io.File fontFile = new java.io.File("Fonts/PressStart2P-Regular.ttf"); 
-            pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((int)radius/2f);
+            java.io.File fontFile = new java.io.File("Fonts/PressStart2P-Regular.ttf");
+            pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((int) radius / 2f);
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
             pixelFont = new Font("Monospaced", Font.BOLD, 100);
             e.printStackTrace();
         }
 
-
-        
     }
+
     //TODO: Change buffs to a method
-    public void applyBuff(int buffType){
+    public void applyBuff(int buffType) {
         buffArray[buffType]++;
         switch (buffType) {
             case 0:
@@ -83,8 +84,12 @@ public class PowerUp extends GameObject {
 
             case 5:
                 if (!Player.glaiveActive) {
-                    game.glaive = new Glaive(game);
-                    game.add(game.glaive);
+                    game.glaive0 = new Glaive(game, 0.0);
+                    game.add(game.glaive0);
+                    game.glaive1 = new Glaive(game, 2 * Math.PI / 3);
+                    game.add(game.glaive1);
+                    game.glaive2 = new Glaive(game, 4 * Math.PI / 3);
+                    game.add(game.glaive2);
                 }
                 break;
 
@@ -96,12 +101,12 @@ public class PowerUp extends GameObject {
                 break;
         }
     }
-  
+
     public void paint(Graphics g) {
         super.paint(g);
 
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
-   
+
         if (xPointsBuff != null && yPointsBuff != null) {
             g2d.setStroke(new BasicStroke(4));
             Color color = getColor().darker();
@@ -118,34 +123,30 @@ public class PowerUp extends GameObject {
             int buffY = posYBuff + textHeight / 2;
 
             g.drawString(buff, buffX, buffY);
+        }
+
     }
 
-
-    }
-
-
-    
     public void act() {
-                        
-        if (!PolygonGame.gamePause)
+
+        if (!PolygonGame.gamePause) {
             return; // powerups only work while the player is choosing a buff (optimize)
-        
+        }
         double buff1 = Math.PI / 2;
 
         double buff1Angle = Math.PI / 2;
-        
+
         int x = game.getMouseX();
         int y = game.getMouseY();
 
         int sides;
-        if(contains(x,y)){
+        if (contains(x, y)) {
             sides = buffArray[buffType] + 2 + 1;
-            buff = String.valueOf(buffArray[buffType]+1);
+            buff = String.valueOf(buffArray[buffType] + 1);
         } else {
             sides = buffArray[buffType] + 2;
             buff = String.valueOf(buffArray[buffType]);
-        } 
-
+        }
 
         xPointsBuff = new int[sides];
         yPointsBuff = new int[sides];
@@ -165,16 +166,12 @@ public class PowerUp extends GameObject {
 
         nPointsBuff = sides;
 
-
         if (!game.mouseLeftPressed()) {
             readyToApply = true; // the buff should be applied on mouse release if the mouse was pressed while hovering over this powerup
         }
         if (game.mouseLeftPressed() && contains(x, y) && readyToApply) {
             wasPressed = true;
-        }  
-        
-
-        
+        }
 
         //apply the buff and remove the powerups if the player clicks on a powerup and releases the mouse button while still hovering over the same powerup
         if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {  // TODO: turn into a method in game class for other application besides powerups (ex. clicking a "start game" button on the main menu)
@@ -191,7 +188,6 @@ public class PowerUp extends GameObject {
             wasPressed = false; // reset wasPressed for the next time the player chooses a buff
 
         }
-    
 
         if (!game.mouseLeftPressed()) {
             wasPressed = false;
