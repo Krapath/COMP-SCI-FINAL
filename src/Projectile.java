@@ -45,7 +45,7 @@ public class Projectile extends GameObject {
             distanceTraveled = 0; // reset distance traveled for the next projectile
         }
 
-        if (game.method.damage(this, hitEnemies, pierceCount, damage))//runs damage code
+        if (damage(this, hitEnemies, pierceCount, damage))//runs damage code
         {
             pierceCount--;
         }
@@ -57,5 +57,50 @@ public class Projectile extends GameObject {
         }
         // move the projectile according to its velocity
     }
+    
+public boolean damage(GameObject attacker, ArrayList<Enemy> hitEnemies, int pierceCount, int damage) {
+    	
+    	boolean hit = false;
+    	for (int i = 0; i < game.enemies.size(); i++) {
+            if (attacker.collides(game.enemies.get(i))) {
+            	boolean alreadyHit = false;
+                
+                // Check if enemy was already hit, if so, don't hit again
+                for (int j = 0; j < hitEnemies.size(); j++) { 
+                    if (game.enemies.get(i) == hitEnemies.get(j)) {
+                        alreadyHit = true;
+                    }
+                }
+
+                if (!alreadyHit) { 
+                    hitEnemies.add(game.enemies.get(i)); // Count as hit from now on
+                    hit = true;
+                    game.enemies.get(i).health -= damage; // Reduce enemy health on collision
+
+                    game.enemies.get(i).setColor(Color.RED);
+
+                    int enemyX = game.enemies.get(i).getX();
+                    int enemyY = game.enemies.get(i).getY();
+
+                    // If chain lightning is active and this is the first enemy hit, activate it
+                    if (Player.chainLightningActive && pierceCount == 2) { 
+                        game.lightning = new ChainLightning(game.enemies.get(i), game);
+                        game.add(game.lightning);
+                    }
+
+                    // If ATG missile is active, spawn a missile when the first enemy is hit
+                    if (Player.atgMissileActive && pierceCount == 2) { 
+                        game.atgMissile = new AtGMissileMk1(game);
+                        game.add(game.atgMissile);
+                    }
+
+
+                }
+            }
+            
+        }
+        return hit;
+    }
+    
 
 }

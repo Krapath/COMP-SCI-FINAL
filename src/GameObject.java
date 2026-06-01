@@ -21,9 +21,10 @@ import javax.swing.JComponent;
  * @see Game#add
  */
 public abstract class GameObject extends JComponent {
-
+	
     Color c = Color.white;
     public double spriteAngle = 0;
+    public double x, y;
 
     /**
      * Sets the pixel width and height of the object
@@ -144,9 +145,17 @@ public abstract class GameObject extends JComponent {
     public abstract void act();
 
     //mohammads methods
-    public void setPosition(GameObject thing, double x, double y) {
-        thing.setX((int) (x + 0.5));
-        thing.setY((int) (y + 0.5));
+    public void setPosition() {
+       setX((int) (x + 0.5));
+       setY((int) (y + 0.5));
     }
+    
+    public void chase(double speed) {
+        double playerAngle = Math.atan2(Player.y - y, Player.x - x);
+        x += (Math.cos(playerAngle) * speed);
+        y += (Math.sin(playerAngle) * speed);
+    }
+    
+
 
 }

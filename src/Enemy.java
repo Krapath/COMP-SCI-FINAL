@@ -7,11 +7,11 @@ public class Enemy extends GameObject {
     PolygonGame game;
     Random r;
     public int size;
-    public int speed;
+    public double speed;
     public int health;
     public int enemyDamage = 1;
     public int displayOld = 0; //used to see enemies that have been alive older
-    public double x, y;
+
     int healthMultiplier;
 
     public Enemy(PolygonGame game, int type, int spawn, int seed) {
@@ -34,8 +34,9 @@ public class Enemy extends GameObject {
         y = getY();
 
         avoidCollision();
-        chase();
-        setPosition(this, x, y);
+        chase(speed);
+        setPosition();
+        checkDeath();
 
         displayOld += 1;
         if (displayOld > 600) { // for debug
@@ -45,11 +46,6 @@ public class Enemy extends GameObject {
 
     }
 
-    public void chase() {
-        double playerAngle = Math.atan2(Player.y - y, Player.x - x);
-        x += (Math.cos(playerAngle) * speed);
-        y += (Math.sin(playerAngle) * speed);
-    }
 
     public void avoidCollision() {
         for (int i = 0; i < game.enemies.size(); i++) {
@@ -119,4 +115,18 @@ public class Enemy extends GameObject {
         }
     }
 
+    
+    public void checkDeath(){
+    	if (health <= 0) {
+            // Create an XP orb at the location of the defeated enemy
+            XpOrb xp = new XpOrb((int)x, (int) y, game); 
+            
+            game.add(xp);          // Add the xp orb to the game
+            game.xpOrbs.add(xp);   // Add the xp orb to the list
+            game.remove(this); // Remove enemy if health is depleted
+            game.enemies.remove(this); // Remove enemy from the list
+        }
+    	
+    }
+    
 }

@@ -8,6 +8,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import javax.swing.*;
+
+
 
 public class PolygonGame extends Game {
 
@@ -25,7 +28,6 @@ public class PolygonGame extends Game {
     Tutorial tutorialController;
     GameBackground background;
     YonduArrow yonduArrow;
-    public Methods method;
     static boolean gamePause = true;
     static boolean choosingBuff = false;
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -58,8 +60,7 @@ public class PolygonGame extends Game {
         // creates the player
         player = new Player(this);
         add(player);
-        // creates methods helper used by projectiles and other game logic
-        method = new Methods(this);
+   
         // creates debugger
         debug = new DisplayDebug(this);
         add(debug);
@@ -131,5 +132,7 @@ public class PolygonGame extends Game {
         PolygonGame game = new PolygonGame();
         game.setVisible(true);
         game.initComponents();
+        ImageIcon icon = new ImageIcon("Images/MainMenu/PolygonLogo.png");
+        game.setIconImage(icon.getImage());
     }
 }

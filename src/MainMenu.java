@@ -202,14 +202,9 @@ public class MainMenu extends GameObject {
                     game.remove(m);
                 }
                 menuButtons.clear(); // clears the entire list
-                //start the game
                 PolygonGame.gamePause = false; // resumes the game
                 //add player and abilities
                 game.spawnGame();
-                //start animation
-                SpawnAnimation spawnDummy = new SpawnAnimation(game, 0,0);
-                spawnDummy.spawnAnimation(game);
-                game.add(spawnDummy);
             }
             else if (buttonName.equals("Tutorial")) {
                 for (MainMenu m : menuButtons) { // removes all the buttons in the list from game
