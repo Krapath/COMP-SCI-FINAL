@@ -25,6 +25,7 @@ public class Projectile extends GameObject {
         double speed = 20; // adjust as needed
         xVel = speed * Math.cos(angle);
         yVel = speed * Math.sin(angle);
+        
 
     }
 
@@ -34,6 +35,8 @@ public class Projectile extends GameObject {
             // a buff
 
         }
+
+        
         distanceTraveled += Math.sqrt(xVel * xVel + yVel * yVel); // update distance traveled
         setLocation(getX() + (int) xVel, getY() + (int) yVel); // update position
 
