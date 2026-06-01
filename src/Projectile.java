@@ -16,7 +16,7 @@ public class Projectile extends GameObject {
     public Projectile(PolygonGame game) {
         this.game = game;
         setLocation(game.player.getX() + Player.size / 3, game.player.getY() + Player.size / 3); // update
-                                                                                                   // position
+        // position
         setSize(10, 10); // size of the projectile
         setColor(Color.YELLOW);
 
@@ -31,7 +31,7 @@ public class Projectile extends GameObject {
     public void act() {
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing
-                   // a buff
+            // a buff
 
         }
         distanceTraveled += Math.sqrt(xVel * xVel + yVel * yVel); // update distance traveled
@@ -43,12 +43,14 @@ public class Projectile extends GameObject {
         }
 
         if (game.method.damage(this, hitEnemies, pierceCount, damage))//runs damage code
-        	pierceCount--;
-        
+        {
+            pierceCount--;
+        }
+
         if (pierceCount == 0) {
             game.remove(this);             // Remove projectile after it hits an enemy
             game.projectiles.remove(this); // Remove projectile from the list
-                          // Exit loop after collision
+            // Exit loop after collision
         }
         // move the projectile according to its velocity
     }

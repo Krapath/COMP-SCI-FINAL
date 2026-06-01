@@ -35,6 +35,7 @@ public class PolygonGame extends Game {
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); // the enemies that have been hit and the timer
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
+    int spawnedEnemies = 0;
 
     public void setup() {
         // changes the game background
@@ -84,10 +85,27 @@ public class PolygonGame extends Game {
         }
 
         if (r.nextInt(300) < 20) { // 0.33% chance each tick to spawn an enemy
-            enemy = new Enemy(this);
-            add(enemy);
-            enemies.add(enemy);
+
+            if ((spawnedEnemies + 1) % 30 == 0) { //hoard spawn
+                int enemySpawnSeed = r.nextInt();
+                for (int i = 0; i < 10; i++) {
+                    enemy = new Enemy(this, 0, 0, enemySpawnSeed);
+                    add(enemy);
+                    enemies.add(enemy);
+
+                }
+                enemySpawnSeed++;
+            } else if ((spawnedEnemies + 1) % 50 == 0) { //big boy
+                enemy = new Enemy(this, 1, 0, r.nextInt());
+                add(enemy);
+                enemies.add(enemy);
+            } else { //normal enemy
+                enemy = new Enemy(this, 0, 0, r.nextInt());
+                add(enemy);
+                enemies.add(enemy);
+            }
         }
+
         if (Player.health <= 0) { // stops if dies
             stopGame();
         }
