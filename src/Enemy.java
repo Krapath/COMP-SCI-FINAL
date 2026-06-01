@@ -15,7 +15,7 @@ public class Enemy extends GameObject {
     int healthMultiplier;
 
     public Enemy(PolygonGame game, int type, int spawn, int seed) {
-        healthMultiplier = (int) Math.pow(2.0, (double) (game.spawnedEnemies / 100));
+        healthMultiplier = (int) Math.pow(2.0, (double) (game.spawnedEnemies / 500));
         System.out.println(healthMultiplier);
         game.spawnedEnemies++;
         r = new Random(seed);
@@ -106,7 +106,7 @@ public class Enemy extends GameObject {
                 setColor(Color.GREEN);
                 break;
             case 1:
-                health = 20 * healthMultiplier;
+                health = 50 * healthMultiplier;
                 size *= 5;
                 speed /= 2;
                 setSize(size, size);

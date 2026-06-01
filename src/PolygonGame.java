@@ -38,6 +38,7 @@ public class PolygonGame extends Game {
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
     int spawnedEnemies = 0;
+    int maxEnemiesSpawned = 75;
 
     public void setup() {
         // changes the game background
@@ -84,9 +85,9 @@ public class PolygonGame extends Game {
             }
         }
 
-        if (r.nextInt(300) < 20) { // 0.33% chance each tick to spawn an enemy
+        if (r.nextInt(300) < 20 && enemies.size() < maxEnemiesSpawned) { // 0.33% chance each tick to spawn an enemy
 
-            if ((spawnedEnemies + 1) % 30 == 0) { //hoard spawn
+            if ((spawnedEnemies + 1) % 70 == 0) { //hoard spawn
                 int enemySpawnSeed = r.nextInt();
                 for (int i = 0; i < 10; i++) {
                     enemy = new Enemy(this, 0, 0, enemySpawnSeed);
@@ -95,7 +96,7 @@ public class PolygonGame extends Game {
 
                 }
                 enemySpawnSeed++;
-            } else if ((spawnedEnemies + 1) % 50 == 0) { //big boy
+            } else if ((spawnedEnemies + 1) % 100 == 0) { //big boy
                 enemy = new Enemy(this, 1, 0, r.nextInt());
                 add(enemy);
                 enemies.add(enemy);
