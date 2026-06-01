@@ -8,6 +8,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import javax.swing.*;
+
+
 
 public class PolygonGame extends Game {
 
@@ -129,5 +132,7 @@ public class PolygonGame extends Game {
         PolygonGame game = new PolygonGame();
         game.setVisible(true);
         game.initComponents();
+        ImageIcon icon = new ImageIcon("Images/MainMenu/PolygonLogo.png");
+        game.setIconImage(icon.getImage());
     }
 }
