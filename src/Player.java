@@ -28,7 +28,7 @@ public class Player extends GameObject {
         speed = (game.getWindowWidth() + game.getWindowHeight()) / 200; // speed is 1/100 of the entire window size
         setLocation(r.nextInt(game.getWindowWidth()), r.nextInt(game.getWindowHeight())); // middle
         setSize(size, size);
-        setColor(Color.BLUE);
+        setColor(new Color(0,0,255,0));
         x = getX();
         y = getY();
     }
