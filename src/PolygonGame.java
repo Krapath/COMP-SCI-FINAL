@@ -40,11 +40,11 @@ public class PolygonGame extends Game {
         background = new GameBackground(this);
         add(background);
         // creates a dummy constructor for the main menu buttons to use to spawn the buttons
-        menuController = new MainMenu(this, "", "");
+        menuController = new MainMenu(this, "");
         menuController.spawnMyBoxes(this);
         add(menuController);
         // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
-        tutorialController = new Tutorial(this, "","");
+        tutorialController = new Tutorial(this, "");
         add(tutorialController);
         
         setDelay(16); // 60fps

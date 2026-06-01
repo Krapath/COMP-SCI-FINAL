@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Methods extends GameObject {
 
@@ -10,6 +11,8 @@ public class Methods extends GameObject {
         this.game = game;
     }
 
+
+    
     public void act() {
         // Method body is currently empty
     }

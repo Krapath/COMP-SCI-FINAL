@@ -23,7 +23,7 @@ public class PowerUp extends GameObject {
     public double radius;
     private Font pixelFont;
     String buff;
-    int [] buffArray = new int[7];
+    static int [] buffArray = new int[7];
 
     static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow"};
     static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA, Color.CYAN};
@@ -37,11 +37,10 @@ public class PowerUp extends GameObject {
         posXBuff = (game.getWindowWidth() / 5) / 2;
         posYBuff = (int)((game.getWindowHeight() / 3) / 2+radius);
 
-       setColor(buffColors[buffType]);
-        buffType = r.nextInt(buffNames.length);
-        
-        setColor(Color.BLUE);
         setLocation(x, y);
+        buffType = r.nextInt(buffNames.length);
+        setColor(buffColors[buffType]);
+
         try {
             java.io.File fontFile = new java.io.File("Fonts/PressStart2P-Regular.ttf"); 
             pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((int)radius/2f);
@@ -52,40 +51,11 @@ public class PowerUp extends GameObject {
         }
 
 
-        switch (r.nextInt(7)) {
-            case 0:
-                setColor(Color.RED);
-                buffType = 0; // health buff
-                break;
-            case 1:
-                setColor(Color.GREEN);
-                buffType = 1; // speed buff
-                break;
-            case 2:
-                setColor(Color.BLUE);
-                buffType = 2; // attack speed buff
-                break;
-            case 3:
-                setColor(Color.YELLOW);
-                buffType = 3; // lightning buff
-                break;
-            case 4:
-                setColor(Color.ORANGE);
-                buffType = 4;
-                break;
-            case 5:
-                setColor(Color.MAGENTA);
-                buffType =5;
-                break;
-            case 6:
-                setColor(Color.CYAN);
-                buffType = 6;
-                break;
-        }
-
+        
     }
     //TODO: Change buffs to a method
     public void applyBuff(int buffType){
+        buffArray[buffType]++;
         switch (buffType) {
             case 0:
                 Player.health += 5;
@@ -114,14 +84,14 @@ public class PowerUp extends GameObject {
             case 5:
                 if (!Player.glaiveActive) {
                     game.glaive = new Glaive(game);
-                    add(game.glaive);
+                    game.add(game.glaive);
                 }
                 break;
 
             case 6:
                 if (!Player.yonduArrowActive) {
                     game.yonduArrow = new YonduArrow(game);
-                    add(game.yonduArrow);
+                    game.add(game.yonduArrow);
                 }
                 break;
         }

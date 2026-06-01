@@ -12,9 +12,8 @@ public class Tutorial extends GameObject {
     PolygonGame game;
 
     // set up dummy consturctor for tutorial buttons to spawn
-    public Tutorial(PolygonGame game, String imagePath, String buttonName) {
+    public Tutorial(PolygonGame game, String buttonName) {
         setSize(0, 0);
-        this.boxImage = new ImageIcon(imagePath).getImage();
         this.game = game;
         this.buttonName = buttonName;
     }
@@ -31,7 +30,7 @@ public class Tutorial extends GameObject {
         int setShift = (int) ((x + y) / 10);
 
         // make the frame for the tutorial
-        Tutorial tutorial = new Tutorial(game, "Images\\MainMenu\\playButton.png", "Tutorial");// change the image
+        Tutorial tutorial = new Tutorial(game, "Tutorial");// change the image
         tutorial.setSize(w, h);
         tutorial.setColor(Color.RED);
         tutorial.setLocation(x, y);
@@ -39,7 +38,7 @@ public class Tutorial extends GameObject {
         tutorialButtons.add(tutorial);
 
         // make the back button
-        Tutorial backButton = new Tutorial(game, "Images\\MainMenu\\playButton.png", "Back");
+        Tutorial backButton = new Tutorial(game, "Back");
         backButton.setSize(w / 4, h / 10);
         backButton.setColor(Color.BLUE);
         backButton.setLocation(x - setShift, y - setShift);
@@ -82,7 +81,7 @@ public class Tutorial extends GameObject {
                 }
                 tutorialButtons.clear(); // clears the entire list
                 // returns to the main menu
-                MainMenu menuController = new MainMenu(game, "", "");
+                MainMenu menuController = new MainMenu(game, "");
                 menuController.spawnMyBoxes(game);
                 add(menuController);
             }
