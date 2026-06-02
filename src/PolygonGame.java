@@ -44,7 +44,8 @@ public class PolygonGame extends Game {
         // changes the game background
         background = new GameBackground(this);
         add(background);
-        
+        // creates a dummy constructor for the main menu buttons to use to spawn the buttons
+        menuController = new MainMenu(this, "");
         menuController.spawnMyBoxes(this);
         // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
         tutorialController = new Tutorial(this, "", 0, 0,0,0);
