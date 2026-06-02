@@ -27,6 +27,7 @@ public class PowerUp extends GameObject {
     private Font pixelFont;
     String buff;
     static int[] buffArray = new int[7];
+    
 
     static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow"};
     static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA, Color.CYAN};
@@ -135,7 +136,7 @@ public class PowerUp extends GameObject {
             g.drawString(buff, buffX, buffY);
         }
         
-        g.drawString(buffDescriptions[buffType],posXBuff/3,(int)(posYBuff/1.25));
+        g.drawString(buffDescriptions[buffType],0+game.getWindowWidth() / 60,(int)(posYBuff/1.25));
 
     }
 
@@ -148,11 +149,11 @@ public class PowerUp extends GameObject {
 
         double buff1Angle = Math.PI / 2;
 
-        int x = game.getMouseX();
-        int y = game.getMouseY();
+        int mouseX = game.getMouseX();
+        int mouseY = game.getMouseY();
 
         int sides;
-        if (contains(x, y)) {
+        if (contains(mouseX,mouseY)) {
             sides = buffArray[buffType] + 2 + 1;
             buff = String.valueOf(buffArray[buffType] + 1);
         } else {
@@ -181,12 +182,12 @@ public class PowerUp extends GameObject {
         if (!game.mouseLeftPressed()) {
             readyToApply = true; // the buff should be applied on mouse release if the mouse was pressed while hovering over this powerup
         }
-        if (game.mouseLeftPressed() && contains(x, y) && readyToApply) {
+        if (game.mouseLeftPressed() && contains(mouseX, mouseY) && readyToApply) {
             wasPressed = true;
         }
 
         //apply the buff and remove the powerups if the player clicks on a powerup and releases the mouse button while still hovering over the same powerup
-        if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {  // TODO: turn into a method in game class for other application besides powerups (ex. clicking a "start game" button on the main menu)
+        if (wasPressed && !game.mouseLeftPressed() && contains(mouseX, mouseY) && readyToApply) {  // TODO: turn into a method in game class for other application besides powerups (ex. clicking a "start game" button on the main menu)
             applyBuff(buffType);
 
             for (int i = 0; i < game.powerUps.size(); i++) { // remove all powerups from the game
