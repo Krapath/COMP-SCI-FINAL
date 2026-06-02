@@ -21,7 +21,7 @@ public class MainMenu extends GameObject {
     double hoverAngle;
     boolean hovered;
     Random r = new Random();
-    private boolean wasHoveredLastFrame = false;
+    boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
 
     static int menuOffsetX;
