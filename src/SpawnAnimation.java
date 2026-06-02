@@ -65,7 +65,7 @@ public class SpawnAnimation extends GameObject {
         int x = getX();
         int y = getY();
         // get angle to player
-        double playerAngle = Math.atan2(Player.y - y, Player.x - x);
+        double playerAngle = Math.atan2(Player.y + Player.size / 2 - y, Player.x + Player.size / 2 - x);
         // move towards player
         x += (Math.cos(playerAngle) * speed) + (r.nextInt(speed * 2) - speed);
         y += (Math.sin(playerAngle) * speed) + (r.nextInt(speed * 2) - speed);

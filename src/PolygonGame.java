@@ -50,7 +50,7 @@ public class PolygonGame extends Game {
         // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
         tutorialController = new Tutorial(this, "", 0, 0,0,0);
         //create dummy constructor for the death screen buttons to use to spawn the buttons
-        deathScreenController = new DeathScreen(this, "", 0, 0,0,0);
+        deathScreenController = new DeathScreen(this, "",false, 0, 0,0,0);
 
         setDelay(16); // 60fps
         setTitle("Polygon");
