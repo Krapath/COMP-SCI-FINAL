@@ -66,12 +66,14 @@ public class DeathScreen extends GameObject {
                 buttonY);
         retryButton.setColor(new Color(15, 82, 186));
         game.add(retryButton);
+        deathScreenButtons.add(retryButton);
 
         // make the return to main menu button
         DeathScreen ReturnToMainMenu = new DeathScreen(game, "Main Menu", true, buttonW, buttonH,
                 mainMenuButtonX, buttonY);
         ReturnToMainMenu.setColor(new Color(15, 82, 186));
         game.add(ReturnToMainMenu);
+        deathScreenButtons.add(ReturnToMainMenu);
     }
 
     @Override
@@ -148,6 +150,7 @@ public class DeathScreen extends GameObject {
                     game.remove(m);
                 }
                 deathScreenButtons.clear(); // clears the entire list
+                game.menuController.spawnMyBoxes(game); // spawns the main menu buttons
             }
             readyToApply = false;
             wasPressed = false;
