@@ -16,7 +16,7 @@ public class Player extends GameObject {
     static double x, y;
     static int level = 1;
     static boolean chainLightningActive = false; // static so all projectiles have property
-    static boolean atgMissileActive = false; // static so all projectiles have property
+    static boolean atgMissileActive = true; // static so all projectiles have property
     static boolean glaiveActive = false;
     static boolean yonduArrowActive = false;
     static double xpReq = 5 * level * Math.log(level + 1);
