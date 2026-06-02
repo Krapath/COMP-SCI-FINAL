@@ -21,7 +21,7 @@ import javax.swing.JComponent;
  * @see Game#add
  */
 public abstract class GameObject extends JComponent {
-	
+
     Color c = Color.white;
     public double spriteAngle = 0;
     public double x, y;
@@ -48,6 +48,10 @@ public abstract class GameObject extends JComponent {
         return getLocation().x;
     }
 
+    public double getRealX() {
+        return x;
+    }
+
     /**
      * Gets the y component of the coordinate of the upper left corner of this
      * object
@@ -59,6 +63,11 @@ public abstract class GameObject extends JComponent {
     public int getY() {
         return getLocation().y;
     }
+
+    public double getRealY() {
+        return y;
+    }
+
 
     /*
 	 * Checks if the object contains a point
@@ -146,21 +155,34 @@ public abstract class GameObject extends JComponent {
 
     //mohammads methods
     public void setPosition() {
-       setX((int) (x + 0.5));
-       setY((int) (y + 0.5));
+        setX((int) (x + 0.5));
+        setY((int) (y + 0.5));
     }
 
     public void setPosition(GameObject thing, int x, int y) {
-       setX(x);
-       setY(y);
+        setX(x);
+        setY(y);
     }
-    
+
     public void chase(double speed) {
         double playerAngle = Math.atan2(Player.y - y, Player.x - x);
         x += (Math.cos(playerAngle) * speed);
         y += (Math.sin(playerAngle) * speed);
     }
-    
 
+    public void shoot(double speed, double targetX, double targetY) {
+        double targetAngle = Math.atan2(targetY - y, targetX - x);
+        x += (Math.cos(targetAngle) * speed);
+        y += (Math.sin(targetAngle) * speed);
+    }
+
+    public void shoot(double speed, double targetAngle) {
+        x += (Math.cos(targetAngle) * speed);
+        y += (Math.sin(targetAngle) * speed);
+    }
+
+    public double getRealAngle(double targetX, double targetY) {
+        return Math.atan2(targetY - y, targetX - x);
+    }
 
 }

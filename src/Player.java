@@ -1,10 +1,11 @@
 
 import java.awt.Color;
 import java.util.Random;
+
 public class Player extends GameObject {
-	
-	Random r = new Random();
-	
+
+    Random r = new Random();
+
     static int size;
     static int speed;
     static int attackDelay = 0;
@@ -28,7 +29,7 @@ public class Player extends GameObject {
         speed = (game.getWindowWidth() + game.getWindowHeight()) / 200; // speed is 1/100 of the entire window size
         setLocation(r.nextInt(game.getWindowWidth()), r.nextInt(game.getWindowHeight())); // middle
         setSize(size, size);
-        setColor(new Color(0,0,255,0));
+        setColor(new Color(0, 0, 255, 0));
         x = getX();
         y = getY();
     }
@@ -37,7 +38,8 @@ public class Player extends GameObject {
         if (PolygonGame.gamePause) {
             return;// player does not move or collide with enemies while the player is choosing a buff
 
-                }attackDelay++;
+        }
+        attackDelay++;
 
         double up = 0.0, down = 0.0, left = 0.0, right = 0.0;
 

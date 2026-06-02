@@ -1,8 +1,10 @@
+
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
-import java.awt.Color;
 
 public class SpawnAnimation extends GameObject {
+
     // set variables
     static boolean spawningAnimation = false;
     PolygonGame game;

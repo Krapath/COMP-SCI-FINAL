@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.Random;
 import javax.swing.*;
 
-
-
 public class PolygonGame extends Game {
 
     Random r = new Random();
@@ -37,8 +35,9 @@ public class PolygonGame extends Game {
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); // the enemies that have been hit and the timer
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
-    int spawnedEnemies = 0;
-    int maxEnemiesSpawned = 75;
+    public int spawnedEnemies = 0;
+    public int maxEnemiesSpawned = 75;
+    public int enemySpawnSeed;
 
     public void setup() {
         // changes the game background
@@ -61,7 +60,7 @@ public class PolygonGame extends Game {
         // creates the player
         player = new Player(this);
         add(player);
-   
+
         // creates debugger
         debug = new DisplayDebug(this);
         add(debug);
@@ -87,17 +86,37 @@ public class PolygonGame extends Game {
 
         if (r.nextInt(300) < 20 && enemies.size() < maxEnemiesSpawned) { // 0.33% chance each tick to spawn an enemy
 
-            if ((spawnedEnemies + 1) % 70 == 0) { //hoard spawn
-                int enemySpawnSeed = r.nextInt();
-                for (int i = 0; i < 10; i++) {
-                    enemy = new Enemy(this, 0, 0, enemySpawnSeed);
-                    add(enemy);
-                    enemies.add(enemy);
+            if ((spawnedEnemies + 1) % 50 == 0) { //hoard spawn
+                enemySpawnSeed = r.nextInt();
 
+                if (r.nextInt(2) == 0) {
+                    for (int i = 0; i < 10; i++) {
+                        enemy = new Enemy(this, 0, 0, enemySpawnSeed);
+                        add(enemy);
+                        enemies.add(enemy);
+                    }
+                } else {
+                    System.out.println("trying to spawn");
+                    for (int i = 0; i < 10; i++) {
+                        enemy = new Enemy(this, 4, 0, enemySpawnSeed);
+                        add(enemy);
+                        enemies.add(enemy);
+                    }
                 }
+
                 enemySpawnSeed++;
             } else if ((spawnedEnemies + 1) % 100 == 0) { //big boy
                 enemy = new Enemy(this, 1, 0, r.nextInt());
+                add(enemy);
+                enemies.add(enemy);
+            } else if ((spawnedEnemies + 1) % 10 == 0 && spawnedEnemies > 0) {
+
+                if (r.nextInt(2) == 0) {
+                    enemy = new Enemy(this, 2, 0, r.nextInt());
+                } else {
+                    enemy = new Enemy(this, 3, 0, r.nextInt());
+                }
+
                 add(enemy);
                 enemies.add(enemy);
             } else { //normal enemy
@@ -105,6 +124,8 @@ public class PolygonGame extends Game {
                 add(enemy);
                 enemies.add(enemy);
             }
+
+            spawnedEnemies++;
         }
 
         if (Player.health <= 0) { // stops if dies
