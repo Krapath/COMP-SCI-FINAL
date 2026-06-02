@@ -22,10 +22,11 @@ public class Tutorial extends GameObject {
 
     Random r = new Random();
     // set up dummy consturctor for tutorial buttons to spawn
-    public Tutorial(PolygonGame game, String buttonName) {
-        setSize(0, 0);
+    public Tutorial(PolygonGame game, String buttonName, int w, int h,int x, int y) {
         this.game = game;
         this.buttonName = buttonName;
+        setSize(w, h);
+        setLocation(x, y);
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf"); 
             menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((45f)));
@@ -48,24 +49,23 @@ public class Tutorial extends GameObject {
         int setShift = (int) ((x + y) / 10);
 
         // make the frame for the tutorial
-        Tutorial tutorial = new Tutorial(game, "Tutorial");// change the image
-        tutorial.setSize(w, h);
+        Tutorial tutorial = new Tutorial(game, "Tutorial", w, h, x, y);// change the image
         tutorial.setColor(new Color(220, 20, 60));
-        tutorial.setLocation(x, y);
         game.add(tutorial);
         tutorialButtons.add(tutorial);
 
         // make the back button
-        Tutorial backButton = new Tutorial(game, "Back");
-        backButton.setSize(w / 4, h / 10);
+        Tutorial backButton = new Tutorial(game, "Back", w / 4, h / 10, x - setShift, y - setShift);
         backButton.setColor(new Color(15, 82, 186));
-        backButton.setLocation(x - setShift, y - setShift);
         game.add(backButton);
         tutorialButtons.add(backButton);
     }
 
     @Override
     public void paint(Graphics g) {
+        if (!PolygonGame.gamePause) {
+            return; // only check if we're on the main menu
+        }
         super.paint(g); // paints the background first of the button first
 
         // adds the image on top of the background WILL USED LATER

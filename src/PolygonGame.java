@@ -24,6 +24,7 @@ public class PolygonGame extends Game {
     MainMenu menuController;
     DisplayDebug debug;
     Tutorial tutorialController;
+    DeathScreen deathScreenController;
     GameBackground background;
     YonduArrow yonduArrow;
     static boolean gamePause = true;
@@ -43,13 +44,12 @@ public class PolygonGame extends Game {
         // changes the game background
         background = new GameBackground(this);
         add(background);
-        // creates a dummy constructor for the main menu buttons to use to spawn the buttons
-        menuController = new MainMenu(this, "");
+        
         menuController.spawnMyBoxes(this);
-        add(menuController);
         // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
-        tutorialController = new Tutorial(this, "");
-        add(tutorialController);
+        tutorialController = new Tutorial(this, "", 0, 0,0,0);
+        //create dummy constructor for the death screen buttons to use to spawn the buttons
+        deathScreenController = new DeathScreen(this, "", 0, 0,0,0);
 
         setDelay(16); // 60fps
         setTitle("Polygon");

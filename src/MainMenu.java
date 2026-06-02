@@ -121,6 +121,9 @@ public class MainMenu extends GameObject {
 
     @Override
     public void paint(Graphics g) {
+        if (!PolygonGame.gamePause) {
+            return; // only check for button clicks if we're on the main menu
+        }
             if (buttonName.equals("")) {
                 if (logoImage != null) {
                     g.drawImage(logoImage, 0, 0, getWidth(), getHeight(), null);
