@@ -20,7 +20,7 @@ public class GameBackground extends GameObject {
     boolean dynamicBackground = false; // can be set to false for a static background, true for a dynamic background with fading hexagons
     int polygonSize;
     int fadeTimer = 0; // timer to control fade effect
-    int fadeDelay = 4; // can be adjusted for a faster or slower fade effect
+    int fadeDelay = 15; // can be adjusted for a faster or slower fade effect
 
     public GameBackground(PolygonGame game) {
         this.game = game;

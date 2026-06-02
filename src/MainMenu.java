@@ -222,7 +222,7 @@ public class MainMenu extends GameObject {
                 //tutorial setup
                 game.tutorialController.spawnTutorial(game);
             } else if (buttonName.equals("Settings")) {
-                
+                game.deathScreenController.youDied();
             }
             else if (buttonName.equals("Exit")) {
                 System.exit(0);

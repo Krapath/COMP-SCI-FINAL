@@ -49,7 +49,7 @@ public class Tutorial extends GameObject {
         int setShift = (int) ((x + y) / 10);
 
         // make the frame for the tutorial
-        Tutorial tutorial = new Tutorial(game, "Tutorial", w, h, x, y);// change the image
+        Tutorial tutorial = new Tutorial(game, "Tutorial", w, h, x, y);
         tutorial.setColor(new Color(220, 20, 60));
         game.add(tutorial);
         tutorialButtons.add(tutorial);
