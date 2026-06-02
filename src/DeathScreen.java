@@ -19,8 +19,9 @@ public class DeathScreen extends GameObject {
     boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
     boolean hovered;
+    Random r = new Random();
 
-    public DeathScreen(PolygonGame game, String buttonName, int w, int h, int x, int y) {
+    public DeathScreen(PolygonGame game, String buttonName, boolean button, int w, int h, int x, int y) {
         this.game = game;
         this.buttonName = buttonName;
         setSize(w, h);
@@ -47,10 +48,10 @@ public class DeathScreen extends GameObject {
         int y = (game.getWindowHeight() - h) / 2; // center the death screen vertically
 
         // make the frame for the death screen
-        DeathScreen deathScreen = new DeathScreen(game, "DeathScreen", w, h, x, y);// change the image
+        DeathScreen deathScreen = new DeathScreen(game, "", false, w, h, x, y);// change the image
         deathScreen.setColor(new Color(220, 20, 60));
         game.add(deathScreen);
-        deathScreenButtons.add(deathScreen);
+         deathScreenButtons.add(deathScreen);
         
         //set buttons for the death screen
         int buttonW = w / 3;
@@ -61,20 +62,99 @@ public class DeathScreen extends GameObject {
         int mainMenuButtonX = (int) (x + w - game.getWindowWidth() / 20 - buttonW);
 
         // make the retry button
-        DeathScreen retryButton = new DeathScreen(game, "Retry", buttonW, buttonH, retryButtonX,
+        DeathScreen retryButton = new DeathScreen(game, "Retry", true, buttonW, buttonH, retryButtonX,
                 buttonY);
         retryButton.setColor(new Color(15, 82, 186));
         game.add(retryButton);
 
         // make the return to main menu button
-        DeathScreen ReturnToMainMenu = new DeathScreen(game, "Main Menu", buttonW, buttonH,
+        DeathScreen ReturnToMainMenu = new DeathScreen(game, "Main Menu", true, buttonW, buttonH,
                 mainMenuButtonX, buttonY);
         ReturnToMainMenu.setColor(new Color(15, 82, 186));
         game.add(ReturnToMainMenu);
     }
 
+    @Override
+    public void paint(Graphics g) {
+        if (!PolygonGame.gamePause) {
+            return; // only check for button clicks if we're on the main menu
+        }
+            super.paint(g);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setFont(menuFont);
+            FontMetrics metrics = g2d.getFontMetrics(menuFont);
+
+            // center the text in the button
+            int textWidth = metrics.stringWidth(buttonName);
+            int textHeight = metrics.getAscent();
+            int textX = getWidth() / 2 - textWidth / 2;
+            int textY = getHeight() / 2 + textHeight / 2 - metrics.getDescent();
+
+            g2d.setColor(Color.BLACK);
+            if (hovered){
+                AffineTransform old = g2d.getTransform();
+                g2d.rotate(hoverAngle, textX + textWidth / 2.0, textY - textHeight / 2.0);
+                g2d.drawString(buttonName, textX, textY);
+                g2d.setTransform(old);
+            } else {
+                hoverAngle = 0;
+                g2d.drawString(buttonName, textX, textY);
+            }     
+        }
+    boolean readyToApply = false;
+    boolean wasPressed = false;
+
     public void act() {
+        if (!PolygonGame.gamePause) {
+            return; // only check for button clicks if we're on the main menu
+        }
+        int x = game.getMouseX();
+        int y = game.getMouseY();
+        // ensure that clicking works properly
+        if (!game.mouseLeftPressed()) {
+            readyToApply = true;
+        }
+        if (game.mouseLeftPressed() && contains(x, y) && readyToApply) {
+            wasPressed = true;
+        }
 
+        //glow when hovered over
+
+        hovered = contains(game.getMouseX(), game.getMouseY());
+        
+        if (hovered) {
+            setColor(Color.BLUE); 
+        } else {
+            setColor(new Color(15, 82, 186));
+        }
+        
+        if (hovered && !wasHoveredLastFrame) {
+            if(tiltLeft){
+            hoverAngle = r.nextDouble() * 0.05+0.1; 
+            tiltLeft= false;
+            }else if (!tiltLeft) {
+                hoverAngle = -(r.nextDouble() * 0.05+0.1); 
+                tiltLeft = true;
+            }
+        }
+        wasHoveredLastFrame = hovered;
+
+
+
+        if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {
+
+            if (buttonName.equals("Main Menu")) {
+                for (DeathScreen m : deathScreenButtons) { // removes all the buttons in the list from game
+                    game.remove(m);
+                }
+                deathScreenButtons.clear(); // clears the entire list
+            }
+            readyToApply = false;
+            wasPressed = false;
+        }
+        if (!game.mouseLeftPressed()) {
+            wasPressed = false;
+        }
+        repaint();
     }
-
 }
