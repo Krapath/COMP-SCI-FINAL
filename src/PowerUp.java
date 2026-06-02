@@ -46,7 +46,7 @@ public class PowerUp extends GameObject {
         setSize(game.getWindowWidth() / 5, game.getWindowHeight() / 3);
         radius = (game.getWindowWidth() + game.getWindowHeight()) / 75;
         posXBuff = (game.getWindowWidth() / 5) / 2;
-        posYBuff = (int) ((game.getWindowHeight() / 3) / 2 + radius);
+        posYBuff = (int) ((game.getWindowHeight() / 3) / 2 + radius*2);
 
         setLocation(x, y);
         buffType = r.nextInt(buffNames.length);
@@ -130,12 +130,12 @@ public class PowerUp extends GameObject {
             int textHeight = metrics.getAscent();
 
             int buffX = posXBuff - textWidth / 2 + 1;
-            int buffY = posYBuff + textHeight / 2;
+            int buffY = posYBuff  + textHeight / 2;
 
             g.drawString(buff, buffX, buffY);
         }
         
-        g.drawString(buffDescriptions[buffType],posXBuff/2,posYBuff);
+        g.drawString(buffDescriptions[buffType],posXBuff/3,(int)(posYBuff/1.25));
 
     }
 
