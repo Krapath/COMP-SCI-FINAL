@@ -105,7 +105,7 @@ public class PolygonGame extends Game {
                 }
 
                 enemySpawnSeed++;
-            } else if ((spawnedEnemies + 1) % 100 == 0) { //big boy
+            } else if ((spawnedEnemies + 1) % 99 == 0) { //big boy
                 enemy = new Enemy(this, 1, 0, r.nextInt());
                 add(enemy);
                 enemies.add(enemy);

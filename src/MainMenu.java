@@ -50,13 +50,14 @@ public class MainMenu extends GameObject {
         }
             menuOffsetX =-game.getWindowHeight()/2;
             menuOffsetY =game.getWindowWidth()/5;
+            
             logoImage = new ImageIcon("Images/MainMenu/PolygonLogo.png").getImage();
             logoOffsetX =game.getWindowWidth()/4;
             logoOffsetY =game.getWindowHeight()/12;
 
 
     }
-
+ 
     /**
      * Spawns the boxes for the main menu.
      */

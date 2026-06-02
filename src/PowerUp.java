@@ -27,6 +27,8 @@ public class PowerUp extends GameObject {
     private Font pixelFont;
     String buff;
     static int[] buffArray = new int[7];
+    private Font descriptionFont;
+
     
 
     static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow"};
@@ -34,11 +36,11 @@ public class PowerUp extends GameObject {
     String[] buffDescriptions = {
     	    "+5 Max Health",                                 // Case 0 (RED / Health)
     	    "+1 Movement Speed",                             // Case 1 (GREEN / Speed)
-    	    "+1 Attack Speed (Decreases Attack Delay)",      // Case 2 (BLUE / Attack Speed)
-    	    "Unlocks Chain Lightning attacks",               // Case 3 (YELLOW / Lightning)
-    	    "Unlocks ATG Missile strikes",                   // Case 4 (ORANGE / Missile)
-    	    "Spawns 3 orbiting Glaives around the player",   // Case 5 (MAGENTA / Glaive)
-    	    "Summons the controllable Yondu Arrow"           // Case 6 (CYAN / Arrow)
+    	    "+1 Attack Speed",      // Case 2 (BLUE / Attack Speed)
+    	    "Unlocks Chain Lightning",               // Case 3 (YELLOW / Lightning)
+    	    "Unlocks Missile strikes",                   // Case 4 (ORANGE / Missile)
+    	    "Spawns orbiting Glaives",   // Case 5 (MAGENTA / Glaive)
+    	    "Summons Yondu Arrow"           // Case 6 (CYAN / Arrow)
     	};
     
     public PowerUp(int x, int y, PolygonGame game) {
@@ -56,7 +58,7 @@ public class PowerUp extends GameObject {
         try {
             java.io.File fontFile = new java.io.File("Fonts/PressStart2P-Regular.ttf");
             pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((int) radius / 2f);
-
+            descriptionFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((int) radius / 3f);
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
             pixelFont = new Font("Monospaced", Font.BOLD, 100);
@@ -135,6 +137,7 @@ public class PowerUp extends GameObject {
 
             g.drawString(buff, buffX, buffY);
         }
+        g.setFont(descriptionFont);
         
         g.drawString(buffDescriptions[buffType],0+game.getWindowWidth() / 60,(int)(posYBuff/1.25));
 
