@@ -51,9 +51,9 @@ public class DeathScreen extends GameObject {
         DeathScreen deathScreen = new DeathScreen(game, "", false, w, h, x, y);// change the image
         deathScreen.setColor(new Color(220, 20, 60));
         game.add(deathScreen);
-         deathScreenButtons.add(deathScreen);
-        
-        //set buttons for the death screen
+        deathScreenButtons.add(deathScreen);
+
+        // set buttons for the death screen
         int buttonW = w / 3;
         int buttonH = h / 8;
 
@@ -76,33 +76,73 @@ public class DeathScreen extends GameObject {
         deathScreenButtons.add(ReturnToMainMenu);
     }
 
+    // clears everything and sets the game to how it would start
+    public void returnToZero() {
+        // reset player stats
+        Player.size = (game.getWindowWidth() + game.getWindowHeight()) / 100;
+        Player.speed = (game.getWindowWidth() + game.getWindowHeight()) / 200;
+        Player.attackDelay = 0;
+        Player.health = 20;
+        Player.maxHealth = 20;
+        Player.score = 0;
+        Player.xp = 0;
+        Player.level = 1;
+        Player.chainLightningActive = false; // static so all projectiles have property
+        Player.atgMissileActive = true; // static so all projectiles have property
+        Player.glaiveActive = false;
+        Player.yonduArrowActive = false;
+        Player.invulnerableDuration = 30;
+
+        //clear all enemies, projectiles, XP orbs, and power-ups
+        for (Enemy e : PolygonGame.enemies) {
+            game.remove(e);
+        }
+        PolygonGame.enemies.clear();
+        for (Projectile p : PolygonGame.projectiles) {
+            game.remove(p);
+        }
+        PolygonGame.projectiles.clear();
+        for(PowerUp p : PolygonGame.powerUps) {
+            game.remove(p);
+        }
+        PolygonGame.powerUps.clear();
+        for(XpOrb x : PolygonGame.xpOrbs) {
+            game.remove(x);
+        }
+        PolygonGame.xpOrbs.clear();
+        //remove scaling for the enemies
+        Enemy.healthMultiplier = 1;
+
+    }
+
     @Override
     public void paint(Graphics g) {
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
-            super.paint(g);
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setFont(menuFont);
-            FontMetrics metrics = g2d.getFontMetrics(menuFont);
+        super.paint(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setFont(menuFont);
+        FontMetrics metrics = g2d.getFontMetrics(menuFont);
 
-            // center the text in the button
-            int textWidth = metrics.stringWidth(buttonName);
-            int textHeight = metrics.getAscent();
-            int textX = getWidth() / 2 - textWidth / 2;
-            int textY = getHeight() / 2 + textHeight / 2 - metrics.getDescent();
+        // center the text in the button
+        int textWidth = metrics.stringWidth(buttonName);
+        int textHeight = metrics.getAscent();
+        int textX = getWidth() / 2 - textWidth / 2;
+        int textY = getHeight() / 2 + textHeight / 2 - metrics.getDescent();
 
-            g2d.setColor(Color.BLACK);
-            if (hovered){
-                AffineTransform old = g2d.getTransform();
-                g2d.rotate(hoverAngle, textX + textWidth / 2.0, textY - textHeight / 2.0);
-                g2d.drawString(buttonName, textX, textY);
-                g2d.setTransform(old);
-            } else {
-                hoverAngle = 0;
-                g2d.drawString(buttonName, textX, textY);
-            }     
+        g2d.setColor(Color.BLACK);
+        if (hovered) {
+            AffineTransform old = g2d.getTransform();
+            g2d.rotate(hoverAngle, textX + textWidth / 2.0, textY - textHeight / 2.0);
+            g2d.drawString(buttonName, textX, textY);
+            g2d.setTransform(old);
+        } else {
+            hoverAngle = 0;
+            g2d.drawString(buttonName, textX, textY);
         }
+    }
+
     boolean readyToApply = false;
     boolean wasPressed = false;
 
@@ -120,28 +160,26 @@ public class DeathScreen extends GameObject {
             wasPressed = true;
         }
 
-        //glow when hovered over
+        // glow when hovered over
 
         hovered = contains(game.getMouseX(), game.getMouseY());
-        
+
         if (hovered) {
-            setColor(Color.BLUE); 
+            setColor(Color.BLUE);
         } else {
             setColor(new Color(15, 82, 186));
         }
-        
+
         if (hovered && !wasHoveredLastFrame) {
-            if(tiltLeft){
-            hoverAngle = r.nextDouble() * 0.05+0.1; 
-            tiltLeft= false;
-            }else if (!tiltLeft) {
-                hoverAngle = -(r.nextDouble() * 0.05+0.1); 
+            if (tiltLeft) {
+                hoverAngle = r.nextDouble() * 0.05 + 0.1;
+                tiltLeft = false;
+            } else if (!tiltLeft) {
+                hoverAngle = -(r.nextDouble() * 0.05 + 0.1);
                 tiltLeft = true;
             }
         }
         wasHoveredLastFrame = hovered;
-
-
 
         if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {
 

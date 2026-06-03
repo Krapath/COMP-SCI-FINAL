@@ -76,14 +76,14 @@ public class SpawnAnimation extends GameObject {
                 game.remove(this);
                 spawnParticles.remove(this);
                 playerTransparency += (int) (255 / 8 - 10); // increase player transparency
-                game.player.setColor(new Color(0, 0, 255, playerTransparency));
+                game.player.setColor(new Color(0, 0, 255, playerTransparency));//Pretty sure the code bricks here if the player is shot while spawning
             }
         }
         if (particleTransparency < 250) { // fade in
             particleTransparency += 5;
             setColor(new Color(0, 0, 255, particleTransparency));
         }
-        if (spawnParticles.size() == 0) { // if all particles are gone, stop spawning
+        if (spawnParticles.size() == 1) { // if all particles are gone, stop spawning
             // ensures that all particles are removed from the game
             for (SpawnAnimation m : spawnParticles) {
                 game.remove(m);
