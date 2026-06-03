@@ -12,7 +12,7 @@ public class SpawnAnimation extends GameObject {
     public int lifespan;
     public int particleTransparency = 10;
     static Random r = new Random();
-    public int playerTransparency = 0;
+    public static int playerTransparency = 0;
     private static ArrayList<SpawnAnimation> spawnParticles = new ArrayList<>();
 
     // dummy constructor for the spawn particles, not used to actually spawn the
@@ -83,7 +83,7 @@ public class SpawnAnimation extends GameObject {
             particleTransparency += 5;
             setColor(new Color(0, 0, 255, particleTransparency));
         }
-        if (spawnParticles.size() == 1) { // a few particles are left make them disappear
+        if (spawnParticles.size() <= 1) { // a few particles are left make them disappear
             // ensures that all particles are removed from the game
             for (SpawnAnimation m : spawnParticles) {
                 game.remove(m);

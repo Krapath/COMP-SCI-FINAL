@@ -77,7 +77,7 @@ public class DeathScreen extends GameObject {
     }
 
     // clears everything and sets the game to how it would start
-    public void returnToZero() {
+    public void returnToZero() { //CURRENTLY DOES NOT WORK, NO IDEA WHY
        //clear all enemies, projectiles, XP orbs, and power-ups
         for (Enemy e : PolygonGame.enemies) {
             game.remove(e);
@@ -112,6 +112,7 @@ public class DeathScreen extends GameObject {
         Player.glaiveActive = false;
         Player.yonduArrowActive = false;
         Player.invulnerableDuration = 30;
+        SpawnAnimation.playerTransparency = 0;
         
         //reset player
         game.remove(game.player);
