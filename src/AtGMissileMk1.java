@@ -85,7 +85,6 @@ public class AtGMissileMk1 extends GameObject {
 
                     if (collides(target) && canDamage) { // if collides with target, damage the target and remove the projectile
                         target.health -= damage;
-                        target.setColor(Color.ORANGE);
                         setSize(size*3,size*3);
                         explosionDuration--;
                         setColor(new Color(255, 215,0));

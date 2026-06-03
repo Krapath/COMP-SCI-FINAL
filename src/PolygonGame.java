@@ -27,6 +27,7 @@ public class PolygonGame extends Game {
     DeathScreen deathScreenController;
     GameBackground background;
     YonduArrow yonduArrow;
+    Blink blink;
     static boolean gamePause = true;
     static boolean choosingBuff = false;
     static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -62,6 +63,8 @@ public class PolygonGame extends Game {
         player = new Player(this);
         add(player);
 
+        blink = new Blink(this,this.player);
+        add(blink);
         // creates debugger
         debug = new DisplayDebug(this);
         add(debug);
@@ -145,8 +148,10 @@ public class PolygonGame extends Game {
             }
             Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
-            Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
+            Player.xpReq = 1; // for testing
+           // Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
             choosingBuff = true;
+            
 
         }
 
