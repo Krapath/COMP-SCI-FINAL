@@ -30,10 +30,10 @@ public class PolygonGame extends Game {
     Blink blink;
     static boolean gamePause = true;
     static boolean choosingBuff = false;
-    ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-    public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
-    ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
-    ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
+    static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    static public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+    static ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
+    static ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); // the enemies that have been hit and the timer
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
@@ -134,6 +134,7 @@ public class PolygonGame extends Game {
 
         if (Player.health <= 0) { // stops if dies
             deathScreenController.youDied();
+            deathScreenController.returnToZero();
         }
 
         if (Player.xp >= Player.xpReq) { // spawns a powerup when the player reaches level 5

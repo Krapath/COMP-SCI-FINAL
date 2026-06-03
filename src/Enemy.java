@@ -17,7 +17,7 @@ public class Enemy extends GameObject {
     public int displayOld = 0; //used to see enemies that have been alive older
     boolean appearedOnGame = false;
 
-    int healthMultiplier;
+    static int healthMultiplier;
 
     public Enemy(PolygonGame game, int type, int spawn, int seed) {
         this.type = type;

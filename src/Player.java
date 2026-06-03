@@ -6,7 +6,7 @@ public class Player extends GameObject {
 
     Random r = new Random();
 
-    static int size;
+    public static int size;
     static int speed;
     static int attackDelay = 0;
     static int health = 20;
