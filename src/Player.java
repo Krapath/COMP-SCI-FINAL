@@ -19,10 +19,11 @@ public class Player extends GameObject {
     static boolean atgMissileActive = true; // static so all projectiles have property
     static boolean glaiveActive = false;
     static boolean yonduArrowActive = false;
+    static boolean blinkActive = false;
     static double xpReq = 5 * level * Math.log(level + 1);
-    
+
     static boolean invulnerable = false;
-    static int invulnerableDuration  = 30;
+    static int invulnerableDuration  = 120;
     static int invulnerableTimer = 0;
     PolygonGame game;
 
@@ -112,7 +113,7 @@ public class Player extends GameObject {
             	setColor(Color.BLUE);
             	invulnerable = false;
             }
-        }
+        } 
 
 
         

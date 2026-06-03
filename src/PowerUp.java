@@ -26,13 +26,13 @@ public class PowerUp extends GameObject {
     public double radius;
     private Font pixelFont;
     String buff;
-    static int[] buffArray = new int[7];
+    static int[] buffArray = new int[8];
     private Font descriptionFont;
 
     
 
-    static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow"};
-    static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA, Color.CYAN};
+    static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow","Blink"};
+    static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA, Color.CYAN,Color.GRAY};
     String[] buffDescriptions = {
     	    "+5 Max Health",                                 // Case 0 (RED / Health)
     	    "+1 Movement Speed",                             // Case 1 (GREEN / Speed)
@@ -40,7 +40,8 @@ public class PowerUp extends GameObject {
     	    "Unlocks Chain Lightning",               // Case 3 (YELLOW / Lightning)
     	    "Unlocks Missile strikes",                   // Case 4 (ORANGE / Missile)
     	    "Spawns orbiting Glaives",   // Case 5 (MAGENTA / Glaive)
-    	    "Summons Yondu Arrow"           // Case 6 (CYAN / Arrow)
+    	    "Summons Yondu Arrow",           // Case 6 (CYAN / Arrow)
+    	    "Press Space to Blink"
     	};
     
     public PowerUp(int x, int y, PolygonGame game) {
@@ -110,6 +111,14 @@ public class PowerUp extends GameObject {
                 if (!Player.yonduArrowActive) {
                     game.yonduArrow = new YonduArrow(game);
                     game.add(game.yonduArrow);
+                }
+                break;
+                
+            case 7:
+                if (!Player.blinkActive) {
+                    Player.blinkActive = true;
+                    game.blink = new Blink(game,game.player);
+                    game.add(game.blink);
                 }
                 break;
         }

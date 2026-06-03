@@ -75,6 +75,7 @@ public abstract class Game extends JFrame {
 	 * <code>true</code> if the mouse left button is being held down or clicked.
 	 */
 	private boolean mouseLeft = false;
+	private boolean spaceBar = false;
 	private int mouseX;
 	private int mouseY;
 
@@ -98,6 +99,11 @@ public abstract class Game extends JFrame {
 	 */
 	public boolean AKeyPressed() {
 		return leftKey;
+	}
+	
+	
+	public boolean spaceBarKeyPressed() {
+		return spaceBar;
 	}
 
 	/**
@@ -283,6 +289,9 @@ public abstract class Game extends JFrame {
 					case 'L':
 						PolygonGame.gamePause = false;
 						break;
+					case 32:
+						spaceBar = true;
+						break;
 
 				}
 
@@ -302,6 +311,9 @@ public abstract class Game extends JFrame {
 						break;
 					case 'S':
 						downKey = false;
+						break;
+					case 32:
+						spaceBar = false;
 						break;
 				}
 			}
