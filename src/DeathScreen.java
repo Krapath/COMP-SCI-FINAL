@@ -48,7 +48,7 @@ public class DeathScreen extends GameObject {
         int y = (game.getWindowHeight() - h) / 2; // center the death screen vertically
 
         // make the frame for the death screen
-        DeathScreen deathScreen = new DeathScreen(game, "", false, w, h, x, y);// change the image
+        DeathScreen deathScreen = new DeathScreen(game, "doNotChange", false, w, h, x, y);// change the image
         deathScreen.setColor(new Color(220, 20, 60));
         game.add(deathScreen);
         deathScreenButtons.add(deathScreen);
@@ -77,7 +77,7 @@ public class DeathScreen extends GameObject {
     }
 
     // clears everything and sets the game to how it would start
-    public void returnToZero() { //CURRENTLY DOES NOT WORK, NO IDEA WHY
+    public void returnToZero() { //must make better later
        //clear all enemies, projectiles, XP orbs, and power-ups
         for (Enemy e : PolygonGame.enemies) {
             game.remove(e);
@@ -125,7 +125,11 @@ public class DeathScreen extends GameObject {
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
+        
         super.paint(g);
+        if(buttonName.equals("doNotChange")) {
+            return; // don't draw text for the background box
+        }
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(menuFont);
         FontMetrics metrics = g2d.getFontMetrics(menuFont);
@@ -154,6 +158,9 @@ public class DeathScreen extends GameObject {
     public void act() {
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
+        }
+        if(buttonName.equals("doNotChange")) {
+            return; // don't check for clicks on the background box
         }
         int x = game.getMouseX();
         int y = game.getMouseY();
