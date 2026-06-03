@@ -6,7 +6,7 @@ public class Player extends GameObject {
 
     Random r = new Random();
 
-    public static int size;
+    static int size;
     static int speed;
     static int attackDelay = 0;
     static int health = 20;
@@ -22,7 +22,7 @@ public class Player extends GameObject {
     static double xpReq = 5 * level * Math.log(level + 1);
     
     static boolean invulnerable = false;
-    static int invulnerableDuration  = 30;
+    static int invulnerableDuration  = 1;
     static int invulnerableTimer = 0;
     PolygonGame game;
 

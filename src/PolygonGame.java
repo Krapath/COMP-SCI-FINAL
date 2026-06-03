@@ -129,9 +129,9 @@ public class PolygonGame extends Game {
             spawnedEnemies++;
         }
 
-        if (Player.health <= 0) { // stops if dies
+        if (Player.health <= 0 && this.player != null) { // stops if dies
+            gamePause = true;
             deathScreenController.youDied();
-            deathScreenController.returnToZero();
         }
 
         if (Player.xp >= Player.xpReq) { // spawns a powerup when the player reaches level 5

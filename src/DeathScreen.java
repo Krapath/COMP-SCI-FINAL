@@ -78,22 +78,7 @@ public class DeathScreen extends GameObject {
 
     // clears everything and sets the game to how it would start
     public void returnToZero() {
-        // reset player stats
-        Player.size = (game.getWindowWidth() + game.getWindowHeight()) / 100;
-        Player.speed = (game.getWindowWidth() + game.getWindowHeight()) / 200;
-        Player.attackDelay = 0;
-        Player.health = 20;
-        Player.maxHealth = 20;
-        Player.score = 0;
-        Player.xp = 0;
-        Player.level = 1;
-        Player.chainLightningActive = false; // static so all projectiles have property
-        Player.atgMissileActive = true; // static so all projectiles have property
-        Player.glaiveActive = false;
-        Player.yonduArrowActive = false;
-        Player.invulnerableDuration = 30;
-
-        //clear all enemies, projectiles, XP orbs, and power-ups
+       //clear all enemies, projectiles, XP orbs, and power-ups
         for (Enemy e : PolygonGame.enemies) {
             game.remove(e);
         }
@@ -113,6 +98,25 @@ public class DeathScreen extends GameObject {
         //remove scaling for the enemies
         Enemy.healthMultiplier = 1;
 
+        // reset player stats
+        Player.size = (game.getWindowWidth() + game.getWindowHeight()) / 100;
+        Player.speed = (game.getWindowWidth() + game.getWindowHeight()) / 200;
+        Player.attackDelay = 0;
+        Player.health = 20;
+        Player.maxHealth = 20;
+        Player.score = 0;
+        Player.xp = 0;
+        Player.level = 1;
+        Player.chainLightningActive = false; // static so all projectiles have property
+        Player.atgMissileActive = true; // static so all projectiles have property
+        Player.glaiveActive = false;
+        Player.yonduArrowActive = false;
+        Player.invulnerableDuration = 30;
+        
+        //reset player
+        game.remove(game.player);
+        // reset debugger
+        game.remove(game.debug);
     }
 
     @Override
@@ -189,6 +193,7 @@ public class DeathScreen extends GameObject {
                 }
                 deathScreenButtons.clear(); // clears the entire list
                 game.menuController.spawnMyBoxes(game); // spawns the main menu buttons
+                returnToZero();
             }
             readyToApply = false;
             wasPressed = false;
