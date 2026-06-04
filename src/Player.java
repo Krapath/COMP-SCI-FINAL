@@ -1,5 +1,6 @@
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Player extends GameObject {
@@ -9,7 +10,7 @@ public class Player extends GameObject {
     static int size;
     static int speed;
     static int attackDelay = 0;
-    static int health = 2;
+    static int health = 20;
     static int maxHealth = 20;
     static int score = 0;
     static int xp = 0;
@@ -21,12 +22,16 @@ public class Player extends GameObject {
     static boolean yonduArrowActive = false;
     static boolean blinkActive = false;
     static double xpReq = 5 * level * Math.log(level + 1);
+    //public AbilityReal realAbility;
+
 
     static boolean invulnerable = false;
     static int invulnerableDuration  = 30;
     static int invulnerableTimer = 0;
     PolygonGame game;
 
+    static ArrayList<AbilityReal> abilityReal = new ArrayList<AbilityReal>();
+    
     public Player(PolygonGame game) {
         this.game = game;
         size = (game.getWindowWidth() + game.getWindowHeight()) / 100; // player size is 1/100 of the entire window

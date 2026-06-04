@@ -97,7 +97,7 @@ public class DeathScreen extends GameObject {
         //TODO: read below
         // can create a new class type called buff/weapons that includes type of powerup for allowing
         // the removal of buffs without having to clear all powerups and reapply the ones that aren't buffs
-        game.removeAllOfType(Ability.class);
+        //game.removeAllOfType(Ability.class);
 
         
 

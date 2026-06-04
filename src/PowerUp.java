@@ -9,6 +9,7 @@ import java.util.Random;
 
 @SuppressWarnings("unused")
 
+//TODO: maybe just use paint 
 public class PowerUp extends GameObject {
 
     Random r = new Random();
@@ -21,6 +22,7 @@ public class PowerUp extends GameObject {
     public int posXBuff;
     public int posYBuff;
     public int nPointsBuff;
+    
 
     public double radius;
     private Font pixelFont;
@@ -67,6 +69,7 @@ public class PowerUp extends GameObject {
 
     }
 
+    //TODO: Change buffs to a method
     public void applyBuff(int buffType) {
         buffArray[buffType]++;
         switch (buffType) {
@@ -79,7 +82,7 @@ public class PowerUp extends GameObject {
                 break;
 
             case 2:
-                Player.attackDelay += 1; //TODO:broken fix
+                Player.attackDelay += 1;
                 break;
 
             case 3:
@@ -115,8 +118,9 @@ public class PowerUp extends GameObject {
             case 7:
                 if (!Player.blinkActive) {
                     Player.blinkActive = true;
-                    game.blink = new Blink(game,game.player);
-                    game.add(game.blink);
+                    BlinkReal blink = new BlinkReal(game, game.player);
+                    //game.player.blink = blink;
+                    game.player.abilityReal.add(blink);
                 }
                 break;
         }

@@ -24,7 +24,7 @@ public class XpOrb extends GameObject {
         setColor(Color.YELLOW);
         x = getX();
         y = getY();
-        xpOrb = new ImageIcon("Images/Misc/XpOrb.png").getImage();
+        xpOrb = new ImageIcon("Images/Sprites/XpOrb.png").getImage();
 
     }
 

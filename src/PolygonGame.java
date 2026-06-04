@@ -28,14 +28,14 @@ public class PolygonGame extends Game {
     DeathScreen deathScreenController;
     GameBackground background;
     YonduArrow yonduArrow;
-    Blink blink;
+    //TODO: fix Blink blink;
     static boolean gamePause = true;
     static boolean choosingBuff = false;
     static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     static public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     static ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
     static ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
-    HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); // the enemies that have been hit and the timer
+    HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); //TODO: Change the enemies that have been hit and the timer
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
     public int spawnedEnemies = 0;
@@ -81,6 +81,19 @@ public class PolygonGame extends Game {
         if (gamePause) {
             return; // pause the game while choosing a buff or on main menu(lock the game)
         }
+        
+        for (int i = 0; i<Player.abilityReal.size();i++){
+        	Player.abilityReal.get(i).act();
+        }
+        
+        if(spaceBarKeyPressed()){
+            for (int i = 0; i<Player.abilityReal.size();i++){
+            	Player.abilityReal.get(i).doingThings();
+            }
+        }
+        
+        
+        
         if (debug != null) {
             getContentPane().setComponentZOrder(debug, 0);
         }

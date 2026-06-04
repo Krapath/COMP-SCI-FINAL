@@ -1,4 +1,4 @@
-import java.awt.Graphics;
+/*import java.awt.Graphics;
 
 public class Ability extends GameObject {
 
@@ -55,3 +55,5 @@ public class Ability extends GameObject {
     public void paint(Graphics g) {
     }
 }
+
+*/
