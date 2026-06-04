@@ -22,6 +22,7 @@ public class PolygonGame extends Game {
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
+    DeathAnimation deathAnimationController;
     DisplayDebug debug;
     Tutorial tutorialController;
     DeathScreen deathScreenController;
@@ -52,6 +53,7 @@ public class PolygonGame extends Game {
         tutorialController = new Tutorial(this, "", 0, 0,0,0);
         //create dummy constructor for the death screen buttons to use to spawn the buttons
         deathScreenController = new DeathScreen(this, "",false, 0, 0,0,0);
+        deathAnimationController = new DeathAnimation(this, 0, 0);
 
         setDelay(16); // 60fps
         setTitle("Polygon");
@@ -139,7 +141,7 @@ public class PolygonGame extends Game {
 
         if (Player.health <= 0 && this.player != null) { // stops if dies
             gamePause = true;
-            deathScreenController.youDied();
+            deathAnimationController.deathAnimation(this);
         }
 
         if (Player.xp >= Player.xpReq) { // spawns a powerup when the player reaches level 5
@@ -153,8 +155,7 @@ public class PolygonGame extends Game {
             }
             Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
-            Player.xpReq = 1; // for testing
-           // Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
+            Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
             choosingBuff = true;
             
 
