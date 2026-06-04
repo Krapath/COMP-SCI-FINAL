@@ -33,7 +33,6 @@ public class XpOrb extends GameObject {
             if (xpOrb != null) {
                 g.drawImage(xpOrb, 0, 0, getWidth(), getHeight(), null);
             }
-            return; // skip everything else
     }
     public void act() {
         if (PolygonGame.gamePause) {
