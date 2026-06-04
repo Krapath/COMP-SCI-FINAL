@@ -69,6 +69,11 @@ public class PolygonGame extends Game {
         debug = new DisplayDebug(this);
         add(debug);
 
+        //start animation
+        SpawnAnimation spawnDummy = new SpawnAnimation(this, 0,0);
+        spawnDummy.spawnAnimation(this);
+        this.add(spawnDummy);
+
     }
 
     public void act() {

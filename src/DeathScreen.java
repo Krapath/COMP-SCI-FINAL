@@ -200,8 +200,17 @@ public class DeathScreen extends GameObject {
                     game.remove(m);
                 }
                 deathScreenButtons.clear(); // clears the entire list
-                game.menuController.spawnMyBoxes(game); // spawns the main menu buttons
                 returnToZero();
+                game.menuController.spawnMyBoxes(game); // spawns the main menu buttons
+                
+            }
+            else if (buttonName.equals("Retry")) {
+                for (DeathScreen m : deathScreenButtons) { // removes all the buttons in the list from game
+                    game.remove(m);
+                }
+                deathScreenButtons.clear(); // clears the entire list
+                returnToZero();
+                game.spawnGame(); // start the game again
             }
             readyToApply = false;
             wasPressed = false;
