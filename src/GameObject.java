@@ -25,6 +25,8 @@ public abstract class GameObject extends JComponent {
     Color c = Color.white;
     public double spriteAngle = 0;
     public double x, y;
+    boolean readyToApply = false;
+    protected boolean wasPressed = false;
 
     /**
      * Sets the pixel width and height of the object
@@ -153,6 +155,27 @@ public abstract class GameObject extends JComponent {
      */
     public abstract void act();
 
+    public boolean isClicked(PolygonGame game, int mouseX, int mouseY) {
+        if (!game.mouseLeftPressed()) {
+            readyToApply = true; 
+        }
+        
+        if (game.mouseLeftPressed() && this.contains(mouseX, mouseY) && readyToApply) {
+            wasPressed = true;
+        }
+
+        if (wasPressed && !game.mouseLeftPressed() && this.contains(mouseX, mouseY) && readyToApply) {  
+            readyToApply = false; 
+            wasPressed = false; 
+            return true;
+        }
+
+        if (!game.mouseLeftPressed()) {
+            wasPressed = false;
+        }
+        
+        return false;
+    }
     //mohammads methods
     public void setPosition() {
         setX((int) (x + 0.5));

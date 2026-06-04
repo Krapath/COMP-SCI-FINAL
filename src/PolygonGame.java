@@ -65,8 +65,6 @@ public class PolygonGame extends Game {
         player = new Player(this);
         add(player);
 
-        blink = new Blink(this,this.player);
-        add(blink);
         // creates debugger
         debug = new DisplayDebug(this);
         add(debug);

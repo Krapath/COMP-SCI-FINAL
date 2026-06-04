@@ -96,7 +96,7 @@ public class Player extends GameObject {
                 Player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
                 game.enemies.get(i).health -= 1;
 
-                if (game.enemies.get(i).health == 1) {
+                if (game.enemies.get(i).health <= 0) {
                     game.remove(game.enemies.get(i)); // remove enemy if health is depleted
                     game.enemies.remove(i);
                 }

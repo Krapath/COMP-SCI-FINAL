@@ -126,7 +126,7 @@ public class YonduArrow extends GameObject {
                 for (Enemy e : game.enemies) {
                     double dx= e.getX()-arrowCX;
                     double dy= e.getY()-arrowCY;
-                    double dist = dx*dy+dy*dy; // takes square value, since not actually using the actual distance, just comparing values 
+                    double dist = dx*dx+dy*dy; // takes square value, since not actually using the actual distance, just comparing values 
                     if (dist < closestDist) {
                         closestDist = dist;
                         closestTarget = e;

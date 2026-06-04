@@ -196,10 +196,25 @@ public abstract class Game extends JFrame {
 	 *          the <code>GameObject</code> to remove
 	 * @see GameObject
 	 */
+	
+
 	public void remove(GameObject o) {
 		_ObjectList.remove(o);
 		getContentPane().remove(o);
 	}
+
+	/*this allows the removal of specific datatype objects from game */
+	public void removeAllOfType(Class<?> type) {
+    ArrayList<GameObject> toRemove = new ArrayList<>();
+    for (int i = 0; i < _ObjectList.size(); i++) {
+        if (type.isInstance(_ObjectList.get(i))) {
+            toRemove.add((GameObject) _ObjectList.get(i));
+        }
+    }
+    for (GameObject o : toRemove) {
+        remove(o);
+    }
+}
 
 	public double getAngle(int x1, int y1, int x2, int y2) {
 		return Math.atan2(y2 - y1, x2 - x1);

@@ -9,7 +9,6 @@ import java.util.Random;
 
 @SuppressWarnings("unused")
 
-//TODO: maybe just use paint 
 public class PowerUp extends GameObject {
 
     Random r = new Random();
@@ -68,7 +67,6 @@ public class PowerUp extends GameObject {
 
     }
 
-    //TODO: Change buffs to a method
     public void applyBuff(int buffType) {
         buffArray[buffType]++;
         switch (buffType) {
@@ -81,7 +79,7 @@ public class PowerUp extends GameObject {
                 break;
 
             case 2:
-                Player.attackDelay += 1;
+                Player.attackDelay += 1; //TODO:broken fix
                 break;
 
             case 3:

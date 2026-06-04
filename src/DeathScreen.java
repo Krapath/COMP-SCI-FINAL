@@ -94,6 +94,13 @@ public class DeathScreen extends GameObject {
         for(XpOrb x : PolygonGame.xpOrbs) {
             game.remove(x);
         }
+        //TODO: read below
+        // can create a new class type called buff/weapons that includes type of powerup for allowing
+        // the removal of buffs without having to clear all powerups and reapply the ones that aren't buffs
+        game.removeAllOfType(Ability.class);
+
+        
+
         PolygonGame.xpOrbs.clear();
         //remove scaling for the enemies
         Enemy.healthMultiplier = 1;
@@ -109,6 +116,7 @@ public class DeathScreen extends GameObject {
         Player.level = 1;
         Player.chainLightningActive = false; // static so all projectiles have property
         Player.atgMissileActive = true; // static so all projectiles have property
+        Player.blinkActive = false;
         Player.glaiveActive = false;
         Player.yonduArrowActive = false;
         Player.invulnerableDuration = 30;
@@ -211,6 +219,7 @@ public class DeathScreen extends GameObject {
                 deathScreenButtons.clear(); // clears the entire list
                 returnToZero();
                 game.spawnGame(); // start the game again
+                PolygonGame.gamePause = false; 
             }
             readyToApply = false;
             wasPressed = false;

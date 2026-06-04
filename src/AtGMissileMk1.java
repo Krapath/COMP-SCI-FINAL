@@ -19,6 +19,7 @@ public class AtGMissileMk1 extends GameObject {
     int spiralDuration = r.nextInt(30) + 30; // the duration of the initial spiral movement, can be adjusted for a longer or shorter spiral
     int randDirectionDuration = 15; // random direction movement
     int explosionDuration =17;
+    int speedReduction = 2;
     public int randomEnemy;
     boolean canDamage = true;
     Enemy target;
@@ -71,9 +72,9 @@ public class AtGMissileMk1 extends GameObject {
                                                                             // target
                 int x = getX();
                 int y = getY();
-                if (randomEnemy < game.enemies.size()) { // if the target enemy was destroyed before the missile could
+                if (game.enemies.contains(target)) {// if the target enemy was destroyed before the missile could
                                                          // reach it, choose a new target if there are any enemies left
-                    target = game.enemies.get(randomEnemy);
+     
                     int enemyX = target.getX();
                     int enemyY = target.getY();
                     double targetAngle = game.getAngle(x, y, enemyX, enemyY);
@@ -88,7 +89,7 @@ public class AtGMissileMk1 extends GameObject {
                         setSize(size*3,size*3);
                         explosionDuration--;
                         setColor(new Color(255, 215,0));
-                        target.speed=target.speed/2;
+                        target.speed=target.speed/speedReduction;
                         canDamage = false;
 
                     }
@@ -116,7 +117,7 @@ public class AtGMissileMk1 extends GameObject {
             setColor(new Color(255, 215,0,15*explosionDuration));
             if (explosionDuration ==0){
             	game.remove(this);
-            	target.speed=target.speed/0.5;
+            	target.speed=target.speed*speedReduction;
             }
         } 
         

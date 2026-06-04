@@ -15,7 +15,6 @@ public class Blink extends Ability {
 		super(game, duration, cooldown);
 		this.player = player;
 
-		originalSpeed = Player.speed;
 	}
 
 	
@@ -28,7 +27,8 @@ public class Blink extends Ability {
 
 		if (game.spaceBarKeyPressed() && canUse()) {
 			startCooldown();
-			originalColor = player.getColor();
+			originalColor = Color.BLUE;
+			originalSpeed = Player.speed;
 			Player.speed = (int) (Player.speed * speedMult);
 			if (!Player.invulnerable) {
 				Player.invulnerable = true;

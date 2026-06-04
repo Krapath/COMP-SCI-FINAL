@@ -19,6 +19,8 @@ public class Enemy extends GameObject {
 
     static int healthMultiplier;
 
+
+    //TODO: enemies exist for one extra frame which can cause problems
     public Enemy(PolygonGame game, int type, int spawn, int seed) {
         this.type = type;
         this.spawnType = spawn;
@@ -66,7 +68,6 @@ public class Enemy extends GameObject {
             case 2:
                 displayOld++;
                 if (displayOld < 75) {
-                    displayOld++;
                     chase(speed);
                     setPosition();
                 } else {
@@ -143,10 +144,10 @@ public class Enemy extends GameObject {
                         x = (int) (game.getWindowWidth() * 1.1);
                         y = r.nextInt(game.getWindowHeight() - size);
                     } else if (side == 2) { // bottom
-                        x = r.nextInt(game.getWindowHeight() - size);
-                        y = (int) (game.getWindowWidth() * 1.1);
+                        x = r.nextInt(game.getWindowWidth() - size);
+                        y = (int) (game.getWindowHeight() * 1.1);
                     } else { // left
-                        x = (int) (0 - game.getWindowHeight() * .1);
+                        x = (int) (0 - game.getWindowWidth() * .1);
                         y = r.nextInt(game.getWindowHeight() - size);
                     }
                     //this code does not work with enemies of different sizes. Fix if variable enemy sizes.
