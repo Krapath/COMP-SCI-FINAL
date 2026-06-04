@@ -27,7 +27,8 @@ public class PowerUp extends GameObject {
     public double radius;
     private Font pixelFont;
     String buff;
-    static int[] buffArray = new int[8];
+    static protected int numBuffs = 8;
+    static int[] buffArray = new int[numBuffs]; // keeps track of how many times the player has gotten each buff, used to determine how many sides the polygon for each buff should have and what number to display on the buff
     private Font descriptionFont;
 
     
@@ -105,6 +106,7 @@ public class PowerUp extends GameObject {
                     game.add(game.glaive1);
                     game.glaive2 = new Glaive(game, 4 * Math.PI / 3);
                     game.add(game.glaive2);
+
                 }
                 break;
 
@@ -118,9 +120,8 @@ public class PowerUp extends GameObject {
             case 7:
                 if (!Player.blinkActive) {
                     Player.blinkActive = true;
-                    BlinkReal blink = new BlinkReal(game, game.player);
+                    Dash blink = new Dash(game, game.player);
                     //game.player.blink = blink;
-                    game.player.abilityReal.add(blink);
                 }
                 break;
         }

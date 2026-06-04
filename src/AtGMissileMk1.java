@@ -10,7 +10,7 @@ import java.awt.geom.AffineTransform;
 
 @SuppressWarnings("unused")
 
-public class AtGMissileMk1 extends GameObject {
+public class AtGMissileMk1 extends Weapon {
     Random r = new Random();
     PolygonGame game;
     public double randomAngle = r.nextDouble() * Math.PI * 2;
@@ -36,6 +36,7 @@ public class AtGMissileMk1 extends GameObject {
     Image missileImage;
 
     public AtGMissileMk1(PolygonGame game) {
+        super(game, "Cast", "AtGMissileMk1");
         this.game = game;
         size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // projectile size is 1/100 of the entire window
         radius = size; // the radius of the spiral, can be adjusted for a tighter or looser spiral
@@ -50,6 +51,8 @@ public class AtGMissileMk1 extends GameObject {
             target = game.enemies.get(randomEnemy);
         }
          missileImage = new ImageIcon("Images/Sprites/Missile.png").getImage();
+
+        game.player.weapons.add(this);
     }
 
 

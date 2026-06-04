@@ -2,14 +2,13 @@
 import java.awt.Color;
 import java.util.ArrayList;
 
-public class Glaive extends GameObject {
+public class Glaive extends Weapon {
 
     int size = (int) (Player.size / 1.5);
     PolygonGame game;
     //double xVel;
     //double yVel;
     //int distanceTraveled = 0;
-    int damage = 1;
     int pierceCooldown = 60; // the amount of frames for each act
     Double angle = 0.0;
     int radius = 100;
@@ -18,11 +17,13 @@ public class Glaive extends GameObject {
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); // TODO: maybe make universal for other buffs
 
     public Glaive(PolygonGame game, double startingAngle) {
+        super(game, "Passive", "Glaive");
         this.game = game;
         angle = startingAngle;
         setLocation(game.player.getX() + 80, game.player.getY() + 80); // update position
         setSize(size, size); // size of the projectile
         setColor(Color.RED);
+        game.player.weapons.add(this);
     }
 
     public void act() {

@@ -65,6 +65,9 @@ public class PolygonGame extends Game {
         player = new Player(this);
         add(player);
 
+        Dash blink = new Dash(this, player);
+        player.abilities.add(blink);
+
         // creates debugger
         debug = new DisplayDebug(this);
         add(debug);
@@ -82,16 +85,15 @@ public class PolygonGame extends Game {
             return; // pause the game while choosing a buff or on main menu(lock the game)
         }
         
-        for (int i = 0; i<Player.abilityReal.size();i++){
-        	Player.abilityReal.get(i).act();
-        }
-        
-        if(spaceBarKeyPressed()){
-            for (int i = 0; i<Player.abilityReal.size();i++){
-            	Player.abilityReal.get(i).doingThings();
+        for (int i = 0; i<Player.abilities.size();i++){
+        	Player.abilities.get(i).act();
+
+            if (spaceBarKeyPressed() && Player.abilities.get(i).name.equals("Dash")){
+                Player.abilities.get(i).performAbility();
             }
+
         }
-        
+  
         
         
         if (debug != null) {

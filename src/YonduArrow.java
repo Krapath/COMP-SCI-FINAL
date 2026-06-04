@@ -5,7 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.Graphics;
 import java.util.Random;
 
-public class YonduArrow extends GameObject {
+public class YonduArrow extends Weapon {
     Random r = new Random();
     int size = 50;
     PolygonGame game;
@@ -42,12 +42,14 @@ public class YonduArrow extends GameObject {
     int tipHeight = 20;
 
     public YonduArrow(PolygonGame game) {
+        super(game, "Passive", "Yondu Arrow");
         this.game = game;
         setSize(game.getWindowWidth(), game.getWindowHeight()); // full screen so nothing clips
         setLocation(0, 0);
         setColor(Color.YELLOW);
         arrowCX = game.player.getX() + 100;
         arrowCY = game.player.getY() + 100;
+        game.player.weapons.add(this);
 
     }
 

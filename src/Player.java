@@ -10,7 +10,7 @@ public class Player extends GameObject {
     static int size;
     static int speed;
     static int attackDelay = 0;
-    static int health = 20;
+    static int health = 1;
     static int maxHealth = 20;
     static int score = 0;
     static int xp = 0;
@@ -30,7 +30,8 @@ public class Player extends GameObject {
     static int invulnerableTimer = 0;
     PolygonGame game;
 
-    static ArrayList<AbilityReal> abilityReal = new ArrayList<AbilityReal>();
+    static ArrayList<Ability> abilities = new ArrayList<Ability>();
+    static ArrayList<Weapon> weapons = new ArrayList<Weapon>();
     
     public Player(PolygonGame game) {
         this.game = game;

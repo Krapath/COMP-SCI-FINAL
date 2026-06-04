@@ -83,21 +83,21 @@ public class DeathScreen extends GameObject {
             game.remove(e);
         }
         PolygonGame.enemies.clear();
-        for (Projectile p : PolygonGame.projectiles) {
-            game.remove(p);
+
+        for (Weapon w : game.player.weapons) {
+            game.remove(w);
         }
-        PolygonGame.projectiles.clear();
-        for(PowerUp p : PolygonGame.powerUps) {
-            game.remove(p);
-        }
-        PolygonGame.powerUps.clear();
+
+        game.player.weapons.clear();
+
+        game.player.abilities.clear();
+
+    
+        PowerUp.buffArray = new int[PowerUp.numBuffs]; // reset the buff array to all 0s
         for(XpOrb x : PolygonGame.xpOrbs) {
             game.remove(x);
         }
-        //TODO: read below
-        // can create a new class type called buff/weapons that includes type of powerup for allowing
-        // the removal of buffs without having to clear all powerups and reapply the ones that aren't buffs
-        //game.removeAllOfType(Ability.class);
+   
 
         
 
@@ -115,10 +115,11 @@ public class DeathScreen extends GameObject {
         Player.xp = 0;
         Player.level = 1;
         Player.chainLightningActive = false; // static so all projectiles have property
-        Player.atgMissileActive = true; // static so all projectiles have property
+        Player.atgMissileActive = false; // static so all projectiles have property
         Player.blinkActive = false;
         Player.glaiveActive = false;
         Player.yonduArrowActive = false;
+        Player.invulnerable = false;
         Player.invulnerableDuration = 30;
         SpawnAnimation.playerTransparency = 0;
         

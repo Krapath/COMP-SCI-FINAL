@@ -6,7 +6,7 @@ import java.awt.Graphics2D; // so i can have thicker lines for the chain lightni
 import java.awt.BasicStroke;
 
 
-public class ChainLightning extends GameObject {
+public class ChainLightning extends Weapon {
 
 
     /* two main array lists
@@ -17,7 +17,6 @@ public class ChainLightning extends GameObject {
     Random r = new Random();
     double randomAngleStatic = r.nextDouble();
     PolygonGame game;   
-    int damage = 1;
     int chainCount = 3;
     int chainRange;
     int durationVisible = 10; // the amount of frames the chain lightning is visible for
@@ -29,6 +28,7 @@ public class ChainLightning extends GameObject {
     
     // will handle the math and logic for the chain lightning buff, only incremments number values and checks for collisions, the actual drawing of the lightning will be handled in the draw method
     public ChainLightning(Enemy enemy, PolygonGame game) {
+        super(game, "Cast", "Chain Lightning");
         this.game = game;
         chainRange = (game.getWindowWidth() + game.getWindowHeight()) / 2 / 10; // the range that the chain lightning can jump to the next target, can be adjusted for more or less range
         setSize(game.getWindowWidth(), game.getWindowHeight()); // make the canvas size of the entire window so it can draw lightning anywhere
@@ -62,7 +62,8 @@ public class ChainLightning extends GameObject {
             } else {
             break; // no more valid targets, end the chain early
             }
-        } 
+        }
+        game.player.weapons.add(this);
     } 
     
 

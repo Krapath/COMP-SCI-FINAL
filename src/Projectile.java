@@ -2,7 +2,7 @@
 import java.awt.Color;
 import java.util.ArrayList;
 
-public class Projectile extends GameObject {
+public class Projectile extends Weapon {
 
     PolygonGame game;
     double xVel;
@@ -17,6 +17,7 @@ public class Projectile extends GameObject {
     public ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
     public Projectile(PolygonGame game) {
+        super(game, "Cast", "Projectile");
         this.game = game;
 
         setLocation(game.player.getX() + Player.size / 3, game.player.getY() + Player.size / 3); // update
@@ -33,6 +34,7 @@ public class Projectile extends GameObject {
     }
 
     public Projectile(PolygonGame game, double givenX, double givenY) {
+        super(game, "Cast", "Projectile");
         this.game = game;
         friendly = false;
         setLocation((int) (givenX + 0.5), (int) (givenY + 0.5)); // update
@@ -46,7 +48,7 @@ public class Projectile extends GameObject {
         speed = 40.0; // adjust as needed
 
     }
-
+    
     public void act() {
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing
