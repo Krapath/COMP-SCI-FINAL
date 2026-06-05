@@ -44,7 +44,7 @@ public class AtGMissileMk1 extends Weapon {
         pivotX = game.player.getX() - size / 2;
         pivotY = game.player.getY() - size / 2;
         setLocation(pivotX, pivotY);
-        spriteSize = size * 4;  
+        spriteSize = size * 100;  
         setSize(spriteSize, spriteSize);
         if (game.enemies.size() > 0) {
             randomEnemy = r.nextInt(game.enemies.size());

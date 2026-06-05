@@ -17,8 +17,9 @@ public class Arrow extends Weapon {
 	int spriteSize;
 	int size;
 
-	int shaftWidth = 10;
-	int shaftHeight = 60;
+	int shaftWidth = 20;
+	int shaftHeight = 50;
+	int projSize;
 	ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
 	public Arrow(PolygonGame game, double angle) {
@@ -27,15 +28,13 @@ public class Arrow extends Weapon {
 
 		targetAngle = angle;
         size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // projectile size is 1/100 of the entire window
-		speed=5.0;
-		setSize(size*10, size*10);
+        projSize =size*10;
+		speed=25.0;
+		setSize(projSize, projSize);
 		setColor(Color.BLUE);
 		x = game.player.x;
 		y = game.player.y;
 		
-		arrowCX = (int)(game.player.x+game.player.size/2.0);
-		
-		arrowCY = (int)(game.player.y + game.player.size/2.0);
 		
 		setPosition(this,arrowCX,arrowCY);
 		arrowImage = new ImageIcon("Images/Sprites/Missile.png").getImage();
@@ -61,30 +60,16 @@ public class Arrow extends Weapon {
             g2d.setTransform(old);
 	} 
 
-	public boolean arrowHits(Enemy e) {
-		double ex = e.getX() + e.size / 2.0;
-		double ey = e.getY() + e.size / 2.0;
-
-		// get the enemies position relative to arrow center
-		double localX = ex - arrowCX;
-		double localY = ey - arrowCY;
-
-		// subtract the PI/2 offset since spriteAngle always has it added
-		// 2d rotation matrix
-		double checkAngle = -(spriteAngle - Math.PI / 2);
-		double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
-		double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
-
-		// check if its inside the rectangle
-		return (Math.abs(rotX) <= shaftWidth / 2.0 && rotY >= -shaftHeight / 2.0 && rotY <= shaftHeight / 2.0);
-	}
 
 	public void act() {
 		spriteAngle = targetAngle;
 		shoot(speed, targetAngle);
         setPosition();
         
-	
+		arrowCX = (int)(x);
+		
+		arrowCY = (int)(y);
+		
 		for (int i = 0; i < game.enemies.size(); i++) { //for every enemy in the game
 			if (arrowHits(game.enemies.get(i))) { //if it collides with an enemy
 				boolean hit = false;
@@ -121,4 +106,23 @@ public class Arrow extends Weapon {
 		}
 
 	}
+	
+	public boolean arrowHits(Enemy e) {
+		double ex = e.getX() + e.size / 2.0;
+		double ey = e.getY() + e.size / 2.0;
+
+		// get the enemies position relative to arrow center
+		double localX = ex - arrowCX;
+		double localY = ey - arrowCY;
+
+		// subtract the PI/2 offset since spriteAngle always has it added
+		// 2d rotation matrix
+		double checkAngle = -(spriteAngle);
+		double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
+		double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
+
+		// check if its inside the rectangle
+		return (Math.abs(rotX) <= shaftWidth / 2.0 && rotY >= -shaftHeight / 2.0 && rotY <= shaftHeight / 2.0);
+	}
+
 }

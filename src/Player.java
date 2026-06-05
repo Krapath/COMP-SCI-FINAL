@@ -10,7 +10,7 @@ public class Player extends GameObject {
     static int size;
     static int speed;
     static int attackDelay = 0;
-    static int health = 1;
+    static int health = 10;
     static int maxHealth = 20;
     static int score = 0;
     static int xp = 0;

@@ -1,5 +1,5 @@
 import java.awt.Color;
-
+import java.util.Random;
 public class ArrowSpread extends Ability{
 	
 	
@@ -14,6 +14,8 @@ public class ArrowSpread extends Ability{
 	
 	static int duration=5;
 	static int cooldown=60;
+	
+	Random r = new Random();
 	
 	
 	public ArrowSpread(PolygonGame game, Player player) {
@@ -33,10 +35,12 @@ public class ArrowSpread extends Ability{
 		if (canUse()){
 			startCooldown();
 			
-			    double angleInRadians = Math.PI/2.4;
+				for(int i = 0; i<5; i ++){
+					
+			    double angleInRadians = r.nextInt(361)*Math.PI/180;
 			    Arrow arrow = new Arrow(game, angleInRadians); 
 			    game.add(arrow); 
-
+				}
 
 
 			
