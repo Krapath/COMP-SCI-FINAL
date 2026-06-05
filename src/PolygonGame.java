@@ -35,6 +35,8 @@ public class PolygonGame extends Game {
     static public ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     static ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
     static ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
+    static ArrayList<Arrow> arrows = new ArrayList<Arrow>();
+
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); //TODO: Change the enemies that have been hit and the timer
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
@@ -65,8 +67,10 @@ public class PolygonGame extends Game {
         player = new Player(this);
         add(player);
 
-        Dash blink = new Dash(this, player);
-        player.abilities.add(blink);
+        
+        Dash dash = new Dash(this, player);
+
+        ArrowSpread ArrowSpread = new ArrowSpread(this, player);
 
         // creates debugger
         debug = new DisplayDebug(this);

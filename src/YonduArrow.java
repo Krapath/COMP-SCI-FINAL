@@ -45,7 +45,6 @@ public class YonduArrow extends Weapon {
         super(game, "Passive", "Yondu Arrow");
         this.game = game;
         setSize(game.getWindowWidth(), game.getWindowHeight()); // full screen so nothing clips
-        setLocation(0, 0);
         setColor(Color.YELLOW);
         arrowCX = game.player.getX() + 100;
         arrowCY = game.player.getY() + 100;
@@ -75,6 +74,30 @@ public class YonduArrow extends Weapon {
         g2d.drawRect(-tipWidth / 2, -shaftHeight / 2 - tipHeight, tipWidth, shaftHeight + tipHeight);
 
         g2d.setTransform(old); // restore
+    }
+    
+    // works by reversing the rotation on the rectangle/ applying it to the enemy then chceking if the enemy is within it
+
+    // custom collision detection for rotating rectangle hitbox, does not use the built in collides function since that is just a bounding box and does not rotate with the arrow
+    boolean arrowHits(Enemy e) {
+        double ex = e.getX() + e.size / 2.0;
+        double ey = e.getY() + e.size / 2.0;
+
+        // get the enemies position relative to arrow center
+
+        double localX = ex - arrowCX;
+        double localY = ey - arrowCY;
+
+        // subtract the PI/2 offset since spriteAngle always has it added
+        // 2d rotation nmatrix
+        double checkAngle = -(spriteAngle - Math.PI / 2);
+        double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
+        double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
+        
+        // check if its inside the rectangle
+        return Math.abs(rotX) <= tipWidth / 2.0
+                && rotY >= -shaftHeight / 2.0 - tipHeight
+                && rotY <= shaftHeight / 2.0;
     }
 
     public void act() {
@@ -229,27 +252,5 @@ public class YonduArrow extends Weapon {
         }
     }
 
-    // works by reversing the rotation on the rectangle/ applying it to the enemy then chceking if the enemy is within it
 
-    // custom collision detection for rotating rectangle hitbox, does not use the built in collides function since that is just a bounding box and does not rotate with the arrow
-    boolean arrowHits(Enemy e) {
-        double ex = e.getX() + e.size / 2.0;
-        double ey = e.getY() + e.size / 2.0;
-
-        // get the enemies position relative to arrow center
-
-        double localX = ex - arrowCX;
-        double localY = ey - arrowCY;
-
-        // subtract the PI/2 offset since spriteAngle always has it added
-        // 2d rotatio nmatrix
-        double checkAngle = -(spriteAngle - Math.PI / 2);
-        double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
-        double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
-        
-        // check if its inside the rectangle
-        return Math.abs(rotX) <= tipWidth / 2.0
-                && rotY >= -shaftHeight / 2.0 - tipHeight
-                && rotY <= shaftHeight / 2.0;
-    }
 }

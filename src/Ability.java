@@ -28,7 +28,7 @@ public class Ability {
 
 
 	public boolean canUse(){
-		return (cooldownTimer == 0 &&!isActive);
+		return (cooldownTimer == 0 &&!isActive && !PolygonGame.gamePause);
 	}
 	
 

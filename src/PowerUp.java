@@ -121,7 +121,6 @@ public class PowerUp extends GameObject {
                 if (!Player.blinkActive) {
                     Player.blinkActive = true;
                     Dash blink = new Dash(game, game.player);
-                    //game.player.blink = blink;
                 }
                 break;
         }

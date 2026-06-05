@@ -155,7 +155,9 @@ public abstract class GameObject extends JComponent {
      */
     public abstract void act();
 
-    public boolean isClicked(PolygonGame game, int mouseX, int mouseY) {
+    
+    // hugo method
+    public boolean isClickedAndReleased(PolygonGame game, int mouseX, int mouseY) {
         if (!game.mouseLeftPressed()) {
             readyToApply = true; 
         }
