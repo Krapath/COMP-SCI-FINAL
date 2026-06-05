@@ -28,8 +28,8 @@ public class DeathAnimation extends GameObject {
     public void deathAnimation(PolygonGame game) {
         game.player.setColor(new Color(0, 0, 255, 0)); // make player invisible
         for (int i = 0; i < 8; i++) {
-            int x = (int) (Player.x + Player.size / 2 + r.nextInt(Player.size+1) - Player.size / 2);
-            int y = (int) (Player.y + Player.size / 2 + r.nextInt(Player.size+1) - Player.size / 2);
+            int x = (int) (game.player.x + Player.size / 2 + r.nextInt(Player.size+1) - Player.size / 2);
+            int y = (int) (game.player.y + Player.size / 2 + r.nextInt(Player.size+1) - Player.size / 2);
             // put the dots in a place close to the player, with some randomization
             addParticle(game, x, y);
         }
@@ -66,7 +66,7 @@ public class DeathAnimation extends GameObject {
             setPosition(this, x, y);
             timer++;
         } else if (timer < 130) { // make the particles fly outwards
-            double playerAngle = Math.atan2(Player.y + Player.size / 2 - y, Player.x + Player.size / 2 - x);
+            double playerAngle = Math.atan2(game.player.y + Player.size / 2 - y, game.player.x + Player.size / 2 - x);
             x += (Math.cos(playerAngle + Math.PI) * speed * 5);
             y += (Math.sin(playerAngle + Math.PI) * speed * 5);
             setPosition(this, x, y);

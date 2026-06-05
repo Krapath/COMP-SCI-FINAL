@@ -189,8 +189,8 @@ public abstract class GameObject extends JComponent {
         setY(y);
     }
 
-    public void chase(double speed) {
-        double playerAngle = Math.atan2(Player.y - y, Player.x - x);
+    public void chase(double speed, GameObject target) {
+        double playerAngle = Math.atan2(target.y - y, target.x - x);
         x += (Math.cos(playerAngle) * speed);
         y += (Math.sin(playerAngle) * speed);
     }

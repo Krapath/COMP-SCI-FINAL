@@ -44,7 +44,7 @@ public class Projectile extends Weapon {
         setSize(15, 15); // size of the projectile
         setColor(Color.RED);
 
-        angle = getRealAngle(Player.x + (double) Player.size / 2, Player.y + (double) Player.size / 2);
+        angle = getRealAngle(game.player.x + (double) Player.size / 2, game.player.y + (double) game.player.size / 2);
         speed = 40.0; // adjust as needed
 
     }

@@ -65,7 +65,7 @@ public class SpawnAnimation extends GameObject {
         int x = getX();
         int y = getY();
         // get angle to player
-        double playerAngle = Math.atan2(Player.y + Player.size / 2 - y, Player.x + Player.size / 2 - x);
+        double playerAngle = Math.atan2(game.player.y + Player.size / 2 - y, game.player.x + Player.size / 2 - x);
         // move towards player
         x += (Math.cos(playerAngle) * speed) + (r.nextInt(speed * 2) - speed);
         y += (Math.sin(playerAngle) * speed) + (r.nextInt(speed * 2) - speed);
@@ -83,6 +83,7 @@ public class SpawnAnimation extends GameObject {
             particleTransparency += 5;
             setColor(new Color(0, 0, 255, particleTransparency));
         }
+        
         if (spawnParticles.size() <= 1) { // a few particles are left make them disappear
             // ensures that all particles are removed from the game
             for (SpawnAnimation m : spawnParticles) {

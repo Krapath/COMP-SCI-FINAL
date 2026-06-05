@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -7,7 +8,7 @@ public class Arrow extends Weapon {
 	PolygonGame game;
 	public double targetAngle;
 	public double speed;
-	static int pierce = 2;
+	public int pierce = 2;
 
 	int arrowCX;
 	int arrowCY;
@@ -25,32 +26,40 @@ public class Arrow extends Weapon {
 		this.game = game;
 
 		targetAngle = angle;
-		size = 20;
+        size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // projectile size is 1/100 of the entire window
 		speed=5.0;
-		setSize(size, size);
+		setSize(size*10, size*10);
 		setColor(Color.BLUE);
-		arrowCX = game.player.getX()+game.player.size/2;
-		arrowCY = game.player.getY()+game.player.size/2;
-		setLocation(arrowCX,arrowCY);
+		x = game.player.x;
+		y = game.player.y;
+		
+		arrowCX = (int)(game.player.x+game.player.size/2.0);
+		
+		arrowCY = (int)(game.player.y + game.player.size/2.0);
+		
+		setPosition(this,arrowCX,arrowCY);
 		arrowImage = new ImageIcon("Images/Sprites/Missile.png").getImage();
 		spriteSize = 5 * size;
 	}
 
-	/*public void paint(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
-		
-		int offset = (spriteSize - getWidth()) / 2; // center it on the hitbox
+	public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        AffineTransform old = g2d.getTransform();
 
-		g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
+   
 
-		spriteAngle = targetAngle; // angle becomes the target
-		g2d.rotate(targetAngle);
-		g2d.translate(-getWidth() / 2.0, -getHeight() / 2.0);
+            int offset = (spriteSize - getWidth()) / 2; // center it on the hitbox
 
-		if (arrowImage != null) {
-			g2d.drawImage(arrowImage, -offset, -offset, spriteSize, spriteSize, null);
-		}
-	} */
+            g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
+            g2d.rotate(spriteAngle);
+            g2d.translate(-getWidth() / 2.0, -getHeight() / 2.0);
+
+            if (arrowImage != null) {
+                g2d.drawImage(arrowImage, -offset, -offset, spriteSize, spriteSize, null);
+            } 
+
+            g2d.setTransform(old);
+	} 
 
 	public boolean arrowHits(Enemy e) {
 		double ex = e.getX() + e.size / 2.0;
@@ -71,14 +80,16 @@ public class Arrow extends Weapon {
 	}
 
 	public void act() {
+		spriteAngle = targetAngle;
 		shoot(speed, targetAngle);
-
+        setPosition();
+        
 	
-		for (int i = 0; i < game.enemies.size(); i++) {
-			if (arrowHits(game.enemies.get(i))) {
+		for (int i = 0; i < game.enemies.size(); i++) { //for every enemy in the game
+			if (arrowHits(game.enemies.get(i))) { //if it collides with an enemy
 				boolean hit = false;
-				for (int j = 0; j < hitEnemies.size(); j++) {
-					if (game.enemies.get(i) == hitEnemies.get(j)) {
+				for (int j = 0; j < hitEnemies.size(); j++) { //for every enemy already hit
+					if (game.enemies.get(i) == hitEnemies.get(j)) { //if this enemy has already been hit, sets hit to true
 						hit = true;
 					}
 				}
@@ -88,8 +99,11 @@ public class Arrow extends Weapon {
 					hitEnemies.add(game.enemies.get(i));
 					game.enemies.get(i).health -= damage;
 					game.enemies.get(i).setColor(Color.RED);
-
-					game.remove(this);
+					
+					pierce--;
+					
+					if(pierce == 0)
+						game.remove(this);
 
 					int enemyX = game.enemies.get(i).getX();
 					int enemyY = game.enemies.get(i).getY();

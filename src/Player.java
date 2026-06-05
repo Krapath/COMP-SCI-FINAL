@@ -14,7 +14,6 @@ public class Player extends GameObject {
     static int maxHealth = 20;
     static int score = 0;
     static int xp = 0;
-    static double x, y;
     static int level = 1;
     static boolean chainLightningActive = false; // static so all projectiles have property
     static boolean atgMissileActive = true; // static so all projectiles have property

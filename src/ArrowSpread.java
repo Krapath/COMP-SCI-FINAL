@@ -33,7 +33,7 @@ public class ArrowSpread extends Ability{
 		if (canUse()){
 			startCooldown();
 			
-			    double angleInRadians = Math.PI/2.0;
+			    double angleInRadians = Math.PI/2.4;
 			    Arrow arrow = new Arrow(game, angleInRadians); 
 			    game.add(arrow); 
 

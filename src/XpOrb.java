@@ -39,12 +39,12 @@ public class XpOrb extends GameObject {
             return; // xp orbs do not move or collide with the player while the player is choosing a buff
         }        // check for collision with player
 
-        if ((Math.abs(Player.x - x) <= distanceAttraction) && (Math.abs(Player.y - y) <= distanceAttraction)) {// only move towards the player if the xp orb is close to player
+        if ((Math.abs(game.player.x - x) <= distanceAttraction) && (Math.abs(game.player.y - y) <= distanceAttraction)) {// only move towards the player if the xp orb is close to player
             chasing = true;
         }
 
         if (chasing) {
-            chase(speed);
+            chase(speed, game.player);
             setPosition();
         }
 

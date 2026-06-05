@@ -61,14 +61,14 @@ public class Enemy extends GameObject {
         switch (type) {
             case 0:
             case 1:
-                chase(speed);
+                chase(speed, game.player);
                 setPosition();
                 checkDeath();
                 break;
             case 2:
                 displayOld++;
                 if (displayOld < 75) {
-                    chase(speed);
+                    chase(speed, game.player);
                     setPosition();
                 } else {
 
@@ -84,7 +84,7 @@ public class Enemy extends GameObject {
             case 3:
                 if (displayOld < 75) {
                     displayOld++;
-                    chase(speed);
+                    chase(speed, game.player);
                     setPosition();
                 } else {
 
@@ -192,7 +192,7 @@ public class Enemy extends GameObject {
                 health = 5;
                 size /= 2;
                 speed *= 4;
-                angle = getRealAngle(Player.x + (double) Player.size / 2, Player.y + (double) Player.size / 2);
+                angle = getRealAngle(game.player.x + (double) Player.size / 2, game.player.y + (double) Player.size / 2);
                 setColor(Color.pink);
                 break;
         }
