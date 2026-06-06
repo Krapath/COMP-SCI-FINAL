@@ -1,7 +1,7 @@
 public class Weapon extends GameObject {
     PolygonGame game;
 
-    public int damage = 1; 
+    static int damage = 1; 
 
     public String weaponType;
     public String weaponName;

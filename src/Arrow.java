@@ -16,9 +16,8 @@ public class Arrow extends Weapon {
 	Image arrowImage;
 	int spriteSize;
 	int size;
-
-	int shaftWidth = 20;
-	int shaftHeight = 50;
+	int shaftWidth; 
+	int shaftHeight;
 	int projSize;
 	ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
@@ -28,8 +27,10 @@ public class Arrow extends Weapon {
 
 		targetAngle = angle;
         size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // projectile size is 1/250 of the entire window
-        projSize =size*10;
-		speed=25.0;
+        projSize =size*5;
+		shaftWidth = (int)(size * 1.5);  
+		shaftHeight = (int)(size * 3); 
+		speed=10.0;
 		setSize(projSize, projSize);
 		setColor(Color.BLUE);
 		x = game.player.x;
@@ -38,28 +39,32 @@ public class Arrow extends Weapon {
 		setPosition();
 
 		//TODO: replace with actual arrow sprite placeholder for
-		arrowImage = new ImageIcon("Images/Sprites/Missile.png").getImage();
-		spriteSize = 5 * size;
+		arrowImage = new ImageIcon("Images/Sprites/Arrow.png").getImage();
+		spriteSize = projSize;
 	}
 
-	public void paint(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        AffineTransform old = g2d.getTransform();
+		public void paint(Graphics g) {
+			Graphics2D g2d = (Graphics2D) g;
+			AffineTransform old = g2d.getTransform();
+			g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
+			g2d.rotate(spriteAngle);
+			g2d.translate(-getWidth() / 2.0, -getHeight() / 2.0);
 
-   
+			if (arrowImage != null) {
+				g2d.drawImage(arrowImage, 0, 0, spriteSize, spriteSize, null);
+			}
+			g2d.setTransform(old);
 
-            int offset = (spriteSize - getWidth()) / 2; // center it on the hitbox
+			// draw hitbox
+			g2d.setColor(Color.GREEN);
+			g2d.setStroke(new BasicStroke(1));
+			// draw the rectangle in unrotated space, then rotate it with the arrow
+			g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
+			g2d.rotate(spriteAngle + Math.PI/4); // undo the unrotation 
+			g2d.drawRect(-shaftHeight/2, -shaftWidth/2, shaftHeight, shaftWidth);
+			g2d.setTransform(old);
 
-            g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
-            g2d.rotate(spriteAngle);
-            g2d.translate(-getWidth() / 2.0, -getHeight() / 2.0);
-
-            if (arrowImage != null) {
-                g2d.drawImage(arrowImage, -offset, -offset, spriteSize, spriteSize, null);
-            } 
-
-            g2d.setTransform(old);
-	} 
+		}
 		// still buggy and i think broken, takes logic from yondu arrow
 		public boolean arrowHits(Enemy e) { // same logic as the yondu arrow
 		double ex = e.getX() + e.size / 2.0;
@@ -74,7 +79,7 @@ public class Arrow extends Weapon {
 
 		// The missile image points right by default, which matches math convention angle of 0
 		// The hitbox is a horizontal rectangle since the arrow travels along the X axis.
-		double checkAngle = -(spriteAngle);
+		double checkAngle = -(spriteAngle+Math.PI/4);
 		double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
 		double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
 
@@ -83,13 +88,16 @@ public class Arrow extends Weapon {
 	}
 
 	public void act() {
-		spriteAngle = targetAngle;
+		if(game.gamePause){
+			return;
+		}
+		spriteAngle = targetAngle-Math.PI/4;
 		shoot(speed, targetAngle);
         setPosition();
         
-		arrowCX = (int)(x);
-		
-		arrowCY = (int)(y);
+		//make sure it rounds
+		arrowCX = (int)(x + projSize / 2.0 + 0.5);
+		arrowCY = (int)(y + projSize / 2.0 + 0.5);
 		
 		for (int i = 0; i < game.enemies.size(); i++) { //for every enemy in the game
 			if (arrowHits(game.enemies.get(i))) { //if it collides with an enemy
@@ -127,8 +135,14 @@ public class Arrow extends Weapon {
 				}
 			}
 		}
+		// remove when offscreen
+		if (x < -projSize || x > game.getFieldWidth() + projSize || y < -projSize || y > game.getFieldHeight() + projSize) {
+			game.remove(this);
+			game.arrows.remove(this);
+		}
 
 	}
+	
 	
 
 

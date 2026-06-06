@@ -13,7 +13,9 @@ public class Glaive extends Weapon {
     Double angle = 0.0;
     int radius = 100;
     Double speed = 1.0;
-    int pierceTimer = 0; // the current timer for pierce .
+    int pierceTimer = 0; // the current timer for pierce.
+    static int damage = 1;
+    static int glaiveCount = 0;
     
     //TODO: right now pierce system is disabled and will hit enemies more than once
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); // TODO: maybe make universal for other buffs

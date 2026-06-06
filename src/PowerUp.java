@@ -31,7 +31,9 @@ public class PowerUp extends GameObject {
     static int[] buffArray = new int[numBuffs]; // keeps track of how many times the player has gotten each buff, used to determine how many sides the polygon for each buff should have and what number to display on the buff
     private Font descriptionFont;
 
-    
+    public int width;
+    public int height;
+
 
     static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow","Dash","ArrowSpread"};
     static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA, Color.CYAN,Color.GRAY,Color.WHITE};
@@ -46,10 +48,24 @@ public class PowerUp extends GameObject {
     	    "Press Space to Dash",            // Case 7 (GRAY / Dash)
     	    "Unlocks Arrow Spread"            // Case 8 (WHITE / ArrowSpread)
     	};
-    
+
+    String[] buffStackDescriptions = {
+        "+5 Max Health [Per Stack]",
+        "+1 Movement Speed [Per Stack]",
+        "+1 Attack Speed [Per Stack]",
+        "+1 Chain, +1 Damage [Per Stack]",
+        "+2 Missile Damage [Per Stack]",
+        " TBD[Per Stack]",
+        "+1 Attack Speed, +1 Damage [Per Stack]",
+        " TBD [Per Stack]",
+        "+1 Arrow, +1 Damage [Per Stack]"
+    };
+
     public PowerUp(int x, int y, PolygonGame game) {
 
         this.game = game;
+        width = game.getWindowWidth() / 5;
+        height = game.getWindowHeight() / 3;
         setSize(game.getWindowWidth() / 5, game.getWindowHeight() / 3);
         radius = (game.getWindowWidth() + game.getWindowHeight()) / 75;
         posXBuff = (game.getWindowWidth() / 5) / 2;
@@ -83,19 +99,24 @@ public class PowerUp extends GameObject {
                 Player.speed += 1;
                 break;
 
-            case 2:
+            case 2: // attack speed
                 Player.attackDelay += 1;
                 break;
 
-            case 3:
+            case 3: // lightning
                 if (!Player.chainLightningActive) {
                     Player.chainLightningActive = true;
+                } else {
+                    ChainLightning.chainCount++;
+                    ChainLightning.damage++;
                 }
                 break;
 
-            case 4:
+            case 4: // missile
                 if (!Player.atgMissileActive) {
                     Player.atgMissileActive = true;
+                } else {
+                    AtGMissileMk1.damage+=2;
                 }
                 break;
 
@@ -111,37 +132,61 @@ public class PowerUp extends GameObject {
                 }
                 break;
 
-            case 6:
+            case 6: // yondu arrow
                 if (!Player.yonduArrowActive) {
+                    Player.yonduArrowActive = true;
                     game.yonduArrow = new YonduArrow(game);
                     game.add(game.yonduArrow);
+                } else {
+                    Player.attackDelay += 1;
+                    YonduArrow.damage++;
                 }
                 break;
-                
-            case 7:
+
+            case 7: // dash
                 if (!Player.dashActive) {
                     Player.dashActive = true;
                     Dash dash = new Dash(game, game.player);
                 }
                 break;
-                
-            case 8:
+
+            case 8: // arrow spread
                 if (!Player.arrowSpreadActive) {
                     Player.arrowSpreadActive = true;
                     ArrowSpread arrowSpread = new ArrowSpread(game, game.player);
+                } else {
+                    ArrowSpread.arrowCount++;
+                    ArrowSpread.damage++;
                 }
                 break;
-        }
+                    }
+    }
+
+    public void drawOutline(Graphics g, String text, int x, int y) {
+        // Draw outline/shadow in black
+        g.setColor(new Color(0,0,0,255));
+        g.drawString(text, x - 1, y);
+        g.drawString(text, x + 1, y);
+        g.drawString(text, x, y - 1);
+        g.drawString(text, x, y + 1);
+
+
     }
 
     public void paint(Graphics g) {
         super.paint(g);
 
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
+        Color color = getColor().darker();
+        int borderSize = 5;
+        g2d.setColor(color);
+        g2d.fillRect(0, 0, width, borderSize);        
+        g2d.fillRect(0, height - borderSize, width, borderSize); 
+        g2d.fillRect(0, 0, borderSize, height);       
+        g2d.fillRect(width - borderSize, 0, borderSize, height); 
 
         if (xPointsBuff != null && yPointsBuff != null) {
             g2d.setStroke(new BasicStroke(4));
-            Color color = getColor().darker();
             g2d.setColor(color);
             g2d.drawPolygon(xPointsBuff, yPointsBuff, nPointsBuff);
 
@@ -173,7 +218,27 @@ public class PowerUp extends GameObject {
         g.setFont(descriptionFont);
 
         // center the description text slightly below middle of powerup, center it by adding width and subtracting half the text width
-        g.drawString(buffDescriptions[buffType], 0 + getWidth()/2-(descriptionMetrics.stringWidth(buffDescriptions[buffType]) / 2), (int)(posYBuff / 1.25));
+        drawOutline(g, buffDescriptions[buffType], getWidth()/2 - (descriptionMetrics.stringWidth(buffDescriptions[buffType]) / 2),(int)(posYBuff / 1.4));
+        g.setColor(color);
+        g.drawString(buffDescriptions[buffType], 0 + getWidth()/2-(descriptionMetrics.stringWidth(buffDescriptions[buffType]) / 2), (int)(posYBuff / 1.4));
+
+        //TODO: could make method but very annoying and only used twice buit also same for outline
+        //same thing but for the buff stack descriptions
+        float fontSizeStack = (int) radius / 3f;
+        Font testFontStack;
+        FontMetrics descriptionMetricsStack;
+        do {
+            testFontStack = pixelFont.deriveFont(fontSizeStack);
+            descriptionMetricsStack = g.getFontMetrics(testFontStack);
+            if (descriptionMetricsStack.stringWidth(buffStackDescriptions[buffType]) <= getWidth() * 0.9) break;
+            fontSizeStack -= 0.5f;
+        } while (fontSizeStack > 4);
+
+        g.setFont(testFontStack);
+
+        drawOutline(g, buffStackDescriptions[buffType],getWidth()/2 - (descriptionMetricsStack.stringWidth(buffStackDescriptions[buffType]) / 2),(int)(posYBuff / 1.25));
+        g.setColor(color);
+        g.drawString(buffStackDescriptions[buffType], 0 + getWidth()/2-(descriptionMetricsStack.stringWidth(buffStackDescriptions[buffType]) / 2), (int)(posYBuff / 1.25));
 
     }
 

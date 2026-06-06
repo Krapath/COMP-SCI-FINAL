@@ -67,6 +67,8 @@ public class PolygonGame extends Game {
         player = new Player(this);
         add(player);
 
+        
+        ArrowSpread arrowSpread = new ArrowSpread(this,player);
         // creates debugger
         debug = new DisplayDebug(this);
         add(debug);

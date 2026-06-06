@@ -9,16 +9,17 @@ public class YonduArrow extends Weapon {
     Random r = new Random();
     int size = 50;
     PolygonGame game;
-    int damage = 1;
+    static int damage = 1;    
     int pierceCooldown = 60;
     Double angle = 0.20;
     int radius = 100;
     Double rotateSpeed = 0.02;
     double shootSpeed = 20;
     int pierceTimer = 0;
-    int rotationTimer = 200 + r.nextInt(100); // how long the arrow rotates around the player before flying off,
+    
+    int rotationTimer = 60 + r.nextInt(30); // how long the arrow rotates around the player before flying off,
                                               // randomize a bit so not every arrow is the same
-    int aimingTimer = 120;
+    int aimingTimer = 30;
     double aimOffsetX;
     double aimOffsetY;
     double arrowCX;

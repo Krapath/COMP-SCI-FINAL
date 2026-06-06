@@ -14,6 +14,9 @@ public class ArrowSpread extends Ability{
 	
 	static int duration=5;
 	static int cooldown=60;
+
+	static int arrowCount = 5;
+	static int damage = 1;
 	
 	Random r = new Random();
 	
@@ -35,11 +38,12 @@ public class ArrowSpread extends Ability{
 		if (canUse()){
 			startCooldown();
 			
-				for(int i = 0; i<5; i ++){
+				for(int i = 0; i<arrowCount; i ++){
 					
 			    double angleInRadians = r.nextInt(361)*Math.PI/180;
 			    Arrow arrow = new Arrow(game, angleInRadians); 
 			    game.add(arrow); 
+				game.arrows.add(arrow);
 				}
 
 

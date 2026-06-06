@@ -17,7 +17,8 @@ public class ChainLightning extends Weapon {
     Random r = new Random();
     double randomAngleStatic = r.nextDouble();
     PolygonGame game;   
-    int chainCount = 3;
+    static int chainCount = 3;
+    static int damage = 1;
     int chainRange;
     int durationVisible = 10; // the amount of frames the chain lightning is visible for
     int lightningSize = 5; // the thickness of the lightning, will be used in the paint method to set the stroke of the graphics object

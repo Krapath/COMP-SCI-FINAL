@@ -15,7 +15,6 @@ public class AtGMissileMk1 extends Weapon {
     PolygonGame game;
     public double randomAngle = r.nextDouble() * Math.PI * 2;
     int size;
-    int damage = 1;
     int radius;
     double spiralAngle = 0.1;
     double spiralSpeed = 0.2;
@@ -34,6 +33,7 @@ public class AtGMissileMk1 extends Weapon {
     Enemy target;
     
     Image missileImage;
+    static int damage = 1;
 
     public AtGMissileMk1(PolygonGame game) {
         super(game, "Cast", "AtGMissileMk1");
