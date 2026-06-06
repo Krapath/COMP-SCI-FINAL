@@ -52,6 +52,7 @@ public class YonduArrow extends Weapon {
 
     }
 
+    //TODO: maybe forget tip and do single rectangle for everything
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
@@ -76,8 +77,8 @@ public class YonduArrow extends Weapon {
         g2d.setTransform(old); // restore
     }
     
+    // Still slightly broken i think
     // works by reversing the rotation on the rectangle/ applying it to the enemy then chceking if the enemy is within it
-
     // custom collision detection for rotating rectangle hitbox, does not use the built in collides function since that is just a bounding box and does not rotate with the arrow
     boolean arrowHits(Enemy e) {
         double ex = e.getX() + e.size / 2.0;
@@ -90,6 +91,8 @@ public class YonduArrow extends Weapon {
 
         // subtract the PI/2 offset since spriteAngle always has it added
         // 2d rotation nmatrix
+        // essentially unrotate the enemy by the negative of the arrow's angle so that the arrow is axis aligned
+        // then check if the enemy's coordinates are within the bounds of the arrow's hitbox as if it were not rotated
         double checkAngle = -(spriteAngle - Math.PI / 2);
         double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
         double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
@@ -164,6 +167,7 @@ public class YonduArrow extends Weapon {
 
                 double dx = closestTarget.getX() + closestTarget.size / 2.0 - arrowCX;
                 double dy = closestTarget.getY() + closestTarget.size / 2.0 - arrowCY;
+                // since the arrow sprite is pointing up by default, add pi/2 to the angle so its angle relative to math conventions is 0
                 spriteAngle = Math.atan2(dy, dx) + Math.PI / 2;
             }
 

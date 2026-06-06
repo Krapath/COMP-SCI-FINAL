@@ -16,10 +16,11 @@ public class Player extends GameObject {
     static int xp = 0;
     static int level = 1;
     static boolean chainLightningActive = false; // static so all projectiles have property
-    static boolean atgMissileActive = true; // static so all projectiles have property
-    static boolean glaiveActive = false;
-    static boolean yonduArrowActive = false;
-    static boolean blinkActive = false;
+    static boolean atgMissileActive = false; // static so all projectiles have property
+    static boolean glaiveActive = false; // does not really do much right now
+    static boolean yonduArrowActive = false; // does not really do much right now
+    static boolean dashActive = false;
+    static boolean arrowSpreadActive = false;
     static double xpReq = 5 * level * Math.log(level + 1);
     //public AbilityReal realAbility;
 
@@ -67,6 +68,8 @@ public class Player extends GameObject {
             down += 1;
         }
 
+        // normalize movement so diagonal isn't faster
+        // pressing two keys will cancel out to one component 
         down -= up;
         right -= left;
 

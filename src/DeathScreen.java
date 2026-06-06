@@ -78,6 +78,7 @@ public class DeathScreen extends GameObject {
 
     // clears everything and sets the game to how it would start
     public void returnToZero() { //must make better later
+        
        //clear all enemies, projectiles, XP orbs, and power-ups
         for (Enemy e : PolygonGame.enemies) {
             game.remove(e);
@@ -116,7 +117,8 @@ public class DeathScreen extends GameObject {
         Player.level = 1;
         Player.chainLightningActive = false; // static so all projectiles have property
         Player.atgMissileActive = false; // static so all projectiles have property
-        Player.blinkActive = false;
+        Player.dashActive = false;
+        Player.arrowSpreadActive = false;
         Player.glaiveActive = false;
         Player.yonduArrowActive = false;
         Player.invulnerable = false;

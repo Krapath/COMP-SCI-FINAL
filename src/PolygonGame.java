@@ -67,11 +67,6 @@ public class PolygonGame extends Game {
         player = new Player(this);
         add(player);
 
-        
-        Dash dash = new Dash(this, player);
-
-        ArrowSpread ArrowSpread = new ArrowSpread(this, player);
-
         // creates debugger
         debug = new DisplayDebug(this);
         add(debug);
@@ -99,7 +94,7 @@ public class PolygonGame extends Game {
         }
   
         
-        
+        // index 0 makes sure that debug is always on top of every other object
         if (debug != null) {
             getContentPane().setComponentZOrder(debug, 0);
         }
@@ -172,8 +167,7 @@ public class PolygonGame extends Game {
             }
             Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
-            Player.xpReq=1;
-           // Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
+            Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
             choosingBuff = true;
             
 

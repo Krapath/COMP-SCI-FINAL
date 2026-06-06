@@ -27,6 +27,10 @@ public class ChainLightning extends Weapon {
     
     
     // will handle the math and logic for the chain lightning buff, only incremments number values and checks for collisions, the actual drawing of the lightning will be handled in the draw method
+    
+    // unlike tranditional weapons that actively run, chain lightnings logic runs purely in the constructor
+    // as such, act is simply purely visual
+    // TODO: consider changing to ability type
     public ChainLightning(Enemy enemy, PolygonGame game) {
         super(game, "Cast", "Chain Lightning");
         this.game = game;

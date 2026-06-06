@@ -44,7 +44,7 @@ public class AtGMissileMk1 extends Weapon {
         pivotX = game.player.getX() - size / 2;
         pivotY = game.player.getY() - size / 2;
         setLocation(pivotX, pivotY);
-        spriteSize = size * 100;  
+        spriteSize = size * 4;  
         setSize(spriteSize, spriteSize);
         if (game.enemies.size() > 0) {
             randomEnemy = r.nextInt(game.enemies.size());
@@ -82,6 +82,8 @@ public class AtGMissileMk1 extends Weapon {
     }
     public void act() {
 
+        // derived from the visual rotation from velocity so it always faces the direction it is moving
+        // this way it actively tracks the target unlike Yondu arrow and arrow
         spriteAngle = Math.atan2(velY, velX);
 
 
@@ -89,8 +91,10 @@ public class AtGMissileMk1 extends Weapon {
             return; // projectiles do not move or collide with enemies while the player is choosing
                     // a buff
 
+        
         if (target != null && game.enemies.contains(target) && canDamage) {
 
+            //spiral phase
             if (spiralDuration > 0) { // spiral around the player for a short duration after being fired
                 spiralSpeed += 0.0001;
                 spiralAngle += spiralSpeed;
@@ -103,6 +107,7 @@ public class AtGMissileMk1 extends Weapon {
                 setX(x);
                 setY(y);
                 radius += 1;
+            //random direction phase
             } else if (randDirectionDuration > 0) { // move in random direction after spiraling
                 randDirectionDuration--;
                 double speed = 25;
@@ -110,6 +115,7 @@ public class AtGMissileMk1 extends Weapon {
                 velY = speed * Math.sin(randomAngle);
                 setX(getX() + (int) velX);
                 setY(getY() + (int) velY);
+            //attacking phase
             } else if (randDirectionDuration <= 0 && spiralDuration <= 0) { // after spiraling and moving in a random
                                                                             // direction, move towards the random enemy
                                                                             // target
@@ -140,7 +146,7 @@ public class AtGMissileMk1 extends Weapon {
                 }
 
             }
-
+        // if the enemy was damaged before the arrow shoots, will find a new target
         } else if (canDamage) {
             if (game.enemies.size() > 0) {
                 randomEnemy = r.nextInt(game.enemies.size());

@@ -27,16 +27,17 @@ public class Arrow extends Weapon {
 		this.game = game;
 
 		targetAngle = angle;
-        size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // projectile size is 1/100 of the entire window
+        size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // projectile size is 1/250 of the entire window
         projSize =size*10;
 		speed=25.0;
 		setSize(projSize, projSize);
 		setColor(Color.BLUE);
 		x = game.player.x;
 		y = game.player.y;
-		
-		
-		setPosition(this,arrowCX,arrowCY);
+	
+		setPosition();
+
+		//TODO: replace with actual arrow sprite placeholder for
 		arrowImage = new ImageIcon("Images/Sprites/Missile.png").getImage();
 		spriteSize = 5 * size;
 	}
@@ -59,7 +60,27 @@ public class Arrow extends Weapon {
 
             g2d.setTransform(old);
 	} 
+		// still buggy and i think broken, takes logic from yondu arrow
+		public boolean arrowHits(Enemy e) { // same logic as the yondu arrow
+		double ex = e.getX() + e.size / 2.0;
+		double ey = e.getY() + e.size / 2.0;
 
+		// get the enemies position relative to arrow center
+		double localX = ex - arrowCX;
+		double localY = ey - arrowCY;
+
+		// 2d rotation matrix
+
+
+		// The missile image points right by default, which matches math convention angle of 0
+		// The hitbox is a horizontal rectangle since the arrow travels along the X axis.
+		double checkAngle = -(spriteAngle);
+		double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
+		double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
+
+		// shaft is horizontal since image points right, so width and height are swapped
+		return (Math.abs(rotY) <= shaftWidth / 2.0 && rotX >= -shaftHeight / 2.0 && rotX <= shaftHeight / 2.0);
+	}
 
 	public void act() {
 		spriteAngle = targetAngle;
@@ -87,8 +108,10 @@ public class Arrow extends Weapon {
 					
 					pierce--;
 					
-					if(pierce == 0)
+					if(pierce == 0){
 						game.remove(this);
+						game.arrows.remove(this);
+					}
 
 					int enemyX = game.enemies.get(i).getX();
 					int enemyY = game.enemies.get(i).getY();
@@ -107,22 +130,6 @@ public class Arrow extends Weapon {
 
 	}
 	
-	public boolean arrowHits(Enemy e) {
-		double ex = e.getX() + e.size / 2.0;
-		double ey = e.getY() + e.size / 2.0;
 
-		// get the enemies position relative to arrow center
-		double localX = ex - arrowCX;
-		double localY = ey - arrowCY;
-
-		// subtract the PI/2 offset since spriteAngle always has it added
-		// 2d rotation matrix
-		double checkAngle = -(spriteAngle);
-		double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
-		double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
-
-		// check if its inside the rectangle
-		return (Math.abs(rotX) <= shaftWidth / 2.0 && rotY >= -shaftHeight / 2.0 && rotY <= shaftHeight / 2.0);
-	}
 
 }

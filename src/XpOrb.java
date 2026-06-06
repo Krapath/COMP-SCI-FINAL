@@ -43,6 +43,8 @@ public class XpOrb extends GameObject {
             chasing = true;
         }
 
+
+        // if it sees the player once it will continuously chase even if the player moves out the initial range
         if (chasing) {
             chase(speed, game.player);
             setPosition();

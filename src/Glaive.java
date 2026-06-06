@@ -9,11 +9,13 @@ public class Glaive extends Weapon {
     //double xVel;
     //double yVel;
     //int distanceTraveled = 0;
-    int pierceCooldown = 60; // the amount of frames for each act
+    int pierceCooldown = 60; // the amount of frames between acts until it can pierce, ensures that it doesnt hit enemies multiple times
     Double angle = 0.0;
     int radius = 100;
     Double speed = 1.0;
-    int pierceTimer = 0; // the current timer for pierce
+    int pierceTimer = 0; // the current timer for pierce .
+    
+    //TODO: right now pierce system is disabled and will hit enemies more than once
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); // TODO: maybe make universal for other buffs
 
     public Glaive(PolygonGame game, double startingAngle) {
@@ -31,6 +33,7 @@ public class Glaive extends Weapon {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
 
+        //scales the speed of the glaive based on the player
         angle += speed * Player.speed / 100.0;
 
         double x = (radius * Math.cos(angle) + game.player.getX()) - size / 2 + Player.size / 2;

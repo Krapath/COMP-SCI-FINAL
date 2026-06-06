@@ -27,7 +27,7 @@ public class ArrowSpread extends Ability{
 	
 	public void act(){
 		super.act();
-		performAbility();
+		performAbility(); // continuously run the ability while it's active, so that it shoots arrows when ability is active
 
 	}
 

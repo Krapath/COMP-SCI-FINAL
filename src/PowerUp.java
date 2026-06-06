@@ -27,14 +27,14 @@ public class PowerUp extends GameObject {
     public double radius;
     private Font pixelFont;
     String buff;
-    static protected int numBuffs = 8;
+    static protected int numBuffs = 9;
     static int[] buffArray = new int[numBuffs]; // keeps track of how many times the player has gotten each buff, used to determine how many sides the polygon for each buff should have and what number to display on the buff
     private Font descriptionFont;
 
     
 
-    static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow","Blink"};
-    static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA, Color.CYAN,Color.GRAY};
+    static String[] buffNames = {"Health", "Speed", "Attack Speed", "Lightning", "Missile", "Glaive", "Arrow","Dash","ArrowSpread"};
+    static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA, Color.CYAN,Color.GRAY,Color.WHITE};
     String[] buffDescriptions = {
     	    "+5 Max Health",                                 // Case 0 (RED / Health)
     	    "+1 Movement Speed",                             // Case 1 (GREEN / Speed)
@@ -43,7 +43,8 @@ public class PowerUp extends GameObject {
     	    "Unlocks Missile strikes",                   // Case 4 (ORANGE / Missile)
     	    "Spawns orbiting Glaives",   // Case 5 (MAGENTA / Glaive)
     	    "Summons Yondu Arrow",           // Case 6 (CYAN / Arrow)
-    	    "Press Space to Blink"
+    	    "Press Space to Dash",            // Case 7 (GRAY / Dash)
+    	    "Unlocks Arrow Spread"            // Case 8 (WHITE / ArrowSpread)
     	};
     
     public PowerUp(int x, int y, PolygonGame game) {
@@ -61,7 +62,7 @@ public class PowerUp extends GameObject {
         try {
             java.io.File fontFile = new java.io.File("Fonts/PressStart2P-Regular.ttf");
             pixelFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((int) radius / 2f);
-            descriptionFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((int) radius / 3f);
+            descriptionFont = pixelFont;
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
             pixelFont = new Font("Monospaced", Font.BOLD, 100);
@@ -118,9 +119,16 @@ public class PowerUp extends GameObject {
                 break;
                 
             case 7:
-                if (!Player.blinkActive) {
-                    Player.blinkActive = true;
-                    Dash blink = new Dash(game, game.player);
+                if (!Player.dashActive) {
+                    Player.dashActive = true;
+                    Dash dash = new Dash(game, game.player);
+                }
+                break;
+                
+            case 8:
+                if (!Player.arrowSpreadActive) {
+                    Player.arrowSpreadActive = true;
+                    ArrowSpread arrowSpread = new ArrowSpread(game, game.player);
                 }
                 break;
         }
@@ -148,9 +156,24 @@ public class PowerUp extends GameObject {
 
             g.drawString(buff, buffX, buffY);
         }
-        g.setFont(descriptionFont);
         
-        g.drawString(buffDescriptions[buffType],0+game.getWindowWidth() / 60,(int)(posYBuff/1.25));
+        // shrink font until text fits within 90% of the powerup width
+        float fontSize = (int) radius / 3f;
+        Font testFont;
+        FontMetrics descriptionMetrics;
+        do {
+            testFont = pixelFont.deriveFont(fontSize);
+            descriptionMetrics = g.getFontMetrics(testFont);
+            descriptionMetrics = g.getFontMetrics(descriptionFont);
+            if (descriptionMetrics.stringWidth(buffDescriptions[buffType]) <= getWidth() * 0.9) break;
+            fontSize -= 0.5f;
+        } while (fontSize > 4); // just so it doesnt get too small, at that point the text is basically unreadable anyway and thus overflwo would be better
+        
+        descriptionFont = testFont;
+        g.setFont(descriptionFont);
+
+        // center the description text slightly below middle of powerup, center it by adding width and subtracting half the text width
+        g.drawString(buffDescriptions[buffType], 0 + getWidth()/2-(descriptionMetrics.stringWidth(buffDescriptions[buffType]) / 2), (int)(posYBuff / 1.25));
 
     }
 
