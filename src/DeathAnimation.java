@@ -28,8 +28,8 @@ public class DeathAnimation extends GameObject {
     public void deathAnimation(PolygonGame game) {
         game.player.setColor(new Color(0, 0, 255, 0)); // make player invisible
         for (int i = 0; i < 8; i++) {
-            int x = (int) (game.player.x + Player.size / 2 + r.nextInt(Player.size+1) - Player.size / 2);
-            int y = (int) (game.player.y + Player.size / 2 + r.nextInt(Player.size+1) - Player.size / 2);
+            int x = (int) (game.player.x + Player.size / 2 + r.nextInt(Player.size + 1) - Player.size / 2);
+            int y = (int) (game.player.y + Player.size / 2 + r.nextInt(Player.size + 1) - Player.size / 2);
             // put the dots in a place close to the player, with some randomization
             addParticle(game, x, y);
         }
@@ -53,15 +53,14 @@ public class DeathAnimation extends GameObject {
         int x = getX();
         int y = getY();
         if (timer < 60) {// make the particles wiggle
-                x += Math.ceil(r.nextInt(speed * 2+1) - speed);
-                y += Math.ceil(r.nextInt(speed * 2+1) - speed);
+            x += Math.ceil(r.nextInt(speed * 2 + 1) - speed);
+            y += Math.ceil(r.nextInt(speed * 2 + 1) - speed);
             setPosition(this, x, y);
             timer++;
         } else if (timer < 120) {// make the wiggle further
 
-
-            x += Math.ceil(r.nextInt(speed * 3+1) - speed * 1.5);
-            y += Math.ceil(r.nextInt(speed * 3+1) - speed * 1.5);
+            x += Math.ceil(r.nextInt(speed * 3 + 1) - speed * 1.5);
+            y += Math.ceil(r.nextInt(speed * 3 + 1) - speed * 1.5);
 
             setPosition(this, x, y);
             timer++;

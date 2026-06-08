@@ -20,12 +20,19 @@ public class DeathScreen extends GameObject {
     boolean tiltLeft = true;
     boolean hovered;
     Random r = new Random();
+    private Image deathImage;
 
-    public DeathScreen(PolygonGame game, String buttonName, boolean button, int w, int h, int x, int y) {
+    public DeathScreen(PolygonGame game, String buttonName, boolean button, int w, int h, int x, int y,
+            ImageIcon image) {
         this.game = game;
         this.buttonName = buttonName;
         setSize(w, h);
         setLocation(x, y);
+        if (image != null) {
+            this.deathImage = image.getImage();
+        } else {
+            this.deathImage = null;
+        }
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
             menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((45f)));
@@ -48,7 +55,8 @@ public class DeathScreen extends GameObject {
         int y = (game.getWindowHeight() - h) / 2; // center the death screen vertically
 
         // make the frame for the death screen
-        DeathScreen deathScreen = new DeathScreen(game, "doNotChange", false, w, h, x, y);// change the image
+        DeathScreen deathScreen = new DeathScreen(game, "doNotChange", false, w, h, x, y,
+                new ImageIcon("Images/Death/Death_Image(1).png"));// change the image
         deathScreen.setColor(new Color(220, 20, 60));
         game.add(deathScreen);
         deathScreenButtons.add(deathScreen);
@@ -63,23 +71,23 @@ public class DeathScreen extends GameObject {
 
         // make the retry button
         DeathScreen retryButton = new DeathScreen(game, "Retry", true, buttonW, buttonH, retryButtonX,
-                buttonY);
+                buttonY, null);
         retryButton.setColor(new Color(15, 82, 186));
         game.add(retryButton);
         deathScreenButtons.add(retryButton);
 
         // make the return to main menu button
         DeathScreen ReturnToMainMenu = new DeathScreen(game, "Main Menu", true, buttonW, buttonH,
-                mainMenuButtonX, buttonY);
+                mainMenuButtonX, buttonY, null);
         ReturnToMainMenu.setColor(new Color(15, 82, 186));
         game.add(ReturnToMainMenu);
         deathScreenButtons.add(ReturnToMainMenu);
     }
 
     // clears everything and sets the game to how it would start
-    public void returnToZero() { //must make better later
-        
-       //clear all enemies, projectiles, XP orbs, and power-ups
+    public void returnToZero() { // must make better later
+
+        // clear all enemies, projectiles, XP orbs, and power-ups
         for (Enemy e : PolygonGame.enemies) {
             game.remove(e);
         }
@@ -93,17 +101,13 @@ public class DeathScreen extends GameObject {
 
         game.player.abilities.clear();
 
-    
         PowerUp.buffArray = new int[PowerUp.numBuffs]; // reset the buff array to all 0s
-        for(XpOrb x : PolygonGame.xpOrbs) {
+        for (XpOrb x : PolygonGame.xpOrbs) {
             game.remove(x);
         }
-   
-
-        
 
         PolygonGame.xpOrbs.clear();
-        //remove scaling for the enemies
+        // remove scaling for the enemies
         Enemy.healthMultiplier = 1;
 
         // reset player stats
@@ -133,8 +137,8 @@ public class DeathScreen extends GameObject {
         YonduArrow.damage = 1;
         ArrowSpread.arrowCount = 5;
         ArrowSpread.damage = 1;
-        
-        //reset player
+
+        // reset player
         game.remove(game.player);
         // reset debugger
         game.remove(game.debug);
@@ -143,11 +147,13 @@ public class DeathScreen extends GameObject {
     @Override
     public void paint(Graphics g) {
         if (!PolygonGame.gamePause) {
-            return; // only check for button clicks if we're on the main menu
+            return; // only change images if on death screen
         }
-        
         super.paint(g);
-        if(buttonName.equals("doNotChange")) {
+        if (deathImage != null) {
+            g.drawImage(deathImage, getWidth()/4, 0, getWidth()/2, getHeight()/2, null);
+        }
+        if (buttonName.equals("doNotChange")) {
             return; // don't draw text for the background box
         }
         Graphics2D g2d = (Graphics2D) g;
@@ -179,7 +185,7 @@ public class DeathScreen extends GameObject {
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
-        if(buttonName.equals("doNotChange")) {
+        if (buttonName.equals("doNotChange")) {
             return; // don't check for clicks on the background box
         }
         int x = game.getMouseX();
@@ -222,16 +228,15 @@ public class DeathScreen extends GameObject {
                 deathScreenButtons.clear(); // clears the entire list
                 returnToZero();
                 game.menuController.spawnMyBoxes(game); // spawns the main menu buttons
-                
-            }
-            else if (buttonName.equals("Retry")) {
+
+            } else if (buttonName.equals("Retry")) {
                 for (DeathScreen m : deathScreenButtons) { // removes all the buttons in the list from game
                     game.remove(m);
                 }
                 deathScreenButtons.clear(); // clears the entire list
                 returnToZero();
                 game.spawnGame(); // start the game again
-                PolygonGame.gamePause = false; 
+                PolygonGame.gamePause = false;
             }
             readyToApply = false;
             wasPressed = false;
