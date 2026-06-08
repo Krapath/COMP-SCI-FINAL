@@ -21,7 +21,7 @@ public class Player extends GameObject {
     static boolean yonduArrowActive = false; // does not really do much right now
     static boolean dashActive = false;
     static boolean arrowSpreadActive = false;
-    static double xpReq = 5 * level * Math.log(level + 1);
+    static double xpReq = 0; //5 * level * Math.log(level + 1);
     //public AbilityReal realAbility;
 
 
