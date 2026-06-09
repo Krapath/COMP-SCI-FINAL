@@ -23,7 +23,7 @@ public class PolygonGame extends Game {
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
     DeathAnimation deathAnimationController;
-    DisplayDebug debug;
+    DisplayGUI debug;
     Tutorial tutorialController;
     DeathScreen deathScreenController;
     GameBackground background;
@@ -70,7 +70,7 @@ public class PolygonGame extends Game {
         
         ArrowSpread arrowSpread = new ArrowSpread(this,player);
         // creates debugger
-        debug = new DisplayDebug(this);
+        debug = new DisplayGUI(this);
         add(debug);
 
         //start animation
@@ -106,7 +106,7 @@ public class PolygonGame extends Game {
                 projectile = new Projectile(this);
                 add(projectile);
                 projectiles.add(projectile);
-                DisplayDebug.borderWidth++;
+                DisplayGUI.borderWidth++;
             }
         }
 

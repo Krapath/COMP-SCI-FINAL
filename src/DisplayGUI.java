@@ -6,7 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class DisplayDebug extends GameObject {
+public class DisplayGUI extends GameObject {
 
     PolygonGame game;
     static int[] xPointsHealth;
@@ -25,10 +25,10 @@ public class DisplayDebug extends GameObject {
 
     static int borderWidth= 4;
 
-    public DisplayDebug(PolygonGame game) {
+    public DisplayGUI(PolygonGame game) {
         this.game = game; //hi this is a test test test
         setSize(game.getWindowWidth(), game.getWindowHeight());  // size of the text area
-        radius = (game.getWindowWidth() + game.getWindowHeight()) / 75;
+        radius = (game.getWindowWidth() + game.getWindowHeight()) / 35;
 
         try {
             java.io.File fontFile = new java.io.File("Fonts/PressStart2P-Regular.ttf");
@@ -51,8 +51,8 @@ public class DisplayDebug extends GameObject {
         double healthAngle = Math.PI / 2;
         xPointsHealth = new int[Player.health + 2];
         yPointsHealth = new int[Player.health + 2];
-        posXHealth = (int) (game.getWindowWidth() - radius * (2));
-        posYHealth = (int) (0 + radius * (2));
+        posXHealth = (int) (0 + radius * (2));
+        posYHealth = (int) (game.getWindowHeight() - radius * 1.5);
         for (int i = 0; i < xPointsHealth.length; i++) {
 
             double x = (radius * Math.cos(healthAngle) + posXHealth);
@@ -74,7 +74,7 @@ public class DisplayDebug extends GameObject {
         xPointsLevel = new int[Player.level + 2];
         yPointsLevel = new int[Player.level + 2];
         posXLevel = (int) (game.getWindowWidth() - radius * (2));
-        posYLevel = (int) (0 + radius * (5));
+        posYLevel = (int) (game.getWindowHeight() - radius * 1.5);
         for (int i = 0; i < xPointsLevel.length; i++) {
 
             double x = (radius * Math.cos(-levelAngle) + posXLevel);
@@ -133,7 +133,7 @@ public class DisplayDebug extends GameObject {
 
         // draw healthbar
         if (xPointsHealth != null && yPointsHealth != null) {
-            g2d.setStroke(new BasicStroke(4)); // set line thickness for the lightning
+            g2d.setStroke(new BasicStroke(4));
             g2d.drawPolygon(xPointsHealth, yPointsHealth, nPointsHealth);
             g2d.setFont(pixelFont);
             FontMetrics metrics = g.getFontMetrics(pixelFont);
@@ -146,9 +146,9 @@ public class DisplayDebug extends GameObject {
 
             g.drawString(health, healthX, healthY);
         }
-
+        //draws exp Bar
         if (xPointsLevel != null && yPointsLevel != null) {
-            g2d.setStroke(new BasicStroke(borderWidth)); // set line thickness for the lightning
+            g2d.setStroke(new BasicStroke(4)); 
             g2d.setColor(Color.CYAN);
             g2d.drawPolygon(xPointsLevel, yPointsLevel, nPointsLevel);
             g2d.setFont(pixelFont);

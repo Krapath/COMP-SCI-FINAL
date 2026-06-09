@@ -124,7 +124,7 @@ public class DeathScreen extends GameObject {
         Player.size = (game.getWindowWidth() + game.getWindowHeight()) / 100;
         Player.speed = (game.getWindowWidth() + game.getWindowHeight()) / 200;
         Player.attackDelay = 0;
-        Player.health = 2;
+        Player.health = 10;
         Player.maxHealth = 20;
         Player.score = 0;
         Player.xp = 0;
