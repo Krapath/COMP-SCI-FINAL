@@ -21,23 +21,22 @@ public class Player extends GameObject {
     static boolean yonduArrowActive = false; // does not really do much right now
     static boolean dashActive = false;
     static boolean arrowSpreadActive = false;
-    static double xpReq =5 * level * Math.log(level + 1);
+    static double xpReq = 5 * level * Math.log(level + 1);
     //public AbilityReal realAbility;
 
-
     static boolean invulnerable = false;
-    static int invulnerableDuration  = 30;
+    static int invulnerableDuration = 30;
     static int invulnerableTimer = 0;
     PolygonGame game;
 
     static ArrayList<Ability> abilities = new ArrayList<Ability>();
     static ArrayList<Weapon> weapons = new ArrayList<Weapon>();
-    
+
     public Player(PolygonGame game) {
         this.game = game;
         size = (game.getWindowWidth() + game.getWindowHeight()) / 100; // player size is 1/100 of the entire window
         speed = (game.getWindowWidth() + game.getWindowHeight()) / 200; // speed is 1/100 of the entire window size
-        setLocation(r.nextInt(game.getWindowWidth()/2), r.nextInt(game.getWindowHeight()/2)); // middle
+        setLocation(r.nextInt(game.getWindowWidth() / 2), r.nextInt(game.getWindowHeight() / 2)); // middle
         setSize(size, size);
         setColor(new Color(0, 0, 255, 0));
         x = getX();
@@ -99,38 +98,33 @@ public class Player extends GameObject {
 
         for (int i = 0; i < game.enemies.size(); i++) {
             if (collides(game.enemies.get(i))) {
-            	
-            	if (!invulnerable){
-                Player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
-                game.enemies.get(i).health -= 1;
 
-                if (game.enemies.get(i).health <= 0) {
-                    game.remove(game.enemies.get(i)); // remove enemy if health is depleted
-                    game.enemies.remove(i);
+                if (!invulnerable) {
+                    Player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
+                    game.enemies.get(i).health -= 1;
+
+                    if (game.enemies.get(i).health <= 0) {
+                        game.remove(game.enemies.get(i)); // remove enemy if health is depleted
+                        game.enemies.remove(i);
+                    }
+                    invulnerable = true;
+                    break; // exit loop after collision
                 }
-                invulnerable = true;
-                break; // exit loop after collision
-            	}
             }
         }
-        if(invulnerable){
-        	setColor(Color.LIGHT_GRAY);
-        	invulnerableTimer++;
-            if (invulnerableTimer == invulnerableDuration){
-            	invulnerableTimer = 0;
-            	setColor(Color.BLUE);
-            	invulnerable = false;
+        if (invulnerable) {
+            setColor(Color.LIGHT_GRAY);
+            invulnerableTimer++;
+            if (invulnerableTimer == invulnerableDuration) {
+                invulnerableTimer = 0;
+                setColor(Color.BLUE);
+                invulnerable = false;
             }
-        } 
+        }
 
-
-        
         if (Player.health <= 0) {
             game.player.setColor(Color.GRAY); // change player color to gray when health is depleted
         }
     }
 
 }
-
-
-

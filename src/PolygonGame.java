@@ -16,9 +16,7 @@ public class PolygonGame extends Game {
     Player player;
     Projectile projectile;
     Enemy enemy;
-    Glaive glaive0;
-    Glaive glaive1;
-    Glaive glaive2;
+    Glaive glaive;
     ChainLightning lightning;
     AtGMissileMk1 atgMissile;
     MainMenu menuController;
@@ -36,6 +34,8 @@ public class PolygonGame extends Game {
     static ArrayList<XpOrb> xpOrbs = new ArrayList<XpOrb>();
     static ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
     static ArrayList<Arrow> arrows = new ArrayList<Arrow>();
+    static ArrayList<Glaive> glaives = new ArrayList<Glaive>();
+    public int numberOfGlaives;
 
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); //TODO: Change the enemies that have been hit and the timer
     // for each enemy to be hit again
@@ -52,9 +52,9 @@ public class PolygonGame extends Game {
         menuController = new MainMenu(this, "");
         menuController.spawnMyBoxes(this);
         // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
-        tutorialController = new Tutorial(this, "", 0, 0,0,0);
+        tutorialController = new Tutorial(this, "", 0, 0, 0, 0);
         //create dummy constructor for the death screen buttons to use to spawn the buttons
-        deathScreenController = new DeathScreen(this, "",false, 0, 0,0,0,null);
+        deathScreenController = new DeathScreen(this, "", false, 0, 0, 0, 0, null);
         deathAnimationController = new DeathAnimation(this, 0, 0);
 
         setDelay(16); // 60fps
@@ -67,14 +67,13 @@ public class PolygonGame extends Game {
         player = new Player(this);
         add(player);
 
-        
-        ArrowSpread arrowSpread = new ArrowSpread(this,player);
+        ArrowSpread arrowSpread = new ArrowSpread(this, player);
         // creates debugger
         debug = new DisplayGUI(this);
         add(debug);
 
         //start animation
-        SpawnAnimation spawnDummy = new SpawnAnimation(this, 0,0);
+        SpawnAnimation spawnDummy = new SpawnAnimation(this, 0, 0);
         spawnDummy.spawnAnimation(this);
         this.add(spawnDummy);
 
@@ -85,17 +84,16 @@ public class PolygonGame extends Game {
         if (gamePause) {
             return; // pause the game while choosing a buff or on main menu(lock the game)
         }
-        
-        for (int i = 0; i<Player.abilities.size();i++){
-        	Player.abilities.get(i).act();
 
-            if (spaceBarKeyPressed() && Player.abilities.get(i).name.equals("Dash")){
+        for (int i = 0; i < Player.abilities.size(); i++) {
+            Player.abilities.get(i).act();
+
+            if (spaceBarKeyPressed() && Player.abilities.get(i).name.equals("Dash")) {
                 Player.abilities.get(i).performAbility();
             }
 
         }
-  
-        
+
         // index 0 makes sure that debug is always on top of every other object
         if (debug != null) {
             getContentPane().setComponentZOrder(debug, 0);
@@ -174,9 +172,10 @@ public class PolygonGame extends Game {
 
             Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
             choosingBuff = true;
-            
 
         }
+
+        checkDeath();
 
     }
 
@@ -187,4 +186,46 @@ public class PolygonGame extends Game {
         ImageIcon icon = new ImageIcon("Images/MainMenu/PolygonLogo.png");
         game.setIconImage(icon.getImage());
     }
+
+    /**
+     * checks all enemies to see which ones have no health and should be
+     * removed, then spawns exp.
+     *
+     * pre: enemies arraylist is filled with all enemies in the game post: all
+     * enemies with 0 or less health or removed from the game and enemies
+     * arraylist, xp orb spawns below killed enemies.
+     */
+    public void checkDeath() {
+        for (int i = 0; i < enemies.size(); i++) {
+            Enemy other = enemies.get(i);
+            if (other.health <= 0) {
+                // Create an XP orb at the location of the defeated enemy
+                XpOrb xp = new XpOrb((int) other.x, (int) other.y, this);
+
+                this.add(xp);          // Add the xp orb to the game
+                xpOrbs.add(xp);   // Add the xp orb to the list
+                this.remove(other); // Remove enemy if health is depleted
+                enemies.remove(other); // Remove enemy from the list
+                i--;
+            }
+        }
+
+    }
+
+    /**
+     *
+     *
+     */
+    public void createGlaive(int numberOfGlaives) {
+        for (Glaive g : glaives) {
+            this.remove(g);
+        }
+        glaives.removeAll(glaives);
+        for (int i = 0; i < numberOfGlaives; i++) {
+            glaive = new Glaive(this, i * 2 * Math.PI / numberOfGlaives);
+            glaives.add(glaive);
+            this.add(glaive);
+        }
+    }
+
 }

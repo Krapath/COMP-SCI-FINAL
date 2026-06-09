@@ -24,6 +24,7 @@ public class SpawnAnimation extends GameObject {
         setPosition(this, x, y);
         setColor(new Color(0, 0, 255, particleTransparency));
         lifespan = r.nextInt(10) + 10;
+        spawnParticles.add(this);
     }
 
     // method to spawn particles
@@ -83,7 +84,7 @@ public class SpawnAnimation extends GameObject {
             particleTransparency += 5;
             setColor(new Color(0, 0, 255, particleTransparency));
         }
-        
+
         if (spawnParticles.size() <= 1) { // a few particles are left make them disappear
             // ensures that all particles are removed from the game
             for (SpawnAnimation m : spawnParticles) {

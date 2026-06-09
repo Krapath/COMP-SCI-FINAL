@@ -16,9 +16,11 @@ public class Enemy extends GameObject {
     public int enemyDamage = 1;
     public int displayOld = 0; //used to see enemies that have been alive older
     boolean appearedOnGame = false;
+    Color color; //color of the enemy.
+    public boolean damaged = false; //wether or not the enemy was recently damaged.
+    int damagedTimer; //how long since the enemy was last damaged.
 
     static int healthMultiplier;
-
 
     //TODO: enemies exist for one extra frame which can cause problems
     public Enemy(PolygonGame game, int type, int spawn, int seed) {
@@ -63,7 +65,7 @@ public class Enemy extends GameObject {
             case 1:
                 chase(speed, game.player);
                 setPosition();
-                checkDeath();
+
                 break;
             case 2:
                 displayOld++;
@@ -79,7 +81,7 @@ public class Enemy extends GameObject {
                         game.projectiles.add(game.projectile);
                     }
                 }
-                checkDeath();
+
                 break;
             case 3:
                 if (displayOld < 75) {
@@ -94,12 +96,12 @@ public class Enemy extends GameObject {
                         game.enemies.add(game.enemy);
                     }
                 }
-                checkDeath();
+
                 break;
             case 4:
                 shoot(speed, angle);
                 setPosition();
-                checkDeath();
+
                 if (!appearedOnGame && x > 0 && y > 0) {
                     appearedOnGame = true;
                 }
@@ -110,6 +112,8 @@ public class Enemy extends GameObject {
                 }
                 break;
         }
+
+        damagedAffects();
 
     }
 
@@ -172,13 +176,15 @@ public class Enemy extends GameObject {
         switch (type) {
             case 0: //normal
                 health = 3 * healthMultiplier;
-                setColor(Color.GREEN);
+                color = Color.GREEN;
+                setColor(color);
                 break;
             case 1: //miniboss
                 health = 50 * healthMultiplier;
                 size *= 5;
                 speed /= 2;
-                setColor(Color.GREEN);
+                color = Color.GREEN;
+                setColor(color);
                 break;
             case 2: //gunner
                 health = 5 * healthMultiplier;
@@ -186,30 +192,32 @@ public class Enemy extends GameObject {
                 break;
             case 3: //throwing goblin
                 health = 2 * healthMultiplier;
-                setColor(Color.orange);
+                color = Color.orange;
+                setColor(color);
                 break;
             case 4: //bat 
                 health = 5;
                 size /= 2;
                 speed *= 4;
                 angle = getRealAngle(game.player.x + (double) Player.size / 2, game.player.y + (double) Player.size / 2);
-                setColor(Color.pink);
+                color = Color.pink;
+                setColor(color);
                 break;
         }
         setSize(size, size);
     }
 
-    public void checkDeath() {
-        if (health <= 0) {
-            // Create an XP orb at the location of the defeated enemy
-            XpOrb xp = new XpOrb((int) x, (int) y, game);
-
-            game.add(xp);          // Add the xp orb to the game
-            game.xpOrbs.add(xp);   // Add the xp orb to the list
-            game.remove(this); // Remove enemy if health is depleted
-            game.enemies.remove(this); // Remove enemy from the list
+    public void damagedAffects() {
+        if (damaged) {
+            setColor(Color.RED);
+            damagedTimer++;
         }
 
+        if (damagedTimer != 0 && damagedTimer % 10 == 0) {
+            damagedTimer = 0;
+            damaged = false;
+            setColor(color);
+        }
     }
 
 }

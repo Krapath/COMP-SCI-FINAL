@@ -48,7 +48,7 @@ public class Projectile extends Weapon {
         speed = 40.0; // adjust as needed
 
     }
-    
+
     public void act() {
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing
@@ -111,7 +111,7 @@ public class Projectile extends Weapon {
                     hit = true;
                     game.enemies.get(i).health -= damage; // Reduce enemy health on collision
 
-                    game.enemies.get(i).setColor(Color.RED);
+                    game.enemies.get(i).damaged = true;
 
                     int enemyX = game.enemies.get(i).getX();
                     int enemyY = game.enemies.get(i).getY();
