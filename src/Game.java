@@ -309,6 +309,8 @@ public abstract class Game extends JFrame {
 						break;
 					case 'M':
 						Player.health=0;
+					case 'N':
+						Player.xpReq =0;
 
 				}
 
