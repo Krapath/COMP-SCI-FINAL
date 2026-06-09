@@ -106,6 +106,7 @@ public class PolygonGame extends Game {
                 projectile = new Projectile(this);
                 add(projectile);
                 projectiles.add(projectile);
+                DisplayDebug.borderWidth++;
             }
         }
 
@@ -169,9 +170,9 @@ public class PolygonGame extends Game {
             }
             Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
-            Player.xpReq = 0;
+            //Player.xpReq = 0;
 
-            //Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
+            Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
             choosingBuff = true;
             
 

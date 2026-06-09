@@ -10,7 +10,7 @@ public class Player extends GameObject {
     static int size;
     static int speed;
     static int attackDelay = 0;
-    static int health = 10;
+    static int health = 2;
     static int maxHealth = 20;
     static int score = 0;
     static int xp = 0;
@@ -21,7 +21,7 @@ public class Player extends GameObject {
     static boolean yonduArrowActive = false; // does not really do much right now
     static boolean dashActive = false;
     static boolean arrowSpreadActive = false;
-    static double xpReq = 0; //5 * level * Math.log(level + 1);
+    static double xpReq =5 * level * Math.log(level + 1);
     //public AbilityReal realAbility;
 
 

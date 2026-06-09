@@ -54,9 +54,19 @@ public class DeathScreen extends GameObject {
         int x = (game.getWindowWidth() - w) / 2; // center the death screen horizontally
         int y = (game.getWindowHeight() - h) / 2; // center the death screen vertically
 
+        // pick a random image for death screen
+        ImageIcon randomImage = new ImageIcon("Images/Death/Death_Image(1).png");
+        int rand = r.nextInt(2) + 1;
+        if (rand == 1) {
+            randomImage = new ImageIcon("Images/Death/Death_Image(1).png");
+        } else if (rand == 2) {
+            randomImage = new ImageIcon("Images/Death/Death_Image(2).png");
+
+        }
+
         // make the frame for the death screen
         DeathScreen deathScreen = new DeathScreen(game, "doNotChange", false, w, h, x, y,
-                new ImageIcon("Images/Death/Death_Image(1).png"));// change the image
+                randomImage);// change the image
         deathScreen.setColor(new Color(220, 20, 60));
         game.add(deathScreen);
         deathScreenButtons.add(deathScreen);
@@ -114,7 +124,7 @@ public class DeathScreen extends GameObject {
         Player.size = (game.getWindowWidth() + game.getWindowHeight()) / 100;
         Player.speed = (game.getWindowWidth() + game.getWindowHeight()) / 200;
         Player.attackDelay = 0;
-        Player.health = 20;
+        Player.health = 2;
         Player.maxHealth = 20;
         Player.score = 0;
         Player.xp = 0;
@@ -151,7 +161,8 @@ public class DeathScreen extends GameObject {
         }
         super.paint(g);
         if (deathImage != null) {
-            g.drawImage(deathImage, getWidth()/4, 0, getWidth()/2, getHeight()/2, null);
+            g.drawImage(deathImage, (getWidth() - (int) (getWidth() / 1.5)) / 2, 0, (int) (getWidth() / 1.5),
+                    (int) (getHeight() / 1.5), null);
         }
         if (buttonName.equals("doNotChange")) {
             return; // don't draw text for the background box

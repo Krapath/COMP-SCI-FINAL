@@ -23,6 +23,8 @@ public class DisplayDebug extends GameObject {
     static double radius;
     private Font pixelFont;
 
+    static int borderWidth= 4;
+
     public DisplayDebug(PolygonGame game) {
         this.game = game; //hi this is a test test test
         setSize(game.getWindowWidth(), game.getWindowHeight());  // size of the text area
@@ -38,6 +40,11 @@ public class DisplayDebug extends GameObject {
         }
     }
 
+
+
+    public void drawEXPBar(Graphics g,int x, int y, int size){
+
+    }
     //TODO: make the level and the health bar thing a method probably
     public void act() {
         // reposition every tick so text stays in corner
@@ -141,7 +148,7 @@ public class DisplayDebug extends GameObject {
         }
 
         if (xPointsLevel != null && yPointsLevel != null) {
-            g2d.setStroke(new BasicStroke(4)); // set line thickness for the lightning
+            g2d.setStroke(new BasicStroke(borderWidth)); // set line thickness for the lightning
             g2d.setColor(Color.CYAN);
             g2d.drawPolygon(xPointsLevel, yPointsLevel, nPointsLevel);
             g2d.setFont(pixelFont);
