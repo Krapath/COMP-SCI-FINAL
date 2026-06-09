@@ -33,8 +33,9 @@ public class Arrow extends Weapon {
 		speed=10.0;
 		setSize(projSize, projSize);
 		setColor(Color.BLUE);
-		x = game.player.x;
-		y = game.player.y;
+		x = game.player.x-projSize/4;
+		y = game.player.y-projSize/4;
+		Player.weapons.add(this);
 	
 		setPosition();
 

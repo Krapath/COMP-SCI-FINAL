@@ -34,6 +34,9 @@ public class Glaive extends Weapon {
         setColor(Color.RED);
         game.player.weapons.add(this);
     }
+    
+    
+    
 
     public void act() {
         if (PolygonGame.gamePause) {
@@ -42,13 +45,13 @@ public class Glaive extends Weapon {
 
         if (rotationTimer == 100) {
             rotationTimer = 0;
-            game.createGlaive(10);
+            game.createGlaive(game.numberOfGlaives);
         }
         //scales the speed of the glaive based on the player
         x = (radius * Math.cos(angle) + game.player.x) - size / 2 + game.player.size / 2;
         y = (radius * Math.sin(angle) + game.player.y) - size / 2 + game.player.size / 2;
         setPosition();
-        /* 
+        
         for (int i = 0; i < game.enemies.size(); i++) {
             if (collides(game.enemies.get(i))) {
                 boolean hit = false;
@@ -91,7 +94,7 @@ public class Glaive extends Weapon {
                 pierceTimer++;
             }
         }
-         */
+        
         angle += speed;
         rotationTimer++;
         // move the projectile according to its velocity

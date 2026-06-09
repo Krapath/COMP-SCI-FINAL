@@ -62,7 +62,7 @@ public class MatchStick extends Weapon {
         g2d.rotate(spriteAngle); // rotate around that point
 
         // shaft: centered on origin
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(new Color(255, 223, 180));
         // negative shaftHeight so it extends upwards from the center
         g2d.fillRect(-shaftWidth / 2, -shaftHeight / 2, shaftWidth, shaftHeight);
 
@@ -72,7 +72,7 @@ public class MatchStick extends Weapon {
         g2d.fillRect(-tipWidth / 2, -shaftHeight / 2 - tipHeight, tipWidth, tipHeight);
 
         // arrow hitbox for debugging
-        g2d.setColor(Color.RED);
+        g2d.setColor(new Color(255, 0, 63));
         g2d.drawRect(-tipWidth / 2, -shaftHeight / 2 - tipHeight, tipWidth, shaftHeight + tipHeight);
 
         g2d.setTransform(old); // restore

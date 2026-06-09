@@ -105,11 +105,10 @@ public class PolygonGame extends Game {
                 add(projectile);
                 projectiles.add(projectile);
                 DisplayGUI.borderWidth++;
-                createGlaive(10);
             }
         }
 
-        /* 
+        
         if (r.nextInt(300) < 20 && enemies.size() < maxEnemiesSpawned) { // 0.33% chance each tick to spawn an enemy
 
             if ((spawnedEnemies + 1) % 50 == 0) { //hoard spawn
@@ -153,7 +152,7 @@ public class PolygonGame extends Game {
 
             spawnedEnemies++;
         }
-         */
+         
         if (Player.health <= 0 && this.player != null) { // stops if dies
             gamePause = true;
             deathAnimationController.deathAnimation(this);
@@ -171,8 +170,10 @@ public class PolygonGame extends Game {
             Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
             Player.xpReq =  
+            
+            		
             5 * Player.level * Math.log(Player.level + 1);
-            //0;
+           // 0;
             choosingBuff = true;
 
         }
