@@ -10,13 +10,15 @@ public class Glaive extends Weapon {
     //double yVel;
     //int distanceTraveled = 0;
     int pierceCooldown = 60; // the amount of frames between acts until it can pierce, ensures that it doesnt hit enemies multiple times
-    Double angle = 0.0;
+    Double angle;
+    Double startingAngle;
     int radius = 100;
-    Double speed = 1.0;
+    Double speed = 2 * Math.PI / 100;
     int pierceTimer = 0; // the current timer for pierce.
     static int damage = 1;
     static int glaiveCount = 0;
-    
+    public int rotationTimer = 0;
+
     //TODO: right now pierce system is disabled and will hit enemies more than once
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); // TODO: maybe make universal for other buffs
 
@@ -24,7 +26,10 @@ public class Glaive extends Weapon {
         super(game, "Passive", "Glaive");
         this.game = game;
         angle = startingAngle;
-        setLocation(game.player.getX() + 80, game.player.getY() + 80); // update position
+        this.startingAngle = startingAngle;
+        x = (radius * Math.cos(angle) + game.player.x) - size / 2 + game.player.size / 2;
+        y = (radius * Math.sin(angle) + game.player.y) - size / 2 + game.player.size / 2;
+        setLocation((int) x, (int) y); // update position
         setSize(size, size); // size of the projectile
         setColor(Color.RED);
         game.player.weapons.add(this);
@@ -35,14 +40,15 @@ public class Glaive extends Weapon {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
 
+        if (rotationTimer == 100) {
+            rotationTimer = 0;
+            game.createGlaive(10);
+        }
         //scales the speed of the glaive based on the player
-        angle += speed * Player.speed / 100.0;
-
-        double x = (radius * Math.cos(angle) + game.player.getX()) - size / 2 + Player.size / 2;
-        double y = (radius * Math.sin(angle) + game.player.getY()) - size / 2 + Player.size / 2;
-        setX((int) (x + 0.5));
-        setY((int) (y + 0.5));
-
+        x = (radius * Math.cos(angle) + game.player.x) - size / 2 + game.player.size / 2;
+        y = (radius * Math.sin(angle) + game.player.y) - size / 2 + game.player.size / 2;
+        setPosition();
+        /* 
         for (int i = 0; i < game.enemies.size(); i++) {
             if (collides(game.enemies.get(i))) {
                 boolean hit = false;
@@ -85,7 +91,9 @@ public class Glaive extends Weapon {
                 pierceTimer++;
             }
         }
-
+         */
+        angle += speed;
+        rotationTimer++;
         // move the projectile according to its velocity
     }
 }
