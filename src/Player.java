@@ -21,9 +21,9 @@ public class Player extends GameObject {
     static boolean matchStickActive = false; // does not really do much right now
     static boolean dashActive = false;
     static boolean arrowSpreadActive = false;
-    static double xpReq = 0;// 5 * level * Math.log(level + 1);
-    //public AbilityReal realAbility;
-
+    static double xpReq = 
+    5 * level * Math.log(level + 1);
+    //0;
     static boolean invulnerable = false;
     static int invulnerableDuration = 30;
     static int invulnerableTimer = 0;
