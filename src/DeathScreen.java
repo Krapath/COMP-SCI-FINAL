@@ -134,7 +134,7 @@ public class DeathScreen extends GameObject {
         Player.dashActive = false;
         Player.arrowSpreadActive = false;
         Player.glaiveActive = false;
-        Player.yonduArrowActive = false;
+        Player.matchStickActive = false;
         Player.invulnerable = false;
         Player.invulnerableDuration = 30;
         SpawnAnimation.playerTransparency = 0;
@@ -144,7 +144,7 @@ public class DeathScreen extends GameObject {
         AtGMissileMk1.damage = 1;
         Glaive.damage = 1;
         Glaive.glaiveCount = 0;
-        YonduArrow.damage = 1;
+        MatchStick.damage = 1;
         ArrowSpread.arrowCount = 5;
         ArrowSpread.damage = 1;
 

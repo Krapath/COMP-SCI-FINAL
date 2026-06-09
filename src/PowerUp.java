@@ -33,17 +33,17 @@ public class PowerUp extends GameObject {
     private Image buffIcon;
 
     public int imageSize;
-    static String[] buffNames = {"Health", "Speed", "AttackSpeed", "Lightning", "Missile", "Glaive", "Arrow", "Dash",
+    static String[] buffNames = {"Health", "Speed", "AttackSpeed", "Lightning", "Missile", "Glaive", "MatchStick", "Dash",
         "ArrowSpread"};
-    static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.ORANGE, Color.MAGENTA,
-        Color.CYAN, Color.GRAY, Color.WHITE};
+    static Color[] buffColors = {Color.RED, Color.GREEN, Color.BLUE, Color.CYAN, Color.ORANGE, Color.MAGENTA,
+        Color.YELLOW, Color.GRAY, Color.WHITE};
     String[] buffDescriptions = {"+5 Max Health", // Case 0 (RED / Health)
         "+1 Movement Speed", // Case 1 (GREEN / Speed)
         "+1 Attack Speed", // Case 2 (BLUE / Attack Speed)
-        "Unlocks Chain Lightning", // Case 3 (YELLOW / Lightning)
+        "Unlocks Chain Lightning", // Case 3 (CYAN / Lightning)
         "Unlocks Missile strikes", // Case 4 (ORANGE / Missile)
         "Spawns orbiting Glaives", // Case 5 (MAGENTA / Glaive)
-        "Summons Yondu Arrow", // Case 6 (CYAN / Arrow)
+        "Summons Matchstick", // Case 6 (YELLOW / MatchStick)
         "Press Space to Dash", // Case 7 (GRAY / Dash)
         "Unlocks Arrow Spread" // Case 8 (WHITE / ArrowSpread)
 };
@@ -125,14 +125,14 @@ public class PowerUp extends GameObject {
                     game.createGlaive(game.numberOfGlaives);
                 }
                 break;
-            case 6: // yondu arrow
-                if (!Player.yonduArrowActive) {
-                    Player.yonduArrowActive = true;
-                    game.yonduArrow = new YonduArrow(game);
-                    game.add(game.yonduArrow);
+            case 6: // match stick
+                if (!Player.matchStickActive) {
+                    Player.matchStickActive = true;
+                    game.matchStick = new MatchStick(game);
+                    game.add(game.matchStick);
                 } else {
                     Player.attackDelay += 1;
-                    YonduArrow.damage++;
+                    MatchStick.damage++;
                 }
                 break;
 
@@ -172,7 +172,7 @@ public class PowerUp extends GameObject {
         // lines
         Color color = getColor().darker();
         Color textColor = getColor().darker();
-        int borderSize = 5;
+        int borderSize = getWidth()/50;
 
         g2d.setColor(color);
         g2d.fillRect(0, 0, width, borderSize);
@@ -255,9 +255,8 @@ public class PowerUp extends GameObject {
                 (int) (posYBuff / 1.2));
 
         g.setColor(color);
-        g2d.drawRect(width / 2 - imageSize / 2, (height / 3 - imageSize / 2), imageSize, imageSize);
 
-        g2d.drawImage(buffIcon, width / 2 - imageSize / 2, (height / 3 - imageSize / 2), imageSize, imageSize, null);
+        g2d.drawImage(buffIcon, width / 2 - imageSize / 2, (height / 3 - imageSize / 2), imageSize, imageSize,null);
 
     }
 

@@ -40,6 +40,7 @@ public class Arrow extends Weapon {
 
 		//TODO: replace with actual arrow sprite placeholder for
 		arrowImage = new ImageIcon("Images/Sprites/Arrow.png").getImage();
+		
 		spriteSize = projSize;
 	}
 

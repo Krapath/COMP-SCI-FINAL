@@ -25,7 +25,7 @@ public class PolygonGame extends Game {
     Tutorial tutorialController;
     DeathScreen deathScreenController;
     GameBackground background;
-    YonduArrow yonduArrow;
+    MatchStick matchStick;
     //TODO: fix Blink blink;
     static boolean gamePause = true;
     static boolean choosingBuff = false;
@@ -170,9 +170,9 @@ public class PolygonGame extends Game {
             }
             Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
-            //Player.xpReq = 0;
+            Player.xpReq = 0;
 
-            Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
+            //Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
             choosingBuff = true;
 
         }

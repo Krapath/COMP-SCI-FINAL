@@ -5,7 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.Graphics;
 import java.util.Random;
 
-public class YonduArrow extends Weapon {
+public class MatchStick extends Weapon {
     Random r = new Random();
     int size = 50;
     PolygonGame game;
@@ -42,7 +42,7 @@ public class YonduArrow extends Weapon {
     int tipWidth = 15;
     int tipHeight = 20;
 
-    public YonduArrow(PolygonGame game) {
+    public MatchStick(PolygonGame game) {
         super(game, "Passive", "Yondu Arrow");
         this.game = game;
         setSize(game.getWindowWidth(), game.getWindowHeight()); // full screen so nothing clips
