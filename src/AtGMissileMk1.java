@@ -32,7 +32,7 @@ public class AtGMissileMk1 extends Weapon {
     
     Enemy target;
     
-    Image missileImage;
+    static Image missileImage;
     static int damage = 1;
 
     public AtGMissileMk1(PolygonGame game) {
@@ -50,7 +50,7 @@ public class AtGMissileMk1 extends Weapon {
             randomEnemy = r.nextInt(game.enemies.size());
             target = game.enemies.get(randomEnemy);
         }
-         missileImage = new ImageIcon("Images/Sprites/Missile.png").getImage();
+        missileImage = new ImageIcon("Images/Sprites/Missile.png").getImage();
 
         game.player.weapons.add(this);
     }
@@ -138,6 +138,7 @@ public class AtGMissileMk1 extends Weapon {
                         setSize(size*3,size*3);
                         explosionDuration--;
                         setColor(new Color(255, 215,0));
+    					target.damaged = true;
                         target.speed=target.speed/speedReduction;
                         canDamage = false;
 

@@ -20,7 +20,10 @@ public class XpOrb extends GameObject {
     public XpOrb(int enemyX, int enemyY, PolygonGame game) {
         this.game = game;
         setLocation(enemyX, enemyY); // update position
-        setSize(10, 10);
+      
+        int width = (game.getWindowHeight()+game.getWindowWidth())/300;
+        int height = width;
+        setSize(width, height);
         setColor(Color.YELLOW);
         x = getX();
         y = getY();

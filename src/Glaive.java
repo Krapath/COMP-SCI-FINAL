@@ -65,7 +65,7 @@ public class Glaive extends Weapon {
                 if (!hit) { //if not hit
                     hitEnemies.add(game.enemies.get(i)); //count as hit from now on
                     game.enemies.get(i).health -= damage; // reduce enemy health on collision
-                    game.enemies.get(i).setColor(Color.RED);
+                    game.enemies.get(i).damaged=true;
 
                     int enemyX = game.enemies.get(i).getX();
                     int enemyY = game.enemies.get(i).getY();

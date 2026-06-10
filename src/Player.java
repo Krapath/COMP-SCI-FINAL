@@ -9,9 +9,9 @@ public class Player extends GameObject {
 
     static int size;
     static int speed;
-    static int attackDelay = 0;
+    static int attackTimer = 0;
+    static int attackCooldown= 10;
     static int health = 10;
-    static int maxHealth = 20;
     static int score = 0;
     static int xp = 0;
     static int level = 1;
@@ -48,7 +48,7 @@ public class Player extends GameObject {
             return;// player does not move or collide with enemies while the player is choosing a buff
 
         }
-        attackDelay++;
+        attackTimer++;
 
         double up = 0.0, down = 0.0, left = 0.0, right = 0.0;
 

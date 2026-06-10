@@ -13,7 +13,7 @@ public class Arrow extends Weapon {
 	int arrowCX;
 	int arrowCY;
 
-	Image arrowImage;
+	static Image arrowImage;
 	int spriteSize;
 	int size;
 	int shaftWidth; 
@@ -30,7 +30,8 @@ public class Arrow extends Weapon {
         projSize =size*5;
 		shaftWidth = (int)(size * 1.5);  
 		shaftHeight = (int)(size * 3); 
-		speed=10.0;
+		speed=(game.getWindowHeight()+game.getWindowWidth())/250;
+		     
 		setSize(projSize, projSize);
 		setColor(Color.BLUE);
 		x = game.player.x-projSize/4;
@@ -114,7 +115,7 @@ public class Arrow extends Weapon {
 							// arrow
 					hitEnemies.add(game.enemies.get(i));
 					game.enemies.get(i).health -= damage;
-					game.enemies.get(i).setColor(Color.RED);
+					game.enemies.get(i).damaged = true;
 					
 					pierce--;
 					

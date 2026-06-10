@@ -24,13 +24,14 @@ public class PowerUp extends GameObject {
     private Font pixelFont;
     String buff;
     static protected int numBuffs = 9;
-    static int[] buffArray = new int[numBuffs]; // keeps track of how many times the player has gotten each buff, used to determine how many sides the polygon for each buff should have and what number to display on the buff
+    static int[] buffArray = new int[numBuffs]; 
+    // keeps track of how many times the player has gotten each buff, used to determine how many sides the polygon for each buff should have and what number to display on the buff
     private Font descriptionFont;
 
     public int width;
     public int height;
 
-    private Image buffIcon;
+    Image buffIcon;
 
     public int imageSize;
     static String[] buffNames = {"Health", "Speed", "AttackSpeed", "Lightning", "Missile", "Glaive", "MatchStick", "Dash",
@@ -95,7 +96,7 @@ public class PowerUp extends GameObject {
                 break;
 
             case 2: // attack speed
-                Player.attackDelay += 1;
+                Player.attackCooldown -= 1;
                 break;
 
             case 3: // lightning
@@ -131,7 +132,7 @@ public class PowerUp extends GameObject {
                     game.matchStick = new MatchStick(game);
                     game.add(game.matchStick);
                 } else {
-                    Player.attackDelay += 1;
+                    Player.attackTimer += 1;
                     MatchStick.damage++;
                 }
                 break;

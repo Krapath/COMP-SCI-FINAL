@@ -99,8 +99,8 @@ public class PolygonGame extends Game {
             getContentPane().setComponentZOrder(debug, 0);
         }
         if (mouseLeftPressed()) {
-            if (Player.attackDelay > 10) {
-                Player.attackDelay = 0;
+            if (Player.attackTimer > Player.attackCooldown) {
+                Player.attackTimer = 0;
                 projectile = new Projectile(this);
                 add(projectile);
                 projectiles.add(projectile);

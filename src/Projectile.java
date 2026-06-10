@@ -22,7 +22,10 @@ public class Projectile extends Weapon {
 
         setLocation(game.player.getX() + Player.size / 3, game.player.getY() + Player.size / 3); // update
         // position
-        setSize(10, 10); // size of the projectile
+        
+        int width = (game.getWindowHeight()+game.getWindowWidth())/300;
+        int height = width;
+        setSize(width, height); // size of the projectile
         setColor(Color.YELLOW);
 
         angle = game.getAngle(game.player.getX() + Player.size / 2,

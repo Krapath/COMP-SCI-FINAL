@@ -43,7 +43,7 @@ public class MatchStick extends Weapon {
     int tipHeight = 20;
 
     public MatchStick(PolygonGame game) {
-        super(game, "Passive", "Yondu Arrow");
+        super(game, "Passive", "MatchStick");
         this.game = game;
         setSize(game.getWindowWidth(), game.getWindowHeight()); // full screen so nothing clips
         setColor(Color.YELLOW);
@@ -230,7 +230,7 @@ public class MatchStick extends Weapon {
                 if (!hit) { // if this enemy has not already been hit by this arrow
                     hitEnemies.add(game.enemies.get(i));
                     game.enemies.get(i).health -= damage;
-                    game.enemies.get(i).setColor(Color.RED);
+                    game.enemies.get(i).damaged=true;
 
                     int enemyX = game.enemies.get(i).getX();
                     int enemyY = game.enemies.get(i).getY();

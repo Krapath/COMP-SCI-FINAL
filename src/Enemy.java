@@ -16,8 +16,9 @@ public class Enemy extends GameObject {
     public int enemyDamage = 1;
     public int displayOld = 0; //used to see enemies that have been alive older
     boolean appearedOnGame = false;
-    Color color; //color of the enemy.
+    public Color color; //color of the enemy.
     public boolean damaged = false; //wether or not the enemy was recently damaged.
+    Color damagedColor;
     int damagedTimer; //how long since the enemy was last damaged.
 
     static int healthMultiplier;
@@ -34,6 +35,8 @@ public class Enemy extends GameObject {
         this.game = game;
         spawnEnemy(spawn);
         enemyType(type);
+        damagedColor = Color.RED;
+
 
     }
 
@@ -50,6 +53,7 @@ public class Enemy extends GameObject {
         this.game = game;
         spawnEnemy(spawn);
         enemyType(type);
+        damagedColor = Color.RED;
 
     }
 
@@ -188,7 +192,7 @@ public class Enemy extends GameObject {
                 break;
             case 2: //gunner
                 health = 5 * healthMultiplier;
-                setColor(Color.GRAY);
+                setColor(Color.LIGHT_GRAY);
                 break;
             case 3: //throwing goblin
                 health = 2 * healthMultiplier;
@@ -209,7 +213,7 @@ public class Enemy extends GameObject {
 
     public void damagedAffects() {
         if (damaged) {
-            setColor(Color.RED);
+            setColor(damagedColor);
             damagedTimer++;
         }
 
@@ -217,6 +221,7 @@ public class Enemy extends GameObject {
             damagedTimer = 0;
             damaged = false;
             setColor(color);
+            damagedColor=Color.RED;
         }
     }
 

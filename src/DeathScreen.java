@@ -123,9 +123,8 @@ public class DeathScreen extends GameObject {
         // reset player stats
         Player.size = (game.getWindowWidth() + game.getWindowHeight()) / 100;
         Player.speed = (game.getWindowWidth() + game.getWindowHeight()) / 200;
-        Player.attackDelay = 0;
+        Player.attackTimer = 0;
         Player.health = 10;
-        Player.maxHealth = 20;
         Player.score = 0;
         Player.xp = 0;
         Player.level = 1;

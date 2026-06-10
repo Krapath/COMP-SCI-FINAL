@@ -21,7 +21,7 @@ public class ChainLightning extends Weapon {
     static int damage = 1;
     int chainRange;
     int durationVisible = 10; // the amount of frames the chain lightning is visible for
-    int lightningSize = 5; // the thickness of the lightning, will be used in the paint method to set the stroke of the graphics object
+    int lightningSize; // the thickness of the lightning, will be used in the paint method to set the stroke of the graphics object
     
     
     ArrayList<Enemy> enemyDisplay = new ArrayList<Enemy>(); // to keep track of the enemies that the lightning should be drawn to, will be used in the paint method to draw lines between these enemies
@@ -41,7 +41,7 @@ public class ChainLightning extends Weapon {
         ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
         hitEnemies.add(initialTarget); // Add the first hit enemy
         enemyDisplay.add(initialTarget); // Add the first hit enemy to the display list for drawing the lightning
-       
+        lightningSize = (game.getWindowWidth() + game.getWindowHeight()) / 2 / 300;
         for (int i = 0; i < chainCount; i++) {
             Enemy target = null;
             double closestDistance = Double.MAX_VALUE;
@@ -59,7 +59,9 @@ public class ChainLightning extends Weapon {
             }
            if (target != null) {
             target.health -= damage; 
-            target.setColor(Color.CYAN);
+            target.damagedColor = Color.CYAN;
+            target.damaged = true;
+
             
             hitEnemies.add(target); // mark this enemy as hit so it won't be hit again in this chain
             initialTarget = target;   // chain lightning jumps to the next target
