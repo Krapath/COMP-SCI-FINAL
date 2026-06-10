@@ -1,4 +1,5 @@
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -7,28 +8,48 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.util.*;
+import java.io.*;
 
 public class Highscores extends GameObject {
 
     private static ArrayList<Highscores> highscoresButtons = new ArrayList<>(); // list of all things in the class
     // set variables
+    private static final File highscores = new File("highscore.txt");
     private Image boxImage;
     private String buttonName;
     PolygonGame game;
     Font menuFont;
+    Font textFont;
     double hoverAngle = 0.2;
     boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
     boolean hovered;
+    public int[] scores = new int[5];
+    public static int w, h, x, y;
+
+    
 
     Random r = new Random();
 
     // set up dummy consturctor for highscores buttons to spawn
     public Highscores(PolygonGame game, String buttonName, int w, int h, int x, int y) {
+		if (!highscores.exists()){
+			try
+		     {
+		       highscores.createNewFile();
+
+		     }
+		     catch(IOException ex)
+		     {
+		    	 System.out.println("No file");
+		     }
+		}
+		
         this.game = game;
         this.buttonName = buttonName;
         setSize(w, h);
         setLocation(x, y);
+        
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
             menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((45f)));
@@ -37,15 +58,43 @@ public class Highscores extends GameObject {
             menuFont = new Font("Monospaced", Font.BOLD, 100);
             e.printStackTrace();
         }
+        
+        
+        try {
+            java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
+            textFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((100f)));
+        } catch (Exception e) {
+            // Fallback to basic monospaced if the file is missing
+            textFont = new Font("Monospaced", Font.BOLD, 200);
+            e.printStackTrace();
+        }
+        
+        
     }
+    
+    
+    /*
+    public void setScores (int[] scores, int newScore) {
+    static FileWriter fw = new FileWriter(highscores);
+    static BufferedWriter bw = new BufferedWriter(fw);
+    	int first = 0, second = 0, third = 0, fourth = 0, fifth = 0;
+    	
+    	for (int i = 0; i < scores.length; i++) {
+    		if (scores[i] > first) 
+    			first = scores[i];
+    	}
+    	
+    }
+    
+    */
 
     public void spawnHighscores(PolygonGame game) {
         // sets up width and height for the highscores box based on the window size
-        int w = (int) (game.getWindowWidth() / 1.5);
-        int h = (int) (game.getWindowHeight() / 1.2);
+        w = (int) (game.getWindowWidth() / 1.5);
+        h = (int) (game.getWindowHeight() / 1.2);
 
-        int x = (game.getWindowWidth() - w) / 2; // center the highscores horizontally
-        int y = (game.getWindowHeight() - h) / 2; // center the highscores vertically
+        x = (game.getWindowWidth() - w) / 2; // center the highscores horizontally
+        y = (game.getWindowHeight() - h) / 2; // center the highscores vertically
 
         // make the shift for the back button
         int setShift = (int) ((x + y) / 10);
@@ -61,6 +110,8 @@ public class Highscores extends GameObject {
         backButton.setColor(new Color(15, 82, 186));
         game.add(backButton);
         highscoresButtons.add(backButton);
+        
+
     }
 
     @Override
@@ -69,7 +120,7 @@ public class Highscores extends GameObject {
             return; // only check if we're on the main menu
         }
         super.paint(g); // paints the background first of the button first
-
+        
         // adds the image on top of the background WILL USED LATER
         if (boxImage != null) {
             g.drawImage(boxImage, 0, 0, getWidth(), getHeight(), null);
@@ -97,6 +148,13 @@ public class Highscores extends GameObject {
             hoverAngle = 0;
             g2d.drawString(buttonName, textX, textY);
         }
+        
+        g2d.setStroke(new BasicStroke(4));
+        g2d.setColor(Color.CYAN);
+        g2d.setFont(textFont);
+
+        g.drawString("1. ", w/8, h/5);
+
     }
 
     boolean readyToApply = false;
