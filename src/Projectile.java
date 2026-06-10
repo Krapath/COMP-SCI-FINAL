@@ -1,6 +1,12 @@
 
 import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class Projectile extends Weapon {
 
@@ -33,6 +39,19 @@ public class Projectile extends Weapon {
         double speed = 20; // adjust as needed
         xVel = speed * Math.cos(angle);
         yVel = speed * Math.sin(angle);
+		File soundFile = new File("SFX/PROJECTILE.wav");
+
+		try {
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioStream);
+			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(-7.0f); // Reduce volume by 10 decibels.
+			clip.start();
+		} catch (Exception e) {
+			System.err.println("Unsupported audio format for file: " + soundFile.getName());
+			e.printStackTrace();
+		} 
 
     }
 

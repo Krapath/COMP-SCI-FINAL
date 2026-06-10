@@ -47,13 +47,21 @@ public class DisplayGUI extends GameObject {
 
     //
     public void drawEXPBar(Graphics g, int nPointsLevel, int[] xPointsLevel, int[] yPointsLevel, int playerXp,
-            int playerXpReq) {
+            double playerXpReq) {
+
+        //clear all current lines
+        for (DisplayGUI m : levelBar) {
+                    game.remove(m);
+                }
+        levelBar.clear();
+        //draw new lines
         int maxPoint = (int) (Math.floor(nPointsLevel / 2) + 1); // find the tallest/ highest point
         int maxHeight = yPointsLevel[maxPoint]; 
+        int minHeight = yPointsLevel[0];
         int levelPercent = (int) (barDefinitionLevel * ((double) playerXp / playerXpReq));
-        int increments = maxHeight/barDefinitionLevel;
-        for (int i = 0; i < levelPercent; i++) {
-
+        int increments = (minHeight-maxHeight)/barDefinitionLevel;
+        for (int i = 1; i <= levelPercent; i++) {
+            g.drawLine((int)(xPointsLevel[0]-radius),minHeight - i * increments,(int)(xPointsLevel[0]+radius) ,minHeight - i * increments);
         }
 
     }
@@ -110,6 +118,7 @@ public class DisplayGUI extends GameObject {
     }
 
     public void paint(Graphics g) {
+        
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
 
         g.setColor(Color.WHITE);
@@ -177,6 +186,7 @@ public class DisplayGUI extends GameObject {
 
             g.drawString(level, levelX, levelY);
 
+            drawEXPBar(g,nPointsLevel,xPointsLevel,yPointsLevel,Player.xp,Player.xpReq);
         }
         if (PolygonGame.choosingBuff) {
             g2d.setColor(new Color(0, 0, 0, 120));
