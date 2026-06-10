@@ -14,7 +14,7 @@ public class Highscores extends GameObject {
 
     private static ArrayList<Highscores> highscoresButtons = new ArrayList<>(); // list of all things in the class
     // set variables
-    private static final File highscores = new File("highscore.txt");
+    private static final File highscores = new File("highscores.txt");
     private Image boxImage;
     private String buttonName;
     PolygonGame game;
@@ -26,25 +26,49 @@ public class Highscores extends GameObject {
     boolean hovered;
     public int[] scores = new int[5];
     public static int w, h, x, y;
-
+    public Scanner scan;
+    public FileWriter fw;
+    public BufferedWriter bw;
     
 
     Random r = new Random();
 
     // set up dummy consturctor for highscores buttons to spawn
     public Highscores(PolygonGame game, String buttonName, int w, int h, int x, int y) {
-		if (!highscores.exists()){
+		
+    	
 			try
 		     {
-		       highscores.createNewFile();
+		        scan = new Scanner(highscores); //scanner for scores
+			    fw = new FileWriter(highscores);
+			    bw = new BufferedWriter(fw);
 
 		     }
 		     catch(IOException ex)
 		     {
-		    	 System.out.println("No file");
+		    	System.out.println("No file");
 		     }
+			
+
+		
+		try {
+			for (int i = 0; i < 5; i++){
+				if(scan.hasNext()) {
+					scan.next();
+					bw.newLine();
+					System.out.println("yes");
+				} else {
+					bw.write("0");
+					bw.newLine();
+					 
+				}
+			}
+			bw.close();
+		} catch (IOException ex){
+			System.out.println("fail");
 		}
 		
+
         this.game = game;
         this.buttonName = buttonName;
         setSize(w, h);
@@ -73,10 +97,9 @@ public class Highscores extends GameObject {
     }
     
     
-    /*
+    
     public void setScores (int[] scores, int newScore) {
-    static FileWriter fw = new FileWriter(highscores);
-    static BufferedWriter bw = new BufferedWriter(fw);
+
     	int first = 0, second = 0, third = 0, fourth = 0, fifth = 0;
     	
     	for (int i = 0; i < scores.length; i++) {
@@ -86,7 +109,7 @@ public class Highscores extends GameObject {
     	
     }
     
-    */
+    
 
     public void spawnHighscores(PolygonGame game) {
         // sets up width and height for the highscores box based on the window size
