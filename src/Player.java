@@ -1,7 +1,13 @@
 
 import java.awt.Color;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class Player extends GameObject {
 
@@ -42,7 +48,26 @@ public class Player extends GameObject {
         x = getX();
         y = getY();
     }
+    
+	public void playSound() {
+		File soundFile = new File("SFX/DAMAGE.wav");
 
+		try {
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioStream);
+			clip.start();
+			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(0); // Reduce volume by 10 decibels.
+			clip.start();
+		} catch (Exception e) {
+			System.err.println("Unsupported audio format for file: " + soundFile.getName());
+			e.printStackTrace();
+		} 
+
+		
+	}
+	
     public void act() {
         if (PolygonGame.gamePause) {
             return;// player does not move or collide with enemies while the player is choosing a buff
@@ -101,6 +126,7 @@ public class Player extends GameObject {
 
                 if (!invulnerable) {
                     Player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
+                    playSound();
                     game.enemies.get(i).health -= 1;
 
                     if (game.enemies.get(i).health <= 0) {
