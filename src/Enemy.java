@@ -17,6 +17,7 @@ public class Enemy extends GameObject {
     public int displayOld = 0; //used to see enemies that have been alive older
     boolean appearedOnGame = false;
     Color color; //color of the enemy.
+    static Color damagedColor;
     public boolean damaged = false; //wether or not the enemy was recently damaged.
     int damagedTimer; //how long since the enemy was last damaged.
 
@@ -34,6 +35,7 @@ public class Enemy extends GameObject {
         this.game = game;
         spawnEnemy(spawn);
         enemyType(type);
+        damagedColor = Color.RED;
 
     }
 
@@ -50,7 +52,7 @@ public class Enemy extends GameObject {
         this.game = game;
         spawnEnemy(spawn);
         enemyType(type);
-
+        damagedColor = Color.RED;
     }
 
     public void act() {
@@ -210,7 +212,7 @@ public class Enemy extends GameObject {
 
     public void damagedAffects() {
         if (damaged) {
-            setColor(Color.RED);
+            setColor(damagedColor);
             damagedTimer++;
         }
 
@@ -218,6 +220,7 @@ public class Enemy extends GameObject {
             damagedTimer = 0;
             damaged = false;
             setColor(color);
+            damagedColor = Color.RED;
         }
     }
 

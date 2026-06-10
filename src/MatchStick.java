@@ -37,11 +37,10 @@ public class MatchStick extends Weapon {
     double spriteAngle=0; // angle at which the arrow tip is pointing
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
     // arrow dimensions
-    int shaftWidth = 10;
-    int shaftHeight = 60;
-    int tipWidth = 15;
-    int tipHeight = 20;
-
+    int shaftWidth;
+    int shaftHeight;
+    int tipWidth;
+    int tipHeight;
     public MatchStick(PolygonGame game) {
         super(game, "Passive", "MatchStick");
         this.game = game;
@@ -50,6 +49,10 @@ public class MatchStick extends Weapon {
         arrowCX = game.player.getX() + 100;
         arrowCY = game.player.getY() + 100;
         game.player.weapons.add(this);
+        shaftWidth = (game.getWindowHeight()+game.getWindowWidth())/300;
+        shaftHeight = (game.getWindowHeight()+game.getWindowWidth())/50;
+        tipWidth = (game.getWindowHeight()+game.getWindowWidth())/200;
+        tipHeight = (game.getWindowHeight()+game.getWindowWidth())/150;;
 
     }
 
