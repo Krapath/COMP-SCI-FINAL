@@ -72,7 +72,7 @@ public class MainMenu extends GameObject {
 
 
         // play button
-        MainMenu playButton = new MainMenu(game,  "Play");
+        MainMenu playButton = new MainMenu(game, "Play");
 
         playButton.setSize(w, h);
         playButton.setColor(new Color(220, 20, 60));
@@ -89,12 +89,12 @@ public class MainMenu extends GameObject {
         menuButtons.add(tutorialButton);
 
         // settings button
-        MainMenu settings = new MainMenu(game, "Settings");
-        settings.setSize(w, h);
-        settings.setColor(new Color(220, 20, 60));
-        settings.setLocation(centerX + menuOffsetX, ySlots * 5 - yShift + menuOffsetY);
-        game.add(settings);
-        menuButtons.add(settings);
+        MainMenu highscore = new MainMenu(game, "HighScore");
+        highscore.setSize(w, h);
+        highscore.setColor(new Color(220, 20, 60));
+        highscore.setLocation(centerX + menuOffsetX, ySlots * 5 - yShift + menuOffsetY);
+        game.add(highscore);
+        menuButtons.add(highscore);
 
         // exit button
         MainMenu exitButton = new MainMenu(game,  "Exit");
@@ -218,7 +218,7 @@ public class MainMenu extends GameObject {
                 menuButtons.clear(); // clears the entire list
                 //tutorial setup
                 game.tutorialController.spawnTutorial(game);
-            } else if (buttonName.equals("Settings")) {
+            } else if (buttonName.equals("HighScore")) {
             }
             else if (buttonName.equals("Exit")) {
                 System.exit(0);

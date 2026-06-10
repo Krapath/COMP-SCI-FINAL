@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 public class DisplayGUI extends GameObject {
 
@@ -13,6 +14,8 @@ public class DisplayGUI extends GameObject {
     static int[] yPointsHealth;
     static int[] xPointsLevel;
     static int[] yPointsLevel;
+
+    static ArrayList<DisplayGUI> ExpBar = new ArrayList<DisplayGUI>();
 
     static int nPointsHealth;
     static int nPointsLevel;
@@ -26,7 +29,7 @@ public class DisplayGUI extends GameObject {
     static int borderWidth= 4;
 
     public DisplayGUI(PolygonGame game) {
-        this.game = game; //hi this is a test test test
+        this.game = game;
         setSize(game.getWindowWidth(), game.getWindowHeight());  // size of the text area
         radius = (game.getWindowWidth() + game.getWindowHeight()) / 35;
 
@@ -42,9 +45,10 @@ public class DisplayGUI extends GameObject {
 
 
 
-    public void drawEXPBar(Graphics g,int x, int y, int size){
-
+    public void drawEXPBar(Graphics g){
+        
     }
+
     //TODO: make the level and the health bar thing a method probably
     public void act() {
         // reposition every tick so text stays in corner
@@ -77,17 +81,17 @@ public class DisplayGUI extends GameObject {
         posYLevel = (int) (game.getWindowHeight() - radius * 1.5);
         for (int i = 0; i < xPointsLevel.length; i++) {
 
-            double x = (radius * Math.cos(-levelAngle) + posXLevel);
-            double y = (radius * Math.sin(-levelAngle) + posYLevel);
+            double x = (radius * Math.cos(levelAngle) + posXLevel);
+            double y = (radius * Math.sin(levelAngle) + posYLevel);
 
             xPointsLevel[i] = (int) Math.round(x + 0.0001);
             yPointsLevel[i] = (int) Math.round(y + 0.0001);
-
+            System.out.println("x point level" + xPointsLevel[i]);
+            System.out.println("y point level" + yPointsLevel[i]);
             // System.out.println(" values:" + yPoints[i]);
             // System.out.println(y);
             // System.out.println(angle);
             levelAngle += Math.PI * 2 / (Player.level + 2);
-
         }
 
         nPointsLevel = Player.level + 2;
