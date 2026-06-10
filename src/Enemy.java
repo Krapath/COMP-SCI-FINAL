@@ -188,6 +188,7 @@ public class Enemy extends GameObject {
                 break;
             case 2: //gunner
                 health = 5 * healthMultiplier;
+                color = Color.GRAY;
                 setColor(Color.GRAY);
                 break;
             case 3: //throwing goblin

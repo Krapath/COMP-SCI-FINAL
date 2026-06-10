@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 public class DisplayGUI extends GameObject {
 
@@ -14,6 +15,9 @@ public class DisplayGUI extends GameObject {
     static int[] xPointsLevel;
     static int[] yPointsLevel;
 
+    static ArrayList<DisplayGUI> levelBar = new ArrayList<DisplayGUI>();
+    static int barDefinition = 100; // controls how many sections the bar is split into
+
     static int nPointsHealth;
     static int nPointsLevel;
     static int posXHealth;
@@ -21,13 +25,14 @@ public class DisplayGUI extends GameObject {
     static int posXLevel;
     static int posYLevel;
     static double radius;
+
     private Font pixelFont;
 
-    static int borderWidth= 4;
+    static int borderWidth = 4;
 
     public DisplayGUI(PolygonGame game) {
-        this.game = game; //hi this is a test test test
-        setSize(game.getWindowWidth(), game.getWindowHeight());  // size of the text area
+        this.game = game;
+        setSize(game.getWindowWidth(), game.getWindowHeight()); // size of the text area
         radius = (game.getWindowWidth() + game.getWindowHeight()) / 35;
 
         try {
@@ -40,12 +45,19 @@ public class DisplayGUI extends GameObject {
         }
     }
 
+    //
+    public void drawEXPBar(Graphics g, int nPointsLevel, int[] xPointsLevel, int[] yPointsLevel, int playerXp,
+            int playerXpReq) {
+        int maxPoint = (int) (Math.floor(nPointsLevel / 2) + 1); // find the tallest/ highest point
+        int levelPercent = (int) (barDefinition * ((double) playerXp / playerXpReq));
 
+        for (int i = 0; i < barDefinition; i++) {
 
-    public void drawEXPBar(Graphics g,int x, int y, int size){
+        }
 
     }
-    //TODO: make the level and the health bar thing a method probably
+
+    // TODO: make the level and the health bar thing a method probably
     public void act() {
         // reposition every tick so text stays in corner
         double healthAngle = Math.PI / 2;
@@ -77,22 +89,22 @@ public class DisplayGUI extends GameObject {
         posYLevel = (int) (game.getWindowHeight() - radius * 1.5);
         for (int i = 0; i < xPointsLevel.length; i++) {
 
-            double x = (radius * Math.cos(-levelAngle) + posXLevel);
-            double y = (radius * Math.sin(-levelAngle) + posYLevel);
+            double x = (radius * Math.cos(levelAngle) + posXLevel);
+            double y = (radius * Math.sin(levelAngle) + posYLevel);
 
             xPointsLevel[i] = (int) Math.round(x + 0.0001);
             yPointsLevel[i] = (int) Math.round(y + 0.0001);
-
+            System.out.println("x point level" + xPointsLevel[i]);
+            System.out.println("y point level" + yPointsLevel[i]);
             // System.out.println(" values:" + yPoints[i]);
             // System.out.println(y);
             // System.out.println(angle);
             levelAngle += Math.PI * 2 / (Player.level + 2);
-
         }
 
         nPointsLevel = Player.level + 2;
 
-        repaint();  // redraws this object every tick
+        repaint(); // redraws this object every tick
 
     }
 
@@ -107,8 +119,10 @@ public class DisplayGUI extends GameObject {
         g.drawString("MOUSE    X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 10, 20);
         g.drawString("PLAYER   X:" + game.player.getX() + "  Y:" + game.player.getY(), 10, 40);
 
-        // finds the angle between the player and the mouse cursor and displays it in degrees
-        double angle = game.getAngle(game.player.getX(), game.player.getY(), game.getMouseX(), game.getMouseY()) * (180 / Math.PI);
+        // finds the angle between the player and the mouse cursor and displays it in
+        // degrees
+        double angle = game.getAngle(game.player.getX(), game.player.getY(), game.getMouseX(), game.getMouseY())
+                * (180 / Math.PI);
         angle = -angle; // increase counterclockwise, follows standard unit circle convention
         if (angle < 0) { // display angle as a positive value between 0 and 360
             angle += 360;
@@ -126,7 +140,7 @@ public class DisplayGUI extends GameObject {
         // display the players level
         g.drawString("LEVEL: " + Player.level, 10, 160);
 
-        // display the mouse cursor as a red rectangle 
+        // display the mouse cursor as a red rectangle
         g.drawString("ANGLE:" + angle, 10, 60);
         g.setColor(Color.RED);
         g.drawRect(game.getMouseX(), game.getMouseY(), 15, 15);
@@ -146,9 +160,9 @@ public class DisplayGUI extends GameObject {
 
             g.drawString(health, healthX, healthY);
         }
-        //draws exp Bar
+        // draws exp Bar
         if (xPointsLevel != null && yPointsLevel != null) {
-            g2d.setStroke(new BasicStroke(4)); 
+            g2d.setStroke(new BasicStroke(4));
             g2d.setColor(Color.CYAN);
             g2d.drawPolygon(xPointsLevel, yPointsLevel, nPointsLevel);
             g2d.setFont(pixelFont);
@@ -161,6 +175,7 @@ public class DisplayGUI extends GameObject {
             int levelY = posYLevel + textHeight / 2;
 
             g.drawString(level, levelX, levelY);
+
         }
         if (PolygonGame.choosingBuff) {
             g2d.setColor(new Color(0, 0, 0, 120));

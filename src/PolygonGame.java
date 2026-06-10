@@ -23,6 +23,7 @@ public class PolygonGame extends Game {
     DeathAnimation deathAnimationController;
     DisplayGUI debug;
     Tutorial tutorialController;
+    Highscores highscoresController;
     DeathScreen deathScreenController;
     GameBackground background;
     MatchStick matchStick;
@@ -53,6 +54,8 @@ public class PolygonGame extends Game {
         menuController.spawnMyBoxes(this);
         // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
         tutorialController = new Tutorial(this, "", 0, 0, 0, 0);
+        // creates dummy consturctor for the highscores buttons to use to spawn the buttons
+        highscoresController = new Highscores(this, "", 0, 0, 0, 0);
         //create dummy constructor for the death screen buttons to use to spawn the buttons
         deathScreenController = new DeathScreen(this, "", false, 0, 0, 0, 0, null);
         deathAnimationController = new DeathAnimation(this, 0, 0);
@@ -76,7 +79,6 @@ public class PolygonGame extends Game {
         SpawnAnimation spawnDummy = new SpawnAnimation(this, 0, 0);
         spawnDummy.spawnAnimation(this);
         this.add(spawnDummy);
-
     }
 
     public void act() {
@@ -108,7 +110,6 @@ public class PolygonGame extends Game {
             }
         }
 
-        
         if (r.nextInt(300) < 20 && enemies.size() < maxEnemiesSpawned) { // 0.33% chance each tick to spawn an enemy
 
             if ((spawnedEnemies + 1) % 50 == 0) { //hoard spawn
@@ -152,7 +153,7 @@ public class PolygonGame extends Game {
 
             spawnedEnemies++;
         }
-         
+
         if (Player.health <= 0 && this.player != null) { // stops if dies
             gamePause = true;
             deathAnimationController.deathAnimation(this);
@@ -169,11 +170,9 @@ public class PolygonGame extends Game {
             }
             Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
-            Player.xpReq =  
-            
-            		
-            5 * Player.level * Math.log(Player.level + 1);
-           // 0;
+            Player.xpReq
+                    = 5 * Player.level * Math.log(Player.level + 1);
+            // 0;
             choosingBuff = true;
 
         }

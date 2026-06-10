@@ -13,7 +13,8 @@ public class Glaive extends Weapon {
     Double angle;
     Double startingAngle;
     int radius = 100;
-    Double speed = 2 * Math.PI / 100;
+    int framesPerRotation = Player.speed * 5;
+    Double speed = 2 * Math.PI / framesPerRotation;
     int pierceTimer = 0; // the current timer for pierce.
     static int damage = 1;
     static int glaiveCount = 0;
@@ -34,16 +35,13 @@ public class Glaive extends Weapon {
         setColor(Color.RED);
         game.player.weapons.add(this);
     }
-    
-    
-    
 
     public void act() {
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
 
-        if (rotationTimer == 100) {
+        if (rotationTimer == framesPerRotation) {
             rotationTimer = 0;
             game.createGlaive(game.numberOfGlaives);
         }
@@ -51,7 +49,7 @@ public class Glaive extends Weapon {
         x = (radius * Math.cos(angle) + game.player.x) - size / 2 + game.player.size / 2;
         y = (radius * Math.sin(angle) + game.player.y) - size / 2 + game.player.size / 2;
         setPosition();
-        
+
         for (int i = 0; i < game.enemies.size(); i++) {
             if (collides(game.enemies.get(i))) {
                 boolean hit = false;
@@ -94,7 +92,7 @@ public class Glaive extends Weapon {
                 pierceTimer++;
             }
         }
-        
+
         angle += speed;
         rotationTimer++;
         // move the projectile according to its velocity

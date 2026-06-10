@@ -24,7 +24,7 @@ public class SpawnAnimation extends GameObject {
         setPosition(this, x, y);
         setColor(new Color(0, 0, 255, particleTransparency));
         lifespan = r.nextInt(10) + 10;
-        spawnParticles.add(this);
+        spawnParticles.add(this); //extra cube bugfix
     }
 
     // method to spawn particles
