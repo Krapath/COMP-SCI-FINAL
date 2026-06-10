@@ -136,6 +136,7 @@ public class DeathScreen extends GameObject {
         Player.matchStickActive = false;
         Player.invulnerable = false;
         Player.invulnerableDuration = 30;
+        Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
         SpawnAnimation.playerTransparency = 0;
 
         ChainLightning.chainCount = 3;
