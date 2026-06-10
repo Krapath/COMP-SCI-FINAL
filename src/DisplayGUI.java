@@ -48,11 +48,19 @@ public class DisplayGUI extends GameObject {
     //
     public void drawEXPBar(Graphics g, int nPointsLevel, int[] xPointsLevel, int[] yPointsLevel, int playerXp,
             int playerXpReq) {
+
+        //clear all current lines
+        for (DisplayGUI m : levelBar) {
+                    game.remove(m);
+                }
+        levelBar.clear();
+        //draw new lines
         int maxPoint = (int) (Math.floor(nPointsLevel / 2) + 1); // find the tallest/ highest point
         int maxHeight = yPointsLevel[maxPoint]; 
         int levelPercent = (int) (barDefinitionLevel * ((double) playerXp / playerXpReq));
         int increments = maxHeight/barDefinitionLevel;
         for (int i = 0; i < levelPercent; i++) {
+
 
         }
 
