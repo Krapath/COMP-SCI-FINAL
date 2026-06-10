@@ -16,7 +16,7 @@ public class DisplayGUI extends GameObject {
     static int[] yPointsLevel;
 
     static ArrayList<DisplayGUI> levelBar = new ArrayList<DisplayGUI>();
-    static int barDefinition = 100; // controls how many sections the bar is split into
+    static int barDefinitionLevel = 100; // controls how many sections the bar is split into
 
     static int nPointsHealth;
     static int nPointsLevel;
@@ -47,12 +47,21 @@ public class DisplayGUI extends GameObject {
 
     //
     public void drawEXPBar(Graphics g, int nPointsLevel, int[] xPointsLevel, int[] yPointsLevel, int playerXp,
-            int playerXpReq) {
+            double playerXpReq) {
+
+        //clear all current lines
+        for (DisplayGUI m : levelBar) {
+                    game.remove(m);
+                }
+        levelBar.clear();
+        //draw new lines
         int maxPoint = (int) (Math.floor(nPointsLevel / 2) + 1); // find the tallest/ highest point
-        int levelPercent = (int) (barDefinition * ((double) playerXp / playerXpReq));
-
-        for (int i = 0; i < barDefinition; i++) {
-
+        int maxHeight = yPointsLevel[maxPoint]; 
+        int minHeight = yPointsLevel[0];
+        int levelPercent = (int) (barDefinitionLevel * ((double) playerXp / playerXpReq));
+        int increments = (minHeight-maxHeight)/barDefinitionLevel;
+        for (int i = 1; i <= levelPercent; i++) {
+            g.drawLine((int)(xPointsLevel[0]-radius),minHeight - i * increments,(int)(xPointsLevel[0]+radius) ,minHeight - i * increments);
         }
 
     }
@@ -73,7 +82,9 @@ public class DisplayGUI extends GameObject {
             xPointsHealth[i] = (int) Math.round(x + 0.0001);
             yPointsHealth[i] = (int) Math.round(y + 0.0001);
 
-
+            // System.out.println(" values:" + yPoints[i]);
+            // System.out.println(y);
+            // System.out.println(angle);
             healthAngle += Math.PI * 2 / (Player.health + 2);
 
         }
@@ -92,8 +103,11 @@ public class DisplayGUI extends GameObject {
 
             xPointsLevel[i] = (int) Math.round(x + 0.0001);
             yPointsLevel[i] = (int) Math.round(y + 0.0001);
-
-            
+            System.out.println("x point level" + xPointsLevel[i]);
+            System.out.println("y point level" + yPointsLevel[i]);
+            // System.out.println(" values:" + yPoints[i]);
+            // System.out.println(y);
+            // System.out.println(angle);
             levelAngle += Math.PI * 2 / (Player.level + 2);
         }
 
@@ -104,6 +118,7 @@ public class DisplayGUI extends GameObject {
     }
 
     public void paint(Graphics g) {
+        
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
 
         g.setColor(Color.WHITE);
@@ -171,6 +186,7 @@ public class DisplayGUI extends GameObject {
 
             g.drawString(level, levelX, levelY);
 
+            drawEXPBar(g,nPointsLevel,xPointsLevel,yPointsLevel,Player.xp,Player.xpReq);
         }
         if (PolygonGame.choosingBuff) {
             g2d.setColor(new Color(0, 0, 0, 120));
