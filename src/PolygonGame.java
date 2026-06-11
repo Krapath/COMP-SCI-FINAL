@@ -37,6 +37,7 @@ public class PolygonGame extends Game {
     static ArrayList<Arrow> arrows = new ArrayList<Arrow>();
     static ArrayList<Glaive> glaives = new ArrayList<Glaive>();
     public int numberOfGlaives;
+    int killCounter;
 
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); //TODO: Change the enemies that have been hit and the timer
     // for each enemy to be hit again
