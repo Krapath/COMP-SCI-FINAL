@@ -5,9 +5,16 @@
  */
 
 import java.awt.Color;
+import java.util.Random;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.io.File;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.JComponent;
 
 /**
@@ -21,6 +28,8 @@ import javax.swing.JComponent;
  * @see Game#add
  */
 public abstract class GameObject extends JComponent {
+	private Random r = new Random();
+
 
     Color c = Color.white;
     public double spriteAngle = 0;
@@ -158,26 +167,70 @@ public abstract class GameObject extends JComponent {
     
     // hugo method
     public boolean isClickedAndReleased(PolygonGame game, int mouseX, int mouseY) {
-        if (!game.mouseLeftPressed()) {
-            readyToApply = true; 
-        }
-        
-        if (game.mouseLeftPressed() && this.contains(mouseX, mouseY) && readyToApply) {
-            wasPressed = true;
+    	boolean currentlyPressed = game.mouseLeftPressed();
+        boolean isHovering = this.contains(mouseX, mouseY);
+        boolean clicked = false;
+
+        //find exact moment the mouse goes from not clicked to clicked
+        if (currentlyPressed && !wasPressed) {
+            // only check as ready if that initial click is inside the object
+            readyToApply = isHovering;
         }
 
-        if (wasPressed && !game.mouseLeftPressed() && this.contains(mouseX, mouseY) && readyToApply) {  
+        // find the exact moment the mouse is released, clicked to not clicked
+        if (!currentlyPressed && wasPressed) {
+            // trigger only if the click started on this object and was released on it
+            if (readyToApply && isHovering) {
+                clicked = true;
+            }
+            // reset after finished
             readyToApply = false; 
-            wasPressed = false; 
-            return true;
         }
 
-        if (!game.mouseLeftPressed()) {
-            wasPressed = false;
-        }
-        
-        return false;
+        // update the tracking variable
+        wasPressed = currentlyPressed;
+
+        return clicked;
     }
+    
+	public void playSound(String fileName, float volume) {
+		
+		File soundFile = new File(fileName);
+
+		try {
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioStream);
+			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(volume); // Reduce volume by 10 decibels.
+			clip.start();
+		} catch (Exception e) {
+			System.err.println("Unsupported audio format for file: " + soundFile.getName());
+			e.printStackTrace();
+		} 
+
+	}
+	
+	//overloaded for random file selection
+	
+	public void playSound(String fileName, float volume, int randomRange) {
+		
+		int randNum = r.nextInt(randomRange)+1;
+		File soundFile = new File("SFX/XP/xp"+randNum+".wav");
+
+		try {
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioStream);
+			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(volume); // Reduce volume by 10 decibels.
+			clip.start();
+		} catch (Exception e) {
+			System.err.println("Unsupported audio format for file: " + soundFile.getName());
+			e.printStackTrace();
+		} 
+
+	}
     //mohammads methods
     public void setPosition() {
         setX((int) (x + 0.5));

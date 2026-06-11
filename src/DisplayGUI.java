@@ -82,9 +82,7 @@ public class DisplayGUI extends GameObject {
             xPointsHealth[i] = (int) Math.round(x + 0.0001);
             yPointsHealth[i] = (int) Math.round(y + 0.0001);
 
-            // System.out.println(" values:" + yPoints[i]);
-            // System.out.println(y);
-            // System.out.println(angle);
+    
             healthAngle += Math.PI * 2 / (Player.health + 2);
 
         }
@@ -103,11 +101,9 @@ public class DisplayGUI extends GameObject {
 
             xPointsLevel[i] = (int) Math.round(x + 0.0001);
             yPointsLevel[i] = (int) Math.round(y + 0.0001);
-            System.out.println("x point level" + xPointsLevel[i]);
-            System.out.println("y point level" + yPointsLevel[i]);
-            // System.out.println(" values:" + yPoints[i]);
-            // System.out.println(y);
-            // System.out.println(angle);
+ 
+
+            
             levelAngle += Math.PI * 2 / (Player.level + 2);
         }
 

@@ -110,13 +110,16 @@ public class DeathScreen extends GameObject {
         game.player.weapons.clear();
 
         game.player.abilities.clear();
-
+        
+  
         PowerUp.buffArray = new int[PowerUp.numBuffs]; // reset the buff array to all 0s
+        
         for (XpOrb x : PolygonGame.xpOrbs) {
             game.remove(x);
         }
-
         PolygonGame.xpOrbs.clear();
+        
+        
         // remove scaling for the enemies
         Enemy.healthMultiplier = 1;
 
@@ -126,8 +129,9 @@ public class DeathScreen extends GameObject {
         Player.attackTimer = 0;
         Player.health = 10;
         Player.score = 0;
-        Player.xp = 0;
         Player.level = 1;
+        Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
+        Player.xp = 0;
         Player.chainLightningActive = false; // static so all projectiles have property
         Player.atgMissileActive = false; // static so all projectiles have property
         Player.dashActive = false;
@@ -136,7 +140,6 @@ public class DeathScreen extends GameObject {
         Player.matchStickActive = false;
         Player.invulnerable = false;
         Player.invulnerableDuration = 30;
-        Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
         SpawnAnimation.playerTransparency = 0;
 
         ChainLightning.chainCount = 3;
@@ -193,6 +196,9 @@ public class DeathScreen extends GameObject {
     boolean wasPressed = false;
 
     public void act() {
+    	int mouseX = game.getMouseX();
+    	int mouseY = game.getMouseY();
+
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
@@ -211,7 +217,7 @@ public class DeathScreen extends GameObject {
 
         // glow when hovered over
 
-        hovered = contains(game.getMouseX(), game.getMouseY());
+        hovered = contains(mouseX, mouseY);
 
         if (hovered) {
             setColor(Color.BLUE);
@@ -230,7 +236,7 @@ public class DeathScreen extends GameObject {
         }
         wasHoveredLastFrame = hovered;
 
-        if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {
+        if (isClickedAndReleased(game, mouseX, mouseY)) {
 
             if (buttonName.equals("Main Menu")) {
                 for (DeathScreen m : deathScreenButtons) { // removes all the buttons in the list from game
@@ -249,12 +255,9 @@ public class DeathScreen extends GameObject {
                 game.spawnGame(); // start the game again
                 PolygonGame.gamePause = false;
             }
-            readyToApply = false;
-            wasPressed = false;
+
         }
-        if (!game.mouseLeftPressed()) {
-            wasPressed = false;
-        }
+
         repaint();
     }
 }
