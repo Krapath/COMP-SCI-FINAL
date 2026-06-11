@@ -24,7 +24,8 @@ public class Highscores extends GameObject {
     boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
     boolean hovered;
-    public int[] scores = new int[5];
+    public int[] levelScores = new int[5];
+    public int[] killScores = new int[5];
     public static int w, h, x, y;
     public Scanner scan;
     public FileWriter fw;
@@ -43,17 +44,11 @@ public class Highscores extends GameObject {
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
             menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((45f)));
+            textFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((100f)));
+            
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
             menuFont = new Font("Monospaced", Font.BOLD, 100);
-            e.printStackTrace();
-        }
-
-        try {
-            java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
-            textFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((100f)));
-        } catch (Exception e) {
-            // Fallback to basic monospaced if the file is missing
             textFont = new Font("Monospaced", Font.BOLD, 200);
             e.printStackTrace();
         }
@@ -61,10 +56,10 @@ public class Highscores extends GameObject {
     }
 
     /**
-     * scans the scores the the highscores textfile and puts them into scores
+     * scans the scores of the highscores textfile and puts them into levelScores and killScores
      * array
      *
-     * pre: existence of text File highscores, int[] scores and Scanner scan
+     * pre: existence of text File highscores with 10 intgers, int[] levelScores, int[] killScores and Scanner scan
      * post: scores will be filled with integers from the text file in order.
      * scan will become a scanner with the text file inputted.
      */
@@ -75,17 +70,22 @@ public class Highscores extends GameObject {
             System.out.println("failed");
         }
 
-        for (int i = 0; i < scores.length; i++) { //puts all scores into the array.
-            scores[i] = scan.nextInt();
+        for (int i = 0; i < levelScores.length; i++) { //puts all scores into the array.
+            levelScores[i] = scan.nextInt();
         }
+        
+        for (int i = 0; i < killScores.length; i++) { //puts all scores into the array.
+            killScores[i] = scan.nextInt();
+        }
+        
     }
 
     /**
-     * saves the array scores to the text file
+     * saves the levelScores and killScores  to the text file
      *
-     * pre: existence of text File highscores, int[] scores, Filewrite fw and
+     * pre: existence of text File highscores, int[] levelScores, int[] killScores, Filewrite fw and
      * BufferedWriter bw post: scores will be saved to the text file, with each
-     * score on a seperate line.
+     * score on a seperate line, starting with levelScores and then killScores
      */
     public void writeScores() {
         try {
@@ -96,51 +96,99 @@ public class Highscores extends GameObject {
             System.out.println("No file");
         }
 
-        for (int i = 0; i < scores.length; i++) { //for every score, write it and jumps to next line
+        
+        
             try {
-                bw.write(Integer.toString(scores[i]));//need to convert to string manually to prevent error
-                bw.newLine();
+            	for (int i = 0; i < levelScores.length; i++) { //for every score, write it and jumps to next line
+            		bw.write(Integer.toString(levelScores[i]));//need to convert to string manually
+            		bw.newLine();
+            	}
+            	
+            	for (int i = 0; i < killScores.length; i++) { //for every score, write it and jumps to next line
+                    bw.write(Integer.toString(killScores[i]));//need to convert to string manually to prevent error
+                    bw.newLine();
+                } 	
+            	
+            	
+                bw.close(); //closes the writers to finish changing the file and save
+                fw.close();
             } catch (IOException ex) {
                 System.out.println("failed");
             }
-        }
-
-        try {
-            bw.close(); //closes the writers to finish changing the file and save
-            fw.close();
-        } catch (IOException ex) {
-            System.out.println("failed");
-        }
+    
+      
     }
 
     /**
-     * places inutter score within the array scores based on greatest to least
+     * places inputted scores within the array's levelScores and killScores based on greatest to least
      *
-     * pre: existence of int[scores] post: newScore will be inputted into the
-     * array, position based on greatest to least
+     * pre: existence of int[] levelScores, int[] killScores 
+     * post: newLevelScore will be inputted into the levelScores array and newKillScore will be inputted into the killScores array, position based on greatest to least
      */
-    public void orderScores(int newScore) {
+    public void orderScores(int newLevelScore, int newKillScore) {
         int order = -1; //position of newscore in array, -1 means not in array.
         int placeholder; //used to temporary store values.
 
-        for (int i = 0; i < scores.length; i++) { //finds the position of the newscore in the array
-            if (scores[i] < newScore) {
+        for (int i = 0; i < levelScores.length; i++) { //finds the position of the newscore in the array
+            if (levelScores[i] < newLevelScore) {
                 order = i;
                 break;
             }
         }
 
-        for (int i = order; order != -1 && i < scores.length; i++) {//moves everything down one.
-            placeholder = scores[i];
-            scores[i] = newScore;
-            newScore = placeholder;
+        for (int i = order; order != -1 && i < levelScores.length; i++) {//moves everything down one.
+            placeholder = levelScores[i];
+            levelScores[i] = newLevelScore;
+            newLevelScore = placeholder;
+        }
+        
+        
+        
+        order = -1; //position of newscore in array, -1 means not in array.
+        placeholder = 0; //used to temporary store values.
+
+        for (int i = 0; i < killScores.length; i++) { //finds the position of the newscore in the array
+            if (killScores[i] < newKillScore) {
+                order = i;
+                break;
+            }
         }
 
+        for (int i = order; order != -1 && i < killScores.length; i++) {//moves everything down one.
+            placeholder = killScores[i];
+            killScores[i] = newKillScore;
+            newKillScore = placeholder;
+        }
+        
+        
+
     }
+    
+    
+    /** creates a new highscores file with the elements of levelScores and killScores
+     * 
+     * pre: existance of int[] levelScores, int[] killScores
+     * post: new highscores.txt file created with 10 scores, each on seperate lines, starting with levelScores and then killScores
+     */
+    public void createFile () {
+    	if (!highscores.exists()) {
+    		try {
+    			highscores.createNewFile();
+    			writeScores();
+    		} catch (IOException ex) {
+    			System.out.println("failed");
+    		}
+    	}
+    }
+    
+    
+    
+    
+    
 
     public void spawnHighscores(PolygonGame game) {
         // sets up width and height for the highscores box based on the window size
-        w = (int) (game.getWindowWidth() / 4);
+        w = (int) (game.getWindowWidth() / 2);
         h = (int) (game.getWindowHeight() / 1.2);
 
         x = (game.getWindowWidth() - w) / 2; // center the highscores horizontally
@@ -198,15 +246,48 @@ public class Highscores extends GameObject {
             g2d.drawString(buttonName, textX, textY);
         }
 
-        //cosmetics for the scores
-        g2d.setStroke(new BasicStroke(4));
-        g2d.setColor(Color.CYAN);
-        g2d.setFont(textFont);
 
+        
+        if(!buttonName.equals("Back")) {
+            g2d.setFont(textFont);
+            g2d.setStroke(new BasicStroke(4));
+            
+            int wIndex = w/100;
+            int hIndex = h/100;
+            FontMetrics leaderboard = g2d.getFontMetrics(textFont);
+            
+        	g.drawString("LEVELS:  KILLS:", 5*wIndex, 25*hIndex);
+       
+
+        
         scanScores(); //scans scores to ensure being up to date
-        for (int i = 0; i < scores.length; i++) { //draws every score
-            g.drawString(i + ". " + scores[i], w / 6, h / 5 + i * h / 6);
+        for (int i = 0; i < levelScores.length; i++) { //draws every score
+            
+        	switch(i){//sets colors for gold, silver and bronze
+        	case 0: 
+        		 g2d.setColor(new Color(239, 191, 4));
+        		 break;
+        	case 1:
+        		g2d.setColor(new Color(196, 196, 196));
+       		 	break;
+        	case 2:
+        		g2d.setColor(new Color(206, 137, 70));
+       		 	break;
+       		default:
+       			g2d.setColor(Color.BLACK);
+       		 	break;
+        	}
+        	g.drawString(i+1 + ". ", 10*wIndex, 35*hIndex + i * 10*hIndex); //print order
+        	g.drawString(i+1 + ". ", 60*wIndex, 35*hIndex + i * 10*hIndex); //print order
+            
+            g2d.setColor(Color.WHITE);//resets colour to cyan for actual score
+
+            g.drawString(Integer.toString(levelScores[i]), 10*wIndex+150, 35*hIndex + i * 10*hIndex); //prints score
+            g.drawString(Integer.toString(killScores[i]), 60*wIndex+150, 35*hIndex + i * 10*hIndex); //prints score
         }
+        
+        }
+
 
     }
 
