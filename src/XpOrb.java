@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.sound.sampled.*;
 import java.awt.*;
 
+import java.util.Random; 
 @SuppressWarnings("unused")
 
 public class XpOrb extends GameObject {
@@ -63,7 +64,10 @@ public class XpOrb extends GameObject {
         }
 
         if (collides(game.player)) {
-        	playSound("SFX/XP/xp"+10+".wav",-20.0f,10);
+        	
+        	int randNum = r.nextInt(10)+1;
+        	
+        	SoundEffects.play("SFX/XP/xp"+randNum+".wav",-20.0f);
             Player.score += 1; // increase player score on collision
             Player.xp += 1;
             game.remove(this); // remove xp orb after collision

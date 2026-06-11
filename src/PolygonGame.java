@@ -157,6 +157,7 @@ public class PolygonGame extends Game {
         }
 
         if (Player.health <= 0 && this.player != null) { // stops if dies
+            SoundEffects.play("SFX/DEATH_SOUND1.wav",1.0f);
             highscoresController.orderScores(Player.level);//checks to see if level should be on highscores
             highscoresController.writeScores(); //saves the highscores
             gamePause = true;

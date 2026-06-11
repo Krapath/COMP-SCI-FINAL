@@ -97,18 +97,18 @@ public class Tutorial extends GameObject {
             }
     }
 
-    boolean readyToApply = false;
-    boolean wasPressed = false;
 
     public void act() {
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
-        int x = game.getMouseX();
-        int y = game.getMouseY();
+        int mouseX = game.getMouseX();
+        int mouseY = game.getMouseY();
         // ensure that clicking works properly
 
         if (hovered && !wasHoveredLastFrame) {
+        	SoundEffects("SFX/HOVER.wav",-5.0f);
+
             if(tiltLeft){
             hoverAngle = r.nextDouble() * 0.05+0.1; 
             tiltLeft= false;
@@ -126,14 +126,10 @@ public class Tutorial extends GameObject {
 
         wasHoveredLastFrame = hovered;
 
-        if (!game.mouseLeftPressed()) {
-            readyToApply = true;
-        }
-        if (game.mouseLeftPressed() && contains(x, y) && readyToApply) {
-            wasPressed = true;
-        }
 
-        if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {
+
+        if (isClickedAndReleased(game, mouseX, mouseY))  {
+        	SoundEffects("SFX/CLICK.wav",5.0f);
 
             if (buttonName.equals("Back")) {
                 for (Tutorial m : tutorialButtons) { // removes all the buttons in the list from game
@@ -145,12 +141,9 @@ public class Tutorial extends GameObject {
                 menuController.spawnMyBoxes(game);
                 add(menuController);
             }
-            readyToApply = false;
-            wasPressed = false;
+
         }
-        if (!game.mouseLeftPressed()) {
-            wasPressed = false;
-        }
+
     }
 
 }

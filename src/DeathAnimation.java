@@ -12,6 +12,9 @@ public class DeathAnimation extends GameObject {
     public int timer = 0;
     public int particleTransparency = 255;
     static Random r = new Random();
+    public int duration =30;
+    
+    public boolean playDeathSound2 = true;
     private static ArrayList<DeathAnimation> dyingParticles = new ArrayList<>();
 
     // dummy constructor for the death particles, not used to actually spawn the
@@ -52,23 +55,27 @@ public class DeathAnimation extends GameObject {
         int speed = Player.size / 5;
         int x = getX();
         int y = getY();
-        if (timer < 60) {// make the particles wiggle
+        if (timer < duration) {// make the particles wiggle
             x += Math.ceil(r.nextInt(speed * 2 + 1) - speed);
             y += Math.ceil(r.nextInt(speed * 2 + 1) - speed);
             setPosition(this, x, y);
             timer++;
-        } else if (timer < 120) {// make the wiggle further
+        } else if (timer < duration*2) {// make the wiggle further
 
             x += Math.ceil(r.nextInt(speed * 3 + 1) - speed * 1.5);
             y += Math.ceil(r.nextInt(speed * 3 + 1) - speed * 1.5);
 
             setPosition(this, x, y);
             timer++;
-        } else if (timer < 130) { // make the particles fly outwards
+        } else if (timer < (int)(duration*2.16)) { // make the particles fly outwards
             double playerAngle = Math.atan2(game.player.y + Player.size / 2 - y, game.player.x + Player.size / 2 - x);
             x += (Math.cos(playerAngle + Math.PI) * speed * 5);
             y += (Math.sin(playerAngle + Math.PI) * speed * 5);
             setPosition(this, x, y);
+            if (playDeathSound2){
+                SoundEffects.play("SFX/DEATH_SOUND.wav", 5.0f);
+                playDeathSound2 = false;
+            }
             timer++;
         } else if (particleTransparency > 20) { // make the particles fade out
             this.setColor(new Color(0, 0, 255, particleTransparency));

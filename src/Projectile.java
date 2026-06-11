@@ -40,7 +40,7 @@ public class Projectile extends Weapon {
         xVel = speed * Math.cos(angle);
         yVel = speed * Math.sin(angle);
 
-		playSound("SFX/PROJECTILE.wav",-20.0f);
+		SoundEffects.play("SFX/PROJECTILE.wav",-14.0f);
 
     }
 

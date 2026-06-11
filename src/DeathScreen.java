@@ -92,6 +92,7 @@ public class DeathScreen extends GameObject {
         ReturnToMainMenu.setColor(new Color(15, 82, 186));
         game.add(ReturnToMainMenu);
         deathScreenButtons.add(ReturnToMainMenu);
+    	SoundEffects.play("SFX/GAME_OVER.wav",1.0f);
     }
 
     // clears everything and sets the game to how it would start
@@ -117,6 +118,7 @@ public class DeathScreen extends GameObject {
         for (XpOrb x : PolygonGame.xpOrbs) {
             game.remove(x);
         }
+        
         PolygonGame.xpOrbs.clear();
         
         
@@ -204,18 +206,8 @@ public class DeathScreen extends GameObject {
         }
         if (buttonName.equals("doNotChange")) {
             return; // don't check for clicks on the background box
-        }
-        int x = game.getMouseX();
-        int y = game.getMouseY();
-        // ensure that clicking works properly
-        if (!game.mouseLeftPressed()) {
-            readyToApply = true;
-        }
-        if (game.mouseLeftPressed() && contains(x, y) && readyToApply) {
-            wasPressed = true;
-        }
+        };
 
-        // glow when hovered over
 
         hovered = contains(mouseX, mouseY);
 
@@ -226,6 +218,7 @@ public class DeathScreen extends GameObject {
         }
 
         if (hovered && !wasHoveredLastFrame) {
+        	SoundEffects("SFX/HOVER.wav",-5.0f);
             if (tiltLeft) {
                 hoverAngle = r.nextDouble() * 0.05 + 0.1;
                 tiltLeft = false;
@@ -237,7 +230,7 @@ public class DeathScreen extends GameObject {
         wasHoveredLastFrame = hovered;
 
         if (isClickedAndReleased(game, mouseX, mouseY)) {
-
+        	SoundEffects("SFX/CLICK.wav",5.0f);
             if (buttonName.equals("Main Menu")) {
                 for (DeathScreen m : deathScreenButtons) { // removes all the buttons in the list from game
                     game.remove(m);

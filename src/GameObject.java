@@ -5,17 +5,16 @@
  */
 
 import java.awt.Color;
+
 import java.util.Random;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.io.File;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
+
 import javax.swing.JComponent;
+import javax.sound.sampled.*;
 
 /**
  * An abstract class for an object which can be added to an instance of
@@ -193,7 +192,7 @@ public abstract class GameObject extends JComponent {
         return clicked;
     }
     
-	public void playSound(String fileName, float volume) {
+	public void SoundEffects(String fileName, float volume) {
 		
 		File soundFile = new File(fileName);
 
@@ -203,6 +202,13 @@ public abstract class GameObject extends JComponent {
 			clip.open(audioStream);
 			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(volume); // Reduce volume by 10 decibels.
+			
+			// Source - https://stackoverflow.com/a/6707971
+			// Posted by datahaki, modified by community. See post 'Timeline' for change history
+			// Retrieved 2026-06-11, License - CC BY-SA 3.0
+
+
+
 			clip.start();
 		} catch (Exception e) {
 			System.err.println("Unsupported audio format for file: " + soundFile.getName());
@@ -213,6 +219,8 @@ public abstract class GameObject extends JComponent {
 	
 	//overloaded for random file selection
 	
+	
+	//TODO: FIX HARD CODED RANDOM PLAY SOUND
 	public void playSound(String fileName, float volume, int randomRange) {
 		
 		int randNum = r.nextInt(randomRange)+1;
@@ -224,6 +232,8 @@ public abstract class GameObject extends JComponent {
 			clip.open(audioStream);
 			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(volume); // Reduce volume by 10 decibels.
+
+
 			clip.start();
 		} catch (Exception e) {
 			System.err.println("Unsupported audio format for file: " + soundFile.getName());

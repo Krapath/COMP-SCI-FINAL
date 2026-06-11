@@ -62,6 +62,7 @@ public class Player extends GameObject {
 
         //setSize(size, size);
         if (game.AKeyPressed()) {
+        	
             left += 1;
         }
         if (game.DKeyPressed()) {
@@ -109,7 +110,7 @@ public class Player extends GameObject {
 
                 if (!invulnerable) {
                     Player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
-                    playSound("SFX/DAMAGE.wav",-3.0f);
+                    SoundEffects("SFX/DAMAGE.wav",-3.0f);
                     game.enemies.get(i).health -= 1;
 
                     if (game.enemies.get(i).health <= 0) {
@@ -131,9 +132,6 @@ public class Player extends GameObject {
             }
         }
 
-        if (Player.health <= 0) {
-            game.player.setColor(Color.GRAY); // change player color to gray when health is depleted
-        }
     }
 
 }

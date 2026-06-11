@@ -158,8 +158,7 @@ public class MainMenu extends GameObject {
 
     }
 
-    boolean readyToApply = false;
-    boolean wasPressed = false;
+
 
     public void act() {
         if (!PolygonGame.gamePause) {
@@ -180,7 +179,7 @@ public class MainMenu extends GameObject {
         }
 
         if (hovered && !wasHoveredLastFrame) {
-        	playSound("SFX/HOVER.wav",5.0f);
+        	SoundEffects.play("SFX/HOVER.wav",-5.0f);
             if (tiltLeft) {
                 hoverAngle = r.nextDouble() * 0.05 + 0.1;
                 tiltLeft = false;
@@ -192,7 +191,7 @@ public class MainMenu extends GameObject {
         wasHoveredLastFrame = hovered;
 
         if (isClickedAndReleased(game, mouseX, mouseY)) {
-        	playSound("SFX/CLICK.wav",5.0f);
+        	SoundEffects.play("SFX/CLICK.wav",5.0f);
 
             if (buttonName.equals("Play")) {
                 for (MainMenu m : menuButtons) { // removes all the buttons in the list from game
