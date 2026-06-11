@@ -78,19 +78,7 @@ public class ChainLightning extends Weapon {
             }
         }
         game.player.weapons.add(this);
-		File soundFile = new File("SFX/SFX_Powerup_01.wav");
 
-		try {
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioStream);
-			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-7.0f); // Reduce volume by 10 decibels.
-			clip.start();
-		} catch (Exception e) {
-			System.err.println("Unsupported audio format for file: " + soundFile.getName());
-			e.printStackTrace();
-		} 
     } 
     
 

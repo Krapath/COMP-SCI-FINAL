@@ -37,6 +37,7 @@ public class PolygonGame extends Game {
     static ArrayList<Arrow> arrows = new ArrayList<Arrow>();
     static ArrayList<Glaive> glaives = new ArrayList<Glaive>();
     public int numberOfGlaives;
+    int killCounter;
 
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); //TODO: Change the enemies that have been hit and the timer
     // for each enemy to be hit again
@@ -59,6 +60,7 @@ public class PolygonGame extends Game {
         //create dummy constructor for the death screen buttons to use to spawn the buttons
         deathScreenController = new DeathScreen(this, "", false, 0, 0, 0, 0, null);
         deathAnimationController = new DeathAnimation(this, 0, 0);
+        highscoresController.createFile(); //creates a highscores file if there isnt one
 
         highscoresController.scanScores();//fills up the dummy constructor with the current highscores
 
@@ -157,7 +159,8 @@ public class PolygonGame extends Game {
         }
 
         if (Player.health <= 0 && this.player != null) { // stops if dies
-            highscoresController.orderScores(Player.level);//checks to see if level should be on highscores
+            SoundEffects.play("SFX/DEATH_SOUND1.wav",1.0f);
+            highscoresController.orderScores(Player.level, killCounter);
             highscoresController.writeScores(); //saves the highscores
             gamePause = true;
             deathAnimationController.deathAnimation(this);
@@ -205,6 +208,8 @@ public class PolygonGame extends Game {
         for (int i = 0; i < enemies.size(); i++) {
             Enemy other = enemies.get(i);
             if (other.health <= 0) {
+                killCounter++;
+       
                 // Create an XP orb at the location of the defeated enemy
                 XpOrb xp = new XpOrb((int) other.x, (int) other.y, this);
 

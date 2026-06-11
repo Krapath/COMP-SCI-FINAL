@@ -158,25 +158,19 @@ public class MainMenu extends GameObject {
 
     }
 
-    boolean readyToApply = false;
-    boolean wasPressed = false;
+
 
     public void act() {
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
-        int x = game.getMouseX();
-        int y = game.getMouseY();
+        int mouseX = game.getMouseX();
+        int mouseY = game.getMouseY();
         // ensure that clicking works properly
-        if (!game.mouseLeftPressed()) {
-            readyToApply = true;
-        }
-        if (game.mouseLeftPressed() && contains(x, y) && readyToApply) {
-            wasPressed = true;
-        }
+   
 
         //glow when hovered over
-        hovered = contains(game.getMouseX(), game.getMouseY());
+        hovered = contains(mouseX, mouseY);
 
         if (hovered) {
             setColor(Color.RED);
@@ -185,6 +179,7 @@ public class MainMenu extends GameObject {
         }
 
         if (hovered && !wasHoveredLastFrame) {
+        	SoundEffects.play("SFX/HOVER.wav",-5.0f);
             if (tiltLeft) {
                 hoverAngle = r.nextDouble() * 0.05 + 0.1;
                 tiltLeft = false;
@@ -195,7 +190,8 @@ public class MainMenu extends GameObject {
         }
         wasHoveredLastFrame = hovered;
 
-        if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {
+        if (isClickedAndReleased(game, mouseX, mouseY)) {
+        	SoundEffects.play("SFX/CLICK.wav",5.0f);
 
             if (buttonName.equals("Play")) {
                 for (MainMenu m : menuButtons) { // removes all the buttons in the list from game
@@ -225,12 +221,9 @@ public class MainMenu extends GameObject {
             } else if (buttonName.equals("Exit")) {
                 System.exit(0);
             }
-            readyToApply = false;
-            wasPressed = false;
+
         }
-        if (!game.mouseLeftPressed()) {
-            wasPressed = false;
-        }
+
         repaint();
 
     }

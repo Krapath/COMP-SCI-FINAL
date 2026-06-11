@@ -49,24 +49,7 @@ public class Player extends GameObject {
         y = getY();
     }
     
-	public void playSound() {
-		File soundFile = new File("SFX/DAMAGE.wav");
 
-		try {
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioStream);
-			clip.start();
-			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(0); // Reduce volume by 10 decibels.
-			clip.start();
-		} catch (Exception e) {
-			System.err.println("Unsupported audio format for file: " + soundFile.getName());
-			e.printStackTrace();
-		} 
-
-		
-	}
 	
     public void act() {
         if (PolygonGame.gamePause) {
@@ -79,6 +62,7 @@ public class Player extends GameObject {
 
         //setSize(size, size);
         if (game.AKeyPressed()) {
+        	
             left += 1;
         }
         if (game.DKeyPressed()) {
@@ -126,7 +110,7 @@ public class Player extends GameObject {
 
                 if (!invulnerable) {
                     Player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
-                    playSound();
+                    SoundEffects("SFX/DAMAGED.wav",-3.0f);
                     game.enemies.get(i).health -= 1;
 
                     if (game.enemies.get(i).health <= 0) {
@@ -148,9 +132,6 @@ public class Player extends GameObject {
             }
         }
 
-        if (Player.health <= 0) {
-            game.player.setColor(Color.GRAY); // change player color to gray when health is depleted
-        }
     }
 
 }

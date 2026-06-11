@@ -17,7 +17,7 @@ public class MatchStick extends Weapon {
     double shootSpeed = 20;
     int pierceTimer = 0;
     
-    int rotationTimer = 60 + r.nextInt(30); // how long the arrow rotates around the player before flying off,
+    int rotationTimer = 30 + r.nextInt(30); // how long the arrow rotates around the player before flying off,
                                               // randomize a bit so not every arrow is the same
     int aimingTimer = 30;
     double aimOffsetX;

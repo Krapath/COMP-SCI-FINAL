@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.sound.sampled.*;
 import java.awt.*;
 
+import java.util.Random; 
 @SuppressWarnings("unused")
 
 public class XpOrb extends GameObject {
@@ -44,24 +45,8 @@ public class XpOrb extends GameObject {
             }
     }
     
-	public void playSound() {
-		
-		int randXp = r.nextInt(10)+1;
-		File soundFile = new File("SFX/XP/xp"+randXp+".wav");
 
-		try {
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioStream);
-			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(-4.0f); // Reduce volume by 10 decibels.
-			clip.start();
-		} catch (Exception e) {
-			System.err.println("Unsupported audio format for file: " + soundFile.getName());
-			e.printStackTrace();
-		} 
-
-	}
+	
     public void act() {
         if (PolygonGame.gamePause) {
             return; // xp orbs do not move or collide with the player while the player is choosing a buff
@@ -79,7 +64,10 @@ public class XpOrb extends GameObject {
         }
 
         if (collides(game.player)) {
-        	playSound();
+        	
+        	int randNum = r.nextInt(10)+1;
+        	
+        	SoundEffects.play("SFX/XP/xp"+randNum+".wav",-20.0f);
             Player.score += 1; // increase player score on collision
             Player.xp += 1;
             game.remove(this); // remove xp orb after collision

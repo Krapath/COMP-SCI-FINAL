@@ -15,14 +15,6 @@ public class PowerUp extends GameObject {
 	Random r = new Random();
 	PolygonGame game;
 	public int buffType;
-	public boolean readyToApply = false; // whether the buff should be applied
-	// on mouse release
-	public boolean wasPressed = false; // whether the mouse was pressed while
-										// hovering over this powerup (used to
-										// prevent applying the buff if the
-										// player clicks on a powerup and then
-										// drags the mouse away before
-										// releasing)
 	public int[] xPointsBuff;
 	public int[] yPointsBuff;
 	public int posXBuff;
@@ -272,14 +264,13 @@ public class PowerUp extends GameObject {
 
 	}
 
+
 	public void act() {
 
 		if (!PolygonGame.gamePause) {
-			return; // powerups only work while the player is choosing a buff
-			// (optimize)
+			return; // powerups only work while the player is choosing a buff (optimize)
 		}
-		double buff1 = Math.PI / 2;
-
+		
 		double buff1Angle = Math.PI / 2;
 
 		int mouseX = game.getMouseX();
@@ -312,84 +303,22 @@ public class PowerUp extends GameObject {
 
 		nPointsBuff = sides;
 
-		if (!game.mouseLeftPressed()) {
-			readyToApply = true; // the buff should be applied on mouse release
-			// if the mouse was pressed while hovering
-			// over this powerup
-		}
-		if (game.mouseLeftPressed() && contains(mouseX, mouseY) && readyToApply) {
-			wasPressed = true;
-		}
-
-		// apply the buff and remove the powerups if the player clicks on a
-		// powerup and releases the mouse button while still hovering over the
-		// same powerup
-		if (wasPressed && !game.mouseLeftPressed() && contains(mouseX, mouseY) && readyToApply) { // TODO:
-																									// turn
-																									// into
-																									// a
-																									// method
-																									// in
-																									// game
-																									// class
-																									// for
-																									// other
-																									// application
-																									// besides
-																									// powerups
-																									// (ex.
-																									// clicking
-																									// a
-																									// "start
-																									// game"
-																									// button
-																									// on
-																									// the
-																									// main
-																									// menu)
-
+		if (isClickedAndReleased(game, mouseX, mouseY)) {
+			
 			createBuff(buffType);
+			SoundEffects("SFX/POWERUP.wav",-20.0f);
 
-			playSound();
-
-			for (int i = 0; i < game.powerUps.size(); i++) { // remove all
-				// powerups from
-				// the game
+			// remove all powerups from the game
+			for (int i = 0; i < game.powerUps.size(); i++) { 
 				game.remove(game.powerUps.get(i));
 			}
 
 			game.powerUps.clear(); // clear the list of powerups
 			PolygonGame.gamePause = false; // allow the game to continue
 			PolygonGame.choosingBuff = false;
-			readyToApply = false; // reset readyToApply for the next time the
-			// player chooses a buff
-			wasPressed = false; // reset wasPressed for the next time the player
-			// chooses a buff
-
 		}
-
-		if (!game.mouseLeftPressed()) {
-			wasPressed = false;
-		}
-
 	}
 
-	public void playSound() {
-		File soundFile = new File("SFX/SFX_Powerup_01.wav");
 
-		try {
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioStream);
-			clip.start();
-			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(0); // Reduce volume by 10 decibels.
-			clip.start();
-		} catch (Exception e) {
-			System.err.println("Unsupported audio format for file: " + soundFile.getName());
-			e.printStackTrace();
-		} 
-
-	}
 
 }

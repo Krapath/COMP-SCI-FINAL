@@ -92,6 +92,7 @@ public class DeathScreen extends GameObject {
         ReturnToMainMenu.setColor(new Color(15, 82, 186));
         game.add(ReturnToMainMenu);
         deathScreenButtons.add(ReturnToMainMenu);
+    	SoundEffects.play("SFX/GAME_OVER.wav",1.0f);
     }
 
     // clears everything and sets the game to how it would start
@@ -110,13 +111,17 @@ public class DeathScreen extends GameObject {
         game.player.weapons.clear();
 
         game.player.abilities.clear();
-
+        
+  
         PowerUp.buffArray = new int[PowerUp.numBuffs]; // reset the buff array to all 0s
+        
         for (XpOrb x : PolygonGame.xpOrbs) {
             game.remove(x);
         }
-
+        
         PolygonGame.xpOrbs.clear();
+        
+        
         // remove scaling for the enemies
         Enemy.healthMultiplier = 1;
 
@@ -126,8 +131,9 @@ public class DeathScreen extends GameObject {
         Player.attackTimer = 0;
         Player.health = 10;
         Player.score = 0;
-        Player.xp = 0;
         Player.level = 1;
+        Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
+        Player.xp = 0;
         Player.chainLightningActive = false; // static so all projectiles have property
         Player.atgMissileActive = false; // static so all projectiles have property
         Player.dashActive = false;
@@ -136,7 +142,6 @@ public class DeathScreen extends GameObject {
         Player.matchStickActive = false;
         Player.invulnerable = false;
         Player.invulnerableDuration = 30;
-        Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
         SpawnAnimation.playerTransparency = 0;
 
         ChainLightning.chainCount = 3;
@@ -193,25 +198,18 @@ public class DeathScreen extends GameObject {
     boolean wasPressed = false;
 
     public void act() {
+    	int mouseX = game.getMouseX();
+    	int mouseY = game.getMouseY();
+
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
         if (buttonName.equals("doNotChange")) {
             return; // don't check for clicks on the background box
-        }
-        int x = game.getMouseX();
-        int y = game.getMouseY();
-        // ensure that clicking works properly
-        if (!game.mouseLeftPressed()) {
-            readyToApply = true;
-        }
-        if (game.mouseLeftPressed() && contains(x, y) && readyToApply) {
-            wasPressed = true;
-        }
+        };
 
-        // glow when hovered over
 
-        hovered = contains(game.getMouseX(), game.getMouseY());
+        hovered = contains(mouseX, mouseY);
 
         if (hovered) {
             setColor(Color.BLUE);
@@ -220,6 +218,7 @@ public class DeathScreen extends GameObject {
         }
 
         if (hovered && !wasHoveredLastFrame) {
+        	SoundEffects("SFX/HOVER.wav",-5.0f);
             if (tiltLeft) {
                 hoverAngle = r.nextDouble() * 0.05 + 0.1;
                 tiltLeft = false;
@@ -230,8 +229,8 @@ public class DeathScreen extends GameObject {
         }
         wasHoveredLastFrame = hovered;
 
-        if (wasPressed && !game.mouseLeftPressed() && contains(x, y) && readyToApply) {
-
+        if (isClickedAndReleased(game, mouseX, mouseY)) {
+        	SoundEffects("SFX/CLICK.wav",5.0f);
             if (buttonName.equals("Main Menu")) {
                 for (DeathScreen m : deathScreenButtons) { // removes all the buttons in the list from game
                     game.remove(m);
@@ -249,12 +248,9 @@ public class DeathScreen extends GameObject {
                 game.spawnGame(); // start the game again
                 PolygonGame.gamePause = false;
             }
-            readyToApply = false;
-            wasPressed = false;
+
         }
-        if (!game.mouseLeftPressed()) {
-            wasPressed = false;
-        }
+
         repaint();
     }
 }
