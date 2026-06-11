@@ -110,7 +110,7 @@ public class Player extends GameObject {
 
                 if (!invulnerable) {
                     Player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
-                    SoundEffects("SFX/DAMAGE.wav",-3.0f);
+                    SoundEffects("SFX/DAMAGED.wav",-3.0f);
                     game.enemies.get(i).health -= 1;
 
                     if (game.enemies.get(i).health <= 0) {

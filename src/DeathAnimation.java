@@ -14,7 +14,7 @@ public class DeathAnimation extends GameObject {
     static Random r = new Random();
     public int duration =30;
     
-    public boolean playDeathSound2 = true;
+    static boolean playDeathSound2 = true;
     private static ArrayList<DeathAnimation> dyingParticles = new ArrayList<>();
 
     // dummy constructor for the death particles, not used to actually spawn the
@@ -73,9 +73,10 @@ public class DeathAnimation extends GameObject {
             y += (Math.sin(playerAngle + Math.PI) * speed * 5);
             setPosition(this, x, y);
             if (playDeathSound2){
-                SoundEffects.play("SFX/DEATH_SOUND.wav", 5.0f);
+                SoundEffects.play("SFX/DEATH_SOUND2.wav", 5.0f);
                 playDeathSound2 = false;
             }
+            
             timer++;
         } else if (particleTransparency > 20) { // make the particles fade out
             this.setColor(new Color(0, 0, 255, particleTransparency));
@@ -88,6 +89,7 @@ public class DeathAnimation extends GameObject {
             dyingAnimation = false;
             timer = 0;
             // set up death screen
+            playDeathSound2 = true; // make true again for later if you retry
             game.deathScreenController.youDied();
         }
 
