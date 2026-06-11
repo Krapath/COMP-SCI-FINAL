@@ -53,7 +53,7 @@ public class PolygonGame extends Game {
         menuController = new MainMenu(this, "");
         menuController.spawnMyBoxes(this);
         // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
-        tutorialController = new Tutorial(this, "", 0, 0, 0, 0);
+        tutorialController = new Tutorial(this, "", 0, 0, 0, 0,null);
         // creates dummy consturctor for the highscores buttons to use to spawn the buttons
         highscoresController = new Highscores(this, "", 0, 0, 0, 0);
         //create dummy constructor for the death screen buttons to use to spawn the buttons

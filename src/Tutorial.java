@@ -1,34 +1,40 @@
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.FontMetrics;
-import java.awt.Font;
-import java.util.*;
+
 public class Tutorial extends GameObject {
     private static ArrayList<Tutorial> tutorialButtons = new ArrayList<>(); // list of all things in the class
     // set variables
-    private Image boxImage;
     private String buttonName;
+    private Image boxImage;
     PolygonGame game;
-    Font menuFont;  
-    double hoverAngle=0.2;
+    Font menuFont;
+    double hoverAngle = 0.2;
     boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
     boolean hovered;
 
     Random r = new Random();
+
     // set up dummy consturctor for tutorial buttons to spawn
-    public Tutorial(PolygonGame game, String buttonName, int w, int h,int x, int y) {
+    public Tutorial(PolygonGame game, String buttonName, int w, int h, int x, int y, Image boxImage) {
         this.game = game;
         this.buttonName = buttonName;
+        if (boxImage != null) {
+            this.boxImage = boxImage;
+        }
         setSize(w, h);
         setLocation(x, y);
         try {
-            java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf"); 
+            java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
             menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((45f)));
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
@@ -45,17 +51,20 @@ public class Tutorial extends GameObject {
         int x = (game.getWindowWidth() - w) / 2; // center the tutorial horizontally
         int y = (game.getWindowHeight() - h) / 2; // center the tutorial vertically
 
+        boxImage = new ImageIcon("Images\\Tutorial\\Tutorial.png").getImage();
+
         // make the shift for the back button
         int setShift = (int) ((x + y) / 10);
 
         // make the frame for the tutorial
-        Tutorial tutorial = new Tutorial(game, "Tutorial", w, h, x, y);
+        Tutorial tutorial = new Tutorial(game, "Tutorial", w, h, x, y,
+                new ImageIcon("Images\\Tutorial\\Tutorial.png").getImage());
         tutorial.setColor(new Color(220, 20, 60));
         game.add(tutorial);
         tutorialButtons.add(tutorial);
 
         // make the back button
-        Tutorial backButton = new Tutorial(game, "Back", w / 4, h / 10, x - setShift, y - setShift);
+        Tutorial backButton = new Tutorial(game, "Back", w / 4, h / 10, x - setShift, y - setShift, null);
         backButton.setColor(new Color(15, 82, 186));
         game.add(backButton);
         tutorialButtons.add(backButton);
@@ -72,29 +81,27 @@ public class Tutorial extends GameObject {
         if (boxImage != null) {
             g.drawImage(boxImage, 0, 0, getWidth(), getHeight(), null);
         }
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setFont(menuFont);
+        FontMetrics metrics = g2d.getFontMetrics(menuFont);
+        hovered = contains(game.getMouseX(), game.getMouseY());
 
-            super.paint(g);
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setFont(menuFont);
-            FontMetrics metrics = g2d.getFontMetrics(menuFont);
-            hovered = contains(game.getMouseX(), game.getMouseY());
+        // center the text in the button
+        int textWidth = metrics.stringWidth(buttonName);
+        int textHeight = metrics.getAscent();
+        int textX = getWidth() / 2 - textWidth / 2;
+        int textY = getHeight() / 2 + textHeight / 2 - metrics.getDescent();
 
-            // center the text in the button
-            int textWidth = metrics.stringWidth(buttonName);
-            int textHeight = metrics.getAscent();
-            int textX = getWidth() / 2 - textWidth / 2;
-            int textY = getHeight() / 2 + textHeight / 2 - metrics.getDescent();
-
-            g2d.setColor(Color.BLACK);
-            if (hovered && buttonName.equals("Back")){
-                AffineTransform old = g2d.getTransform();
-                g2d.rotate(hoverAngle, textX + textWidth / 2.0, textY - textHeight / 2.0);
-                g2d.drawString(buttonName, textX, textY);
-                g2d.setTransform(old);
-            } else if (buttonName.equals("Back")) {
-                hoverAngle = 0;
-                g2d.drawString(buttonName, textX, textY);
-            }
+        g2d.setColor(Color.BLACK);
+        if (hovered && buttonName.equals("Back")) {
+            AffineTransform old = g2d.getTransform();
+            g2d.rotate(hoverAngle, textX + textWidth / 2.0, textY - textHeight / 2.0);
+            g2d.drawString(buttonName, textX, textY);
+            g2d.setTransform(old);
+        } else if (buttonName.equals("Back")) {
+            hoverAngle = 0;
+            g2d.drawString(buttonName, textX, textY);
+        }
     }
 
     boolean readyToApply = false;
@@ -109,18 +116,18 @@ public class Tutorial extends GameObject {
         // ensure that clicking works properly
 
         if (hovered && !wasHoveredLastFrame) {
-            if(tiltLeft){
-            hoverAngle = r.nextDouble() * 0.05+0.1; 
-            tiltLeft= false;
-            }else if (!tiltLeft) {
-                hoverAngle = -(r.nextDouble() * 0.05+0.1); 
+            if (tiltLeft) {
+                hoverAngle = r.nextDouble() * 0.05 + 0.1;
+                tiltLeft = false;
+            } else if (!tiltLeft) {
+                hoverAngle = -(r.nextDouble() * 0.05 + 0.1);
                 tiltLeft = true;
             }
         }
 
-        if(hovered && buttonName.equals("Back")){
+        if (hovered && buttonName.equals("Back")) {
             setColor(Color.BLUE);
-        } else if (buttonName.equals("Back")){
+        } else if (buttonName.equals("Back")) {
             setColor(new Color(15, 82, 186));
         }
 
