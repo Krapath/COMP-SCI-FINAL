@@ -90,7 +90,8 @@ public class PolygonGame extends Game {
         if (gamePause) {
             return; // pause the game while choosing a buff or on main menu(lock the game)
         }
-
+        
+        enemySpawning ();
         for (int i = 0; i < Player.abilities.size(); i++) {
             Player.abilities.get(i).act();
 
@@ -114,49 +115,7 @@ public class PolygonGame extends Game {
             }
         }
 
-        if (r.nextInt(300) < 20 && enemies.size() < maxEnemiesSpawned) { // 0.33% chance each tick to spawn an enemy
-
-            if ((spawnedEnemies + 1) % 50 == 0) { //hoard spawn
-                enemySpawnSeed = r.nextInt();
-
-                if (r.nextInt(2) == 0) {
-                    for (int i = 0; i < 10; i++) {
-                        enemy = new Enemy(this, 0, 0, enemySpawnSeed);
-                        add(enemy);
-                        enemies.add(enemy);
-                    }
-                } else {
-                    System.out.println("trying to spawn");
-                    for (int i = 0; i < 10; i++) {
-                        enemy = new Enemy(this, 4, 0, enemySpawnSeed);
-                        add(enemy);
-                        enemies.add(enemy);
-                    }
-                }
-
-                enemySpawnSeed++;
-            } else if ((spawnedEnemies + 1) % 99 == 0) { //big boy
-                enemy = new Enemy(this, 1, 0, r.nextInt());
-                add(enemy);
-                enemies.add(enemy);
-            } else if ((spawnedEnemies + 1) % 10 == 0 && spawnedEnemies > 0) {
-
-                if (r.nextInt(2) == 0) {
-                    enemy = new Enemy(this, 2, 0, r.nextInt());
-                } else {
-                    enemy = new Enemy(this, 3, 0, r.nextInt());
-                }
-
-                add(enemy);
-                enemies.add(enemy);
-            } else { //normal enemy
-                enemy = new Enemy(this, 0, 0, r.nextInt());
-                add(enemy);
-                enemies.add(enemy);
-            }
-
-            spawnedEnemies++;
-        }
+        
 
         if (Player.health <= 0 && this.player != null) { // stops if dies
             SoundEffects.play("SFX/DEATH_SOUND1.wav",1.0f);
@@ -236,6 +195,54 @@ public class PolygonGame extends Game {
             glaive = new Glaive(this, i * 2 * Math.PI / numberOfGlaives);
             glaives.add(glaive);
             this.add(glaive);
+        }
+    }
+    
+    
+    
+    public void enemySpawning() {
+    	if (r.nextInt(300) < 20 && enemies.size() < maxEnemiesSpawned) { // 0.33% chance each tick to spawn an enemy
+
+            if ((spawnedEnemies + 1) % 50 == 0) { //hoard spawn
+                enemySpawnSeed = r.nextInt();
+
+                if (r.nextInt(2) == 0) {
+                    for (int i = 0; i < 10; i++) {
+                        enemy = new Enemy(this, 0, 0, enemySpawnSeed);
+                        add(enemy);
+                        enemies.add(enemy);
+                    }
+                } else {
+                    System.out.println("trying to spawn");
+                    for (int i = 0; i < 10; i++) {
+                        enemy = new Enemy(this, 4, 0, enemySpawnSeed);
+                        add(enemy);
+                        enemies.add(enemy);
+                    }
+                }
+
+                enemySpawnSeed++;
+            } else if ((spawnedEnemies + 1) % 99 == 0) { //big boy
+                enemy = new Enemy(this, 1, 0, r.nextInt());
+                add(enemy);
+                enemies.add(enemy);
+            } else if ((spawnedEnemies + 1) % 10 == 0 && spawnedEnemies > 0) {
+
+                if (r.nextInt(2) == 0) {
+                    enemy = new Enemy(this, 2, 0, r.nextInt());
+                } else {
+                    enemy = new Enemy(this, 3, 0, r.nextInt());
+                }
+
+                add(enemy);
+                enemies.add(enemy);
+            } else { //normal enemy
+                enemy = new Enemy(this, 0, 0, r.nextInt());
+                add(enemy);
+                enemies.add(enemy);
+            }
+
+            spawnedEnemies++;
         }
     }
 

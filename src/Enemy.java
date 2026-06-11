@@ -123,7 +123,8 @@ public class Enemy extends GameObject {
         for (int i = 0; i < game.enemies.size(); i++) {
             Enemy other = game.enemies.get(i);
 
-            if (collides(other) && other != this && other.type != 4) { //if touching another enemy, moves this enemy away from the other one.
+            //&& (other.type == 4 && this.type == 4) || (other.type != 4 && this.type != 4)
+            if (collides(other) && other != this ) { //if touching another enemy, moves this enemy away from the other one.
                 //setColor(Color.RED);
                 double enemyX = game.enemies.get(i).x;
                 double enemyY = game.enemies.get(i).y;
