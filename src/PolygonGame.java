@@ -60,6 +60,8 @@ public class PolygonGame extends Game {
         deathScreenController = new DeathScreen(this, "", false, 0, 0, 0, 0, null);
         deathAnimationController = new DeathAnimation(this, 0, 0);
 
+        highscoresController.scanScores();//fills up the dummy constructor with the current highscores
+
         setDelay(16); // 60fps
         setTitle("Polygon");
     }
@@ -155,6 +157,8 @@ public class PolygonGame extends Game {
         }
 
         if (Player.health <= 0 && this.player != null) { // stops if dies
+            highscoresController.orderScores(Player.level);//checks to see if level should be on highscores
+            highscoresController.writeScores(); //saves the highscores
             gamePause = true;
             deathAnimationController.deathAnimation(this);
         }

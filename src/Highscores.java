@@ -7,8 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Highscores extends GameObject {
 
@@ -29,51 +29,17 @@ public class Highscores extends GameObject {
     public Scanner scan;
     public FileWriter fw;
     public BufferedWriter bw;
-    
 
     Random r = new Random();
 
     // set up dummy consturctor for highscores buttons to spawn
     public Highscores(PolygonGame game, String buttonName, int w, int h, int x, int y) {
-		
-    	
-			try
-		     {
-		        scan = new Scanner(highscores); //scanner for scores
-			    fw = new FileWriter(highscores);
-			    bw = new BufferedWriter(fw);
-
-		     }
-		     catch(IOException ex)
-		     {
-		    	System.out.println("No file");
-		     }
-			
-
-		
-		try {
-			for (int i = 0; i < 5; i++){
-				if(scan.hasNext()) {
-					scan.next();
-					bw.newLine();
-					System.out.println("yes");
-				} else {
-					bw.write("0");
-					bw.newLine();
-					 
-				}
-			}
-			bw.close();
-		} catch (IOException ex){
-			System.out.println("fail");
-		}
-		
 
         this.game = game;
         this.buttonName = buttonName;
         setSize(w, h);
         setLocation(x, y);
-        
+
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
             menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((45f)));
@@ -82,8 +48,7 @@ public class Highscores extends GameObject {
             menuFont = new Font("Monospaced", Font.BOLD, 100);
             e.printStackTrace();
         }
-        
-        
+
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
             textFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((100f)));
@@ -92,35 +57,97 @@ public class Highscores extends GameObject {
             textFont = new Font("Monospaced", Font.BOLD, 200);
             e.printStackTrace();
         }
-        
-        
-    }
-    
-    
-    
-    public void setScores (int[] scores, int newScore) {
 
-    	int first = 0, second = 0, third = 0, fourth = 0, fifth = 0;
-    	
-    	for (int i = 0; i < scores.length; i++) {
-    		if (scores[i] > first) 
-    			first = scores[i];
-    	}
-    	
     }
-    
-    
+
+    /**
+     * scans the scores the the highscores textfile and puts them into scores
+     * array
+     *
+     * pre: existence of text File highscores, int[] scores and Scanner scan
+     * post: scores will be filled with integers from the text file in order.
+     * scan will become a scanner with the text file inputted.
+     */
+    public void scanScores() {
+        try {
+            scan = new Scanner(highscores); //scanner for scores, based on text file
+        } catch (IOException ex) {
+            System.out.println("failed");
+        }
+
+        for (int i = 0; i < scores.length; i++) { //puts all scores into the array.
+            scores[i] = scan.nextInt();
+        }
+    }
+
+    /**
+     * saves the array scores to the text file
+     *
+     * pre: existence of text File highscores, int[] scores, Filewrite fw and
+     * BufferedWriter bw post: scores will be saved to the text file, with each
+     * score on a seperate line.
+     */
+    public void writeScores() {
+        try {
+            fw = new FileWriter(highscores); //set up for writers
+            bw = new BufferedWriter(fw);
+
+        } catch (IOException ex) {
+            System.out.println("No file");
+        }
+
+        for (int i = 0; i < scores.length; i++) { //for every score, write it and jumps to next line
+            try {
+                bw.write(Integer.toString(scores[i]));//need to convert to string manually to prevent error
+                bw.newLine();
+            } catch (IOException ex) {
+                System.out.println("failed");
+            }
+        }
+
+        try {
+            bw.close(); //closes the writers to finish changing the file and save
+            fw.close();
+        } catch (IOException ex) {
+            System.out.println("failed");
+        }
+    }
+
+    /**
+     * places inutter score within the array scores based on greatest to least
+     *
+     * pre: existence of int[scores] post: newScore will be inputted into the
+     * array, position based on greatest to least
+     */
+    public void orderScores(int newScore) {
+        int order = -1; //position of newscore in array, -1 means not in array.
+        int placeholder; //used to temporary store values.
+
+        for (int i = 0; i < scores.length; i++) { //finds the position of the newscore in the array
+            if (scores[i] < newScore) {
+                order = i;
+                break;
+            }
+        }
+
+        for (int i = order; order != -1 && i < scores.length; i++) {//moves everything down one.
+            placeholder = scores[i];
+            scores[i] = newScore;
+            newScore = placeholder;
+        }
+
+    }
 
     public void spawnHighscores(PolygonGame game) {
         // sets up width and height for the highscores box based on the window size
-        w = (int) (game.getWindowWidth() / 1.5);
+        w = (int) (game.getWindowWidth() / 4);
         h = (int) (game.getWindowHeight() / 1.2);
 
         x = (game.getWindowWidth() - w) / 2; // center the highscores horizontally
         y = (game.getWindowHeight() - h) / 2; // center the highscores vertically
 
         // make the shift for the back button
-        int setShift = (int) ((x + y) / 10);
+        int setShift = (int) ((x + y) / 15);
 
         // make the frame for the highscores
         Highscores highscores = new Highscores(game, "Highscores", w, h, x, y);
@@ -133,7 +160,6 @@ public class Highscores extends GameObject {
         backButton.setColor(new Color(15, 82, 186));
         game.add(backButton);
         highscoresButtons.add(backButton);
-        
 
     }
 
@@ -143,7 +169,7 @@ public class Highscores extends GameObject {
             return; // only check if we're on the main menu
         }
         super.paint(g); // paints the background first of the button first
-        
+
         // adds the image on top of the background WILL USED LATER
         if (boxImage != null) {
             g.drawImage(boxImage, 0, 0, getWidth(), getHeight(), null);
@@ -171,12 +197,16 @@ public class Highscores extends GameObject {
             hoverAngle = 0;
             g2d.drawString(buttonName, textX, textY);
         }
-        
+
+        //cosmetics for the scores
         g2d.setStroke(new BasicStroke(4));
         g2d.setColor(Color.CYAN);
         g2d.setFont(textFont);
 
-        g.drawString("1. ", w/8, h/5);
+        scanScores(); //scans scores to ensure being up to date
+        for (int i = 0; i < scores.length; i++) { //draws every score
+            g.drawString(i + ". " + scores[i], w / 6, h / 5 + i * h / 6);
+        }
 
     }
 
