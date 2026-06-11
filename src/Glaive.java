@@ -1,10 +1,17 @@
 
-import java.awt.Color;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+
+import java.awt.geom.AffineTransform;
 
 public class Glaive extends Weapon {
 
-    int size = (int) (Player.size / 1.5);
+    int size = (int) (Player.size / 1);
     PolygonGame game;
     //double xVel;
     //double yVel;
@@ -19,6 +26,7 @@ public class Glaive extends Weapon {
     static int damage = 1;
     static int glaiveCount = 0;
     public int rotationTimer = 0;
+    static Image glaiveImage;
 
     //TODO: right now pierce system is disabled and will hit enemies more than once
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); // TODO: maybe make universal for other buffs
@@ -34,20 +42,38 @@ public class Glaive extends Weapon {
         setSize(size, size); // size of the projectile
         setColor(Color.RED);
         game.player.weapons.add(this);
+        glaiveImage = new ImageIcon("Images/Sprites/GLAIVE_SPRITE.png").getImage();
+
+    }
+    
+    public void paint(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        AffineTransform old = g2d.getTransform();
+        g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
+        g2d.rotate(spriteAngle);
+        g2d.translate(-getWidth() / 2.0, -getHeight() / 2.0);
+        
+        // REMEMBER CHANGE THE GLAIVES SIZE
+        if (glaiveImage != null) {
+            g2d.drawImage(glaiveImage,0 ,0,(int)(size/0.85),(int)(size/0.85), null);
+        } 
+        g2d.setTransform(old);
+
     }
 
     public void act() {
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
-
+        
+        spriteAngle-=1;
         if (rotationTimer == framesPerRotation) {
             rotationTimer = 0;
             game.createGlaive(game.numberOfGlaives);
         }
         //scales the speed of the glaive based on the player
-        x = (radius * Math.cos(angle) + game.player.x) - size / 2 + game.player.size / 2;
-        y = (radius * Math.sin(angle) + game.player.y) - size / 2 + game.player.size / 2;
+        x = (radius * Math.cos(-angle) + game.player.x) - size / 2 + game.player.size / 2;
+        y = (radius * Math.sin(-angle) + game.player.y) - size / 2 + game.player.size / 2;
         setPosition();
 
         for (int i = 0; i < game.enemies.size(); i++) {
