@@ -13,6 +13,9 @@ public class SpawnAnimation extends GameObject {
     public int particleTransparency = 10;
     static Random r = new Random();
     public static int playerTransparency = 0;
+    static boolean playSpawnSound = true;
+
+
     private static ArrayList<SpawnAnimation> spawnParticles = new ArrayList<>();
 
     // dummy constructor for the spawn particles, not used to actually spawn the
@@ -25,7 +28,6 @@ public class SpawnAnimation extends GameObject {
         setColor(new Color(0, 0, 255, particleTransparency));
         lifespan = r.nextInt(10) + 10;
         spawnParticles.add(this); //extra cube 
-        SoundEffects("SPAWN_SOUND.wav",-3.0f);
     }
 
     // method to spawn particles
@@ -55,6 +57,7 @@ public class SpawnAnimation extends GameObject {
         SpawnAnimation particle = new SpawnAnimation(game, x, y);
         game.add(particle);
         spawnParticles.add(particle);
+        
     }
 
     public void act() {
@@ -73,6 +76,11 @@ public class SpawnAnimation extends GameObject {
         y += (Math.sin(playerAngle) * speed) + (r.nextInt(speed * 2) - speed);
         setPosition(x, y);
         if (collides(game.player)) { // if collides with player, remove from game and list
+
+            if (playSpawnSound){
+                SoundEffects("SFX/SPAWN_SOUND.wav",-4.0f);
+                playSpawnSound=false;
+            }
             lifespan--;
             if (lifespan <= 0) {
                 game.remove(this);
@@ -82,7 +90,7 @@ public class SpawnAnimation extends GameObject {
             }
         }
         if (particleTransparency < 250) { // fade in
-            particleTransparency += 5;
+            particleTransparency += 15;
             setColor(new Color(0, 0, 255, particleTransparency));
         }
 
