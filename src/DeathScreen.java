@@ -1,13 +1,14 @@
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.FontMetrics;
-import java.awt.Font;
-import java.util.*;
 
 public class DeathScreen extends GameObject {
     private static ArrayList<DeathScreen> deathScreenButtons = new ArrayList<>(); // list of all things in the class
@@ -141,8 +142,8 @@ public class DeathScreen extends GameObject {
         Player.matchStickActive = false;
         Player.invulnerable = false;
         Player.invulnerableDuration = 30;
+        game.killCounter = 0;
         SpawnAnimation.playerTransparency = 0;
-
         ChainLightning.chainCount = 3;
         ChainLightning.damage = 1;
         AtGMissileMk1.damage = 1;

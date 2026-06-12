@@ -83,6 +83,10 @@ public class PowerUp extends GameObject {
 
 		buffIcon = new ImageIcon("Images/BuffIcon/" + buffNames[buffType] + ".png").getImage();
 
+		// Initialize wasPressed to current mouse state to prevent unintended clicks
+		// from presses that occurred before this PowerUp was created
+		wasPressed = game.mouseLeftPressed();
+		readyToApply = false;
 	}
 
 	public void createBuff(int buffType) {
@@ -90,6 +94,7 @@ public class PowerUp extends GameObject {
 		switch (buffType) {
 		case 0:
 			Player.health += 5;
+			Player.maxHealth+=5;
 			break;
 
 		case 1:
