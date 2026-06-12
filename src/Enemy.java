@@ -39,8 +39,10 @@ public class Enemy extends GameObject {
         healthMultiplier = (int) Math.pow(2.0, (double) (game.killCounter / 150));
         //System.out.println(healthMultiplier);
         r = new Random(seed);
-        size = (game.getWindowWidth() + game.getWindowHeight()) / 80; // enemy size is 1/100 of the entire window
-        speed = (game.getWindowWidth() + game.getWindowHeight()) / 500; // speed is 1/100 of the entire window size
+        // scaled enemy size and speed
+        size = (game.getWindowWidth() + game.getWindowHeight()) / 80; 
+        speed = (game.getWindowWidth() + game.getWindowHeight()) / 500; 
+        
         this.game = game;
         spawnEnemy(spawn);
         enemyType(type);
@@ -55,6 +57,7 @@ public class Enemy extends GameObject {
         healthMultiplier = (int) Math.pow(2.0, (double) (game.spawnedAttempts / 1000));
         //System.out.println(healthMultiplier); debug
         r = new Random(seed);
+        // scaled enemy size and speed
         size = (game.getWindowWidth() + game.getWindowHeight()) / 80; // enemy size is 1/100 of the entire window
         speed = (game.getWindowWidth() + game.getWindowHeight()) / 500; // speed is 1/100 of the entire window size
         this.game = game;
