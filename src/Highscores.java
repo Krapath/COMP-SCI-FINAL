@@ -43,8 +43,8 @@ public class Highscores extends GameObject {
 
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
-            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((45f)));
-            textFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((100f)));
+            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            textFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
@@ -218,15 +218,23 @@ public class Highscores extends GameObject {
         }
         super.paint(g); // paints the background first of the button first
 
-        // adds the image on top of the background WILL USED LATER
+        // adds the image on top of the background 
         if (boxImage != null) {
             g.drawImage(boxImage, 0, 0, getWidth(), getHeight(), null);
         }
 
-        super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setFont(menuFont);
-        FontMetrics metrics = g2d.getFontMetrics(menuFont);
+
+        // dynamic scale factor based on screen height
+        float scaleFactor = (game.getWindowHeight()+game.getWindowWidth()) /3000f; 
+        if (scaleFactor <= 0) scaleFactor = 1.0f; // Prevention fail-safe
+
+        // scaled fonts using float values
+        Font scaledMenuFont = menuFont.deriveFont(45f * scaleFactor);
+        Font scaledTextFont = textFont.deriveFont(100f * scaleFactor);
+
+        g2d.setFont(scaledMenuFont);
+        FontMetrics metrics = g2d.getFontMetrics(scaledMenuFont);
         hovered = contains(game.getMouseX(), game.getMouseY());
 
         // center the text in the button
@@ -249,47 +257,51 @@ public class Highscores extends GameObject {
 
         
         if(!buttonName.equals("Back")) {
-            g2d.setFont(textFont);
+            g2d.setFont(scaledTextFont);
             g2d.setStroke(new BasicStroke(4));
             
-            int wIndex = w/100;
-            int hIndex = h/100;
-            FontMetrics leaderboard = g2d.getFontMetrics(textFont);
+            // 
+            int wIndex = getWidth() / 100;
+            int hIndex = getHeight() / 100;
             
-        	g.drawString("LEVELS:  KILLS:", 5*wIndex, 25*hIndex);
-       
+            g2d.drawString("LEVELS:", 10 * wIndex, 25 * hIndex);
+            g2d.drawString("KILLS:", 60 * wIndex, 25 * hIndex);
 
         
-        scanScores(); //scans scores to ensure being up to date
-        for (int i = 0; i < levelScores.length; i++) { //draws every score
-            
-        	switch(i){//sets colors for gold, silver and bronze
-        	case 0: 
-        		 g2d.setColor(new Color(239, 191, 4));
-        		 break;
-        	case 1:
-        		g2d.setColor(new Color(196, 196, 196));
-       		 	break;
-        	case 2:
-        		g2d.setColor(new Color(206, 137, 70));
-       		 	break;
-       		default:
-       			g2d.setColor(Color.BLACK);
-       		 	break;
-        	}
-        	g.drawString(i+1 + ". ", 10*wIndex, 40*hIndex + i * 10*hIndex); //print order
-        	g.drawString(i+1 + ". ", 60*wIndex, 40*hIndex + i * 10*hIndex); //print order
-            
-            g2d.setColor(Color.WHITE);//resets colour to cyan for actual score
+            scanScores(); // scans scores to ensure being up to date
+            for (int i = 0; i < levelScores.length; i++) { // draws every score
+                
+                switch(i) { // sets colors for gold, silver and bronze
+                    case 0: 
+                         g2d.setColor(new Color(239, 191, 4));
+                         break;
+                    case 1:
+                        g2d.setColor(new Color(196, 196, 196));
+                         break;
+                    case 2:
+                        g2d.setColor(new Color(206, 137, 70));
+                         break;
+                    default:
+                        g2d.setColor(Color.BLACK);
+                         break;
+                }
+                g2d.drawString(i + 1 + ". ", 10 * wIndex, 40 * hIndex + i * 10 * hIndex); // print order
+                g2d.drawString(i + 1 + ". ", 60 * wIndex, 40 * hIndex + i * 10 * hIndex); // print order
+                
+                g2d.setColor(Color.WHITE); // resets colour for actual score
 
-            g.drawString(Integer.toString(levelScores[i]), 10*wIndex+150, 40*hIndex + i * 10*hIndex); //prints score
-            g.drawString(Integer.toString(killScores[i]), 60*wIndex+150, 40*hIndex + i * 10*hIndex); //prints score
-        }
+                //  scale the horizontal layout gap
+                int scaledOffset = (int) (100 * scaleFactor);
+
+                g2d.drawString(Integer.toString(levelScores[i]), 10 * wIndex + scaledOffset, 40 * hIndex + i * 10 * hIndex); // prints score
+                g2d.drawString(Integer.toString(killScores[i]), 60 * wIndex + scaledOffset, 40 * hIndex + i * 10 * hIndex); // prints score
+            }
         
         }
-
 
     }
+
+    
 
 
 

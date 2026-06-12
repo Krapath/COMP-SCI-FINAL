@@ -35,12 +35,15 @@ public class Tutorial extends GameObject {
         setLocation(x, y);
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
-            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((45f)));
+            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
             menuFont = new Font("Monospaced", Font.BOLD, 100);
             e.printStackTrace();
         }
+        float scaleFactor = (game.getWindowHeight()+game.getWindowWidth()) /3000f; 
+        if (scaleFactor <= 0) scaleFactor = 1.0f; // Prevention fail-safe
+        menuFont = menuFont.deriveFont(45*scaleFactor);
     }
 
     public void spawnTutorial(PolygonGame game) {
@@ -64,6 +67,8 @@ public class Tutorial extends GameObject {
         tutorialButtons.add(tutorial);
 
         // make the back button
+
+    
         Tutorial backButton = new Tutorial(game, "Back", w / 4, h / 10, x - setShift, y - setShift, null);
         backButton.setColor(new Color(15, 82, 186));
         game.add(backButton);

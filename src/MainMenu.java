@@ -43,7 +43,7 @@ public class MainMenu extends GameObject {
         this.buttonName = buttonName;
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
-            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((90f / (float) sizeMultiplier)));
+            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((90f)));// base font
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
             menuFont = new Font("Monospaced", Font.BOLD, 100);
@@ -124,6 +124,7 @@ public class MainMenu extends GameObject {
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
+
         if (buttonName.equals("")) {
             if (logoImage != null) {
                 g.drawImage(logoImage, 0, 0, getWidth(), getHeight(), null);

@@ -26,6 +26,7 @@ public class DeathScreen extends GameObject {
     int gameOverOffsetY = 0;
     int gameOverWiggleRange = 10;
     int gameOverWiggleDelay = 0;
+    Font gameOverFont;
 
     public DeathScreen(PolygonGame game, String buttonName, boolean button, int w, int h, int x, int y,
             ImageIcon image) {
@@ -40,12 +41,18 @@ public class DeathScreen extends GameObject {
         }
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
-            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((45f)));
+            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
             menuFont = new Font("Monospaced", Font.BOLD, 100);
             e.printStackTrace();
         }
+        
+        float scaleFactor = (game.getWindowHeight()+game.getWindowWidth()) /3000f; 
+        if (scaleFactor <= 0) scaleFactor = 1.0f; // Prevention fail-safe
+        menuFont = menuFont.deriveFont(45*scaleFactor);
+        
+        gameOverFont = menuFont.deriveFont(85*scaleFactor);
     }
 
     public void youDied() {
@@ -130,6 +137,7 @@ public class DeathScreen extends GameObject {
         Player.speed = (game.getWindowWidth() + game.getWindowHeight()) / 200;
         Player.attackTimer = 0;
         Player.health = 10;
+        Player.maxHealth=10;
         Player.score = 0;
         Player.level = 1;
         Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
@@ -169,12 +177,11 @@ public class DeathScreen extends GameObject {
             int imgW = (int) (getWidth() / 1.8);
             int imgH = (int) (getHeight() / 2.5);
             int imgX = (getWidth() - imgW) / 2;
-            int imgY = (int) (getHeight() * 0.35); // lower on the panel 
+            int imgY = (int) (getHeight() * 0.25); // lower on the panel 
             g.drawImage(deathImage, imgX, imgY, imgW, imgH, null);
         }
         if (buttonName.equals("doNotChange")) {
             Graphics2D g2d = (Graphics2D) g;
-            Font gameOverFont = menuFont.deriveFont(90f);
             g2d.setFont(gameOverFont);
             FontMetrics metrics = g2d.getFontMetrics(gameOverFont);
             String gameOverText = "GAME OVER";
@@ -225,7 +232,7 @@ public class DeathScreen extends GameObject {
             if (gameOverWiggleDelay >= 3) {
                 gameOverWiggleDelay = 0;
                 gameOverOffsetX = r.nextInt(gameOverWiggleRange * 2 + 1) - gameOverWiggleRange;
-                gameOverOffsetY = r.nextInt(gameOverWiggleRange * 2 + 1) - gameOverWiggleRange;
+                gameOverOffsetY = 2*r.nextInt(gameOverWiggleRange * 2 + 1) - gameOverWiggleRange;
             }
             return; // don't check for clicks on the background box
         };

@@ -77,24 +77,25 @@ public class Arrow extends Weapon {
 	 * must use the same offset to remain consistent with the visible sprite.
 	 */
 	public boolean arrowHits(Enemy e) {
-		double ex = e.getX() + e.size / 2.0;
-		double ey = e.getY() + e.size / 2.0;
+	    // get positions directly using real double precision properties
+	    double ex = e.getRealX() + e.size / 2.0;
+	    double ey = e.getRealY() + e.size / 2.0;
 
-		// center relative to the arrow center.
-		double localX = ex - arrowCX;
-		double localY = ey - arrowCY;
+	    double localX = ex - arrowCX;
+	    double localY = ey - arrowCY;
 
-		// rotate  the enemy point into the arrow's local hitbox.
-		double checkAngle = -(spriteAngle + IMAGE_ORIENTATION_OFFSET);
-		double cos = Math.cos(checkAngle);
-		double sin = Math.sin(checkAngle);
-		double rotX = localX * cos - localY * sin;
-		double rotY = localX * sin + localY * cos;
+	    // unrotate the relative tracking space back to flat alignment angles
+	    double cos = Math.cos(-targetAngle);
+	    double sin = Math.sin(-targetAngle);
+	    double rotX = localX * cos - localY * sin;
+	    double rotY = localX * sin + localY * cos;
 
-		// check the rotated rectangular shaft hitbox.
-		return Math.abs(rotY) <= shaftWidth / 2.0
-			&& rotX >= -shaftHeight / 2.0
-			&& rotX <= shaftHeight / 2.0;
+	    // include enemy radius bounds so arrows register hits on edges
+	    double enemyRadius = e.size / 2.0;
+	    
+	    return Math.abs(rotY) <= (shaftWidth / 2.0 + enemyRadius)
+	        && rotX >= -(shaftHeight / 2.0 + enemyRadius)
+	        && rotX <= (shaftHeight / 2.0 + enemyRadius);
 	}
 
 	/**
