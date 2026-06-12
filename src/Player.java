@@ -31,7 +31,7 @@ public class Player extends GameObject {
     static boolean dashActive = false;
     static boolean arrowSpreadActive = false;
     
-    static double xpReq = 2 * level * Math.log(level + 1);
+    static double xpReq = Math.floor(2 * level * Math.log(level + 1));
     
     static boolean invulnerable = false;
     static int invulnerableDuration = 30;

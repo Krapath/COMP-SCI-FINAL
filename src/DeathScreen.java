@@ -11,48 +11,56 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class DeathScreen extends GameObject {
-    private static ArrayList<DeathScreen> deathScreenButtons = new ArrayList<>(); // list of all things in the class
     // set variables
+    private static ArrayList<DeathScreen> deathScreenButtons = new ArrayList<>(); // list of all things in the class
     private String buttonName;
+    private Image deathImage;
+    Random r = new Random();
     PolygonGame game;
     Font menuFont;
     double hoverAngle = 0.2;
     boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
     boolean hovered;
-    Random r = new Random();
-    private Image deathImage;
     int gameOverOffsetX = 0;
     int gameOverOffsetY = 0;
     int gameOverWiggleRange = 10;
     int gameOverWiggleDelay = 0;
     Font gameOverFont;
 
+    /**
+     * dummy constructor for death screen variables
+     */
     public DeathScreen(PolygonGame game, String buttonName, boolean button, int w, int h, int x, int y,
             ImageIcon image) {
+        // define variables for each object
         this.game = game;
         this.buttonName = buttonName;
         setSize(w, h);
         setLocation(x, y);
+        // set image
         if (image != null) {
             this.deathImage = image.getImage();
         } else {
+            // fail-safe if image file is missing
             this.deathImage = null;
         }
+        // set font
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
             menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
         } catch (Exception e) {
-            // Fallback to basic monospaced if the file is missing
+            // fallback to basic monospaced if the file is missing
             menuFont = new Font("Monospaced", Font.BOLD, 100);
             e.printStackTrace();
         }
-        
-        float scaleFactor = (game.getWindowHeight()+game.getWindowWidth()) /3000f; 
-        if (scaleFactor <= 0) scaleFactor = 1.0f; // Prevention fail-safe
-        menuFont = menuFont.deriveFont(45*scaleFactor);
-        
-        gameOverFont = menuFont.deriveFont(85*scaleFactor);
+        // scale font
+        float scaleFactor = (game.getWindowHeight() + game.getWindowWidth()) / 3000f;
+        if (scaleFactor <= 0)
+            scaleFactor = 1.0f; // prevention fail-safe
+        menuFont = menuFont.deriveFont(45 * scaleFactor);
+        // scale game over font
+        gameOverFont = menuFont.deriveFont(85 * scaleFactor);
     }
 
     public void youDied() {
@@ -67,7 +75,6 @@ public class DeathScreen extends GameObject {
         int y = (game.getWindowHeight() - h) / 2; // center the death screen vertically
 
         // pick a random image for death screen
-
         int rand = r.nextInt(4) + 1; // 1-2
         ImageIcon randomImage = new ImageIcon("Images/Death/Death" + rand + ".png");
 
@@ -78,7 +85,7 @@ public class DeathScreen extends GameObject {
         game.add(deathScreen);
         deathScreenButtons.add(deathScreen);
 
-        // set buttons for the death screen
+        // set buttons variables for the death screen
         int buttonW = w / 3;
         int buttonH = h / 8;
 
@@ -99,37 +106,34 @@ public class DeathScreen extends GameObject {
         ReturnToMainMenu.setColor(new Color(15, 82, 186));
         game.add(ReturnToMainMenu);
         deathScreenButtons.add(ReturnToMainMenu);
-    	SoundEffects.play("SFX/GAME_OVER.wav",-15.0f);
+        SoundEffects.play("SFX/GAME_OVER.wav", -15.0f);
     }
 
     // clears everything and sets the game to how it would start
-    public void returnToZero() { // must make better later
+    public void returnToZero() {
+        // remove all death screen buttons
+        for (DeathScreen m : deathScreenButtons) {
+            game.remove(m);
+        }
+        deathScreenButtons.clear();
 
         // clear all enemies, projectiles, XP orbs, and power-ups
         for (Enemy e : PolygonGame.enemies) {
             game.remove(e);
         }
         PolygonGame.enemies.clear();
-
         for (Weapon w : Player.weapons) {
             game.remove(w);
         }
-
         Player.weapons.clear();
-
         Player.abilities.clear();
-        
-  
         PowerUp.buffArray = new int[PowerUp.numBuffs]; // reset the buff array to all 0s
-        
         for (XpOrb x : PolygonGame.xpOrbs) {
             game.remove(x);
         }
-        
         PolygonGame.xpOrbs.clear();
-        
-        
-        // remove scaling for the enemies
+
+        // reset scaling for the enemies
         Enemy.healthMultiplier = 1;
 
         // reset player stats
@@ -137,13 +141,13 @@ public class DeathScreen extends GameObject {
         Player.speed = (game.getWindowWidth() + game.getWindowHeight()) / 200;
         Player.attackTimer = 0;
         Player.health = 10;
-        Player.maxHealth=10;
+        Player.maxHealth = 10;
         Player.score = 0;
         Player.level = 1;
-        Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
+        Player.xpReq = Math.floor(2 * Player.level * Math.log(Player.level + 1));
         Player.xp = 0;
-        Player.chainLightningActive = false; // static so all projectiles have property
-        Player.atgMissileActive = false; // static so all projectiles have property
+        Player.chainLightningActive = false;
+        Player.atgMissileActive = false;
         Player.dashActive = false;
         Player.arrowSpreadActive = false;
         Player.glaiveActive = false;
@@ -173,14 +177,15 @@ public class DeathScreen extends GameObject {
             return; // only change images if on death screen
         }
         super.paint(g);
-        if (deathImage != null) {
-            int imgW = (int) (getWidth() / 1.8);
-            int imgH = (int) (getHeight() / 2.5);
-            int imgX = (getWidth() - imgW) / 2;
-            int imgY = (int) (getHeight() * 0.25); // lower on the panel 
-            g.drawImage(deathImage, imgX, imgY, imgW, imgH, null);
-        }
         if (buttonName.equals("doNotChange")) {
+            // paint the death image
+            if (deathImage != null) {
+                int imgW = (int) (getWidth() / 1.8);
+                int imgH = (int) (getHeight() / 2.5);
+                int imgX = (getWidth() - imgW) / 2;
+                int imgY = (int) (getHeight() * 0.25); // lower on the panel
+                g.drawImage(deathImage, imgX, imgY, imgW, imgH, null);
+            }
             Graphics2D g2d = (Graphics2D) g;
             g2d.setFont(gameOverFont);
             FontMetrics metrics = g2d.getFontMetrics(gameOverFont);
@@ -192,7 +197,7 @@ public class DeathScreen extends GameObject {
 
             g2d.setColor(Color.BLACK);
             g2d.drawString(gameOverText, textX + 2, textY + 2);
-  
+
             return; // don't draw text for the background box
         }
         Graphics2D g2d = (Graphics2D) g;
@@ -206,6 +211,7 @@ public class DeathScreen extends GameObject {
         int textY = getHeight() / 2 + textHeight / 2 - metrics.getDescent();
 
         g2d.setColor(Color.BLACK);
+        // make the buttons rotate if hovered on
         if (hovered) {
             AffineTransform old = g2d.getTransform();
             g2d.rotate(hoverAngle, textX + textWidth / 2.0, textY - textHeight / 2.0);
@@ -221,9 +227,6 @@ public class DeathScreen extends GameObject {
     boolean wasPressed = false;
 
     public void act() {
-    	int mouseX = game.getMouseX();
-    	int mouseY = game.getMouseY();
-
         if (!PolygonGame.gamePause) {
             return; // only check for button clicks if we're on the main menu
         }
@@ -232,22 +235,22 @@ public class DeathScreen extends GameObject {
             if (gameOverWiggleDelay >= 3) {
                 gameOverWiggleDelay = 0;
                 gameOverOffsetX = r.nextInt(gameOverWiggleRange * 2 + 1) - gameOverWiggleRange;
-                gameOverOffsetY = 2*r.nextInt(gameOverWiggleRange * 2 + 1) - gameOverWiggleRange;
+                gameOverOffsetY = 2 * r.nextInt(gameOverWiggleRange * 2 + 1) - gameOverWiggleRange;
             }
             return; // don't check for clicks on the background box
-        };
-
-
+        }
+        int mouseX = game.getMouseX();
+        int mouseY = game.getMouseY();
         hovered = contains(mouseX, mouseY);
-
+        // change color if hovered on
         if (hovered) {
             setColor(Color.BLUE);
         } else {
             setColor(new Color(15, 82, 186));
         }
-
+        // play and sound effect and tilt the fram if hovered on
         if (hovered && !wasHoveredLastFrame) {
-        	SoundEffects("SFX/HOVER.wav",-5.0f);
+            SoundEffects("SFX/HOVER.wav", -5.0f);
             if (tiltLeft) {
                 hoverAngle = r.nextDouble() * 0.05 + 0.1;
                 tiltLeft = false;
@@ -259,29 +262,21 @@ public class DeathScreen extends GameObject {
         wasHoveredLastFrame = hovered;
 
         if (isClickedAndReleased(game, mouseX, mouseY)) {
-        	SoundEffects("SFX/CLICK.wav",5.0f);
+            SoundEffects("SFX/CLICK.wav", 5.0f);
+            // main menu button
             if (buttonName.equals("Main Menu")) {
-                for (DeathScreen m : deathScreenButtons) { // removes all the buttons in the list from game
-                    game.remove(m);
-                }
-                deathScreenButtons.clear(); // clears the entire list
                 returnToZero();
                 game.menuController.spawnMyBoxes(game); // spawns the main menu buttons
 
-            } else if (buttonName.equals("Retry")) {
-     
-                    SoundEffects("SFX/SPAWN_SOUND.wav",-4.0f);
-                    for (DeathScreen m : deathScreenButtons) { // removes all the buttons in the list from game
-                    game.remove(m);
-                }
-                deathScreenButtons.clear(); // clears the entire list
+            }
+            // retry button
+            else if (buttonName.equals("Retry")) {
+                SoundEffects("SFX/SPAWN_SOUND.wav", -4.0f);
                 returnToZero();
                 game.spawnGame(); // start the game again
                 PolygonGame.gamePause = false;
             }
-
         }
-
         repaint();
     }
 }

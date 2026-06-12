@@ -137,7 +137,7 @@ public class PolygonGame extends Game {
             }
             Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
-            Player.xpReq = 2 * Player.level * Math.log(Player.level + 1);
+            Player.xpReq = Math.floor(2 * Player.level * Math.log(Player.level + 1));
             // 0; // debug
             Player.health = Math.min((int)Math.ceil(0.1*Player.maxHealth+Player.health),Player.maxHealth);
             choosingBuff = true;
