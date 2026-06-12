@@ -94,10 +94,7 @@ public class ChainLightning extends Weapon {
 
     
 
-    
-    /**
-     * paint: draw the lightning arcs between chained enemies.
-     */
+
     public void paint(Graphics g) {
         if (PolygonGame.gamePause) return;// projectiles do not move or collide with enemies while the player is choosing a buff
         
@@ -119,7 +116,7 @@ public class ChainLightning extends Weapon {
             // if the distance is great enough, draw lighting with random offset
             if (distance > 20){
                 double randomAngle = r.nextDouble() * 2 * Math.PI; // random angle for the offset
-                int randomness = (int) (distance/2); // the maximum distance of the random offset, can be adjusted for more or less randomness
+                int randomness = (int) (distance/2); // the maximum distance of the random offset
                                 
 
                 int offsetX = (int) (Math.cos(randomAngle) * randomness); // random offset in the x direction 

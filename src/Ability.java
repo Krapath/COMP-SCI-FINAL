@@ -5,9 +5,9 @@ import javax.swing.*;
  * ability: represents a timed ability with duration and cooldown.
  */
 public class Ability {
-    /** maximum duration ticks for the ability. */
+    // maximum duration ticks for the ability. 
     protected int maxDuration;
-    /** maximum cooldown ticks for the ability. */
+    // maximum cooldown ticks for the ability. 
     protected int maxCooldown;
 
     protected String name;
@@ -73,9 +73,9 @@ public class Ability {
     }
     
     /**
-     * onDurationEnd: hook called when ability duration ends; override in subclasses.
+     * onDurationEnd: hook called when ability duration ends
      */
     public void onDurationEnd() {
-        // override in subclass
-    }
+
+	}
 }

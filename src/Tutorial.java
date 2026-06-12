@@ -118,7 +118,7 @@ public class Tutorial extends GameObject {
         int mouseY = game.getMouseY();
         // ensure that clicking works properly
 
-        if (hovered && !wasHoveredLastFrame) {
+        if (hovered && !wasHoveredLastFrame && buttonName.equals("Back") ) {
         	SoundEffects("SFX/HOVER.wav",-5.0f);
 
             if(tiltLeft){
