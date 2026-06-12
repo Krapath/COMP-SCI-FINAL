@@ -16,8 +16,6 @@ public class GameBackground extends GameObject {
     ArrayList<Polygon> hexagons = new ArrayList<>();
     ArrayList<Integer> hexagonBrightness = new ArrayList<>();
 
-    boolean dynamicBackground = false; // can be set to false for a static background, true for a dynamic background
-                                       // with fading hexagons
     int polygonSize;
 
     public GameBackground(PolygonGame game) {
@@ -30,8 +28,11 @@ public class GameBackground extends GameObject {
         int offsetX = (int) (-polygonSize * 1.5);
         setLocation(offsetX, offsetY);
         drawGrid();
-
-    }
+        drawGrid();
+        for (Polygon p : hexagons) {
+            hexagonBrightness.add(r.nextInt(10)+30); // random brightness for each hexagon, can be adjusted for a more or less transparent background
+            }
+        }    
 
     public void act() {
         repaint();

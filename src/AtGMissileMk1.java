@@ -9,6 +9,9 @@ import java.awt.geom.AffineTransform;
 
 
 
+/**
+ * atgmissilemk1: a homing missile with an initial spiral then tracking behavior.
+ */
 public class AtGMissileMk1 extends Weapon {
     Random r = new Random();
     PolygonGame game;
@@ -32,8 +35,12 @@ public class AtGMissileMk1 extends Weapon {
     Enemy target;
     
     static Image missileImage;
-    static int damage = 1;
+    private static final int DEFAULT_ATG_MISSILE_DAMAGE = 1;
+    static int damage = DEFAULT_ATG_MISSILE_DAMAGE;
 
+    /**
+     * create a new atg missile
+     */
     public AtGMissileMk1(PolygonGame game) {
         super(game, "Cast", "AtGMissileMk1");
         this.game = game;
@@ -49,12 +56,15 @@ public class AtGMissileMk1 extends Weapon {
             randomEnemy = r.nextInt(PolygonGame.enemies.size());
             target = PolygonGame.enemies.get(randomEnemy);
         }
-        missileImage = new ImageIcon("Images/Sprites/Missile.png").getImage();
+        missileImage = new ImageIcon("Images/Sprites/MISSILE_SPRITE.png").getImage();
 
         Player.weapons.add(this);
     }
 
 
+    /**
+     * paint: render the missile sprite and explosion visuals.
+     */
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
@@ -77,6 +87,9 @@ public class AtGMissileMk1 extends Weapon {
 
             g2d.setTransform(old);
     }
+    /**
+     * update missile movement, targeting, and explosion state each frame.
+     */
     public void act() {
 
         // derived from the visual rotation from velocity so it always faces the direction it is moving

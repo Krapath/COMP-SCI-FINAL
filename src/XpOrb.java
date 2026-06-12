@@ -9,13 +9,14 @@ public class XpOrb extends GameObject {
     Random r = new Random();
     PolygonGame game;
 
-    double speed = 20.0; // maybe accelerate as it gets closer to player
-    int distanceAttraction = (game.getWindowHeight()+game.getWindowWidth())/30; // the distance at which the xp orb starts moving towards the player, can be adjusted for better gameplay
+    double speed = 20.0; // maybe accelerate as it gets closer to the player
+    int distanceAttraction;
     boolean chasing = false;
     Image xpOrb;
 
     public XpOrb(int enemyX, int enemyY, int size, PolygonGame game) {
         this.game = game;
+        this.distanceAttraction = (game.getWindowHeight() + game.getWindowWidth()) / 30;
         setLocation(r.nextInt(size + 1) + enemyX, r.nextInt(size + 1) + enemyY); // update position
 
         int width = (game.getWindowHeight() + game.getWindowWidth()) / 300;
@@ -24,7 +25,7 @@ public class XpOrb extends GameObject {
         setColor(Color.YELLOW);
         x = getX();
         y = getY();
-        xpOrb = new ImageIcon("Images/Sprites/XpOrb.png").getImage();
+        xpOrb = new ImageIcon("Images/Sprites/XPORB_SPRITE.png").getImage();
 
     }
 
@@ -58,6 +59,7 @@ public class XpOrb extends GameObject {
             Player.score += 1; // increase player score on collision
             Player.xp += 1;
             game.remove(this); // remove xp orb after collision
+            PolygonGame.xpOrbs.remove(this);
         }
     }
 }

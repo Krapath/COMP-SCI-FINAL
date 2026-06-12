@@ -193,7 +193,7 @@ public class Enemy extends GameObject {
 
                     for (int i = 0; i < PolygonGame.enemies.size(); i++) { //ensures enemies dont spawn directly on top of each other
                         Enemy other = PolygonGame.enemies.get(i);
-                        if (other != this && other.getY() > y + size && other.getY() < y && other.getX() > x && other.getX() < x + size) {
+                        if (other != this && other.getX() < x + size && other.getX() + other.size > x && other.getY() < y + size && other.getY() + other.size > y) {
                             collided = true;
                         }
                     }
@@ -209,9 +209,9 @@ public class Enemy extends GameObject {
                     y = r.nextInt(game.getWindowHeight());
                     collided = false;
 
-                    for (int i = 0; i < game.enemies.size(); i++) { //ensures enemies dont spawn directly on top of each other
-                        Enemy other = game.enemies.get(i);
-                        if (other != this && other.getY() > y + size && other.getY() < y && other.getX() > x && other.getX() < x + size) {
+                    for (int i = 0; i < PolygonGame.enemies.size(); i++) { //ensures enemies dont spawn directly on top of each other
+                        Enemy other = PolygonGame.enemies.get(i);
+                        if (other != this && other.getX() < x + size && other.getX() + other.size > x && other.getY() < y + size && other.getY() + other.size > y) {
                             collided = true;
                         }
                     }

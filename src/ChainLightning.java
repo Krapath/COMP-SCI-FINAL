@@ -13,6 +13,9 @@ import java.io.File;
 import java.awt.BasicStroke;
 
 
+/**
+ * chain lightning: visual and logic for a chaining lightning effect that damages nearby enemies.
+ */
 public class ChainLightning extends Weapon {
 
 
@@ -24,10 +27,12 @@ public class ChainLightning extends Weapon {
     Random r = new Random();
     double randomAngleStatic = r.nextDouble();
     PolygonGame game;   
-    static int chainCount = 3;
+    private static final int CHAIN_COUNT_DEFAULT = 3;
+    static int chainCount = CHAIN_COUNT_DEFAULT;
     static int damage = 1;
     int chainRange;
-    int durationVisible = 10; // the amount of frames the chain lightning is visible for
+    private static final int DURATION_VISIBLE_DEFAULT = 10;
+    int durationVisible = DURATION_VISIBLE_DEFAULT; // the amount of frames the chain lightning is visible for
     int lightningSize; // the thickness of the lightning, will be used in the paint method to set the stroke of the graphics object
     
     
@@ -38,6 +43,11 @@ public class ChainLightning extends Weapon {
     
     // unlike tranditional weapons that actively run, chain lightnings logic runs purely in the constructor
     // as such, act is simply purely visual
+    /**
+     * create a chain lightning starting from an initial enemy.
+     * enemy the initial enemy hit
+     * game the game instance
+     */
     public ChainLightning(Enemy enemy, PolygonGame game) {
         super(game, "Cast", "Chain Lightning");
         this.game = game;
@@ -84,7 +94,9 @@ public class ChainLightning extends Weapon {
     
 
     
-    // will handle the drawing of the chain lightning, will draw a line from the enemy to the first target, then from each target to the next target in the chain
+    /**
+     * paint: draw the lightning arcs between chained enemies.
+     */
     public void paint(Graphics g) {
         if (PolygonGame.gamePause) return;// projectiles do not move or collide with enemies while the player is choosing a buff
         
@@ -125,6 +137,9 @@ public class ChainLightning extends Weapon {
     }
     
 
+    /**
+     * act: update visibility timer and remove when expired.
+     */
     public void act() { // no need for movement code since the chain lightning jumps from enemy to enemy, immediately
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff

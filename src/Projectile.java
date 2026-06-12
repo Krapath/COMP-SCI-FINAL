@@ -14,7 +14,8 @@ public class Projectile extends Weapon {
     double xVel;
     double yVel;
     int distanceTraveled = 0;
-    int damage = 1;
+    private static final int DEFAULT_PROJECTILE_DAMAGE = 1;
+    int damage = DEFAULT_PROJECTILE_DAMAGE;
     int pierceCount = 2;
     boolean friendly = true;
     double angle;
@@ -44,6 +45,12 @@ public class Projectile extends Weapon {
 
     }
 
+    /**
+     * create an unfriendly projectile spawned at given coordinates.
+     * @param game the game instance
+     * @param givenX initial x coordinate
+     * @param givenY initial y coordinate
+     */
     public Projectile(PolygonGame game, double givenX, double givenY) {
         super(game, "Cast", "Projectile");
         this.game = game;
@@ -60,6 +67,9 @@ public class Projectile extends Weapon {
 
     }
 
+    /**
+     * update movement, collisions, and removal for the projectile each frame.
+     */
     public void act() {
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing
@@ -103,6 +113,14 @@ public class Projectile extends Weapon {
 
     }
 
+    /**
+     * damage: apply damage to enemies collided with the attacker and handle special effects.
+     * @param attacker the object causing damage
+     * @param hitEnemies list of enemies already hit by this projectile
+     * @param pierceCount how many enemies the projectile can pierce
+     * @param damage amount of damage to apply
+     * @return true if a new enemy was hit
+     */
     public boolean damage(GameObject attacker, ArrayList<Enemy> hitEnemies, int pierceCount, int damage) {
 
         boolean hit = false;

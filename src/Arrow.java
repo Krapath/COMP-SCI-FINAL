@@ -4,6 +4,9 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import javax.swing.*;
 
+/**
+ * arrow: a projectile weapon that travels in a straight line.
+ */
 public class Arrow extends Weapon {
 
 	PolygonGame game;
@@ -14,7 +17,7 @@ public class Arrow extends Weapon {
 	double arrowCX;
 	double arrowCY;
 
-	private static final double IMAGE_ORIENTATION_OFFSET = Math.PI / 4;
+	private static final double IMAGE_ORIENTATION_OFFSET = Math.PI / 4.0;
 
 	static Image arrowImage;
 	int spriteSize;
@@ -24,12 +27,16 @@ public class Arrow extends Weapon {
 	int projSize;
 	ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
-    public Arrow(PolygonGame game, double angle) {
-        super(game, "Cast", "Arrow");
+	/**
+	 * create a new arrow.
+	 * Takes angle for target angle of the arrow
+	 */
+	public Arrow(PolygonGame game, double angle) {
+		super(game, "Cast", "Arrow");
         this.game = game;
 
         targetAngle = angle;
-        size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // projectile size is 1/250 of the entire window
+        size = (game.getWindowWidth() + game.getWindowHeight()) / 200; // projectile size is 1/250 of the entire window
         projSize = size * 5;
         shaftWidth = (int) (size * 1.5);
         shaftHeight = (int) (size * 3);
@@ -48,6 +55,9 @@ public class Arrow extends Weapon {
 		spriteSize = projSize;
 	}
 
+	/**
+	 * paint: render the arrow sprite rotated to its sprite angle.
+	 */
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		AffineTransform old = g2d.getTransform();
@@ -62,32 +72,34 @@ public class Arrow extends Weapon {
 	}
 
 	/**
-	 * Returns true if the given enemy's center intersects the arrow's rotated hitbox.
-	 *
-	 * The arrow sprite is rendered with an orientation offset, so the collision math
+	 * return true if the given enemy's center intersects the arrow's rotated hitbox
+	 * The arrow has an orientation offset, so the collision math
 	 * must use the same offset to remain consistent with the visible sprite.
 	 */
 	public boolean arrowHits(Enemy e) {
 		double ex = e.getX() + e.size / 2.0;
 		double ey = e.getY() + e.size / 2.0;
 
-		// Enemy center relative to the arrow center.
+		// center relative to the arrow center.
 		double localX = ex - arrowCX;
 		double localY = ey - arrowCY;
 
-		// Rotate the enemy point into the arrow's local hitbox coordinate frame.
+		// rotate  the enemy point into the arrow's local hitbox.
 		double checkAngle = -(spriteAngle + IMAGE_ORIENTATION_OFFSET);
 		double cos = Math.cos(checkAngle);
 		double sin = Math.sin(checkAngle);
 		double rotX = localX * cos - localY * sin;
 		double rotY = localX * sin + localY * cos;
 
-		// Check against the rotated rectangular shaft hitbox.
+		// check the rotated rectangular shaft hitbox.
 		return Math.abs(rotY) <= shaftWidth / 2.0
 			&& rotX >= -shaftHeight / 2.0
 			&& rotX <= shaftHeight / 2.0;
 	}
 
+	/**
+	 * update arrow position, collision, and removal each frame.
+	 */
 	public void act() {
 		if(PolygonGame.gamePause){
 			return;
@@ -125,16 +137,11 @@ public class Arrow extends Weapon {
 						PolygonGame.arrows.remove(this);
 					}
 
-					int enemyX = PolygonGame.enemies.get(i).getX();
-					int enemyY = PolygonGame.enemies.get(i).getY();
-
 					if (PolygonGame.enemies.get(i).health <= 0) {
-						XpOrb xp = new XpOrb(enemyX, enemyY, game);
-						game.add(xp);
-						PolygonGame.xpOrbs.add(xp);
 						hitEnemies.remove(PolygonGame.enemies.get(i));
 						game.remove(PolygonGame.enemies.get(i));
 						PolygonGame.enemies.remove(i);
+						i--;
 					}
 				}
 			}

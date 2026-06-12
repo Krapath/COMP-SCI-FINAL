@@ -6,12 +6,16 @@ import java.awt.geom.AffineTransform;
 import java.awt.Graphics;
 import java.util.Random;
 
+/**
+ * matchstick: a throwable match that aims then shoots and can return like a boomerang.
+ */
 public class MatchStick extends Weapon {
 
     Random r = new Random();
     int size = 50;
     PolygonGame game;
-    static int damage = 1;
+    private static final int DEFAULT_MATCHSTICK_DAMAGE = 1;
+    static int damage = DEFAULT_MATCHSTICK_DAMAGE;
     int pierceCooldown = 60;
     Double angle = 0.20;
     int radius = 100;
@@ -44,6 +48,9 @@ public class MatchStick extends Weapon {
     int tipWidth;
     int tipHeight;
 
+    /**
+     * create a new matchstick weapon.
+     */
     public MatchStick(PolygonGame game) {
         super(game, "Passive", "MatchStick");
         this.game = game;
@@ -59,6 +66,9 @@ public class MatchStick extends Weapon {
 
     }
 
+    /**
+     * paint: draw the matchstick with shaft and tip using transforms.
+     */
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
@@ -83,9 +93,12 @@ public class MatchStick extends Weapon {
         g2d.setTransform(old); // restore
     }
 
-    // Still slightly broken i think
-    // works by reversing the rotation on the rectangle/ applying it to the enemy then chceking if the enemy is within it
-    // custom collision detection for rotating rectangle hitbox, does not use the built in collides function since that is just a bounding box and does not rotate with the arrow
+
+    /**
+     * arrowHits: return true if the enemy is inside the rotated match hitbox
+     * works by reversing the rotation on the rectangle/ applying it to the enemy then chceking if the enemy is within it
+     * custom collision detection for rotating rectangle hitbox, does not use the built in collides
+     */
     boolean arrowHits(Enemy e) {
         double ex = e.getX() + e.size / 2.0;
         double ey = e.getY() + e.size / 2.0;
@@ -108,6 +121,9 @@ public class MatchStick extends Weapon {
                 && rotY <= shaftHeight / 2.0;
     }
 
+    /**
+     * act: update aiming, movement, returning behavior, and collision handling.
+     */
     public void act() {
         if (PolygonGame.gamePause) {
             return;
@@ -236,16 +252,11 @@ public class MatchStick extends Weapon {
                     PolygonGame.enemies.get(i).health -= damage;
                     PolygonGame.enemies.get(i).damaged=true;
 
-                    int enemyX = PolygonGame.enemies.get(i).getX();
-                    int enemyY = PolygonGame.enemies.get(i).getY();
-
                     if (PolygonGame.enemies.get(i).health <= 0) {
-                        XpOrb xp = new XpOrb(enemyX, enemyY, game);
-                        game.add(xp);
-                        PolygonGame.xpOrbs.add(xp);
                         hitEnemies.remove(PolygonGame.enemies.get(i));
                         game.remove(PolygonGame.enemies.get(i));
                         PolygonGame.enemies.remove(i);
+                        i--;
                     }
                 }
             }

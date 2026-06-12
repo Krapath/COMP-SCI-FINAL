@@ -21,6 +21,10 @@ public class DeathScreen extends GameObject {
     boolean hovered;
     Random r = new Random();
     private Image deathImage;
+    int gameOverOffsetX = 0;
+    int gameOverOffsetY = 0;
+    int gameOverWiggleRange = 10;
+    int gameOverWiggleDelay = 0;
 
     public DeathScreen(PolygonGame game, String buttonName, boolean button, int w, int h, int x, int y,
             ImageIcon image) {
@@ -55,14 +59,9 @@ public class DeathScreen extends GameObject {
         int y = (game.getWindowHeight() - h) / 2; // center the death screen vertically
 
         // pick a random image for death screen
-        ImageIcon randomImage = new ImageIcon("Images/Death/Death_Image(1).png");
-        int rand = r.nextInt(2) + 1;
-        if (rand == 1) {
-            randomImage = new ImageIcon("Images/Death/Death_Image(1).png");
-        } else if (rand == 2) {
-            randomImage = new ImageIcon("Images/Death/Death_Image(2).png");
 
-        }
+        int rand = r.nextInt(4) + 1; // 1-2
+        ImageIcon randomImage = new ImageIcon("Images/Death/Death" + rand + ".png");
 
         // make the frame for the death screen
         DeathScreen deathScreen = new DeathScreen(game, "doNotChange", false, w, h, x, y,
@@ -92,7 +91,7 @@ public class DeathScreen extends GameObject {
         ReturnToMainMenu.setColor(new Color(15, 82, 186));
         game.add(ReturnToMainMenu);
         deathScreenButtons.add(ReturnToMainMenu);
-    	SoundEffects.play("SFX/GAME_OVER.wav",-8.0f);
+    	SoundEffects.play("SFX/GAME_OVER.wav",-15.0f);
     }
 
     // clears everything and sets the game to how it would start
@@ -166,10 +165,26 @@ public class DeathScreen extends GameObject {
         }
         super.paint(g);
         if (deathImage != null) {
-            g.drawImage(deathImage, (getWidth() - (int) (getWidth() / 1.5)) / 2, 0, (int) (getWidth() / 1.5),
-                    (int) (getHeight() / 1.5), null);
+            int imgW = (int) (getWidth() / 1.8);
+            int imgH = (int) (getHeight() / 2.5);
+            int imgX = (getWidth() - imgW) / 2;
+            int imgY = (int) (getHeight() * 0.35); // lower on the panel 
+            g.drawImage(deathImage, imgX, imgY, imgW, imgH, null);
         }
         if (buttonName.equals("doNotChange")) {
+            Graphics2D g2d = (Graphics2D) g;
+            Font gameOverFont = menuFont.deriveFont(90f);
+            g2d.setFont(gameOverFont);
+            FontMetrics metrics = g2d.getFontMetrics(gameOverFont);
+            String gameOverText = "GAME OVER";
+            int textWidth = metrics.stringWidth(gameOverText);
+            int textHeight = metrics.getAscent();
+            int textX = getWidth() / 2 - textWidth / 2 + gameOverOffsetX;
+            int textY = (int) (getHeight() * 0.12) + textHeight / 2 + gameOverOffsetY; // keep text above the image
+
+            g2d.setColor(Color.BLACK);
+            g2d.drawString(gameOverText, textX + 2, textY + 2);
+  
             return; // don't draw text for the background box
         }
         Graphics2D g2d = (Graphics2D) g;
@@ -205,6 +220,12 @@ public class DeathScreen extends GameObject {
             return; // only check for button clicks if we're on the main menu
         }
         if (buttonName.equals("doNotChange")) {
+            gameOverWiggleDelay++;
+            if (gameOverWiggleDelay >= 3) {
+                gameOverWiggleDelay = 0;
+                gameOverOffsetX = r.nextInt(gameOverWiggleRange * 2 + 1) - gameOverWiggleRange;
+                gameOverOffsetY = r.nextInt(gameOverWiggleRange * 2 + 1) - gameOverWiggleRange;
+            }
             return; // don't check for clicks on the background box
         };
 

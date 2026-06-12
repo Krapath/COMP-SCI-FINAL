@@ -1,23 +1,35 @@
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * ability: represents a timed ability with duration and cooldown.
+ */
 public class Ability {
+    /** maximum duration ticks for the ability. */
     protected int maxDuration;
+    /** maximum cooldown ticks for the ability. */
     protected int maxCooldown;
-    
+
     protected String name;
     // active tickers counts down each tick
     protected int durationTimer = 0;
+    ///remaining cooldown ticks before ability can be reused. 
     protected int cooldownTimer = 0;
+    //whether the ability is currently active. 
     protected boolean isActive = false;
     
-	public Ability(String name, int maxDur, int maxCool) {
-		
-		maxDuration=maxDur;
-		maxCooldown=maxCool;
-		this.name = name;
-	}
-	
+    /**
+     * create an ability with a name, duration and cooldown.
+     */
+    public Ability(String name, int maxDur, int maxCool) {
+        maxDuration = maxDur;
+        maxCooldown = maxCool;
+        this.name = name;
+    }
+    
+    /**
+     * startCooldown: activate the ability and reset timers.
+     */
     public void startCooldown() {
         this.isActive = true;
         this.durationTimer = maxDuration;  // reset duration
@@ -25,19 +37,28 @@ public class Ability {
     }
 
 
-	public boolean canUse(){
+    /**
+     * canUse: return true if the ability is ready to be used.
+     */
+    public boolean canUse(){
         // can't use if on cooldown, already active, or game is paused
-		return (cooldownTimer == 0 &&!isActive && !PolygonGame.gamePause);
-	}
-	
-	public void performAbility(){
+        return (cooldownTimer == 0 && !isActive && !PolygonGame.gamePause);
+    }
+    
+    /**
+     * performAbility: trigger the ability if it can be used.
+     */
+    public void performAbility(){
         if (canUse()){
             startCooldown();
         }
     }
 
 
-	public void act(){
+    /**
+     * act: tick down duration and cooldown timers each frame.
+     */
+    public void act(){
         if (cooldownTimer > 0) {
             cooldownTimer--;  // tick down cooldown
         }
@@ -48,10 +69,13 @@ public class Ability {
                 isActive = false;
                 onDurationEnd();  // notify subclass
             }
-		}
-	}
-	
+        }
+    }
+    
+    /**
+     * onDurationEnd: hook called when ability duration ends; override in subclasses.
+     */
     public void onDurationEnd() {
-    	// override in subclass
+        // override in subclass
     }
 }

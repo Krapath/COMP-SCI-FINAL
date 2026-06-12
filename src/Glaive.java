@@ -20,7 +20,8 @@ public class Glaive extends Weapon {
     Double angle;
     Double startingAngle;
     int radius = 100;
-    int framesPerRotation = Player.speed * 5;
+    private static final int GLAIVE_ROTATION_FACTOR = 5;
+    int framesPerRotation = Player.speed * GLAIVE_ROTATION_FACTOR;
     Double speed = 2 * Math.PI / framesPerRotation;
     int pierceTimer = 0; // the current timer for pierce.
     static int damage = 1;
@@ -90,14 +91,7 @@ public class Glaive extends Weapon {
                     PolygonGame.enemies.get(i).health -= damage; // reduce enemy health on collision
                     PolygonGame.enemies.get(i).damaged=true;
 
-                    int enemyX = PolygonGame.enemies.get(i).getX();
-                    int enemyY = PolygonGame.enemies.get(i).getY();
-
                     if (PolygonGame.enemies.get(i).health <= 0) {
-
-                        XpOrb xp = new XpOrb(enemyX, enemyY, game); // create an xp orb at the location of the defeated enemy
-                        game.add(xp);// add the xp orb to the game
-                        PolygonGame.xpOrbs.add(xp); // add the xp orb to the list
 
                         //if (hitEnemies.contains(game.enemies.get(i))) {
                         hitEnemies.remove(PolygonGame.enemies.get(i));
@@ -105,6 +99,7 @@ public class Glaive extends Weapon {
 
                         game.remove(PolygonGame.enemies.get(i)); // remove enemy if health is depleted
                         PolygonGame.enemies.remove(i); // remove enemy from the list
+                        i--;
 
                     }
                 }

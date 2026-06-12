@@ -43,7 +43,7 @@ public class PowerUp extends GameObject {
 	String[] buffDescriptions = { "+5 Max Health", // Case 0 (RED / Health)
 			"+1 Movement Speed", // Case 1 (GREEN / Speed)
 			"+1 Attack Speed", // Case 2 (BLUE / Attack Speed)
-			"Unlocks Ch4444444444444444444ain Lightning", // Case 3 (CYAN / Lightning)
+			"Unlocks Chain Lightning", // Case 3 (CYAN / Lightning)
 			"Unlocks Missile strikes", // Case 4 (ORANGE / Missile)
 			"Spawns orbiting Glaives", // Case 5 (MAGENTA / Glaive)
 			"Summons Matchstick", // Case 6 (YELLOW / MatchStick)

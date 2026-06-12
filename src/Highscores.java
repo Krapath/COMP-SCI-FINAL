@@ -277,13 +277,13 @@ public class Highscores extends GameObject {
        			g2d.setColor(Color.BLACK);
        		 	break;
         	}
-        	g.drawString(i+1 + ". ", 10*wIndex, 35*hIndex + i * 10*hIndex); //print order
-        	g.drawString(i+1 + ". ", 60*wIndex, 35*hIndex + i * 10*hIndex); //print order
+        	g.drawString(i+1 + ". ", 10*wIndex, 40*hIndex + i * 10*hIndex); //print order
+        	g.drawString(i+1 + ". ", 60*wIndex, 40*hIndex + i * 10*hIndex); //print order
             
             g2d.setColor(Color.WHITE);//resets colour to cyan for actual score
 
-            g.drawString(Integer.toString(levelScores[i]), 10*wIndex+150, 35*hIndex + i * 10*hIndex); //prints score
-            g.drawString(Integer.toString(killScores[i]), 60*wIndex+150, 35*hIndex + i * 10*hIndex); //prints score
+            g.drawString(Integer.toString(levelScores[i]), 10*wIndex+150, 40*hIndex + i * 10*hIndex); //prints score
+            g.drawString(Integer.toString(killScores[i]), 60*wIndex+150, 40*hIndex + i * 10*hIndex); //prints score
         }
         
         }
