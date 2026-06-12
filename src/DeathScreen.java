@@ -11,17 +11,19 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class DeathScreen extends GameObject {
-    // set variables
-    private static ArrayList<DeathScreen> deathScreenButtons = new ArrayList<>(); // list of all things in the class
+    private static ArrayList<DeathScreen> deathScreenButtons = new ArrayList<>();
+    // set dummy constructor variables
     private String buttonName;
     private Image deathImage;
     Random r = new Random();
     PolygonGame game;
+    //set font varialbes
     Font menuFont;
     double hoverAngle = 0.2;
     boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
     boolean hovered;
+    //set box placement variables
     int gameOverOffsetX = 0;
     int gameOverOffsetY = 0;
     int gameOverWiggleRange = 10;

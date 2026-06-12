@@ -4,22 +4,25 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class DeathAnimation extends GameObject {
-
-    // set variables
+    //
+    private static ArrayList<DeathAnimation> dyingParticles = new ArrayList<>();
+    // set animation variables
     static boolean dyingAnimation = false;
-    static Random r = new Random();
     static boolean playDeathSound2 = true;
     PolygonGame game;
     int size;
+    // set particple varialbes
     public int timer = 0;
     public int particleTransparency = 255;
     public int duration = 30;
-    private static ArrayList<DeathAnimation> dyingParticles = new ArrayList<>();
+    // random variable
+    Random r = new Random();
 
     /**
      * Dummy constructor to build death particles
      */
     public DeathAnimation(PolygonGame game, int x, int y) {
+        // assign values to object's variables
         this.game = game;
         size = Player.size / 2;
         setSize(size, size);
@@ -59,12 +62,12 @@ public class DeathAnimation extends GameObject {
         int speed = Player.size / 5;
         int x = getX();
         int y = getY();
-        if (timer < duration) {// make the particles wiggle
+        if (timer < duration) { // make the particles wiggle
             x += Math.ceil(r.nextInt(speed * 2 + 1) - speed);
             y += Math.ceil(r.nextInt(speed * 2 + 1) - speed);
             setPosition(x, y);
             timer++;
-        } else if (timer < duration * 2) {// make the wiggle further
+        } else if (timer < duration * 2) { // make the wiggle further
             x += Math.ceil(r.nextInt(speed * 3 + 1) - speed * 1.5);
             y += Math.ceil(r.nextInt(speed * 3 + 1) - speed * 1.5);
             setPosition(x, y);
@@ -74,7 +77,7 @@ public class DeathAnimation extends GameObject {
             x += (Math.cos(playerAngle + Math.PI) * speed * 5);
             y += (Math.sin(playerAngle + Math.PI) * speed * 5);
             setPosition(x, y);
-            if (playDeathSound2) {// play death sound
+            if (playDeathSound2) { // play death sound
                 SoundEffects.play("SFX/DEATH_SOUND2.wav", 5.0f);
                 playDeathSound2 = false;
             }
