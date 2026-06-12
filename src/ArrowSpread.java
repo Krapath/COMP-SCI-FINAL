@@ -38,7 +38,7 @@ public class ArrowSpread extends Ability {
 		if (canUse()) {
 			startCooldown();
 
-			for (int i = 0; i <= arrowCount; i++) {
+			for (int i = 0; i < arrowCount; i++) {
 
 			    double angleInRadians = (i * 2 * Math.PI) / arrowCount;
 				Arrow arrow = new Arrow(game, angleInRadians);
