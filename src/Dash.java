@@ -26,7 +26,11 @@ public class Dash extends Ability{
 		super.act();
 
 	}
-
+	
+	/*
+	 * 
+	 * 
+	 */
 	public void performAbility(){
 		if (canUse()){
 			startCooldown();
