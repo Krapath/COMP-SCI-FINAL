@@ -131,6 +131,7 @@ public class MainMenu extends GameObject {
             game.remove(m);
         }
         menuButtons.clear(); // clears the entire list
+        
     }
 
     @Override
@@ -206,9 +207,9 @@ public class MainMenu extends GameObject {
             // do different effects for different buttons
             if (buttonName.equals("Play")) {
                 clearMainMenu();
+                PolygonGame.gamePause = false; // resume the game
                 // add player and abilities
                 game.spawnGame();
-
             } else if (buttonName.equals("Tutorial")) {
                 clearMainMenu();
                 // tutorial setup
