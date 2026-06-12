@@ -19,7 +19,6 @@ public class Player extends GameObject {
     static int attackCooldown= 10;
     static int health = 10;
     static int maxHealth = 10;
-    static int score = 0;
     static int xp = 0;
     static int level = 1;
     

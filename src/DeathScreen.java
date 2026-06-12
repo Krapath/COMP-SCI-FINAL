@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 public class DeathScreen extends GameObject {
     // array list of all objects in the class
     private static ArrayList<DeathScreen> deathScreenButtons = new ArrayList<>();
-    // set dummy constructor variables
+    // set dummy constructor variables + objects
     private String buttonName;
     private Image deathImage;
     Random r = new Random();
@@ -150,7 +150,6 @@ public class DeathScreen extends GameObject {
         Player.attackTimer = 0;
         Player.health = 10;
         Player.maxHealth = 10;
-        Player.score = 0;
         Player.level = 1;
         Player.xpReq = Math.floor(2 * Player.level * Math.log(Player.level + 1));
         Player.xp = 0;

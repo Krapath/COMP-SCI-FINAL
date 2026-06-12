@@ -100,12 +100,7 @@ public class DisplayGUI extends GameObject {
         String health = String.valueOf(Player.health);
         String level = String.valueOf(Player.level);
 
-        // draw mouse and player coordinates
-        g.drawString("MOUSE    X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 10, 20);
-        g.drawString("PLAYER   X:" + game.player.getX() + "  Y:" + game.player.getY(), 10, 40);
-
-        // finds the angle between the player and the mouse cursor and displays it in
-        // degrees
+        // finds the angle between the player and the mouse cursor and displays it in degrees
         double angle = game.getAngle(game.player.getX(), game.player.getY(), game.getMouseX(), game.getMouseY())
                 * (180 / Math.PI);
         angle = -angle; // increase counterclockwise, follows standard unit circle convention
@@ -113,20 +108,19 @@ public class DisplayGUI extends GameObject {
             angle += 360;
         }
 
+        // draw mouse and player coordinates
+        g.drawString("MOUSE    X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 10, 20);
+        g.drawString("PLAYER   X:" + game.player.getX() + "  Y:" + game.player.getY(), 10, 40);
+        //display angle from mout cursor and player in degrees
+        g.drawString("ANGLE:" + angle, 10, 60);
         // display the number of enemies and hp
         g.drawString("ENEMIES: " + PolygonGame.enemies.size(), 10, 80);
         g.drawString("HP: " + Player.health, 10, 100);
-
-        // display the players current score
-        g.drawString("SCORE: " + Player.score, 10, 120);
         // display the players xp and xp required to level up
-        g.drawString("XP: " + Player.xp + "/" + Player.xpReq, 10, 140);
-
+        g.drawString("XP: " + Player.xp + "/" + Player.xpReq, 10, 120);
         // display the players level
-        g.drawString("LEVEL: " + Player.level, 10, 160);
-
+        g.drawString("LEVEL: " + Player.level, 10, 140);
         // display the mouse cursor as a red rectangle
-        g.drawString("ANGLE:" + angle, 10, 60);
         g.setColor(Color.RED);
         g.drawRect(game.getMouseX(), game.getMouseY(), 15, 15);
 

@@ -6,7 +6,7 @@ import java.util.Random;
 public class DeathAnimation extends GameObject {
     // array of all objects in the class
     private static ArrayList<DeathAnimation> dyingParticles = new ArrayList<>();
-    // set animation variables
+    // set animation variables + objects
     static boolean dyingAnimation = false;
     static boolean playDeathSound2 = true;
     PolygonGame game;

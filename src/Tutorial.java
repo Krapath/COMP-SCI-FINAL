@@ -12,7 +12,7 @@ import javax.swing.ImageIcon;
 public class Tutorial extends GameObject {
     // array list of all objects in the class
     private static ArrayList<Tutorial> tutorialButtons = new ArrayList<>();
-    // set dummy constructor variables
+    // set dummy constructor variables + objects
     private String buttonName;
     private Image boxImage;
     PolygonGame game;

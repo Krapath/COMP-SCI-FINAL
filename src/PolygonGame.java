@@ -135,7 +135,7 @@ public class PolygonGame extends Game {
             for (PowerUp p : powerUps) {
                 add(p);
             }
-            Player.xp = 0; // reset score after spawning powerup
+            Player.xp = 0; // reset xp after spawning powerup
             Player.level += 1;
             Player.xpReq = Math.floor(2 * Player.level * Math.log(Player.level + 1));
             // 0; // debug

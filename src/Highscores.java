@@ -13,7 +13,7 @@ import java.util.*;
 public class Highscores extends GameObject {
     // create array list for all objects in the class
     private static ArrayList<Highscores> highscoresButtons = new ArrayList<>();
-    // set variables for dummy constructor
+    // set variables + objects for dummy constructor
     private String buttonName;
     PolygonGame game;
     // set variables for font

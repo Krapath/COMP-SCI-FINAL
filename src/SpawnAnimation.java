@@ -6,7 +6,7 @@ import java.util.Random;
 public class SpawnAnimation extends GameObject {
     // array list holding all the objects
     private static ArrayList<SpawnAnimation> spawnParticles = new ArrayList<>();
-    // set variables for dummy constructor
+    // set variables + objects for dummy constructor
     static boolean spawningAnimation = false;
     PolygonGame game;
     int size;
