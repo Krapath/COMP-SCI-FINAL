@@ -11,9 +11,8 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class MainMenu extends GameObject {
-
-    private static ArrayList<MainMenu> menuButtons = new ArrayList<>(); // list for the actual buttons, shared aross the
-    // entire class
+    // main menu variables
+    private static ArrayList<MainMenu> menuButtons = new ArrayList<>();
     private Image logoImage;
     private String buttonName;
     PolygonGame game;
@@ -23,12 +22,11 @@ public class MainMenu extends GameObject {
     Random r = new Random();
     boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
-
+    // main menu placement variables
     static int menuOffsetX;
     static int menuOffsetY;
     static double sizeMultiplier = 1.7; // higher is actually lower
-    // The constructor for the dummy object
-
+    // logo variables
     int logoW;
     int logoH;
     int logoX;
@@ -37,10 +35,13 @@ public class MainMenu extends GameObject {
     static int logoOffsetY;
     static double logoSizeMultiplier = 0.5; // higher = smaller
 
+    /**
+     * A dummy constructor used as the template for the main menu buttons
+     */
     public MainMenu(PolygonGame game, String buttonName) {
-
         this.game = game;
         this.buttonName = buttonName;
+        // set fonts for each button
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
             menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);// base font
@@ -49,17 +50,18 @@ public class MainMenu extends GameObject {
             menuFont = new Font("Monospaced", Font.BOLD, 100);
             e.printStackTrace();
         }
+        // shifts location of the menu
         menuOffsetX = -game.getWindowHeight() / 2;
         menuOffsetY = game.getWindowWidth() / 5;
-
+        // sets logo image and decides logo location
         logoImage = new ImageIcon("Images/MainMenu/PolygonLogo.png").getImage();
         logoOffsetX = game.getWindowWidth() / 4;
         logoOffsetY = game.getWindowHeight() / 12;
-
-        float scaleFactor = (game.getWindowHeight()+game.getWindowWidth()) /3000f; 
-        if (scaleFactor <= 0) scaleFactor = 1.0f; // Prevention fail-safe
-        menuFont = menuFont.deriveFont(45*scaleFactor);
-        
+        // scales the menu fonts to monitor size
+        float scaleFactor = (game.getWindowHeight() + game.getWindowWidth()) / 3000f;
+        if (scaleFactor <= 0)
+            scaleFactor = 1.0f; // Prevention fail-safe
+        menuFont = menuFont.deriveFont(45 * scaleFactor);
     }
 
     /**
@@ -72,18 +74,17 @@ public class MainMenu extends GameObject {
 
         int centerX = (game.getWindowWidth() - w) / 2; // center the boxes horizontally
         int ySlots = (int) (game.getWindowHeight() / 9 / sizeMultiplier); // gets even splits for the boxes
-        int yShift = (int) (-(game.getWindowHeight() / 25.0 * ((sizeMultiplier - 1) * 2))); // shifts the boxes up a bit so they look better
-
-        // play button
+        int yShift = (int) (-(game.getWindowHeight() / 25.0 * ((sizeMultiplier - 1) * 2))); // shifts the boxes up a bit
+                                                                                            // so they look better
+        // create play button
         MainMenu playButton = new MainMenu(game, "Play");
-
         playButton.setSize(w, h);
         playButton.setColor(new Color(220, 20, 60));
         playButton.setLocation(centerX + menuOffsetX, ySlots - yShift + menuOffsetY);
         game.add(playButton);
         menuButtons.add(playButton);
 
-        // tutorial button
+        // create tutorial button
         MainMenu tutorialButton = new MainMenu(game, "Tutorial");
         tutorialButton.setSize(w, h);
         tutorialButton.setColor(new Color(220, 20, 60));
@@ -91,7 +92,7 @@ public class MainMenu extends GameObject {
         game.add(tutorialButton);
         menuButtons.add(tutorialButton);
 
-        // highscores button
+        // create highscores button
         MainMenu highscores = new MainMenu(game, "Highscores");
         highscores.setSize(w, h);
         highscores.setColor(new Color(220, 20, 60));
@@ -99,16 +100,16 @@ public class MainMenu extends GameObject {
         game.add(highscores);
         menuButtons.add(highscores);
 
-        // exit button
+        // create exit button
         MainMenu exitButton = new MainMenu(game, "Exit");
         exitButton.setSize(w, h);
         exitButton.setColor(new Color(220, 20, 60));
         exitButton.setLocation(centerX + menuOffsetX, ySlots * 7 - yShift + menuOffsetY);
         game.add(exitButton);
         menuButtons.add(exitButton);
-
+        // create logo
         MainMenu logoPolygon = new MainMenu(game, "");
-
+        // set logo location
         int logoW = (int) (game.getWindowWidth() / 3 / logoSizeMultiplier);
         int logoH = (int) (game.getWindowHeight() / 4 / logoSizeMultiplier);
         int logoX = (game.getWindowWidth() - logoW) / 2 + logoOffsetX;
@@ -116,25 +117,35 @@ public class MainMenu extends GameObject {
 
         logoPolygon.setLocation(logoX, logoY);
         logoPolygon.setSize(logoW, logoH);
-
-        logoPolygon.setLocation(logoX, logoY);
+        // add logo to the game
         game.add(logoPolygon);
         menuButtons.add(logoPolygon);
 
     }
 
+    /**
+     * clears all things on the main menu
+     */
+    public void clearMainMenu() {
+        for (MainMenu m : menuButtons) { // removes all the buttons in the list from game
+            game.remove(m);
+        }
+        menuButtons.clear(); // clears the entire list
+    }
+
     @Override
     public void paint(Graphics g) {
         if (!PolygonGame.gamePause) {
-            return; // only check for button clicks if we're on the main menu
+            return; // only paint when on main menu
         }
-
+        // draw the logo
         if (buttonName.equals("")) {
             if (logoImage != null) {
                 g.drawImage(logoImage, 0, 0, getWidth(), getHeight(), null);
             }
             return; // skip everything else
         }
+
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(menuFont);
@@ -145,8 +156,8 @@ public class MainMenu extends GameObject {
         int textHeight = metrics.getAscent();
         int textX = getWidth() / 2 - textWidth / 2;
         int textY = getHeight() / 2 + textHeight / 2 - metrics.getDescent();
-
         g2d.setColor(Color.BLACK);
+        // make the text tilt a little bit when the mouse hovers over it
         if (hovered) {
             AffineTransform old = g2d.getTransform();
             g2d.rotate(hoverAngle, textX + textWidth / 2.0, textY - textHeight / 2.0);
@@ -156,80 +167,61 @@ public class MainMenu extends GameObject {
             hoverAngle = 0;
             g2d.drawString(buttonName, textX, textY);
         }
-
-        if (buttonName.equals("") && logoImage != null) {
-            g.drawImage(logoImage, 0, 0, getWidth(), getHeight(), null);
-        }
-
     }
-
-
 
     public void act() {
         if (!PolygonGame.gamePause) {
-            return; // only check for button clicks if we're on the main menu
+            return; // only check if we're on the main menu
+        }
+        if (buttonName.equals("")) {
+            return; // skip all effects if not a button
         }
         int mouseX = game.getMouseX();
         int mouseY = game.getMouseY();
-        // ensure that clicking works properly
-   
 
-        //glow when hovered over
+        // glow when hovered over
         hovered = contains(mouseX, mouseY);
-
         if (hovered) {
             setColor(Color.RED);
         } else {
             setColor(new Color(220, 20, 60));
         }
-
+        // play sounds when hovering over
         if (hovered && !wasHoveredLastFrame) {
-        	SoundEffects.play("SFX/HOVER.wav",-5.0f);
+            SoundEffects.play("SFX/HOVER.wav", -5.0f);
+            // make text tilt when hovering over
             if (tiltLeft) {
                 hoverAngle = r.nextDouble() * 0.05 + 0.1;
                 tiltLeft = false;
-            } else if (!tiltLeft) {
+            } else {
                 hoverAngle = -(r.nextDouble() * 0.05 + 0.1);
                 tiltLeft = true;
             }
         }
         wasHoveredLastFrame = hovered;
-
+        // when clicked effects
         if (isClickedAndReleased(game, mouseX, mouseY)) {
-        	SoundEffects.play("SFX/CLICK.wav",5.0f);
-
+            // sound effect when clicked
+            SoundEffects.play("SFX/CLICK.wav", 5.0f);
+            // do different effects for different buttons
             if (buttonName.equals("Play")) {
-                for (MainMenu m : menuButtons) { // removes all the buttons in the list from game
-                    game.remove(m);
-                }
-                menuButtons.clear(); // clears the entire list
-                PolygonGame.gamePause = false; // resumes the game
-                //add player and abilities
+                clearMainMenu();
+                // add player and abilities
                 game.spawnGame();
 
             } else if (buttonName.equals("Tutorial")) {
-                for (MainMenu m : menuButtons) { // removes all the buttons in the list from game
-                    game.remove(m);
-                }
-                menuButtons.clear(); // clears the entire list
-                //tutorial setup
+                clearMainMenu();
+                // tutorial setup
                 game.tutorialController.spawnTutorial(game);
 
             } else if (buttonName.equals("Highscores")) {
-
-                for (MainMenu m : menuButtons) { // removes all the buttons in the list from game
-                    game.remove(m);
-                }
-                menuButtons.clear(); // clears the entire list
-                //highscores setup
+                clearMainMenu();
+                // highscores setup
                 game.highscoresController.spawnHighscores(game);
             } else if (buttonName.equals("Exit")) {
                 System.exit(0);
             }
-
         }
-
         repaint();
-
     }
 }
