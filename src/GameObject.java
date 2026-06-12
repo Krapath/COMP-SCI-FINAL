@@ -220,27 +220,7 @@ public abstract class GameObject extends JComponent {
 	//overloaded for random file selection
 	
 	
-	//TODO: FIX HARD CODED RANDOM PLAY SOUND
-	public void playSound(String fileName, float volume, int randomRange) {
-		
-		int randNum = r.nextInt(randomRange)+1;
-		File soundFile = new File("SFX/XP/xp"+randNum+".wav");
 
-		try {
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioStream);
-			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(volume); // Reduce volume by 10 decibels.
-
-
-			clip.start();
-		} catch (Exception e) {
-			System.err.println("Unsupported audio format for file: " + soundFile.getName());
-			e.printStackTrace();
-		} 
-
-	}
     //mohammads methods
     public void setPosition() {
         setX((int) (x + 0.5));

@@ -9,7 +9,6 @@ import java.io.File;
 
 @SuppressWarnings("unused")
 
-// TODO: maybe just use paint
 public class PowerUp extends GameObject {
 
 	Random r = new Random();
@@ -44,7 +43,7 @@ public class PowerUp extends GameObject {
 	String[] buffDescriptions = { "+5 Max Health", // Case 0 (RED / Health)
 			"+1 Movement Speed", // Case 1 (GREEN / Speed)
 			"+1 Attack Speed", // Case 2 (BLUE / Attack Speed)
-			"Unlocks Chain Lightning", // Case 3 (CYAN / Lightning)
+			"Unlocks Ch4444444444444444444ain Lightning", // Case 3 (CYAN / Lightning)
 			"Unlocks Missile strikes", // Case 4 (ORANGE / Missile)
 			"Spawns orbiting Glaives", // Case 5 (MAGENTA / Glaive)
 			"Summons Matchstick", // Case 6 (YELLOW / MatchStick)
@@ -86,7 +85,6 @@ public class PowerUp extends GameObject {
 
 	}
 
-	// TODO: Change buffs to a method
 	public void createBuff(int buffType) {
 		buffArray[buffType]++;
 		switch (buffType) {
@@ -200,25 +198,23 @@ public class PowerUp extends GameObject {
 
 			int buffX = posXBuff - textWidth / 2 + 1;
 			int buffY = posYBuff + textHeight / 2;
-			g.drawString(buff, buffX + 2, buffY + 2);
 			g.drawString(buff, buffX, buffY);
 		}
 
 		// shrink font until text fits within 90% of the powerup width
-		float fontSize = (int) radius / 3f;
+		float fontSize = (float)radius / 3f;
 		Font testFont;
-		FontMetrics descriptionMetrics;
+		FontMetrics descriptionMetrics = null;
 		do {
 			testFont = pixelFont.deriveFont(fontSize);
 			descriptionMetrics = g.getFontMetrics(testFont);
-			descriptionMetrics = g.getFontMetrics(descriptionFont);
 			if (descriptionMetrics.stringWidth(buffDescriptions[buffType]) <= getWidth() * 0.9) {
 				break;
 			}
 			fontSize -= 0.5f;
 		} while (fontSize > 4); // just so it doesnt get too small, at that
 		// point the text is basically unreadable anyway
-		// and thus overflwo would be better
+		// and thus overflow would be better
 
 		descriptionFont = testFont;
 		g.setFont(descriptionFont);
@@ -233,9 +229,6 @@ public class PowerUp extends GameObject {
 				0 + getWidth() / 2 - (descriptionMetrics.stringWidth(buffDescriptions[buffType]) / 2),
 				(int) (posYBuff / 1.3));
 
-		// TODO: could make method but very annoying and only used twice buit
-		// also same for outline
-		// same thing but for the buff stack descriptions
 		float fontSizeStack = (int) radius / 3f;
 		Font testFontStack;
 		FontMetrics descriptionMetricsStack;
@@ -309,11 +302,11 @@ public class PowerUp extends GameObject {
 			SoundEffects("SFX/POWERUP.wav",-20.0f);
 
 			// remove all powerups from the game
-			for (int i = 0; i < game.powerUps.size(); i++) { 
-				game.remove(game.powerUps.get(i));
+			for (int i = 0; i < PolygonGame.powerUps.size(); i++) { 
+				game.remove(PolygonGame.powerUps.get(i));
 			}
 
-			game.powerUps.clear(); // clear the list of powerups
+			PolygonGame.powerUps.clear(); // clear the list of powerups
 			PolygonGame.gamePause = false; // allow the game to continue
 			PolygonGame.choosingBuff = false;
 		}

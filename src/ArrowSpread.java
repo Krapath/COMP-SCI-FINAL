@@ -24,7 +24,7 @@ public class ArrowSpread extends Ability {
 		super(name, duration, cooldown);
 		this.game = game;
 		this.player = player;
-		game.player.abilities.add(this);
+		Player.abilities.add(this);
 	}
 
 	public void act() {
@@ -43,7 +43,7 @@ public class ArrowSpread extends Ability {
 			    double angleInRadians = (i * 2 * Math.PI) / arrowCount;
 				Arrow arrow = new Arrow(game, angleInRadians);
 				game.add(arrow);
-				game.arrows.add(arrow);
+				PolygonGame.arrows.add(arrow);
 			}
 
 		}
@@ -51,7 +51,7 @@ public class ArrowSpread extends Ability {
 
 	public void onDurationEnd() {
 
-		game.arrows.clear();
+		PolygonGame.arrows.clear();
 	}
 
 }

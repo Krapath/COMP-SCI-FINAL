@@ -23,7 +23,6 @@ public class Enemy extends GameObject {
 
     static int healthMultiplier;
 
-    //TODO: enemies exist for one extra frame which can cause problems
     public Enemy(PolygonGame game, int type, int spawn, int seed) {
         this.type = type;
         this.spawnType = spawn;
@@ -80,7 +79,7 @@ public class Enemy extends GameObject {
                         displayOld = 0;
                         game.projectile = new Projectile(game, this.x, this.y);
                         game.add(game.projectile);
-                        game.projectiles.add(game.projectile);
+                        PolygonGame.projectiles.add(game.projectile);
                     }
                 }
 
@@ -95,7 +94,7 @@ public class Enemy extends GameObject {
                     if (r.nextInt(300) < 5) {
                         game.enemy = new Enemy(game, 4, 2, game.enemySpawnSeed, this.x, this.y);
                         game.add(game.enemy);
-                        game.enemies.add(game.enemy);
+                        PolygonGame.enemies.add(game.enemy);
                     }
                 }
 
@@ -110,7 +109,7 @@ public class Enemy extends GameObject {
 
                 if (appearedOnGame && (x < 0 || x > game.getFieldWidth() || y < 0 || y > game.getFieldHeight())) {
                     game.remove(this); // Remove enemy if health is depleted
-                    game.enemies.remove(this); // Remove enemy from the list
+                    PolygonGame.enemies.remove(this); // Remove enemy from the list
                 }
                 break;
         }
@@ -120,14 +119,14 @@ public class Enemy extends GameObject {
     }
 
     public void avoidCollision() {
-        for (int i = 0; i < game.enemies.size(); i++) {
-            Enemy other = game.enemies.get(i);
+        for (int i = 0; i < PolygonGame.enemies.size(); i++) {
+            Enemy other = PolygonGame.enemies.get(i);
 
             //&& (other.type == 4 && this.type == 4) || (other.type != 4 && this.type != 4)
             if (collides(other) && other != this ) { //if touching another enemy, moves this enemy away from the other one.
                 //setColor(Color.RED);
-                double enemyX = game.enemies.get(i).x;
-                double enemyY = game.enemies.get(i).y;
+                double enemyX = PolygonGame.enemies.get(i).x;
+                double enemyY = PolygonGame.enemies.get(i).y;
                 double enemyAngle = Math.atan2(enemyY - y, enemyX - x);
 
                 x -= (Math.cos(enemyAngle) * 10.0);
@@ -158,8 +157,8 @@ public class Enemy extends GameObject {
                         y = r.nextInt(game.getWindowHeight() - size);
                     }
                     //this code does not work with enemies of different sizes. Fix if variable enemy sizes.
-                    for (int i = 0; i < game.enemies.size(); i++) { //ensures enemies dont spawn directly on top of each other
-                        Enemy other = game.enemies.get(i);
+                    for (int i = 0; i < PolygonGame.enemies.size(); i++) { //ensures enemies dont spawn directly on top of each other
+                        Enemy other = PolygonGame.enemies.get(i);
                         if (other != this && other.getY() > y + size && other.getY() < y && other.getX() > x + size && other.getX() < x) {
                             collided = true;
                         }

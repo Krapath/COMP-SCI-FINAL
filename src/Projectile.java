@@ -55,7 +55,7 @@ public class Projectile extends Weapon {
         setSize(15, 15); // size of the projectile
         setColor(Color.RED);
 
-        angle = getRealAngle(game.player.x + (double) Player.size / 2, game.player.y + (double) game.player.size / 2);
+        angle = getRealAngle(game.player.x + (double) Player.size / 2, game.player.y + (double)Player.size / 2);
         speed = 40.0; // adjust as needed
 
     }
@@ -83,7 +83,7 @@ public class Projectile extends Weapon {
 
             if (pierceCount == 0) {
                 game.remove(this);             // Remove projectile after it hits an enemy
-                game.projectiles.remove(this); // Remove projectile from the list
+                PolygonGame.projectiles.remove(this); // Remove projectile from the list
                 // Exit loop after collision
             }
             // move the projectile according to its velocity
@@ -93,11 +93,11 @@ public class Projectile extends Weapon {
             if (collides(game.player)) {
                 Player.health -= 1;
                 game.remove(this);
-                game.projectiles.remove(this);
+                PolygonGame.projectiles.remove(this);
             }
             if (x < 0 || x > game.getFieldWidth() || y < 0 || y > game.getFieldHeight()) {
                 game.remove(this); // Remove enemy if health is depleted
-                game.projectiles.remove(this);
+                PolygonGame.projectiles.remove(this);
             }
         }
 
@@ -106,30 +106,28 @@ public class Projectile extends Weapon {
     public boolean damage(GameObject attacker, ArrayList<Enemy> hitEnemies, int pierceCount, int damage) {
 
         boolean hit = false;
-        for (int i = 0; i < game.enemies.size(); i++) {
-            if (attacker.collides(game.enemies.get(i))) {
+        for (int i = 0; i < PolygonGame.enemies.size(); i++) {
+            if (attacker.collides(PolygonGame.enemies.get(i))) {
                 boolean alreadyHit = false;
 
                 // Check if enemy was already hit, if so, don't hit again
                 for (int j = 0; j < hitEnemies.size(); j++) {
-                    if (game.enemies.get(i) == hitEnemies.get(j)) {
+                    if (PolygonGame.enemies.get(i) == hitEnemies.get(j)) {
                         alreadyHit = true;
                     }
                 }
 
                 if (!alreadyHit) {
-                    hitEnemies.add(game.enemies.get(i)); // Count as hit from now on
+                    hitEnemies.add(PolygonGame.enemies.get(i)); // Count as hit from now on
                     hit = true;
-                    game.enemies.get(i).health -= damage; // Reduce enemy health on collision
+                    PolygonGame.enemies.get(i).health -= damage; // Reduce enemy health on collision
 
-                    game.enemies.get(i).damaged = true;
+                    PolygonGame.enemies.get(i).damaged = true;
 
-                    int enemyX = game.enemies.get(i).getX();
-                    int enemyY = game.enemies.get(i).getY();
 
                     // If chain lightning is active and this is the first enemy hit, activate it
                     if (Player.chainLightningActive && pierceCount == 2) {
-                        game.lightning = new ChainLightning(game.enemies.get(i), game);
+                        game.lightning = new ChainLightning(PolygonGame.enemies.get(i), game);
                         game.add(game.lightning);
                     }
 

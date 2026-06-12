@@ -17,24 +17,24 @@ public class MatchStick extends Weapon {
     double shootSpeed = 20;
     int pierceTimer = 0;
     
-    int rotationTimer = 30 + r.nextInt(30); // how long the arrow rotates around the player before flying off,
-                                              // randomize a bit so not every arrow is the same
+    int rotationTimer = 30 + r.nextInt(30); // how long the match rotates around the player before flying off,
+                                              // randomize a bit so not every match is the same
     int aimingTimer = 30;
     double aimOffsetX;
     double aimOffsetY;
     double arrowCX;
-    double arrowCY; // actual center of arrow in screen space
-    Enemy closestTarget; // the enemy the arrow is currently aiming at, will be null if not aiming at
+    double arrowCY; // actual center of match in screen space
+    Enemy closestTarget; // the enemy the match is currently aiming at, will be null if not aiming at
                          // anything
 
-    double targetAngle; // the angle the arrow will fly towards once it stops aiming, calculated when
-                        // the arrow finishes rotating around the player
+    double targetAngle; // the angle the match will fly towards once it stops aiming, calculated when
+                        // the match finishes rotating around the player
 
-    boolean returning = false; // whether the arrow is flying back to the player after going off screen, if it
+    boolean returning = false; // whether the match is flying back to the player after going off screen, if it
                                // goes off screen it will return to the player instead of disappearing so the
                                // player can reuse it if they miss, this also gives it a cool boomerang effect
 
-    double spriteAngle=0; // angle at which the arrow tip is pointing
+    double spriteAngle=0; // angle at which the match tip is pointing
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
     // arrow dimensions
     int shaftWidth;
@@ -48,7 +48,7 @@ public class MatchStick extends Weapon {
         setColor(Color.YELLOW);
         arrowCX = game.player.getX() + 100;
         arrowCY = game.player.getY() + 100;
-        game.player.weapons.add(this);
+        Player.weapons.add(this);
         shaftWidth = (game.getWindowHeight()+game.getWindowWidth())/300;
         shaftHeight = (game.getWindowHeight()+game.getWindowWidth())/50;
         tipWidth = (game.getWindowHeight()+game.getWindowWidth())/200;
@@ -56,7 +56,6 @@ public class MatchStick extends Weapon {
 
     }
 
-    //TODO: maybe forget tip and do single rectangle for everything
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
@@ -132,7 +131,7 @@ public class MatchStick extends Weapon {
                 // find closest target 
                 closestTarget = null;
                 double closestDist = Double.MAX_VALUE;
-                for (Enemy e : game.enemies) {
+                for (Enemy e : PolygonGame.enemies) {
                     double dist = Math.sqrt(Math.pow(e.getX() - arrowCX, 2) + Math.pow(e.getY() - arrowCY, 2));
                     if (dist < closestDist) {
                         closestDist = dist;
@@ -148,14 +147,14 @@ public class MatchStick extends Weapon {
             arrowCY = game.player.getY() + aimOffsetY;
 
             // if target does not exist, invalidate it
-            if(closestTarget != null && !game.enemies.contains(closestTarget)){
+            if(closestTarget != null && !PolygonGame.enemies.contains(closestTarget)){
                 closestTarget = null;
             }
 
             // get a new target
             if (closestTarget == null) {
                 double closestDist = Double.MAX_VALUE;
-                for (Enemy e : game.enemies) {
+                for (Enemy e : PolygonGame.enemies) {
                     double dx= e.getX()-arrowCX;
                     double dy= e.getY()-arrowCY;
                     double dist = dx*dx+dy*dy; // takes square value, since not actually using the actual distance, just comparing values 
@@ -219,32 +218,32 @@ public class MatchStick extends Weapon {
         // hitbox using rotating rectangle
         boolean canHit = (aimingTimer == 0 && rotationTimer == 0); // can only hit while shooting or returning
 
-        for (int i = 0; i < game.enemies.size(); i++) {
+        for (int i = 0; i < PolygonGame.enemies.size(); i++) {
 
-            if (canHit && arrowHits(game.enemies.get(i))) {
+            if (canHit && arrowHits(PolygonGame.enemies.get(i))) {
                 boolean hit = false;
 
                 for (int j = 0; j < hitEnemies.size(); j++) {
-                    if (game.enemies.get(i) == hitEnemies.get(j)) {
+                    if (PolygonGame.enemies.get(i) == hitEnemies.get(j)) {
                         hit = true;
                     }
                 }
 
                 if (!hit) { // if this enemy has not already been hit by this arrow
-                    hitEnemies.add(game.enemies.get(i));
-                    game.enemies.get(i).health -= damage;
-                    game.enemies.get(i).damaged=true;
+                    hitEnemies.add(PolygonGame.enemies.get(i));
+                    PolygonGame.enemies.get(i).health -= damage;
+                    PolygonGame.enemies.get(i).damaged=true;
 
-                    int enemyX = game.enemies.get(i).getX();
-                    int enemyY = game.enemies.get(i).getY();
+                    int enemyX = PolygonGame.enemies.get(i).getX();
+                    int enemyY = PolygonGame.enemies.get(i).getY();
 
-                    if (game.enemies.get(i).health <= 0) {
+                    if (PolygonGame.enemies.get(i).health <= 0) {
                         XpOrb xp = new XpOrb(enemyX, enemyY, game);
                         game.add(xp);
-                        game.xpOrbs.add(xp);
-                        hitEnemies.remove(game.enemies.get(i));
-                        game.remove(game.enemies.get(i));
-                        game.enemies.remove(i);
+                        PolygonGame.xpOrbs.add(xp);
+                        hitEnemies.remove(PolygonGame.enemies.get(i));
+                        game.remove(PolygonGame.enemies.get(i));
+                        PolygonGame.enemies.remove(i);
                     }
                 }
             }

@@ -92,7 +92,7 @@ public class DeathScreen extends GameObject {
         ReturnToMainMenu.setColor(new Color(15, 82, 186));
         game.add(ReturnToMainMenu);
         deathScreenButtons.add(ReturnToMainMenu);
-    	SoundEffects.play("SFX/GAME_OVER.wav",1.0f);
+    	SoundEffects.play("SFX/GAME_OVER.wav",-8.0f);
     }
 
     // clears everything and sets the game to how it would start
@@ -104,13 +104,13 @@ public class DeathScreen extends GameObject {
         }
         PolygonGame.enemies.clear();
 
-        for (Weapon w : game.player.weapons) {
+        for (Weapon w : Player.weapons) {
             game.remove(w);
         }
 
-        game.player.weapons.clear();
+        Player.weapons.clear();
 
-        game.player.abilities.clear();
+        Player.abilities.clear();
         
   
         PowerUp.buffArray = new int[PowerUp.numBuffs]; // reset the buff array to all 0s

@@ -66,7 +66,6 @@ public class DisplayGUI extends GameObject {
 
     }
 
-    // TODO: make the level and the health bar thing a method probably
     public void act() {
         // reposition every tick so text stays in corner
         double healthAngle = Math.PI / 2;
@@ -135,7 +134,7 @@ public class DisplayGUI extends GameObject {
         }
 
         // display the number of enemies and hp
-        g.drawString("ENEMIES: " + game.enemies.size(), 10, 80);
+        g.drawString("ENEMIES: " + PolygonGame.enemies.size(), 10, 80);
         g.drawString("HP: " + Player.health, 10, 100);
 
         // display the players current score

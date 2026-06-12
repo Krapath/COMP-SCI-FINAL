@@ -38,7 +38,6 @@ public class ChainLightning extends Weapon {
     
     // unlike tranditional weapons that actively run, chain lightnings logic runs purely in the constructor
     // as such, act is simply purely visual
-    // TODO: consider changing to ability type
     public ChainLightning(Enemy enemy, PolygonGame game) {
         super(game, "Cast", "Chain Lightning");
         this.game = game;
@@ -53,11 +52,11 @@ public class ChainLightning extends Weapon {
             Enemy target = null;
             double closestDistance = Double.MAX_VALUE;
 
-            for (int j = 0; j < game.enemies.size(); j++) {
-                Enemy potentialTarget = game.enemies.get(j);
+            for (int j = 0; j < PolygonGame.enemies.size(); j++) {
+                Enemy potentialTarget = PolygonGame.enemies.get(j);
                 
                 if (!hitEnemies.contains(potentialTarget)) { // find the closest enemy that has not already been hit and is within range
-                    double distance = Math.sqrt(Math.pow(game.enemies.get(j).getX() - initialTarget.getX(), 2) + Math.pow(game.enemies.get(j).getY() - initialTarget.getY(), 2));
+                    double distance = Math.sqrt(Math.pow(PolygonGame.enemies.get(j).getX() - initialTarget.getX(), 2) + Math.pow(PolygonGame.enemies.get(j).getY() - initialTarget.getY(), 2));
                     if (distance < closestDistance && distance <= chainRange) {
                         closestDistance = distance;
                         target = potentialTarget;
@@ -66,7 +65,7 @@ public class ChainLightning extends Weapon {
             }
            if (target != null) {
             target.health -= damage; 
-            target.damagedColor = Color.CYAN;
+            Enemy.damagedColor = Color.CYAN;
             target.damaged = true;
 
             
@@ -77,7 +76,7 @@ public class ChainLightning extends Weapon {
             break; // no more valid targets, end the chain early
             }
         }
-        game.player.weapons.add(this);
+        Player.weapons.add(this);
 
     } 
     

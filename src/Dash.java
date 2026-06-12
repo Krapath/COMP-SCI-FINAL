@@ -15,12 +15,11 @@ public class Dash extends Ability{
 	static int duration=5;
 	static int cooldown=60;
 
-	//TODO: decide whether it will be base ability or unlockable
 	public Dash(PolygonGame game, Player player) {
 		super(name,duration,cooldown);
 		this.game=game;
 		this.player=player;
-		game.player.abilities.add(this);
+		Player.abilities.add(this);
 	}
 	
 	public void act(){

@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 import java.awt.geom.AffineTransform;
 
 
-@SuppressWarnings("unused")
 
 public class AtGMissileMk1 extends Weapon {
     Random r = new Random();
@@ -46,18 +45,16 @@ public class AtGMissileMk1 extends Weapon {
         setLocation(pivotX, pivotY);
         spriteSize = size * 4;  
         setSize(spriteSize, spriteSize);
-        if (game.enemies.size() > 0) {
-            randomEnemy = r.nextInt(game.enemies.size());
-            target = game.enemies.get(randomEnemy);
+        if (PolygonGame.enemies.size() > 0) {
+            randomEnemy = r.nextInt(PolygonGame.enemies.size());
+            target = PolygonGame.enemies.get(randomEnemy);
         }
         missileImage = new ImageIcon("Images/Sprites/Missile.png").getImage();
 
-        game.player.weapons.add(this);
+        Player.weapons.add(this);
     }
 
 
-    //TODO: NEED TO FIX HITBOX CONFLICT WITH SPRITE
-    // CURRENTLY HITBOX IS MUCH LARGER BECAUSE
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
@@ -92,7 +89,7 @@ public class AtGMissileMk1 extends Weapon {
                     // a buff
 
         
-        if (target != null && game.enemies.contains(target) && canDamage) {
+        if (target != null && PolygonGame.enemies.contains(target) && canDamage) {
 
             //spiral phase
             if (spiralDuration > 0) { // spiral around the player for a short duration after being fired
@@ -121,7 +118,7 @@ public class AtGMissileMk1 extends Weapon {
                                                                             // target
                 int x = getX();
                 int y = getY();
-                if (game.enemies.contains(target)) {// if the target enemy was destroyed before the missile could
+                if (PolygonGame.enemies.contains(target)) {// if the target enemy was destroyed before the missile could
                                                          // reach it, choose a new target if there are any enemies left
      
                     int enemyX = target.getX();
@@ -149,9 +146,9 @@ public class AtGMissileMk1 extends Weapon {
             }
         // if the enemy was damaged before the arrow shoots, will find a new target
         } else if (canDamage) {
-            if (game.enemies.size() > 0) {
-                randomEnemy = r.nextInt(game.enemies.size());
-                target = game.enemies.get(randomEnemy);
+            if (PolygonGame.enemies.size() > 0) {
+                randomEnemy = r.nextInt(PolygonGame.enemies.size());
+                target = PolygonGame.enemies.get(randomEnemy);
             } else { // continue spiraling if no enemy
                 target = null;
                 int x = (int) (radius * Math.cos(spiralAngle) + pivotX);

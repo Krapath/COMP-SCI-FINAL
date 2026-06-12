@@ -105,17 +105,17 @@ public class Player extends GameObject {
         setX((int) x);
         setY((int) y);
 
-        for (int i = 0; i < game.enemies.size(); i++) {
-            if (collides(game.enemies.get(i))) {
+        for (int i = 0; i < PolygonGame.enemies.size(); i++) {
+            if (collides(PolygonGame.enemies.get(i))) {
 
                 if (!invulnerable) {
-                    Player.health -= game.enemies.get(i).enemyDamage; // reduce enemy health on collision
+                    Player.health -= PolygonGame.enemies.get(i).enemyDamage; // reduce enemy health on collision
                     SoundEffects("SFX/DAMAGED.wav",-3.0f);
-                    game.enemies.get(i).health -= 1;
+                    PolygonGame.enemies.get(i).health -= 1;
 
-                    if (game.enemies.get(i).health <= 0) {
-                        game.remove(game.enemies.get(i)); // remove enemy if health is depleted
-                        game.enemies.remove(i);
+                    if (PolygonGame.enemies.get(i).health <= 0) {
+                        game.remove(PolygonGame.enemies.get(i)); // remove enemy if health is depleted
+                        PolygonGame.enemies.remove(i);
                     }
                     invulnerable = true;
                     break; // exit loop after collision

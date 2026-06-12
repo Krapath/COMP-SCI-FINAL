@@ -28,20 +28,19 @@ public class Glaive extends Weapon {
     public int rotationTimer = 0;
     static Image glaiveImage;
 
-    //TODO: right now pierce system is disabled and will hit enemies more than once
-    ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); // TODO: maybe make universal for other buffs
+    ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); 
 
     public Glaive(PolygonGame game, double startingAngle) {
         super(game, "Passive", "Glaive");
         this.game = game;
         angle = startingAngle;
         this.startingAngle = startingAngle;
-        x = (radius * Math.cos(angle) + game.player.x) - size / 2 + game.player.size / 2;
-        y = (radius * Math.sin(angle) + game.player.y) - size / 2 + game.player.size / 2;
+        x = (radius * Math.cos(angle) + game.player.x) - size / 2 + Player.size / 2;
+        y = (radius * Math.sin(angle) + game.player.y) - size / 2 + Player.size / 2;
         setLocation((int) x, (int) y); // update position
         setSize(size, size); // size of the projectile
         setColor(Color.RED);
-        game.player.weapons.add(this);
+        Player.weapons.add(this);
         glaiveImage = new ImageIcon("Images/Sprites/GLAIVE_SPRITE.png").getImage();
 
     }
@@ -72,40 +71,40 @@ public class Glaive extends Weapon {
             game.createGlaive(game.numberOfGlaives);
         }
         //scales the speed of the glaive based on the player
-        x = (radius * Math.cos(-angle) + game.player.x) - size / 2 + game.player.size / 2;
-        y = (radius * Math.sin(-angle) + game.player.y) - size / 2 + game.player.size / 2;
+        x = (radius * Math.cos(-angle) + game.player.x) - size / 2 + Player.size / 2;
+        y = (radius * Math.sin(-angle) + game.player.y) - size / 2 + Player.size / 2;
         setPosition();
 
-        for (int i = 0; i < game.enemies.size(); i++) {
-            if (collides(game.enemies.get(i))) {
+        for (int i = 0; i < PolygonGame.enemies.size(); i++) {
+            if (collides(PolygonGame.enemies.get(i))) {
                 boolean hit = false;
 
                 for (int j = 0; j < hitEnemies.size(); j++) { //if enemy already hit, dont hit again.
-                    if (game.enemies.get(i) == hitEnemies.get(j)) {
+                    if (PolygonGame.enemies.get(i) == hitEnemies.get(j)) {
                         hit = true;
                     }
                 }
 
                 if (!hit) { //if not hit
-                    hitEnemies.add(game.enemies.get(i)); //count as hit from now on
-                    game.enemies.get(i).health -= damage; // reduce enemy health on collision
-                    game.enemies.get(i).damaged=true;
+                    hitEnemies.add(PolygonGame.enemies.get(i)); //count as hit from now on
+                    PolygonGame.enemies.get(i).health -= damage; // reduce enemy health on collision
+                    PolygonGame.enemies.get(i).damaged=true;
 
-                    int enemyX = game.enemies.get(i).getX();
-                    int enemyY = game.enemies.get(i).getY();
+                    int enemyX = PolygonGame.enemies.get(i).getX();
+                    int enemyY = PolygonGame.enemies.get(i).getY();
 
-                    if (game.enemies.get(i).health <= 0) {
+                    if (PolygonGame.enemies.get(i).health <= 0) {
 
                         XpOrb xp = new XpOrb(enemyX, enemyY, game); // create an xp orb at the location of the defeated enemy
                         game.add(xp);// add the xp orb to the game
-                        game.xpOrbs.add(xp); // add the xp orb to the list
+                        PolygonGame.xpOrbs.add(xp); // add the xp orb to the list
 
                         //if (hitEnemies.contains(game.enemies.get(i))) {
-                        hitEnemies.remove(game.enemies.get(i));
+                        hitEnemies.remove(PolygonGame.enemies.get(i));
                         // }
 
-                        game.remove(game.enemies.get(i)); // remove enemy if health is depleted
-                        game.enemies.remove(i); // remove enemy from the list
+                        game.remove(PolygonGame.enemies.get(i)); // remove enemy if health is depleted
+                        PolygonGame.enemies.remove(i); // remove enemy from the list
 
                     }
                 }

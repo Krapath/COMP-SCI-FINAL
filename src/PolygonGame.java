@@ -27,7 +27,6 @@ public class PolygonGame extends Game {
     DeathScreen deathScreenController;
     GameBackground background;
     MatchStick matchStick;
-    //TODO: fix Blink blink;
     static boolean gamePause = true;
     static boolean choosingBuff = false;
     static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -39,7 +38,7 @@ public class PolygonGame extends Game {
     public int numberOfGlaives;
     int killCounter;
 
-    HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); //TODO: Change the enemies that have been hit and the timer
+    HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); 
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
     public int spawnedEnemies = 0;
@@ -74,8 +73,7 @@ public class PolygonGame extends Game {
         player = new Player(this);
         add(player);
 
-        ArrowSpread arrowSpread = new ArrowSpread(this, player);
-        // creates debugger
+        // creates /GUI
         debug = new DisplayGUI(this);
         add(debug);
 
