@@ -13,7 +13,8 @@ public class Arrow extends Weapon {
 	public double targetAngle;
 	public double speed;
 	public int pierce = 1;
-
+    private static final int DEFAULT_ARROW_DAMAGE = 1;
+    static int damage = DEFAULT_ARROW_DAMAGE;
 	double arrowCX;
 	double arrowCY;
 

@@ -22,19 +22,23 @@ public class Player extends GameObject {
     static int score = 0;
     static int xp = 0;
     static int level = 1;
-    static boolean chainLightningActive = false; // static so all projectiles have property
-    static boolean atgMissileActive = false; // static so all projectiles have property
-    static boolean glaiveActive = false; // does not really do much right now
-    static boolean matchStickActive = false; // does not really do much right now
+    
+    // boolea ncheck for specific buffs
+    static boolean chainLightningActive = false; 
+    static boolean atgMissileActive = false; 
+    static boolean glaiveActive = false; 
+    static boolean matchStickActive = false; 
     static boolean dashActive = false;
     static boolean arrowSpreadActive = false;
+    
     static double xpReq = 2 * level * Math.log(level + 1);
-    //0; // debug
+    
     static boolean invulnerable = false;
     static int invulnerableDuration = 30;
     static int invulnerableTimer = 0;
     PolygonGame game;
 
+    // store all weapons and abilities
     static ArrayList<Ability> abilities = new ArrayList<Ability>();
     static ArrayList<Weapon> weapons = new ArrayList<Weapon>();
 
@@ -106,16 +110,17 @@ public class Player extends GameObject {
         setY((int) y);
 
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
-            if (collides(PolygonGame.enemies.get(i))) {
+        	Enemy target = PolygonGame.enemies.get(i);
+            if (collides(target)) {
 
                 if (!invulnerable) {
-                    Player.health -= PolygonGame.enemies.get(i).enemyDamage; // reduce enemy health on collision
+                    Player.health -= target.enemyDamage; // reduce enemy health on collision
                     SoundEffects("SFX/DAMAGED.wav",-3.0f);
-                    PolygonGame.enemies.get(i).health -= 1;
+                    target.health -= 1;
 
-                    if (PolygonGame.enemies.get(i).health <= 0) {
-                        game.remove(PolygonGame.enemies.get(i)); // remove enemy if health is depleted
-                        PolygonGame.enemies.remove(i);
+                    if (target.health <= 0) {
+                        game.remove(target); // remove enemy if health is depleted
+                        PolygonGame.enemies.remove(target);
                     }
                     invulnerable = true;
                     break; // exit loop after collision

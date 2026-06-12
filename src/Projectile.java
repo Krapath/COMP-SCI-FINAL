@@ -48,10 +48,8 @@ public class Projectile extends Weapon {
 
     /**
      * create an unfriendly projectile spawned at given coordinates.
-     *
-     * @param game the game instance
-     * @param givenX initial x coordinate
-     * @param givenY initial y coordinate
+     * givenX initial x coordinate
+     * givenY initial y coordinate
      */
     public Projectile(PolygonGame game, double givenX, double givenY) {
         super(game, "Cast", "Projectile");
@@ -69,10 +67,8 @@ public class Projectile extends Weapon {
         Player.weapons.add(this);
 
     }
+   
 
-    /**
-     * update movement, collisions, and removal for the projectile each frame.
-     */
     public void act() {
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing
@@ -129,27 +125,28 @@ public class Projectile extends Weapon {
 
         boolean hit = false;
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
-            if (attacker.collides(PolygonGame.enemies.get(i))) {
+        	Enemy target = PolygonGame.enemies.get(i);
+            if (attacker.collides(target)) {
                 boolean alreadyHit = false;
 
                 // Check if enemy was already hit, if so, don't hit again
                 for (int j = 0; j < hitEnemies.size(); j++) {
-                    if (PolygonGame.enemies.get(i) == hitEnemies.get(j)) {
+                    if (target == hitEnemies.get(j)) {
                         alreadyHit = true;
                     }
                 }
 
                 if (!alreadyHit) {
-                    hitEnemies.add(PolygonGame.enemies.get(i)); // Count as hit from now on
+                    hitEnemies.add(target); // Count as hit from now on
                     hit = true;
-                    PolygonGame.enemies.get(i).health -= damage; // Reduce enemy health on collision
-                    PolygonGame.enemies.get(i).knockBack(10.0, game.player);
+                    target.health -= damage; // Reduce enemy health on collision
+                    target.knockBack(10.0, game.player);
 
-                    PolygonGame.enemies.get(i).damaged = true;
+                    target.damaged = true;
 
                     // If chain lightning is active and this is the first enemy hit, activate it
                     if (Player.chainLightningActive && pierceCount == 2) {
-                        game.lightning = new ChainLightning(PolygonGame.enemies.get(i), game);
+                        game.lightning = new ChainLightning(target, game);
                         game.add(game.lightning);
                     }
 

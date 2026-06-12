@@ -59,8 +59,8 @@ public class PowerUp extends GameObject {
 			"+1 Chain, +1 Damage [Per Stack]", 
 			"+2 Missile Damage [Per Stack]",
 			"+1 Glaives, +1 Damage [Per Stack]", 
-			"+1 Attack Speed, +1 Damage [Per Stack]", 
-			" TBD [Per Stack]",
+			"-20% Cooldown, +1 Damage [Per Stack]", 
+			"-20% Cooldown [Per Stack]",
 			"+1 Arrow, +1 Damage [Per Stack]" };
 
 	public PowerUp(int x, int y, PolygonGame game) {
@@ -151,8 +151,7 @@ public class PowerUp extends GameObject {
 				game.matchStick = new MatchStick(game);
 				game.add(game.matchStick);
 			} else {
-				MatchStick.damage++;
-				MatchStick.aimingTimer=(int)(MatchStick.aimingTimer*0.8);
+				MatchStick.damage+=2;
 				MatchStick.aimingTimer=(int)(MatchStick.aimingTimer*0.8);
 
 			}
@@ -162,6 +161,8 @@ public class PowerUp extends GameObject {
 			if (!Player.dashActive) {
 				Player.dashActive = true;
 				Dash dash = new Dash(game, game.player);
+			} else {
+				Dash.cooldown=(int)(Dash.cooldown*0.8);
 			}
 			break;
 

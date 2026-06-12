@@ -14,7 +14,7 @@ public class MatchStick extends Weapon {
     Random r = new Random();
     int size = 50;
     PolygonGame game;
-    private static final int DEFAULT_MATCHSTICK_DAMAGE = 1;
+    private static final int DEFAULT_MATCHSTICK_DAMAGE = 3;
     static int damage = DEFAULT_MATCHSTICK_DAMAGE;
     int pierceCooldown = 60;
     Double angle = 0.20;
@@ -24,7 +24,7 @@ public class MatchStick extends Weapon {
     int pierceTimer = 0;
     static int aimingTimer = 30;
 
-    public int rotationTimer = 30 + r.nextInt(aimingTimer); // how long the match rotates around the player before flying off,
+    public int rotationTimer = aimingTimer + r.nextInt(aimingTimer); // how long the match rotates around the player before flying off,
     // randomize a bit so not every match is the same
     double aimOffsetX;
     double aimOffsetY;
@@ -48,9 +48,7 @@ public class MatchStick extends Weapon {
     int tipWidth;
     int tipHeight;
 
-    /**
-     * create a new matchstick weapon.
-     */
+    
     public MatchStick(PolygonGame game) {
         super(game, "Passive", "MatchStick");
         this.game = game;
@@ -67,7 +65,7 @@ public class MatchStick extends Weapon {
     }
 
     /**
-     * paint: draw the matchstick with shaft and tip using transforms.
+     * draw the matchstick with shaft and tip using transforms.
      */
     public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -122,9 +120,7 @@ public class MatchStick extends Weapon {
                 && rotY <= (shaftHeight / 2.0 + enemyRadius);
     }
 
-    /**
-     * act: update aiming, movement, returning behavior, and collision handling.
-     */
+
     public void act() {
         if (PolygonGame.gamePause) {
             return;
@@ -265,7 +261,7 @@ public class MatchStick extends Weapon {
             // the same enemy again
 
         }
-        if (pierceTimer == pierceCooldown) {
+        if (pierceTimer == pierceCooldown) { // resets pierce cooldown and allows enemy to be hit by same object again
             pierceTimer = 0;
             hitEnemies.clear();
         } else {
