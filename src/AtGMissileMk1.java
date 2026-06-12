@@ -23,7 +23,8 @@ public class AtGMissileMk1 extends Weapon {
 	double velY;
 	int pivotX;
 	int pivotY;
-	int spiralDuration = r.nextInt(30) + 30; // duration of initial spiral movement with random duration
+	int spiralDuration = r.nextInt(30) + 30; // duration of initial spiral
+												// movement with random duration
 	int randDirectionDuration = 15; // random direction movement
 	int explosionDuration = 17;
 	int speedReduction = 2;
@@ -43,7 +44,9 @@ public class AtGMissileMk1 extends Weapon {
 	public AtGMissileMk1(PolygonGame game) {
 		super(game, "Cast", "AtGMissileMk1");
 		this.game = game;
-		size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // scaling projectile size
+		size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // scaling
+																		// projectile
+																		// size
 		radius = size; // the radius of the spiral
 		setColor(new Color(255, 165, 0, 15 * explosionDuration));
 		pivotX = game.player.getX() - size / 2;
@@ -87,8 +90,9 @@ public class AtGMissileMk1 extends Weapon {
 
 	public void act() {
 
-		// derived from the visual rotation from velocity so it always faces the direction it is moving
-		// this way it actively tracks the target 
+		// derived from the visual rotation from velocity so it always faces the
+		// direction it is moving
+		// this way it actively tracks the target
 		spriteAngle = Math.atan2(velY, velX);
 
 		if (PolygonGame.gamePause)
@@ -122,11 +126,13 @@ public class AtGMissileMk1 extends Weapon {
 				setX(getX() + (int) velX);
 				setY(getY() + (int) velY);
 				// attacking phase
-				// after spiraling and moving in a random direction, move towards the random enemy target
-			} else if (randDirectionDuration <= 0 && spiralDuration <= 0) { // 
+				// after spiraling and moving in a random direction, move
+				// towards the random enemy target
+			} else if (randDirectionDuration <= 0 && spiralDuration <= 0) { //
 				int x = getX();
 				int y = getY();
-				//if the target enemy was destroyed before the missile could reach it, choose a new target if there are any enemies left
+				// if the target enemy was destroyed before the missile could
+				// reach it, choose a new target if there are any enemies left
 				if (PolygonGame.enemies.contains(target)) {
 
 					int enemyX = target.getX();
@@ -137,12 +143,8 @@ public class AtGMissileMk1 extends Weapon {
 					velY = speed * Math.sin(targetAngle);
 					setX(getX() + (int) velX);
 					setY(getY() + (int) velY);
-
-					if (collides(target) && canDamage) { // if collides with
-															// target, damage
-															// the target and
-															// remove the
-															// projectile
+					// if collides with target, damage the target and change sprite
+					if (collides(target) && canDamage) { 
 						target.health -= damage;
 						setSize((int) (size * 3.5), (int) (size * 3.5));
 
@@ -157,8 +159,7 @@ public class AtGMissileMk1 extends Weapon {
 				}
 
 			}
-			// if the enemy was damaged before the arrow shoots, will find a new
-			// target
+			// if the enemy was damaged before the arrow shoots, will find a new target
 		} else if (canDamage) {
 			if (PolygonGame.enemies.size() > 0) {
 				randomEnemy = r.nextInt(PolygonGame.enemies.size());
@@ -173,6 +174,7 @@ public class AtGMissileMk1 extends Weapon {
 				radius += 1;
 			}
 
+		// remove the object after it fades out
 		} else if (!canDamage) {
 			explosionDuration--;
 			setColor(new Color(255, 215, 0, 15 * explosionDuration));
