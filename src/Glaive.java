@@ -45,18 +45,18 @@ public class Glaive extends Weapon {
         glaiveImage = new ImageIcon("Images/Sprites/GLAIVE_SPRITE.png").getImage();
 
     }
-    
-    public void paint(Graphics g){
+
+    public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
         g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
         g2d.rotate(spriteAngle);
         g2d.translate(-getWidth() / 2.0, -getHeight() / 2.0);
-        
+
         // REMEMBER CHANGE THE GLAIVES SIZE
         if (glaiveImage != null) {
-            g2d.drawImage(glaiveImage,0 ,0,(int)(size/0.85),(int)(size/0.85), null);
-        } 
+            g2d.drawImage(glaiveImage, 0, 0, (int) (size / 0.85), (int) (size / 0.85), null);
+        }
         g2d.setTransform(old);
 
     }
@@ -65,8 +65,8 @@ public class Glaive extends Weapon {
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
-        
-        spriteAngle-=1;
+
+        spriteAngle -= 1;
         if (rotationTimer == framesPerRotation) {
             rotationTimer = 0;
             game.createGlaive(game.numberOfGlaives);
@@ -89,21 +89,11 @@ public class Glaive extends Weapon {
                 if (!hit) { //if not hit
                     hitEnemies.add(game.enemies.get(i)); //count as hit from now on
                     game.enemies.get(i).health -= damage; // reduce enemy health on collision
-                    game.enemies.get(i).damaged=true;
-
-                    int enemyX = game.enemies.get(i).getX();
-                    int enemyY = game.enemies.get(i).getY();
+                    game.enemies.get(i).damaged = true;
 
                     if (game.enemies.get(i).health <= 0) {
 
-                        XpOrb xp = new XpOrb(enemyX, enemyY, game); // create an xp orb at the location of the defeated enemy
-                        game.add(xp);// add the xp orb to the game
-                        game.xpOrbs.add(xp); // add the xp orb to the list
-
-                        //if (hitEnemies.contains(game.enemies.get(i))) {
                         hitEnemies.remove(game.enemies.get(i));
-                        // }
-
                         game.remove(game.enemies.get(i)); // remove enemy if health is depleted
                         game.enemies.remove(i); // remove enemy from the list
 

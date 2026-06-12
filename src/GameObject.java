@@ -5,16 +5,13 @@
  */
 
 import java.awt.Color;
-
-import java.util.Random;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.io.File;
-
-
-import javax.swing.JComponent;
+import java.util.Random;
 import javax.sound.sampled.*;
+import javax.swing.JComponent;
 
 /**
  * An abstract class for an object which can be added to an instance of
@@ -27,8 +24,8 @@ import javax.sound.sampled.*;
  * @see Game#add
  */
 public abstract class GameObject extends JComponent {
-	private Random r = new Random();
 
+    private Random r = new Random();
 
     Color c = Color.white;
     public double spriteAngle = 0;
@@ -163,10 +160,9 @@ public abstract class GameObject extends JComponent {
      */
     public abstract void act();
 
-    
     // hugo method
     public boolean isClickedAndReleased(PolygonGame game, int mouseX, int mouseY) {
-    	boolean currentlyPressed = game.mouseLeftPressed();
+        boolean currentlyPressed = game.mouseLeftPressed();
         boolean isHovering = this.contains(mouseX, mouseY);
         boolean clicked = false;
 
@@ -183,7 +179,7 @@ public abstract class GameObject extends JComponent {
                 clicked = true;
             }
             // reset after finished
-            readyToApply = false; 
+            readyToApply = false;
         }
 
         // update the tracking variable
@@ -191,84 +187,117 @@ public abstract class GameObject extends JComponent {
 
         return clicked;
     }
-    
-	public void SoundEffects(String fileName, float volume) {
-		
-		File soundFile = new File(fileName);
 
-		try {
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioStream);
-			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(volume); // Reduce volume by 10 decibels.
-			
-			// Source - https://stackoverflow.com/a/6707971
-			// Posted by datahaki, modified by community. See post 'Timeline' for change history
-			// Retrieved 2026-06-11, License - CC BY-SA 3.0
+    public void SoundEffects(String fileName, float volume) {
 
+        File soundFile = new File(fileName);
 
+        try {
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(volume); // Reduce volume by 10 decibels.
 
-			clip.start();
-		} catch (Exception e) {
-			System.err.println("Unsupported audio format for file: " + soundFile.getName());
-			e.printStackTrace();
-		} 
+            // Source - https://stackoverflow.com/a/6707971
+            // Posted by datahaki, modified by community. See post 'Timeline' for change history
+            // Retrieved 2026-06-11, License - CC BY-SA 3.0
+            clip.start();
+        } catch (Exception e) {
+            System.err.println("Unsupported audio format for file: " + soundFile.getName());
+            e.printStackTrace();
+        }
 
-	}
-	
-	//overloaded for random file selection
-	
-	
-	//TODO: FIX HARD CODED RANDOM PLAY SOUND
-	public void playSound(String fileName, float volume, int randomRange) {
-		
-		int randNum = r.nextInt(randomRange)+1;
-		File soundFile = new File("SFX/XP/xp"+randNum+".wav");
+    }
 
-		try {
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioStream);
-			FloatControl gainControl =(FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-			gainControl.setValue(volume); // Reduce volume by 10 decibels.
+    //overloaded for random file selection
+    //TODO: FIX HARD CODED RANDOM PLAY SOUND
+    public void playSound(String fileName, float volume, int randomRange) {
 
+        int randNum = r.nextInt(randomRange) + 1;
+        File soundFile = new File("SFX/XP/xp" + randNum + ".wav");
 
-			clip.start();
-		} catch (Exception e) {
-			System.err.println("Unsupported audio format for file: " + soundFile.getName());
-			e.printStackTrace();
-		} 
+        try {
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(volume); // Reduce volume by 10 decibels.
 
-	}
+            clip.start();
+        } catch (Exception e) {
+            System.err.println("Unsupported audio format for file: " + soundFile.getName());
+            e.printStackTrace();
+        }
+
+    }
+
     //mohammads methods
+    /**
+     * sets the position of the object by rounding its double x and y values.
+     * pre: x and y double values no overriden post: gameobject's coordiantes
+     * are moved to the rounded version of its double x and y values
+     *
+     */
     public void setPosition() {
         setX((int) (x + 0.5));
         setY((int) (y + 0.5));
     }
 
-    public void setPosition(GameObject thing, int x, int y) {
+    /**
+     * sets the position of the object based on given int x and y values. pre:
+     * none post: gameobject's coordiantes are moved to given int x and y values
+     *
+     */
+    public void setPosition(int x, int y) {
         setX(x);
         setY(y);
     }
 
+    /**
+     * GameObject chases after inputted tager GameObject with given speed pre:
+     * given GameObject has applicabale x and y values post: the cooridnates of
+     * the current GameObject is moved towards the given GameObject based on
+     * speed.
+     */
     public void chase(double speed, GameObject target) {
         double playerAngle = Math.atan2(target.y - y, target.x - x);
         x += (Math.cos(playerAngle) * speed);
         y += (Math.sin(playerAngle) * speed);
     }
 
+    /**
+     * GameObject shoots towards the given x and y double values with given
+     * speed
+     *
+     * pre: none post: GameObjects coordiantes get changed in the direction of
+     * given double coordiantes based on speed.
+     *
+     */
     public void shoot(double speed, double targetX, double targetY) {
         double targetAngle = Math.atan2(targetY - y, targetX - x);
         x += (Math.cos(targetAngle) * speed);
         y += (Math.sin(targetAngle) * speed);
     }
 
+    /**
+     * GameObject shoots towards the given double radians angle value with given
+     * speed
+     *
+     * pre: none post: GameObjects coordiantes get changed in the direction of
+     * given radian angle based on speed.
+     *
+     */
     public void shoot(double speed, double targetAngle) {
         x += (Math.cos(targetAngle) * speed);
         y += (Math.sin(targetAngle) * speed);
     }
 
+    /**
+     * gives the angle from this GameObject to given coordinates in radians pre:
+     * none post: gives the radian angle of this object as the origin in
+     * compriosn to given coordiantes, given as a double radians value
+     */
     public double getRealAngle(double targetX, double targetY) {
         return Math.atan2(targetY - y, targetX - x);
     }
