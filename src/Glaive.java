@@ -44,18 +44,18 @@ public class Glaive extends Weapon {
         glaiveImage = new ImageIcon("Images/Sprites/GLAIVE_SPRITE.png").getImage();
 
     }
-    
-    public void paint(Graphics g){
+
+    public void paint(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform old = g2d.getTransform();
         g2d.translate(getWidth() / 2.0, getHeight() / 2.0);
         g2d.rotate(spriteAngle);
         g2d.translate(-getWidth() / 2.0, -getHeight() / 2.0);
-        
+
         // REMEMBER CHANGE THE GLAIVES SIZE
         if (glaiveImage != null) {
-            g2d.drawImage(glaiveImage,0 ,0,(int)(size/0.85),(int)(size/0.85), null);
-        } 
+            g2d.drawImage(glaiveImage, 0, 0, (int) (size / 0.85), (int) (size / 0.85), null);
+        }
         g2d.setTransform(old);
 
     }
@@ -64,8 +64,8 @@ public class Glaive extends Weapon {
         if (PolygonGame.gamePause) {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
-        
-        spriteAngle-=1;
+
+        spriteAngle -= 1;
         if (rotationTimer == framesPerRotation) {
             rotationTimer = 0;
             game.createGlaive(game.numberOfGlaives);

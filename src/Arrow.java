@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
@@ -23,24 +24,24 @@ public class Arrow extends Weapon {
 	int projSize;
 	ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
-	public Arrow(PolygonGame game, double angle) {
-		super(game, "Cast", "Arrow");
-		this.game = game;
+    public Arrow(PolygonGame game, double angle) {
+        super(game, "Cast", "Arrow");
+        this.game = game;
 
-		targetAngle = angle;
+        targetAngle = angle;
         size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // projectile size is 1/250 of the entire window
-        projSize =size*5;
-		shaftWidth = (int)(size * 1.5);  
-		shaftHeight = (int)(size * 3); 
-		speed=(game.getWindowHeight()+game.getWindowWidth())/1000;
-		     
-		setSize(projSize, projSize);
-		setColor(Color.BLUE);
-		x = game.player.x-projSize/4;
-		y = game.player.y-projSize/4;
-		Player.weapons.add(this);
-	
-		setPosition();
+        projSize = size * 5;
+        shaftWidth = (int) (size * 1.5);
+        shaftHeight = (int) (size * 3);
+        speed = (game.getWindowHeight() + game.getWindowWidth()) / 1000;
+
+        setSize(projSize, projSize);
+        setColor(Color.BLUE);
+        x = game.player.x - projSize / 4;
+        y = game.player.y - projSize / 4;
+        Player.weapons.add(this);
+
+        setPosition();
 
 		arrowImage = new ImageIcon("Images/Sprites/Arrow.png").getImage();
 		
@@ -144,9 +145,6 @@ public class Arrow extends Weapon {
 			PolygonGame.arrows.remove(this);
 		}
 
-	}
-	
-	
-
+    }
 
 }

@@ -21,7 +21,7 @@ public class SpawnAnimation extends GameObject {
         this.game = game;
         size = Player.size / 2;
         setSize(size, size);
-        setPosition(this, x, y);
+        setPosition(x, y);
         setColor(new Color(0, 0, 255, particleTransparency));
         lifespan = r.nextInt(10) + 10;
         spawnParticles.add(this); //extra cube bugfix
@@ -70,7 +70,7 @@ public class SpawnAnimation extends GameObject {
         // move towards player
         x += (Math.cos(playerAngle) * speed) + (r.nextInt(speed * 2) - speed);
         y += (Math.sin(playerAngle) * speed) + (r.nextInt(speed * 2) - speed);
-        setPosition(this, x, y);
+        setPosition(x, y);
         if (collides(game.player)) { // if collides with player, remove from game and list
             lifespan--;
             if (lifespan <= 0) {

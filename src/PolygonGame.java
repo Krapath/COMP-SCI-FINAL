@@ -36,13 +36,14 @@ public class PolygonGame extends Game {
     static ArrayList<Arrow> arrows = new ArrayList<Arrow>();
     static ArrayList<Glaive> glaives = new ArrayList<Glaive>();
     public int numberOfGlaives;
-    int killCounter;
+    public int killCounter;
+    boolean minibossSpawned = false;
 
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); 
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
-    public int spawnedEnemies = 0;
-    public int maxEnemiesSpawned = 75;
+    public int spawnedAttempts = 0;
+    public int maxEnemiesSpawned = 100;
     public int enemySpawnSeed;
 
     public void setup() {
@@ -53,7 +54,7 @@ public class PolygonGame extends Game {
         menuController = new MainMenu(this, "");
         menuController.spawnMyBoxes(this);
         // creates dummy consturctor for the tutorial buttons to use to spawn the buttons
-        tutorialController = new Tutorial(this, "", 0, 0, 0, 0,null);
+        tutorialController = new Tutorial(this, "", 0, 0, 0, 0, null);
         // creates dummy consturctor for the highscores buttons to use to spawn the buttons
         highscoresController = new Highscores(this, "", 0, 0, 0, 0);
         //create dummy constructor for the death screen buttons to use to spawn the buttons
@@ -88,8 +89,12 @@ public class PolygonGame extends Game {
         if (gamePause) {
             return; // pause the game while choosing a buff or on main menu(lock the game)
         }
-        
-        enemySpawning ();
+
+        if (enemies.size() < maxEnemiesSpawned) //spawns enemies when less than maximum
+        {
+            enemySpawning();
+        }
+
         for (int i = 0; i < Player.abilities.size(); i++) {
             Player.abilities.get(i).act();
 
@@ -113,10 +118,8 @@ public class PolygonGame extends Game {
             }
         }
 
-        
-
         if (Player.health <= 0 && this.player != null) { // stops if dies
-            SoundEffects.play("SFX/DEATH_SOUND1.wav",1.0f);
+            SoundEffects.play("SFX/DEATH_SOUND1.wav", 1.0f);
             highscoresController.orderScores(Player.level, killCounter);
             highscoresController.writeScores(); //saves the highscores
             gamePause = true;
@@ -134,8 +137,7 @@ public class PolygonGame extends Game {
             }
             Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
-            Player.xpReq
-                    = 5 * Player.level * Math.log(Player.level + 1);
+            Player.xpReq = 5 * Player.level * Math.log(Player.level + 1);
             // 0;
             choosingBuff = true;
 
@@ -166,12 +168,16 @@ public class PolygonGame extends Game {
             Enemy other = enemies.get(i);
             if (other.health <= 0) {
                 killCounter++;
-       
-                // Create an XP orb at the location of the defeated enemy
-                XpOrb xp = new XpOrb((int) other.x, (int) other.y, this);
+                XpOrb xp;
 
-                this.add(xp);          // Add the xp orb to the game
-                xpOrbs.add(xp);   // Add the xp orb to the list
+                // Create an XP orb at the location of the defeated enemy
+                for (int j = 0; j < other.xpDrop; j++) {
+                    xp = new XpOrb((int) other.x, (int) other.y, other.size, this);
+                    this.add(xp);          // Add the xp orb to the game
+                    xpOrbs.add(xp);   // Add the xp orb to the list
+
+                }
+
                 this.remove(other); // Remove enemy if health is depleted
                 enemies.remove(other); // Remove enemy from the list
                 i--;
@@ -181,7 +187,10 @@ public class PolygonGame extends Game {
     }
 
     /**
-     *
+     * creates a set number of glaives orbiting at equidistant spacing around
+     * the player pre: existence of class Glaive and arraylist glaives post: old
+     * glaives removed from game and galives arralist, inputted number of
+     * glaives created around the player and put into game and glaives arraylist
      *
      */
     public void createGlaive(int numberOfGlaives) {
@@ -195,53 +204,59 @@ public class PolygonGame extends Game {
             this.add(glaive);
         }
     }
-    
-    
-    
+
+    /**
+     * spawns the enemies for the game based on an algorithm pre: ecistence of
+     * int enemySpawnSeed, int maxEnemiesSpawned, arraylist enemies, object
+     * enemy and class Enemy post: creates a certain number and types of enemies
+     * based on the algorithmn
+     */
     public void enemySpawning() {
-    	if (r.nextInt(300) < 20 && enemies.size() < maxEnemiesSpawned) { // 0.33% chance each tick to spawn an enemy
+        if (r.nextInt(10000) < Math.max(300 - 2 * killCounter, 20)) { //spawns normal enemy, becoming less likely as more enemies die, min 20/10000 chance
+            enemy = new Enemy(this, 0, 0, r.nextInt());
+            add(enemy);
+            enemies.add(enemy);
+        }
 
-            if ((spawnedEnemies + 1) % 50 == 0) { //hoard spawn
-                enemySpawnSeed = r.nextInt();
+        if (!minibossSpawned && (killCounter + 1) % 50 == 0) { //spawn big boy every 80 enemy killed
+            minibossSpawned = true;
+            enemy = new Enemy(this, 1, 0, r.nextInt());
+            add(enemy);
+            enemies.add(enemy);
+        } else if ((killCounter + 1) % 50 != 0) { //prevents continously spawning miniboss
+            minibossSpawned = false;
+        }
 
-                if (r.nextInt(2) == 0) {
-                    for (int i = 0; i < 10; i++) {
-                        enemy = new Enemy(this, 0, 0, enemySpawnSeed);
-                        add(enemy);
-                        enemies.add(enemy);
-                    }
-                } else {
-                    System.out.println("trying to spawn");
-                    for (int i = 0; i < 10; i++) {
-                        enemy = new Enemy(this, 4, 0, enemySpawnSeed);
-                        add(enemy);
-                        enemies.add(enemy);
-                    }
-                }
-
-                enemySpawnSeed++;
-            } else if ((spawnedEnemies + 1) % 99 == 0) { //big boy
-                enemy = new Enemy(this, 1, 0, r.nextInt());
-                add(enemy);
-                enemies.add(enemy);
-            } else if ((spawnedEnemies + 1) % 10 == 0 && spawnedEnemies > 0) {
-
-                if (r.nextInt(2) == 0) {
-                    enemy = new Enemy(this, 2, 0, r.nextInt());
-                } else {
-                    enemy = new Enemy(this, 3, 0, r.nextInt());
-                }
-
-                add(enemy);
-                enemies.add(enemy);
-            } else { //normal enemy
-                enemy = new Enemy(this, 0, 0, r.nextInt());
+        if (r.nextInt(10000) < Math.min(10 * (killCounter / 25), 50)) {//spawns hoard of normal enemies, becoming more likely over time, max 50/10000 chance
+            enemySpawnSeed = r.nextInt();
+            for (int i = 0; i < 10; i++) {
+                enemy = new Enemy(this, 0, 0, enemySpawnSeed);
                 add(enemy);
                 enemies.add(enemy);
             }
-
-            spawnedEnemies++;
         }
+
+        if (killCounter > 30 && r.nextInt(10000) < 10) { //spawns a bat hoard when over 50 enemies killed, 10/10000 chance
+            enemySpawnSeed = r.nextInt();
+            for (int i = 0; i < 10; i++) {
+                enemy = new Enemy(this, 4, 0, enemySpawnSeed);
+                add(enemy);
+                enemies.add(enemy);
+            }
+        }
+
+        if (killCounter > 40 && r.nextInt(10000) < Math.min(10 * (killCounter / 30), 80)) { //spanws gunner or throwing goblin when more than 80 kills, max 80/10000 chance
+            if (r.nextInt(2) == 0) {
+                enemy = new Enemy(this, 2, 0, r.nextInt());
+            } else {
+                enemy = new Enemy(this, 3, 0, r.nextInt());
+            }
+
+            add(enemy);
+            enemies.add(enemy);
+        }
+
+        spawnedAttempts++;
     }
 
 }

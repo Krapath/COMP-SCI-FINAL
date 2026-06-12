@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
@@ -6,41 +7,43 @@ import java.awt.Graphics;
 import java.util.Random;
 
 public class MatchStick extends Weapon {
+
     Random r = new Random();
     int size = 50;
     PolygonGame game;
-    static int damage = 1;    
+    static int damage = 1;
     int pierceCooldown = 60;
     Double angle = 0.20;
     int radius = 100;
     Double rotateSpeed = 0.02;
     double shootSpeed = 20;
     int pierceTimer = 0;
-    
+
     int rotationTimer = 30 + r.nextInt(30); // how long the match rotates around the player before flying off,
-                                              // randomize a bit so not every match is the same
+    // randomize a bit so not every match is the same
     int aimingTimer = 30;
     double aimOffsetX;
     double aimOffsetY;
     double arrowCX;
     double arrowCY; // actual center of match in screen space
     Enemy closestTarget; // the enemy the match is currently aiming at, will be null if not aiming at
-                         // anything
+    // anything
 
     double targetAngle; // the angle the match will fly towards once it stops aiming, calculated when
-                        // the match finishes rotating around the player
+    // the match finishes rotating around the player
 
     boolean returning = false; // whether the match is flying back to the player after going off screen, if it
-                               // goes off screen it will return to the player instead of disappearing so the
-                               // player can reuse it if they miss, this also gives it a cool boomerang effect
+    // goes off screen it will return to the player instead of disappearing so the
+    // player can reuse it if they miss, this also gives it a cool boomerang effect
 
-    double spriteAngle=0; // angle at which the match tip is pointing
+    double spriteAngle = 0; // angle at which the match tip is pointing
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
     // arrow dimensions
     int shaftWidth;
     int shaftHeight;
     int tipWidth;
     int tipHeight;
+
     public MatchStick(PolygonGame game) {
         super(game, "Passive", "MatchStick");
         this.game = game;
@@ -49,10 +52,10 @@ public class MatchStick extends Weapon {
         arrowCX = game.player.getX() + 100;
         arrowCY = game.player.getY() + 100;
         Player.weapons.add(this);
-        shaftWidth = (game.getWindowHeight()+game.getWindowWidth())/300;
-        shaftHeight = (game.getWindowHeight()+game.getWindowWidth())/50;
-        tipWidth = (game.getWindowHeight()+game.getWindowWidth())/200;
-        tipHeight = (game.getWindowHeight()+game.getWindowWidth())/150;;
+        shaftWidth = (game.getWindowHeight() + game.getWindowWidth()) / 300;
+        shaftHeight = (game.getWindowHeight() + game.getWindowWidth()) / 50;
+        tipWidth = (game.getWindowHeight() + game.getWindowWidth()) / 200;
+        tipHeight = (game.getWindowHeight() + game.getWindowWidth()) / 150;;
 
     }
 
@@ -79,7 +82,7 @@ public class MatchStick extends Weapon {
 
         g2d.setTransform(old); // restore
     }
-    
+
     // Still slightly broken i think
     // works by reversing the rotation on the rectangle/ applying it to the enemy then chceking if the enemy is within it
     // custom collision detection for rotating rectangle hitbox, does not use the built in collides function since that is just a bounding box and does not rotate with the arrow
@@ -88,7 +91,6 @@ public class MatchStick extends Weapon {
         double ey = e.getY() + e.size / 2.0;
 
         // get the enemies position relative to arrow center
-
         double localX = ex - arrowCX;
         double localY = ey - arrowCY;
 
@@ -99,7 +101,7 @@ public class MatchStick extends Weapon {
         double checkAngle = -(spriteAngle - Math.PI / 2);
         double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
         double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
-        
+
         // check if its inside the rectangle
         return Math.abs(rotX) <= tipWidth / 2.0
                 && rotY >= -shaftHeight / 2.0 - tipHeight
@@ -107,8 +109,9 @@ public class MatchStick extends Weapon {
     }
 
     public void act() {
-        if (PolygonGame.gamePause)
+        if (PolygonGame.gamePause) {
             return;
+        }
 
         repaint();
 
@@ -116,10 +119,10 @@ public class MatchStick extends Weapon {
             --rotationTimer;
             angle += rotateSpeed;
             // keep arrow centered on player while rotating
-   
+
             arrowCX = radius * Math.cos(angle) + game.player.getX() + Player.size / 2.0;
             arrowCY = radius * Math.sin(angle) + game.player.getY() + Player.size / 2.0;
-            
+
             spriteAngle = angle + Math.PI;
 
             if (rotationTimer == 0) {
@@ -147,7 +150,7 @@ public class MatchStick extends Weapon {
             arrowCY = game.player.getY() + aimOffsetY;
 
             // if target does not exist, invalidate it
-            if(closestTarget != null && !PolygonGame.enemies.contains(closestTarget)){
+            if (closestTarget != null && !PolygonGame.enemies.contains(closestTarget)) {
                 closestTarget = null;
             }
 
@@ -155,9 +158,9 @@ public class MatchStick extends Weapon {
             if (closestTarget == null) {
                 double closestDist = Double.MAX_VALUE;
                 for (Enemy e : PolygonGame.enemies) {
-                    double dx= e.getX()-arrowCX;
-                    double dy= e.getY()-arrowCY;
-                    double dist = dx*dx+dy*dy; // takes square value, since not actually using the actual distance, just comparing values 
+                    double dx = e.getX() - arrowCX;
+                    double dy = e.getY() - arrowCY;
+                    double dist = dx * dx + dy * dy; // takes square value, since not actually using the actual distance, just comparing values 
                     if (dist < closestDist) {
                         closestDist = dist;
                         closestTarget = e;
@@ -174,11 +177,11 @@ public class MatchStick extends Weapon {
                 spriteAngle = Math.atan2(dy, dx) + Math.PI / 2;
             }
 
-            if (aimingTimer == 0 && closestTarget !=null) {
+            if (aimingTimer == 0 && closestTarget != null) {
                 //save the target angle from teh enemy to the arrow
                 targetAngle = Math.atan2(
-                closestTarget.getY() + closestTarget.size / 2.0 - arrowCY,
-                closestTarget.getX() + closestTarget.size / 2.0 - arrowCX);
+                        closestTarget.getY() + closestTarget.size / 2.0 - arrowCY,
+                        closestTarget.getX() + closestTarget.size / 2.0 - arrowCX);
             }
 
         } else {
@@ -193,7 +196,6 @@ public class MatchStick extends Weapon {
                 returning = true;
             }
 
-
             if (returning) {
                 // take the angle between the player and the arrow
                 double playerAngle = Math.atan2(
@@ -203,9 +205,9 @@ public class MatchStick extends Weapon {
                 arrowCX += Math.cos(playerAngle) * shootSpeed;
                 arrowCY += Math.sin(playerAngle) * shootSpeed;
                 spriteAngle = playerAngle + Math.PI / 2;
-                 // if the arrow has reached the player, reset it so it can be fired again
-                if (arrowCX > game.player.getX() - size && arrowCX < game.player.getX() + Player.size + size &&
-                        arrowCY > game.player.getY() - size && arrowCY < game.player.getY() + Player.size + size) {
+                // if the arrow has reached the player, reset it so it can be fired again
+                if (arrowCX > game.player.getX() - size && arrowCX < game.player.getX() + Player.size + size
+                        && arrowCY > game.player.getY() - size && arrowCY < game.player.getY() + Player.size + size) {
 
                     returning = false;
                     rotationTimer = 200 + r.nextInt(100);
@@ -258,6 +260,5 @@ public class MatchStick extends Weapon {
             pierceTimer++;
         }
     }
-
 
 }

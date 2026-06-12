@@ -28,8 +28,8 @@ public class Projectile extends Weapon {
 
         setLocation(game.player.getX() + Player.size / 3, game.player.getY() + Player.size / 3); // update
         // position
-        
-        int width = (game.getWindowHeight()+game.getWindowWidth())/300;
+
+        int width = (game.getWindowHeight() + game.getWindowWidth()) / 300;
         int height = width;
         setSize(width, height); // size of the projectile
         setColor(Color.YELLOW);
@@ -40,7 +40,7 @@ public class Projectile extends Weapon {
         xVel = speed * Math.cos(angle);
         yVel = speed * Math.sin(angle);
 
-		SoundEffects.play("SFX/PROJECTILE.wav",-14.0f);
+        SoundEffects.play("SFX/PROJECTILE.wav", -14.0f);
 
     }
 
