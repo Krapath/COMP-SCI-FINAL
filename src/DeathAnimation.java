@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class DeathAnimation extends GameObject {
-    //
+    // array of all objects in the class
     private static ArrayList<DeathAnimation> dyingParticles = new ArrayList<>();
     // set animation variables
     static boolean dyingAnimation = false;
@@ -15,7 +15,7 @@ public class DeathAnimation extends GameObject {
     public int timer = 0;
     public int particleTransparency = 255;
     public int duration = 30;
-    // random variable
+    // create random object
     Random r = new Random();
 
     /**

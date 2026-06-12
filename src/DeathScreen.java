@@ -11,6 +11,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class DeathScreen extends GameObject {
+    // array list of all objects in the class
     private static ArrayList<DeathScreen> deathScreenButtons = new ArrayList<>();
     // set dummy constructor variables
     private String buttonName;

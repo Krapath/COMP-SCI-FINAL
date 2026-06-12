@@ -7,10 +7,10 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
 
 public class Tutorial extends GameObject {
+    // array list of all objects in the class
     private static ArrayList<Tutorial> tutorialButtons = new ArrayList<>();
     // set dummy constructor variables
     private String buttonName;
@@ -22,7 +22,7 @@ public class Tutorial extends GameObject {
     boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
     boolean hovered;
-    // make random variable
+    // create random object
     Random r = new Random();
 
     /**
@@ -77,16 +77,16 @@ public class Tutorial extends GameObject {
     @Override
     public void paint(Graphics g) {
         if (!PolygonGame.gamePause) {
-            return; // only  run if on tutorial
+            return; // only run if on tutorial
         }
-        super.paint(g); // paints ground on the bottom
-        //draws image on box
+        super.paint(g); // paints background on the bottom
+        // draws image on box
         if (boxImage != null) {
             g.drawImage(boxImage, 0, 0, getWidth(), getHeight(), null);
 
-            return; //skip other changes object has an image
+            return; // skip other changes object has an image
         }
-        
+
         Graphics2D g2d = (Graphics2D) g;
         g2d.setFont(menuFont);
         FontMetrics metrics = g2d.getFontMetrics(menuFont);
@@ -97,7 +97,7 @@ public class Tutorial extends GameObject {
         int textHeight = metrics.getAscent();
         int textX = getWidth() / 2 - textWidth / 2;
         int textY = getHeight() / 2 + textHeight / 2 - metrics.getDescent();
-        //change the back button when mouse is hovering over it
+        // change the back button when mouse is hovering over it
         g2d.setColor(Color.BLACK);
         if (hovered && buttonName.equals("Back")) {
             AffineTransform old = g2d.getTransform();
@@ -116,32 +116,29 @@ public class Tutorial extends GameObject {
         }
         int mouseX = game.getMouseX();
         int mouseY = game.getMouseY();
-        //if hovering over back button make a sound and tilt the text
-        if(buttonName.equals("Back")){
-        if (hovered && !wasHoveredLastFrame) {
-            SoundEffects("SFX/HOVER.wav", -5.0f);
-            if (tiltLeft) {
-                hoverAngle = r.nextDouble() * 0.05 + 0.1;
-                tiltLeft = false;
-            } else if (!tiltLeft) {
-                hoverAngle = -(r.nextDouble() * 0.05 + 0.1);
-                tiltLeft = true;
+        // if hovering over back button make a sound and tilt the text
+        if (buttonName.equals("Back")) {
+            if (hovered && !wasHoveredLastFrame) {
+                SoundEffects("SFX/HOVER.wav", -5.0f);
+                if (tiltLeft) {
+                    hoverAngle = r.nextDouble() * 0.05 + 0.1;
+                    tiltLeft = false;
+                } else if (!tiltLeft) {
+                    hoverAngle = -(r.nextDouble() * 0.05 + 0.1);
+                    tiltLeft = true;
+                }
+            }
+            if (hovered) {
+                setColor(Color.BLUE);
+            } else {
+                setColor(new Color(15, 82, 186));
             }
         }
-
-        if (hovered) {
-            setColor(Color.BLUE);
-        } else {
-            setColor(new Color(15, 82, 186));
-        }
-        }
-
-
         wasHoveredLastFrame = hovered;
-
+        // make a sound effect for when the back button is clicked then return to main
+        // menu
         if (isClickedAndReleased(game, mouseX, mouseY)) {
             SoundEffects("SFX/CLICK.wav", 5.0f);
-
             if (buttonName.equals("Back")) {
                 for (Tutorial m : tutorialButtons) { // removes all the buttons in the list from game
                     game.remove(m);
@@ -152,9 +149,6 @@ public class Tutorial extends GameObject {
                 menuController.spawnMyBoxes(game);
                 add(menuController);
             }
-
         }
-
     }
-
 }
