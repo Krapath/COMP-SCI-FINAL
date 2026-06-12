@@ -16,26 +16,22 @@ public class Glaive extends Weapon {
     //double xVel;
     //double yVel;
     //int distanceTraveled = 0;
-    int pierceCooldown = 60; // the amount of frames between acts until it can pierce, ensures that it doesnt hit enemies multiple times
     Double angle;
-    Double startingAngle;
     int radius = 100;
     private static final int GLAIVE_ROTATION_FACTOR = 5;
     int framesPerRotation = Player.speed * GLAIVE_ROTATION_FACTOR;
     Double speed = 2 * Math.PI / framesPerRotation;
-    int pierceTimer = 0; // the current timer for pierce.
     static int damage = 1;
     static int glaiveCount = 0;
     public int rotationTimer = 0;
     static Image glaiveImage;
 
-    ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>(); 
+    ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
     public Glaive(PolygonGame game, double startingAngle) {
         super(game, "Passive", "Glaive");
         this.game = game;
         angle = startingAngle;
-        this.startingAngle = startingAngle;
         x = (radius * Math.cos(angle) + game.player.x) - size / 2 + Player.size / 2;
         y = (radius * Math.sin(angle) + game.player.y) - size / 2 + Player.size / 2;
         setLocation((int) x, (int) y); // update position
@@ -89,7 +85,7 @@ public class Glaive extends Weapon {
                 if (!hit) { //if not hit
                     hitEnemies.add(PolygonGame.enemies.get(i)); //count as hit from now on
                     PolygonGame.enemies.get(i).health -= damage; // reduce enemy health on collision
-                    PolygonGame.enemies.get(i).damaged=true;
+                    PolygonGame.enemies.get(i).damaged = true;
 
                     if (PolygonGame.enemies.get(i).health <= 0) {
 
@@ -103,14 +99,14 @@ public class Glaive extends Weapon {
 
                     }
                 }
+            } else {
+                for (int j = 0; j < hitEnemies.size(); j++) { //if enemy already hit, dont hit again.
+                    if (PolygonGame.enemies.get(i) == hitEnemies.get(j)) {
+                        hitEnemies.remove(PolygonGame.enemies.get(i));
+                    }
+                }
             }
 
-            if (pierceTimer == pierceCooldown) { // if the pierce cooldown has been reached, reset the pierce timer and clear the list of hit enemies
-                pierceTimer = 0;
-                hitEnemies.clear();
-            } else {
-                pierceTimer++;
-            }
         }
 
         angle += speed;

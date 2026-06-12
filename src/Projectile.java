@@ -47,6 +47,7 @@ public class Projectile extends Weapon {
 
     /**
      * create an unfriendly projectile spawned at given coordinates.
+     *
      * @param game the game instance
      * @param givenX initial x coordinate
      * @param givenY initial y coordinate
@@ -62,7 +63,7 @@ public class Projectile extends Weapon {
         setSize(15, 15); // size of the projectile
         setColor(Color.RED);
 
-        angle = getRealAngle(game.player.x + (double) Player.size / 2, game.player.y + (double)Player.size / 2);
+        angle = getRealAngle(game.player.x + (double) Player.size / 2, game.player.y + (double) Player.size / 2);
         speed = 40.0; // adjust as needed
 
     }
@@ -114,7 +115,9 @@ public class Projectile extends Weapon {
     }
 
     /**
-     * damage: apply damage to enemies collided with the attacker and handle special effects.
+     * damage: apply damage to enemies collided with the attacker and handle
+     * special effects.
+     *
      * @param attacker the object causing damage
      * @param hitEnemies list of enemies already hit by this projectile
      * @param pierceCount how many enemies the projectile can pierce
@@ -139,9 +142,9 @@ public class Projectile extends Weapon {
                     hitEnemies.add(PolygonGame.enemies.get(i)); // Count as hit from now on
                     hit = true;
                     PolygonGame.enemies.get(i).health -= damage; // Reduce enemy health on collision
+                    PolygonGame.enemies.get(i).knockBack(10.0, game.player);
 
                     PolygonGame.enemies.get(i).damaged = true;
-
 
                     // If chain lightning is active and this is the first enemy hit, activate it
                     if (Player.chainLightningActive && pierceCount == 2) {

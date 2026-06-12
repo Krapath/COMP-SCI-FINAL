@@ -23,7 +23,7 @@ public class Enemy extends GameObject {
     public int xpDrop;
     boolean stunned = false;
     int stunnedCounter;
-
+    int stunDuration = 0;
     static int healthMultiplier;
 
     public Enemy(PolygonGame game, int type, int spawn, int seed) {
@@ -65,7 +65,7 @@ public class Enemy extends GameObject {
         avoidCollision(); //moves away from current enemy
 
         if (stunned) {
-            if (stunnedCounter == 5) {
+            if (stunnedCounter == stunDuration) {
                 stunned = false;
             }
             stunnedCounter++;
