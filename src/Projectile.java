@@ -41,6 +41,7 @@ public class Projectile extends Weapon {
         xVel = speed * Math.cos(angle);
         yVel = speed * Math.sin(angle);
 
+        Player.weapons.add(this);
         SoundEffects.play("SFX/PROJECTILE.wav", -14.0f);
 
     }
@@ -65,6 +66,7 @@ public class Projectile extends Weapon {
 
         angle = getRealAngle(game.player.x + (double) Player.size / 2, game.player.y + (double) Player.size / 2);
         speed = 40.0; // adjust as needed
+        Player.weapons.add(this);
 
     }
 

@@ -50,6 +50,10 @@ public class SpawnAnimation extends GameObject {
         addParticle(game, w + size, h + size); // Bottom Right
 
         spawningAnimation = true;
+        if (playSpawnSound){
+            SoundEffects("SFX/SPAWN_SOUND.wav",-4.0f);
+            playSpawnSound=false;
+        }
     }
 
     // helper method to add a particle to the game and the list
@@ -76,10 +80,6 @@ public class SpawnAnimation extends GameObject {
         y += (Math.sin(playerAngle) * speed) + (r.nextInt(speed * 2) - speed);
         setPosition(x, y);
         if (collides(game.player)) { // if collides with player, remove from game and list
-            if (playSpawnSound){
-                SoundEffects("SFX/SPAWN_SOUND.wav",-4.0f);
-                playSpawnSound=false;
-            }
             lifespan--;
             if (lifespan <= 0) {
                 game.remove(this);

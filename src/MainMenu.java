@@ -43,7 +43,7 @@ public class MainMenu extends GameObject {
         this.buttonName = buttonName;
         try {
             java.io.File fontFile = new java.io.File("Fonts/ZeroCool.ttf");
-            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(((90f)));// base font
+            menuFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);// base font
         } catch (Exception e) {
             // Fallback to basic monospaced if the file is missing
             menuFont = new Font("Monospaced", Font.BOLD, 100);
@@ -56,6 +56,10 @@ public class MainMenu extends GameObject {
         logoOffsetX = game.getWindowWidth() / 4;
         logoOffsetY = game.getWindowHeight() / 12;
 
+        float scaleFactor = (game.getWindowHeight()+game.getWindowWidth()) /3000f; 
+        if (scaleFactor <= 0) scaleFactor = 1.0f; // Prevention fail-safe
+        menuFont = menuFont.deriveFont(45*scaleFactor);
+        
     }
 
     /**

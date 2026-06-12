@@ -22,10 +22,10 @@ public class MatchStick extends Weapon {
     Double rotateSpeed = 0.02;
     double shootSpeed = 20;
     int pierceTimer = 0;
+    static int aimingTimer = 30;
 
-    int rotationTimer = 30 + r.nextInt(30); // how long the match rotates around the player before flying off,
+    public int rotationTimer = 30 + r.nextInt(aimingTimer); // how long the match rotates around the player before flying off,
     // randomize a bit so not every match is the same
-    int aimingTimer = 30;
     double aimOffsetX;
     double aimOffsetY;
     double arrowCX;

@@ -29,7 +29,8 @@ public class PowerUp extends GameObject {
 	// determine how many sides the polygon for each buff should have and what
 	// number to display on the buff
 	private Font descriptionFont;
-
+	
+    boolean hovered;
 	public int width;
 	public int height;
 
@@ -51,9 +52,15 @@ public class PowerUp extends GameObject {
 			"Unlocks Arrow Spread" // Case 8 (WHITE / ArrowSpread)
 	};
 
-	String[] buffStackDescriptions = { "+5 Max Health [Per Stack]", "+1 Movement Speed [Per Stack]",
-			"+1 Attack Speed [Per Stack]", "+1 Chain, +1 Damage [Per Stack]", "+2 Missile Damage [Per Stack]",
-			" TBD[Per Stack]", "+1 Attack Speed, +1 Damage [Per Stack]", " TBD [Per Stack]",
+	String[] buffStackDescriptions = { 
+			"+5 Max Health [Per Stack]", 
+			"+1 Movement Speed [Per Stack]",
+			"+1 Attack Speed [Per Stack]", 
+			"+1 Chain, +1 Damage [Per Stack]", 
+			"+2 Missile Damage [Per Stack]",
+			"+1 Glaives, +1 Damage [Per Stack]", 
+			"+1 Attack Speed, +1 Damage [Per Stack]", 
+			" TBD [Per Stack]",
 			"+1 Arrow, +1 Damage [Per Stack]" };
 
 	public PowerUp(int x, int y, PolygonGame game) {
@@ -131,6 +138,7 @@ public class PowerUp extends GameObject {
 			} else {
 				game.numberOfGlaives++;
 				game.createGlaive(game.numberOfGlaives);
+				Glaive.damage++;
 			}
 			break;
 		case 6: // match stick
@@ -139,8 +147,10 @@ public class PowerUp extends GameObject {
 				game.matchStick = new MatchStick(game);
 				game.add(game.matchStick);
 			} else {
-				Player.attackTimer += 1;
 				MatchStick.damage++;
+				MatchStick.aimingTimer=(int)(MatchStick.aimingTimer*0.8);
+				MatchStick.aimingTimer=(int)(MatchStick.aimingTimer*0.8);
+
 			}
 			break;
 
@@ -277,14 +287,19 @@ public class PowerUp extends GameObject {
 		int mouseY = game.getMouseY();
 
 		int sides;
-		if (contains(mouseX, mouseY)) {
+        hovered = contains(mouseX, mouseY);
+        
+        if (hovered){
 			sides = buffArray[buffType] + 2 + 1;
 			buff = String.valueOf(buffArray[buffType] + 1);
-		} else {
+
+        } else{
 			sides = buffArray[buffType] + 2;
 			buff = String.valueOf(buffArray[buffType]);
-		}
+        }
 
+		
+		
 		xPointsBuff = new int[sides];
 		yPointsBuff = new int[sides];
 

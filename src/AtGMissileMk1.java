@@ -72,7 +72,7 @@ public class AtGMissileMk1 extends Weapon {
    
             if(!canDamage){
                 g2d.setColor(new Color(255, 215,0,15*explosionDuration));
-                g2d.fillOval(0, 0, getWidth(), getHeight());
+                g2d.fillOval(0,0, getWidth(), getHeight());
                 return;
             }
             int offset = (spriteSize - getWidth()) / 2; // center it on the hitbox
@@ -145,7 +145,9 @@ public class AtGMissileMk1 extends Weapon {
 
                     if (collides(target) && canDamage) { // if collides with target, damage the target and remove the projectile
                         target.health -= damage;
-                        setSize(size*3,size*3);
+                        setSize((int)(size*3.5),(int)(size*3.5));
+
+
                         explosionDuration--;
                         setColor(new Color(255, 215,0));
     					target.damaged = true;

@@ -51,7 +51,7 @@ public class ChainLightning extends Weapon {
     public ChainLightning(Enemy enemy, PolygonGame game) {
         super(game, "Cast", "Chain Lightning");
         this.game = game;
-        chainRange = (game.getWindowWidth() + game.getWindowHeight()) / 2 / 10; // the range that the chain lightning can jump to the next target, can be adjusted for more or less range
+        chainRange = (game.getWindowWidth() + game.getWindowHeight()) / 20; // the range that the chain lightning can jump to the next target, can be adjusted for more or less range
         setSize(game.getWindowWidth(), game.getWindowHeight()); // make the canvas size of the entire window so it can draw lightning anywhere
         Enemy initialTarget = enemy; // the first target of the chain lightning is the enemy that was hit by the projectile
         ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
