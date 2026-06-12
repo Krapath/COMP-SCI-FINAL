@@ -1,6 +1,13 @@
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
+
+import java.awt.Image;
 
 public class Enemy extends GameObject {
 
@@ -25,6 +32,7 @@ public class Enemy extends GameObject {
     int stunnedCounter;
     int stunDuration = 0;
     static int healthMultiplier;
+    Image batImage;
 
     public Enemy(PolygonGame game, int type, int spawn, int seed) {
         this.type = type;
@@ -38,6 +46,7 @@ public class Enemy extends GameObject {
         spawnEnemy(spawn);
         enemyType(type);
         damagedColor = Color.RED;
+        batImage = new ImageIcon("Images/Sprites/BAT_SPRITE.png").getImage();
 
     }
 
@@ -55,7 +64,25 @@ public class Enemy extends GameObject {
         spawnEnemy(spawn);
         enemyType(type);
         damagedColor = Color.RED;
+        batImage = new ImageIcon("Images/Sprites/BAT_SPRITE.png").getImage();
     }
+    
+    @Override
+    public void paint(Graphics g) {
+        if (type == 4) {
+            if (batImage != null) {
+                g.drawImage(batImage, 0, 0, getWidth(), getHeight(), null);
+            } else {
+               
+                g.setColor(Color.PINK);
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        } else {
+            // goes back to GameObject to draw solid colored shapes safely
+            super.paint(g);
+        }
+    }
+
 
     public void act() {
         if (PolygonGame.gamePause) {

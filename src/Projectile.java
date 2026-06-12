@@ -37,7 +37,7 @@ public class Projectile extends Weapon {
 
         angle = game.getAngle(game.player.getX() + Player.size / 2,
                 game.player.getY() + Player.size / 2, game.getMouseX(), game.getMouseY());
-        double speed = 20; // adjust as needed
+        double speed = (game.getWindowHeight()+game.getWindowWidth())/150; // adjust as needed
         xVel = speed * Math.cos(angle);
         yVel = speed * Math.sin(angle);
 
@@ -77,12 +77,11 @@ public class Projectile extends Weapon {
             // a buff
 
         }
-
         if (friendly) {
             distanceTraveled += Math.sqrt(xVel * xVel + yVel * yVel); // update distance traveled
             setLocation(getX() + (int) xVel, getY() + (int) yVel); // update position
 
-            if (distanceTraveled > 400) { // remove projectile after it has traveled a certain distance
+            if (distanceTraveled > (game.getWindowHeight()+game.getWindowWidth())/6) { // remove projectile after it has traveled a certain distance
                 game.remove(this);
                 distanceTraveled = 0; // reset distance traveled for the next projectile
             }

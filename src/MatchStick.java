@@ -86,22 +86,20 @@ public class MatchStick extends Weapon {
         // negative tipHeight so it extends upwards from the top of the shaft
         g2d.fillRect(-tipWidth / 2, -shaftHeight / 2 - tipHeight, tipWidth, tipHeight);
 
-        // arrow hitbox for debugging
-        g2d.setColor(new Color(255, 0, 63));
-        g2d.drawRect(-tipWidth / 2, -shaftHeight / 2 - tipHeight, tipWidth, shaftHeight + tipHeight);
-
+    
         g2d.setTransform(old); // restore
     }
 
 
     /**
-     * arrowHits: return true if the enemy is inside the rotated match hitbox
+     * matchStickHits: return true if the enemy is inside the rotated match hitbox
      * works by reversing the rotation on the rectangle/ applying it to the enemy then chceking if the enemy is within it
      * custom collision detection for rotating rectangle hitbox, does not use the built in collides
      */
-    boolean arrowHits(Enemy e) {
-        double ex = e.getX() + e.size / 2.0;
-        double ey = e.getY() + e.size / 2.0;
+    boolean matchStickHits(Enemy e) {
+        // CRITICAL precision update: using getRealX() and getRealY() for double precision
+        double ex = e.getRealX() + e.size / 2.0;
+        double ey = e.getRealY() + e.size / 2.0;
 
         // get the enemies position relative to arrow center
         double localX = ex - arrowCX;
@@ -115,10 +113,13 @@ public class MatchStick extends Weapon {
         double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
         double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
 
-        // check if its inside the rectangle
-        return Math.abs(rotX) <= tipWidth / 2.0
-                && rotY >= -shaftHeight / 2.0 - tipHeight
-                && rotY <= shaftHeight / 2.0;
+        // Calculate enemy radius to pad the bounding check parameters
+        double enemyRadius = e.size / 2.0;
+
+        // check if its inside the rectangle (expanded on all sides by enemyRadius)
+        return Math.abs(rotX) <= (tipWidth / 2.0 + enemyRadius)
+                && rotY >= (-shaftHeight / 2.0 - tipHeight - enemyRadius)
+                && rotY <= (shaftHeight / 2.0 + enemyRadius);
     }
 
     /**
@@ -238,7 +239,7 @@ public class MatchStick extends Weapon {
 
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
 
-            if (canHit && arrowHits(PolygonGame.enemies.get(i))) {
+            if (canHit && matchStickHits(PolygonGame.enemies.get(i))) {
                 boolean hit = false;
 
                 for (int j = 0; j < hitEnemies.size(); j++) {

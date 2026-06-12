@@ -90,6 +90,7 @@ public class PowerUp extends GameObject {
 		switch (buffType) {
 		case 0:
 			Player.health += 5;
+			Player.maxHealth+=5;
 			break;
 
 		case 1:
@@ -98,6 +99,11 @@ public class PowerUp extends GameObject {
 
 		case 2: // attack speed
 			Player.attackCooldown -= 1;
+			
+			if (Player.attackCooldown<=1){
+				Player.attackCooldown=1;
+				//maxes out at 1 
+			}
 			break;
 
 		case 3: // lightning
@@ -152,6 +158,7 @@ public class PowerUp extends GameObject {
 			} else {
 				ArrowSpread.arrowCount++;
 				ArrowSpread.damage++;
+				ArrowSpread.cooldown-=ArrowSpread.cooldown*0.1;
 			}
 			break;
 		}

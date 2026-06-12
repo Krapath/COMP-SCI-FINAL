@@ -18,6 +18,7 @@ public class Player extends GameObject {
     static int attackTimer = 0;
     static int attackCooldown= 10;
     static int health = 10;
+    static int maxHealth = 10;
     static int score = 0;
     static int xp = 0;
     static int level = 1;
@@ -27,9 +28,8 @@ public class Player extends GameObject {
     static boolean matchStickActive = false; // does not really do much right now
     static boolean dashActive = false;
     static boolean arrowSpreadActive = false;
-    static double xpReq = 
-    5 * level * Math.log(level + 1);
-    //0;
+    static double xpReq = 2 * level * Math.log(level + 1);
+    //0; // debug
     static boolean invulnerable = false;
     static int invulnerableDuration = 30;
     static int invulnerableTimer = 0;

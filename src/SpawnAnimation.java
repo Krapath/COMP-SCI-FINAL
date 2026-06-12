@@ -76,7 +76,6 @@ public class SpawnAnimation extends GameObject {
         y += (Math.sin(playerAngle) * speed) + (r.nextInt(speed * 2) - speed);
         setPosition(x, y);
         if (collides(game.player)) { // if collides with player, remove from game and list
-
             if (playSpawnSound){
                 SoundEffects("SFX/SPAWN_SOUND.wav",-4.0f);
                 playSpawnSound=false;
@@ -96,6 +95,7 @@ public class SpawnAnimation extends GameObject {
 
         if (spawnParticles.size() <= 1) { // a few particles are left make them disappear
             // ensures that all particles are removed from the game
+
             for (SpawnAnimation m : spawnParticles) {
                 game.remove(m);
             }
@@ -103,6 +103,7 @@ public class SpawnAnimation extends GameObject {
             game.remove(this);
             // set the player to full color
             game.player.setColor(new Color(0, 0, 255, 255));
+            
             spawningAnimation = false;
         }
     }
