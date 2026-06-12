@@ -63,6 +63,9 @@ public class DeathScreen extends GameObject {
         gameOverFont = menuFont.deriveFont(85 * scaleFactor);
     }
 
+    /**
+     * spawn the death screen and pause the game
+     */
     public void youDied() {
         // pause the game
         PolygonGame.gamePause = true;
@@ -109,7 +112,9 @@ public class DeathScreen extends GameObject {
         SoundEffects.play("SFX/GAME_OVER.wav", -15.0f);
     }
 
-    // clears everything and sets the game to how it would start
+    /**
+     * revert the game to its original state
+     */
     public void returnToZero() {
         // remove all death screen buttons
         for (DeathScreen m : deathScreenButtons) {

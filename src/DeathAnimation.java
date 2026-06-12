@@ -7,18 +7,18 @@ public class DeathAnimation extends GameObject {
 
     // set variables
     static boolean dyingAnimation = false;
+        static Random r = new Random();
+            static boolean playDeathSound2 = true;
     PolygonGame game;
     int size;
     public int timer = 0;
     public int particleTransparency = 255;
-    static Random r = new Random();
     public int duration = 30;
-
-    static boolean playDeathSound2 = true;
     private static ArrayList<DeathAnimation> dyingParticles = new ArrayList<>();
 
-    // dummy constructor for the death particles, not used to actually spawn the
-    // animation
+    /**
+     * Dummy constructor to build death particles
+     */
     public DeathAnimation(PolygonGame game, int x, int y) {
         this.game = game;
         size = Player.size / 2;
@@ -27,13 +27,16 @@ public class DeathAnimation extends GameObject {
         setColor(new Color(0, 0, 255, particleTransparency));
     }
 
-    // method to spawn particles
+    /**
+     * runs the death animation
+     */
     public void deathAnimation(PolygonGame game) {
-        game.player.setColor(new Color(0, 0, 255, 0)); // make player invisible
-        for (int i = 0; i < 8; i++) {
+        // make player invisible
+        game.player.setColor(new Color(0, 0, 255, 0)); 
+        // put dots closed to the player with some randomization. Number of dots is based on player level
+        for (int i = 0; i < Player.level * 2; i++) {
             int x = (int) (game.player.x + Player.size / 2 + r.nextInt(Player.size + 1) - Player.size / 2);
             int y = (int) (game.player.y + Player.size / 2 + r.nextInt(Player.size + 1) - Player.size / 2);
-            // put the dots in a place close to the player, with some randomization
             addParticle(game, x, y);
         }
         dyingAnimation = true;
@@ -47,10 +50,8 @@ public class DeathAnimation extends GameObject {
     }
 
     public void act() {
-
-        // optimize
         if (!dyingAnimation) {
-            return;
+            return; // if death animation isn't running skip code
         }
         int speed = Player.size / 5;
         int x = getX();
