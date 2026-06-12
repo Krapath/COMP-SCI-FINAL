@@ -29,8 +29,7 @@ public class ArrowSpread extends Ability {
 
 	public void act() {
 		super.act();
-		performAbility(); // continuously run the ability while it's active, so
-							// that it shoots arrows when ability is active
+		performAbility(); // continuously run the ability while it's active, the ability automatically performs when teh cooldown is off
 
 	}
 
@@ -38,6 +37,7 @@ public class ArrowSpread extends Ability {
 		if (canUse()) {
 			startCooldown();
 
+			// spawns in a radial pattern scaling based on the arrowCount
 			for (int i = 0; i < arrowCount; i++) {
 
 			    double angleInRadians = (i * 2 * Math.PI) / arrowCount;

@@ -43,6 +43,7 @@ public class ChainLightning extends Weapon {
     
     // unlike tranditional weapons that actively run, chain lightnings logic runs purely in the constructor
     // as such, act is simply purely visual
+    
     /**
      * create a chain lightning starting from an initial enemy.
      * enemy the initial enemy hit

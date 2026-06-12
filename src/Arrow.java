@@ -27,10 +27,7 @@ public class Arrow extends Weapon {
 	int projSize;
 	ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
-	/**
-	 * create a new arrow.
-	 * Takes angle for target angle of the arrow
-	 */
+
 	public Arrow(PolygonGame game, double angle) {
 		super(game, "Cast", "Arrow");
         this.game = game;
@@ -55,9 +52,7 @@ public class Arrow extends Weapon {
 		spriteSize = projSize;
 	}
 
-	/**
-	 * paint: render the arrow sprite rotated to its sprite angle.
-	 */
+	//render the arrow sprite rotated to its sprite angle.
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		AffineTransform old = g2d.getTransform();
@@ -98,9 +93,6 @@ public class Arrow extends Weapon {
 	        && rotX <= (shaftHeight / 2.0 + enemyRadius);
 	}
 
-	/**
-	 * update arrow position, collision, and removal each frame.
-	 */
 	public void act() {
 		if(PolygonGame.gamePause){
 			return;
@@ -117,19 +109,20 @@ public class Arrow extends Weapon {
 		arrowCY = y + projSize / 2.0;
 		
 		for (int i = 0; i < PolygonGame.enemies.size(); i++) { //for every enemy in the game
-			if (arrowHits(PolygonGame.enemies.get(i))) { //if it collides with an enemy
+			Enemy target = PolygonGame.enemies.get(i);
+			if (arrowHits(target)) { //if it collides with an enemy
 				boolean hit = false;
 				for (int j = 0; j < hitEnemies.size(); j++) { //for every enemy already hit
-					if (PolygonGame.enemies.get(i) == hitEnemies.get(j)) { //if this enemy has already been hit, sets hit to true
+					if (target == hitEnemies.get(j)) { //if this enemy has already been hit, sets hit to true
 						hit = true;
 					}
 				}
 
 				if (!hit) { // if this enemy has not already been hit by this
 							// arrow
-					hitEnemies.add(PolygonGame.enemies.get(i));
-					PolygonGame.enemies.get(i).health -= damage;
-					PolygonGame.enemies.get(i).damaged = true;
+					hitEnemies.add(target);
+					target.health -= damage;
+					target.damaged = true;
 					
 					pierce--;
 					

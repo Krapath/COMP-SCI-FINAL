@@ -106,14 +106,14 @@ public class MatchStick extends Weapon {
         double localY = ey - arrowCY;
 
         // subtract the PI/2 offset since spriteAngle always has it added
-        // 2d rotation nmatrix
+        // 2d rotation matrix
         // essentially unrotate the enemy by the negative of the arrow's angle so that the arrow is axis aligned
         // then check if the enemy's coordinates are within the bounds of the arrow's hitbox as if it were not rotated
         double checkAngle = -(spriteAngle - Math.PI / 2);
         double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
         double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
 
-        // Calculate enemy radius to pad the bounding check parameters
+        // find radius to account for
         double enemyRadius = e.size / 2.0;
 
         // check if its inside the rectangle (expanded on all sides by enemyRadius)
@@ -238,25 +238,25 @@ public class MatchStick extends Weapon {
         boolean canHit = (aimingTimer == 0 && rotationTimer == 0); // can only hit while shooting or returning
 
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
-
-            if (canHit && matchStickHits(PolygonGame.enemies.get(i))) {
+        	Enemy target = PolygonGame.enemies.get(i);
+            if (canHit && matchStickHits(target)) {
                 boolean hit = false;
 
                 for (int j = 0; j < hitEnemies.size(); j++) {
-                    if (PolygonGame.enemies.get(i) == hitEnemies.get(j)) {
+                    if (target == hitEnemies.get(j)) {
                         hit = true;
                     }
                 }
 
                 if (!hit) { // if this enemy has not already been hit by this arrow
-                    hitEnemies.add(PolygonGame.enemies.get(i));
-                    PolygonGame.enemies.get(i).health -= damage;
-                    PolygonGame.enemies.get(i).damaged=true;
+                    hitEnemies.add(target);
+                    target.health -= damage;
+                    target.damaged=true;
 
-                    if (PolygonGame.enemies.get(i).health <= 0) {
-                        hitEnemies.remove(PolygonGame.enemies.get(i));
-                        game.remove(PolygonGame.enemies.get(i));
-                        PolygonGame.enemies.remove(i);
+                    if (target.health <= 0) {
+                        hitEnemies.remove(target);
+                        game.remove(target);
+                        PolygonGame.enemies.remove(target);
                         i--;
                     }
                 }
