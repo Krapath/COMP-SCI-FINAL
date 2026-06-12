@@ -7,8 +7,8 @@ public class DeathAnimation extends GameObject {
 
     // set variables
     static boolean dyingAnimation = false;
-        static Random r = new Random();
-            static boolean playDeathSound2 = true;
+    static Random r = new Random();
+    static boolean playDeathSound2 = true;
     PolygonGame game;
     int size;
     public int timer = 0;
@@ -32,8 +32,9 @@ public class DeathAnimation extends GameObject {
      */
     public void deathAnimation(PolygonGame game) {
         // make player invisible
-        game.player.setColor(new Color(0, 0, 255, 0)); 
-        // put dots closed to the player with some randomization. Number of dots is based on player level
+        game.player.setColor(new Color(0, 0, 255, 0));
+        // put dots closed to the player with some randomization. Number of dots is
+        // based on player level
         for (int i = 0; i < Player.level * 2; i++) {
             int x = (int) (game.player.x + Player.size / 2 + r.nextInt(Player.size + 1) - Player.size / 2);
             int y = (int) (game.player.y + Player.size / 2 + r.nextInt(Player.size + 1) - Player.size / 2);
@@ -42,7 +43,9 @@ public class DeathAnimation extends GameObject {
         dyingAnimation = true;
     }
 
-    // helper method to add a particle to the game and the list
+    /**
+     * helper method to add a particle to the game and the list
+     */
     private void addParticle(PolygonGame game, int x, int y) {
         DeathAnimation particle = new DeathAnimation(game, x, y);
         game.add(particle);
@@ -62,10 +65,8 @@ public class DeathAnimation extends GameObject {
             setPosition(x, y);
             timer++;
         } else if (timer < duration * 2) {// make the wiggle further
-
             x += Math.ceil(r.nextInt(speed * 3 + 1) - speed * 1.5);
             y += Math.ceil(r.nextInt(speed * 3 + 1) - speed * 1.5);
-
             setPosition(x, y);
             timer++;
         } else if (timer < (int) (duration * 2.16)) { // make the particles fly outwards
@@ -73,11 +74,10 @@ public class DeathAnimation extends GameObject {
             x += (Math.cos(playerAngle + Math.PI) * speed * 5);
             y += (Math.sin(playerAngle + Math.PI) * speed * 5);
             setPosition(x, y);
-            if (playDeathSound2) {
+            if (playDeathSound2) {// play death sound
                 SoundEffects.play("SFX/DEATH_SOUND2.wav", 5.0f);
                 playDeathSound2 = false;
             }
-
             timer++;
         } else if (particleTransparency > 20) { // make the particles fade out
             this.setColor(new Color(0, 0, 255, particleTransparency));
@@ -88,12 +88,11 @@ public class DeathAnimation extends GameObject {
             }
             dyingParticles.clear();
             dyingAnimation = false;
+            // reset the death screen for next time
+            playDeathSound2 = true;
             timer = 0;
-            // set up death screen
-            playDeathSound2 = true; // make true again for later if you retry
+            // open the death menu
             game.deathScreenController.youDied();
         }
-
     }
-
 }
