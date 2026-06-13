@@ -100,6 +100,7 @@ public class Projectile extends Weapon {
             setPosition();
             if (collides(game.player)) {
                 Player.health -= 1;
+                SoundEffects.play("SFX/DAMAGED.wav", -3.0f);
                 game.remove(this);
                 PolygonGame.projectiles.remove(this);
             }

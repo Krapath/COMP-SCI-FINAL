@@ -108,16 +108,20 @@ public class DisplayGUI extends GameObject {
             angle += 360;
         }
 
+        // Set font for debug text scaled to window size
+        g.setFont(pixelFont);
+        
         // draw mouse and player coordinates
         g.drawString("MOUSE    X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 10, 20);
         g.drawString("PLAYER   X:" + game.player.getX() + "  Y:" + game.player.getY(), 10, 40);
-        //display angle from mout cursor and player in degrees
+        //display angle from mouse cursor and player in degrees
         g.drawString("ANGLE:" + angle, 10, 60);
         // display the number of enemies and hp
         g.drawString("ENEMIES: " + PolygonGame.enemies.size(), 10, 80);
-        g.drawString("HP: " + Player.health, 10, 100);
+        g.drawString("KILLS: " + game.killCounter, 10, 100);
+        g.drawString("HP: " + Player.health, 10, 120);
         // display the players xp and xp required to level up
-        g.drawString("XP: " + Player.xp + "/" + Player.xpReq, 10, 120);
+        g.drawString("XP: " + Player.xp + "/" + Player.xpReq, 10, 140);
         // display the players level
         g.drawString("LEVEL: " + Player.level, 10, 140);
         // display the mouse cursor as a red rectangle

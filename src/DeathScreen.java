@@ -125,14 +125,40 @@ public class DeathScreen extends GameObject {
         }
         deathScreenButtons.clear();
 
-        // clear all enemies, projectiles, XP orbs, and power-ups
+        // clear all enemies, projectiles, XP orbs, and power ups
         for (Enemy e : PolygonGame.enemies) {
             game.remove(e);
         }
         PolygonGame.enemies.clear();
+
+        // remove and clear projectiles
+        for (Projectile p : PolygonGame.projectiles) {
+            game.remove(p);
+        }
+        PolygonGame.projectiles.clear();
+
+        // remove and clear arrows
+        for (Arrow a : PolygonGame.arrows) {
+            game.remove(a);
+        }
+        PolygonGame.arrows.clear();
+
+        // remove and clear glaives
+        for (Glaive g : PolygonGame.glaives) {
+            game.remove(g);
+        }
+        PolygonGame.glaives.clear();
+
+        // remove and clear powerups
+        for (PowerUp p : PolygonGame.powerUps) {
+            game.remove(p);
+        }
+        PolygonGame.powerUps.clear();
         for (Weapon w : Player.weapons) {
             game.remove(w);
         }
+
+
         Player.weapons.clear();
         Player.abilities.clear();
         PowerUp.buffArray = new int[PowerUp.numBuffs]; // reset the buff array to all 0s
@@ -140,6 +166,8 @@ public class DeathScreen extends GameObject {
             game.remove(x);
         }
         PolygonGame.xpOrbs.clear();
+
+        
 
         // reset scaling for the enemies
         Enemy.healthMultiplier = 1;

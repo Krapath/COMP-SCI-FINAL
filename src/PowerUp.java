@@ -326,7 +326,7 @@ public class PowerUp extends GameObject {
 		if (isClickedAndReleased(game, mouseX, mouseY)) {
 			
 			createBuff(buffType);
-			SoundEffects("SFX/POWERUP.wav",-20.0f);
+			SoundEffects.play("SFX/POWERUP.wav",-20.0f);
 
 			// remove all powerups from the game
 			for (int i = 0; i < PolygonGame.powerUps.size(); i++) { 

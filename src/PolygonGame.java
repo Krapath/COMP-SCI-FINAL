@@ -42,8 +42,7 @@ public class PolygonGame extends Game {
     HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); 
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
-    public int spawnedAttempts = 0;
-    public int maxEnemiesSpawned = 100;
+    public int maxEnemiesSpawned = 200;
     public int enemySpawnSeed;
 
     public void setup() {
@@ -135,9 +134,9 @@ public class PolygonGame extends Game {
             for (PowerUp p : powerUps) {
                 add(p);
             }
-            Player.xp = 0; // reset xp after spawning powerup
+            Player.xp = 0; // reset score after spawning powerup
             Player.level += 1;
-            Player.xpReq = Math.floor(2 * Player.level * Math.log(Player.level + 1));
+            Player.xpReq = Math.round(Math.floor(2 * Player.level * Math.log(Player.level + 1)));
             // 0; // debug
             Player.health = Math.min((int)Math.ceil(0.1*Player.maxHealth+Player.health),Player.maxHealth);
             choosingBuff = true;
@@ -213,13 +212,15 @@ public class PolygonGame extends Game {
      * based on the algorithmn
      */
     public void enemySpawning() {
-        if (r.nextInt(10000) < Math.max(300 - 2 * killCounter, 20)) { //spawns normal enemy, becoming less likely as more enemies die, min 20/10000 chance
+    	//spawns normal enemy, becoming less likely as more enemies die, min 20/10000 chance
+        if (r.nextInt(10000) < Math.max(300 - 2 * killCounter, 10)) { 
             enemy = new Enemy(this, 0, 0, r.nextInt());
             add(enemy);
             enemies.add(enemy);
         }
-
-        if (!minibossSpawned && (killCounter + 1) % 50 == 0) { //spawn big boy every 80 enemy killed
+        
+      //spawn big boy every 80 enemy killed
+        if (!minibossSpawned && (killCounter + 1) % 50 == 0) { 
             minibossSpawned = true;
             enemy = new Enemy(this, 1, 0, r.nextInt());
             add(enemy);
@@ -228,25 +229,36 @@ public class PolygonGame extends Game {
             minibossSpawned = false;
         }
 
-        if (r.nextInt(10000) < Math.min(10 * (killCounter / 25), 50)) {//spawns hoard of normal enemies, becoming more likely over time, max 50/10000 chance
+      //spawns hoard of normal enemies, becoming more likely over time, max 50/10000 chance
+        if (r.nextInt(10000) < Math.min(10 * (killCounter / 25), 100)) {
             enemySpawnSeed = r.nextInt();
             for (int i = 0; i < 10; i++) {
-                enemy = new Enemy(this, 0, 0, enemySpawnSeed);
+                enemy = new Enemy(this, 0, 4, enemySpawnSeed);
                 add(enemy);
                 enemies.add(enemy);
             }
         }
 
-        if (killCounter > 30 && r.nextInt(10000) < 10) { //spawns a bat hoard when over 50 enemies killed, 10/10000 chance
-            enemySpawnSeed = r.nextInt();
+      //spawns wave of normal enemies, becoming more likely over time, max 50/10000 chance
+        if (r.nextInt(10000) < Math.min(10 * (killCounter / 25), 150)) {
             for (int i = 0; i < 10; i++) {
-                enemy = new Enemy(this, 4, 0, enemySpawnSeed);
+                enemy = new Enemy(this, 0, 4, r.nextInt());
+                add(enemy);
+                enemies.add(enemy);
+            }
+        }
+        
+      //spawns a bat hoards when over 40 enemies killed, 20/10000 chance
+        if (killCounter > 40 && r.nextInt(10000) < 20+killCounter/50) { 
+            for (int i = 0; i < 10; i++) {
+                enemy = new Enemy(this, 4, 0, r.nextInt());
                 add(enemy);
                 enemies.add(enemy);
             }
         }
 
-        if (killCounter > 40 && r.nextInt(10000) < Math.min(10 * (killCounter / 30), 80)) { //spanws gunner or throwing goblin when more than 80 kills, max 80/10000 chance
+      //spawns gunner or throwing goblin when more than 80 kills, max 80/10000 chance
+        if (killCounter > 40 && r.nextInt(10000) < Math.min(10 * (killCounter / 30), 500)) { 
             if (r.nextInt(2) == 0) {
                 enemy = new Enemy(this, 2, 0, r.nextInt());
             } else {
@@ -256,8 +268,8 @@ public class PolygonGame extends Game {
             add(enemy);
             enemies.add(enemy);
         }
-
-        spawnedAttempts++;
     }
 
 }
+
+

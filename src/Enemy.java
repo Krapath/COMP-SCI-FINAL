@@ -39,10 +39,8 @@ public class Enemy extends GameObject {
         healthMultiplier = (int) Math.pow(2.0, (double) (game.killCounter / 150));
         //System.out.println(healthMultiplier);
         r = new Random(seed);
-        // scaled enemy size and speed
-        size = (game.getWindowWidth() + game.getWindowHeight()) / 80; 
-        speed = (game.getWindowWidth() + game.getWindowHeight()) / 500; 
-        
+        size = (game.getWindowWidth() + game.getWindowHeight()) / 80; // enemy size is 1/100 of the entire window
+        speed = (game.getWindowWidth() + game.getWindowHeight()) / 500; // speed is 1/100 of the entire window size
         this.game = game;
         spawnEnemy(spawn);
         enemyType(type);
@@ -54,10 +52,9 @@ public class Enemy extends GameObject {
         this.spawnType = spawn;
         this.givenX = givenX;
         this.givenY = givenY;
-        healthMultiplier = (int) Math.pow(2.0, (double) (game.spawnedAttempts / 1000));
+        healthMultiplier = (int) Math.pow(2.0, (double) (game.killCounter / 500));
         //System.out.println(healthMultiplier); debug
         r = new Random(seed);
-        // scaled enemy size and speed
         size = (game.getWindowWidth() + game.getWindowHeight()) / 80; // enemy size is 1/100 of the entire window
         speed = (game.getWindowWidth() + game.getWindowHeight()) / 500; // speed is 1/100 of the entire window size
         this.game = game;
@@ -228,6 +225,22 @@ public class Enemy extends GameObject {
                     }
                 } while (collided);
                 break;
+            case 4: //hoard spawn, helps spawn on top of each other when seed is the same
+            	int side = r.nextInt(4); // randomly picks a side of the screen to spawn on
+                if (side == 0) { // top
+                    x = r.nextInt(game.getWindowWidth() - size);
+                    y = (int) (0 - game.getWindowHeight() * .1);
+                } else if (side == 1) { // right
+                    x = (int) (game.getWindowWidth() * 1.1);
+                    y = r.nextInt(game.getWindowHeight() - size);
+                } else if (side == 2) { // bottom
+                    x = r.nextInt(game.getWindowWidth() - size);
+                    y = (int) (game.getWindowHeight() * 1.1);
+                } else { // left
+                    x = (int) (0 - game.getWindowWidth() * .1);
+                    y = r.nextInt(game.getWindowHeight() - size);
+                }
+                
         }
 
         setPosition(); //sets the starting position
@@ -309,8 +322,15 @@ public class Enemy extends GameObject {
      */
     public void knockBack(double amount, GameObject target) {
         double playerAngle = Math.atan2(target.y - y, target.x - x);
+        if (target.y == y && target.x == x) { //ensures knockback works when enemies fully on top of each other
+        	x += r.nextInt(20);
+        	y += r.nextInt(20);
+        } else { //push away
         x -= (Math.cos(playerAngle) * amount);
         y -= (Math.sin(playerAngle) * amount);
+        }
     }
 
 }
+
+

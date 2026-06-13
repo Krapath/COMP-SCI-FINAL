@@ -38,7 +38,7 @@ public class Arrow extends Weapon {
         projSize = size * 5;
         shaftWidth = (int) (size * 1.5);
         shaftHeight = (int) (size * 3);
-        speed = (game.getWindowHeight() + game.getWindowWidth()) / 1000;
+        speed = (game.getWindowHeight() + game.getWindowWidth()) / 750;
 
         setSize(projSize, projSize);
         setColor(Color.BLUE);

@@ -1,6 +1,10 @@
 import java.awt.Color;
 import java.util.Random;
 
+/**
+ * arrowspread: an ability that fires multiple arrows in a spread pattern
+ * simultaneously to cover a wider area.
+ */
 public class ArrowSpread extends Ability {
 
 	PolygonGame game;

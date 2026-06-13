@@ -1,5 +1,9 @@
 import java.awt.Color;
 
+/**
+ * dash: an ability that grants temporary invulnerability and increased movement speed
+ * to quickly escape from danger.
+ */
 public class Dash extends Ability{
 	
 	
