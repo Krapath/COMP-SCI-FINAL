@@ -1,10 +1,18 @@
 
 import java.awt.Color;
 import java.util.Random;
-import javax.swing.ImageIcon;
-import java.awt.Image;
 
-/**creates a unique enemy based on type given and handles behavior and scaling
+//types of enemies
+enum Type {
+    PEASANT,
+    BIGBOY,
+    GUNNER,
+    THROWINGGOBLIN,
+    BAT
+}
+
+/**
+ * creates a unique enemy based on type given and handles behavior and scaling
  * Author: Mohammad Sadeghi
  */
 public class Enemy extends GameObject {

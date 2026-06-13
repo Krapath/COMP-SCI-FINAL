@@ -1,31 +1,22 @@
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
-
 import java.awt.Graphics2D; // so i can have thicker lines for the chain lightning
-import java.io.File;
 import java.awt.BasicStroke;
 
 /**
- * chain lightning: visual and logic for a chaining lightning effect that
- * damages nearby enemies when triggered by projectile
- * Author: Hugo To
+ * visual and logic for a chaining lightning effect that damages nearby enemies
+ * when triggered by projectile Author: Hugo To
  */
 public class ChainLightning extends Weapon {
 
     Random r = new Random();
-    double randomAngleStatic = r.nextDouble();
     PolygonGame game;
 
     private static final int CHAIN_COUNT_DEFAULT = 3;
     static int chainCount = CHAIN_COUNT_DEFAULT;
-    static int damage = 1;
     int chainRange;
     private static final int DURATION_VISIBLE_DEFAULT = 10;
     int durationVisible = DURATION_VISIBLE_DEFAULT; // the amount of frames the chain lightning is visible for
@@ -38,9 +29,9 @@ public class ChainLightning extends Weapon {
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
     /**
-     * Creates chain lightning starting from an initial enemy.
-     * Unlike normal weapons, all the damage and branching math runs instantly
-     * right here in the constructor. The act() method is just used for visuals.
+     * Creates chain lightning starting from an initial enemy. Unlike normal
+     * weapons, all the damage and branching math runs instantly right here in
+     * the constructor. The act() method is just used for visuals.
      */
     public ChainLightning(Enemy enemy, PolygonGame game) {
         super(game, "Cast", "Chain Lightning");
@@ -64,7 +55,7 @@ public class ChainLightning extends Weapon {
                 Enemy potentialTarget = PolygonGame.enemies.get(j);
 
                 if (!hitEnemies.contains(potentialTarget)) { // find the closest enemy that has not already been hit and
-                                                             // is within range
+                    // is within range
                     double distance = Math.sqrt(Math.pow(PolygonGame.enemies.get(j).getX() - initialTarget.getX(), 2)
                             + Math.pow(PolygonGame.enemies.get(j).getY() - initialTarget.getY(), 2));
                     if (distance < closestDistance && distance <= chainRange) {
@@ -90,8 +81,9 @@ public class ChainLightning extends Weapon {
     }
 
     public void paint(Graphics g) {
-        if (PolygonGame.gamePause)
+        if (PolygonGame.gamePause) {
             return;
+        }
 
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
         g2d.setStroke(new BasicStroke(lightningSize)); // set line thickness for the lightning

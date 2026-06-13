@@ -13,8 +13,9 @@ public class Glaive extends Weapon {
     int size = (int) (Player.size / 1);
     PolygonGame game;
     Double angle;
+
     private static final int GLAIVE_ROTATION_FACTOR = 5;
-    int framesPerRotation = Player.speed * GLAIVE_ROTATION_FACTOR; //numbers of acts for 1 full rotation
+    static int framesPerRotation = Player.speed * GLAIVE_ROTATION_FACTOR; //numbers of acts for 1 full rotation
     Double speed = 2 * Math.PI / framesPerRotation;
     int radius;
     public int rotationTimer = 0; //how many acts the glaive had been rotating for
@@ -51,7 +52,7 @@ public class Glaive extends Weapon {
         g2d.rotate(spriteAngle);
         g2d.translate(-getWidth() / 2.0, -getHeight() / 2.0);
 
-        // REMEMBER CHANGE THE GLAIVES SIZE
+        //draws the sprite and spins it
         if (glaiveImage != null) {
             g2d.drawImage(glaiveImage, 0, 0, (int) (size / 0.85), (int) (size / 0.85), null);
         }
@@ -64,7 +65,7 @@ public class Glaive extends Weapon {
             return;// projectiles do not move or collide with enemies while the player is choosing a buff
         }
 
-        spriteAngle -= 1;
+        spriteAngle -= 1;//sets up counterclockwise spin for sprite
         if (rotationTimer == framesPerRotation) {//resets glaive after a full rotation to prevent bugs
             rotationTimer = 0;
             game.createGlaive(game.numberOfGlaives);
@@ -75,34 +76,28 @@ public class Glaive extends Weapon {
         setPosition();
 
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
-            if (collides(PolygonGame.enemies.get(i))) {
+            Enemy target = PolygonGame.enemies.get(i);
+            if (collides(target)) {
                 boolean hit = false;
-
                 for (int j = 0; j < hitEnemies.size(); j++) { //if enemy already hit, dont hit again.
-                    if (PolygonGame.enemies.get(i) == hitEnemies.get(j)) {
+                    if (target == hitEnemies.get(j)) {
                         hit = true;
                     }
                 }
 
                 if (!hit) { //if not hit
-                    hitEnemies.add(PolygonGame.enemies.get(i)); //count as hit from now on
-                    PolygonGame.enemies.get(i).health -= damage; // reduce enemy health on collision
-                    PolygonGame.enemies.get(i).damaged = true;
+                    hitEnemies.add(target); //count as hit from now on
+                    target.health -= damage; // reduce enemy health on collision
+                    target.damaged = true;
 
-                    if (PolygonGame.enemies.get(i).health <= 0) {
-
-                        hitEnemies.remove(PolygonGame.enemies.get(i));
-
-                        game.remove(PolygonGame.enemies.get(i)); // remove enemy if health is depleted
-                        PolygonGame.enemies.remove(i); // remove enemy from the list
-                        i--;
-
+                    if (target.health <= 0) {
+                        hitEnemies.remove(target);
                     }
                 }
             } else {
                 for (int j = 0; j < hitEnemies.size(); j++) { //if enemy already hit, dont hit again.
-                    if (PolygonGame.enemies.get(i) == hitEnemies.get(j)) {
-                        hitEnemies.remove(PolygonGame.enemies.get(i));
+                    if (target == hitEnemies.get(j)) {
+                        hitEnemies.remove(target);
                     }
                 }
             }

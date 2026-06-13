@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
-/** handles the creation and animation of death screen panel UI 
- *  Author: Raymond Tan, Hugo To
+/**
+ * handles the creation and animation of death screen panel UI Author: Raymond
+ * Tan, Hugo To
  */
 public class DeathScreen extends GameObject {
 
@@ -197,7 +198,6 @@ public class DeathScreen extends GameObject {
         ChainLightning.chainCount = 3;
         ChainLightning.damage = 1;
         AtGMissileMk1.damage = 1;
-        Glaive.damage = 1;
         MatchStick.damage = 1;
         ArrowSpread.arrowCount = 5;
         ArrowSpread.damage = 1;
@@ -259,9 +259,6 @@ public class DeathScreen extends GameObject {
             g2d.drawString(buttonName, textX, textY);
         }
     }
-
-    boolean readyToApply = false;
-    boolean wasPressed = false;
 
     public void act() {
         if (!PolygonGame.gamePause) {

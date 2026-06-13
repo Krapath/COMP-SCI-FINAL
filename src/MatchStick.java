@@ -1,7 +1,4 @@
 
-/** a flying matchstick weapon which roates around the player before launching in a certain direction and returning, damaging enemies
- * author: Hugo
- */
 import java.awt.Color;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
@@ -10,8 +7,8 @@ import java.awt.Graphics;
 import java.util.Random;
 
 /**
- * matchstick: a throwable match that aims then shoots and can return like a
- * boomerang.
+ * atchstick: a throwable match that aims then shoots and can return like a
+ * boomerang, doing damage Author: Hugo and Mohammad
  */
 public class MatchStick extends Weapon {
 
@@ -98,7 +95,7 @@ public class MatchStick extends Weapon {
      * collides
      */
     boolean matchStickHits(Enemy e) {
-        // CRITICAL precision update: using getRealX() and getRealY() for double precision
+
         double ex = e.getRealX() + e.size / 2.0;
         double ey = e.getRealY() + e.size / 2.0;
 
@@ -253,9 +250,6 @@ public class MatchStick extends Weapon {
 
                     if (target.health <= 0) {
                         hitEnemies.remove(target);
-                        game.remove(target);
-                        PolygonGame.enemies.remove(target);
-                        i--;
                     }
                 }
             }

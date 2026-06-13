@@ -125,7 +125,7 @@ public class PolygonGame extends Game {
 
         if (enemies.size() < maxEnemiesSpawned) //spawns enemies when less than maximum
         {
-            enemySpawning();
+            createEnemies();
         }
 
         for (int i = 0; i < Player.abilities.size(); i++) {
@@ -245,15 +245,15 @@ public class PolygonGame extends Game {
      * enemy and class Enemy post: creates a certain number and types of enemies
      * based on the algorithmn
      */
-    public void enemySpawning() {
-        //spawns normal enemy, becoming less likely as more enemies die, min 20/10000 chance
+    public void createEnemies() {
+        //spawns normal enemy, becoming less likely as more enemies die, min 10/10000 chance
         if (r.nextInt(10000) < Math.max(300 - 2 * killCounter, 10)) {
             enemy = new Enemy(this, 0, 0, r.nextInt());
             add(enemy);
             enemies.add(enemy);
         }
 
-        //spawn big boy every 80 enemy killed
+        //spawn big boy every 50 enemy killed
         if (!minibossSpawned && (killCounter + 1) % 50 == 0) {
             minibossSpawned = true;
             enemy = new Enemy(this, 1, 0, r.nextInt());
@@ -263,7 +263,7 @@ public class PolygonGame extends Game {
             minibossSpawned = false;
         }
 
-        //spawns hoard of normal enemies, becoming more likely over time, max 50/10000 chance
+        //spawns hoard of normal enemies, becoming more likely over time, max 100/10000 chance
         if (r.nextInt(10000) < Math.min(10 * (killCounter / 25), 100)) {
             enemySpawnSeed = r.nextInt();
             for (int i = 0; i < 10; i++) {
@@ -273,7 +273,7 @@ public class PolygonGame extends Game {
             }
         }
 
-        //spawns wave of normal enemies, becoming more likely over time, max 50/10000 chance
+        //spawns wave of normal enemies, becoming more likely over time, max 150/10000 chance
         if (r.nextInt(10000) < Math.min(10 * (killCounter / 25), 150)) {
             for (int i = 0; i < 10; i++) {
                 enemy = new Enemy(this, 0, 4, r.nextInt());
@@ -282,8 +282,8 @@ public class PolygonGame extends Game {
             }
         }
 
-        //spawns a bat hoards when over 40 enemies killed, 20/10000 chance
-        if (killCounter > 40 && r.nextInt(10000) < 20 + killCounter / 50) {
+        //spawns a bat hoards when over 40 enemies killed, max of 60/10000 chance
+        if (killCounter > 40 && r.nextInt(10000) < Math.min(20 + killCounter / 50, 60)) {
             for (int i = 0; i < 10; i++) {
                 enemy = new Enemy(this, 4, 0, r.nextInt());
                 add(enemy);
@@ -291,7 +291,7 @@ public class PolygonGame extends Game {
             }
         }
 
-        //spawns gunner or throwing goblin when more than 80 kills, max 80/10000 chance
+        //spawns gunner or throwing goblin when more than 80 kills, max 500/10000 chance
         if (killCounter > 40 && r.nextInt(10000) < Math.min(10 * (killCounter / 30), 500)) {
             if (r.nextInt(2) == 0) {
                 enemy = new Enemy(this, 2, 0, r.nextInt());

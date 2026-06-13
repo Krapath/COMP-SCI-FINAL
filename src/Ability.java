@@ -1,11 +1,10 @@
-import java.awt.*;
-import javax.swing.*;
 
 /**
  * timed ability with duration and cooldown.
  * Author: Hugo To
  */
 public class Ability {
+
     // maximum duration ticks for the ability.
     protected int maxDuration;
     // maximum cooldown ticks for the ability.
