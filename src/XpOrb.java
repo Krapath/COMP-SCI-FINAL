@@ -9,13 +9,11 @@ public class XpOrb extends GameObject {
     Random r = new Random();
     PolygonGame game;
 
-    double speed = 20.0; // maybe accelerate as it gets closer to the player
+    double speed;
     int distanceAttraction;
     boolean chasing = false;
     Image xpOrb;
-    /**
-     * A constructor used for when eneimies drop xp orbs
-     */
+
     public XpOrb(int enemyX, int enemyY, int size, PolygonGame game) {
         //assign values to object variables
         this.game = game;
@@ -27,6 +25,7 @@ public class XpOrb extends GameObject {
         setColor(Color.YELLOW);
         x = getX();
         y = getY();
+        speed = (game.getWindowHeight() + game.getWindowWidth()) / 150;
         xpOrb = new ImageIcon("Images/Sprites/XPORB_SPRITE.png").getImage();
     }
 
@@ -39,8 +38,9 @@ public class XpOrb extends GameObject {
 
     public void act() {
         if (PolygonGame.gamePause) {
-            return; // xp orbs do not move or collide with the player while the player is choosing a buff
-        }        // check for collision with player
+            return; 
+        }
+        
         //calculates if player is close to exp orb to decide if it should move towards it
         if ((Math.abs(game.player.x - x) <= distanceAttraction) && (Math.abs(game.player.y - y) <= distanceAttraction)) {
             chasing = true;

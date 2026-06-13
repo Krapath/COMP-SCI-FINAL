@@ -5,19 +5,19 @@ import javax.swing.*;
  * ability: represents a timed ability with duration and cooldown.
  */
 public class Ability {
-    // maximum duration ticks for the ability. 
+    // maximum duration ticks for the ability.
     protected int maxDuration;
-    // maximum cooldown ticks for the ability. 
+    // maximum cooldown ticks for the ability.
     protected int maxCooldown;
 
     protected String name;
     // active tickers counts down each tick
     protected int durationTimer = 0;
-    ///remaining cooldown ticks before ability can be reused. 
+    /// remaining cooldown ticks before ability can be reused.
     protected int cooldownTimer = 0;
-    //whether the ability is currently active. 
+    // whether the ability is currently active.
     protected boolean isActive = false;
-    
+
     /**
      * create an ability with a name, duration and cooldown.
      */
@@ -26,56 +26,54 @@ public class Ability {
         maxCooldown = maxCool;
         this.name = name;
     }
-    
+
     /**
      * startCooldown: activate the ability and reset timers.
      */
     public void startCooldown() {
         this.isActive = true;
-        this.durationTimer = maxDuration;  // reset duration
-        this.cooldownTimer = maxCooldown;  // reset cooldown
+        this.durationTimer = maxDuration; // reset duration
+        this.cooldownTimer = maxCooldown; // reset cooldown
     }
-
 
     /**
      * canUse: return true if the ability is ready to be used.
      */
-    public boolean canUse(){
+    public boolean canUse() {
         // can't use if on cooldown, already active, or game is paused
         return (cooldownTimer == 0 && !isActive && !PolygonGame.gamePause);
     }
-    
+
     /**
      * performAbility: trigger the ability if it can be used.
      */
-    public void performAbility(){
-        if (canUse()){
+    public void performAbility() {
+        if (canUse()) {
             startCooldown();
         }
     }
 
-
     /**
      * act: tick down duration and cooldown timers each frame.
      */
-    public void act(){
+    public void act() {
         if (cooldownTimer > 0) {
-            cooldownTimer--;  // tick down cooldown
+            cooldownTimer--; // tick down cooldown
         }
 
         if (isActive) {
             durationTimer--;
             if (durationTimer <= 0) {
                 isActive = false;
-                onDurationEnd();  // notify subclass
+                onDurationEnd(); // notify subclass
             }
         }
     }
-    
+
     /**
      * onDurationEnd: hook called when ability duration ends
      */
     public void onDurationEnd() {
 
-	}
+    }
 }

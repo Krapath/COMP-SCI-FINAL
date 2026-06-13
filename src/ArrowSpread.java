@@ -9,18 +9,21 @@ public class ArrowSpread extends Ability {
 
 	PolygonGame game;
 
-	static String name = "ArrowSpread";
 	Player player;
+	// ability config
+	static String name = "ArrowSpread";
+	static int duration = 5;
+	static int cooldown = 60;
+
+	// arrow stats
+	static int arrowCount = 5;
+	static int damage = 1;
+
+	// keep variables for player state modifications
 	Color originalColor;
 	double speedMult = 4;
 	boolean wasInvulnerable = false;
 	int originalSpeed;
-
-	static int duration = 5;
-	static int cooldown = 60;
-
-	static int arrowCount = 5;
-	static int damage = 1;
 
 	Random r = new Random();
 
@@ -33,7 +36,9 @@ public class ArrowSpread extends Ability {
 
 	public void act() {
 		super.act();
-		performAbility(); // continuously run the ability while it's active, the ability automatically performs when teh cooldown is off
+		// continuously run the ability while it's active, the ability automatically
+		// performs when the cooldown is off
+		performAbility();
 
 	}
 
@@ -44,7 +49,7 @@ public class ArrowSpread extends Ability {
 			// spawns in a radial pattern scaling based on the arrowCount
 			for (int i = 0; i < arrowCount; i++) {
 
-			    double angleInRadians = (i * 2 * Math.PI) / arrowCount;
+				double angleInRadians = (i * 2 * Math.PI) / arrowCount;
 				Arrow arrow = new Arrow(game, angleInRadians);
 				game.add(arrow);
 				PolygonGame.arrows.add(arrow);
@@ -54,7 +59,7 @@ public class ArrowSpread extends Ability {
 	}
 
 	public void onDurationEnd() {
-
+		// removes the spawned arrows when the ability time runs out
 		PolygonGame.arrows.clear();
 	}
 

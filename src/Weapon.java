@@ -2,16 +2,15 @@
  * weapon: base class for all weapons.
  */
 public class Weapon extends GameObject {
-    /** the game instance this weapon belongs to. */
     PolygonGame game;
 
-    /** default damage for weapons. */
+    //default damage for weapons. 
     private static final int DEFAULT_WEAPON_DAMAGE = 1;
     static int damage = DEFAULT_WEAPON_DAMAGE;
 
-    /** the type of the weapon. */
+    // the type of the weapon.
     public String weaponType;
-    /** the display name of the weapon. */
+    //the display name of the weapon. 
     public String weaponName;
 
     /**
@@ -24,9 +23,6 @@ public class Weapon extends GameObject {
         this.weaponName = weaponName;
     }
 
-    /**
-     * act: update logic for the weapon each frame.
-     */
     public void act(){
         
     }

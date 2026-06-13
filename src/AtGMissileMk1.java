@@ -24,10 +24,9 @@ public class AtGMissileMk1 extends Weapon {
 	int pivotX;
 	int pivotY;
 	int spiralDuration = r.nextInt(30) + 30; // duration of initial spiral
-												// movement with random duration
+
 	int randDirectionDuration = 15; // random direction movement
 	int explosionDuration = 17;
-	int speedReduction = 2;
 	int spriteSize;
 	public int randomEnemy;
 	boolean canDamage = true;
@@ -35,8 +34,11 @@ public class AtGMissileMk1 extends Weapon {
 	Enemy target;
 
 	static Image missileImage;
+
+	// missile stats
 	private static final int DEFAULT_ATG_MISSILE_DAMAGE = 1;
 	static int damage = DEFAULT_ATG_MISSILE_DAMAGE;
+	int speedReduction = 2;
 
 	/**
 	 * create an atg missile in game that follows enemies
@@ -44,9 +46,8 @@ public class AtGMissileMk1 extends Weapon {
 	public AtGMissileMk1(PolygonGame game) {
 		super(game, "Cast", "AtGMissileMk1");
 		this.game = game;
-		size = (game.getWindowWidth() + game.getWindowHeight()) / 250; // scaling
-																		// projectile
-																		// size
+		// scaling projectile size
+		size = (game.getWindowWidth() + game.getWindowHeight()) / 250;
 		radius = size; // the radius of the spiral
 		setColor(new Color(255, 165, 0, 15 * explosionDuration));
 		pivotX = game.player.getX() - size / 2;
@@ -86,12 +87,11 @@ public class AtGMissileMk1 extends Weapon {
 
 		g2d.setTransform(old);
 	}
-	// updates missile movement: spirals around player, then moves randomly, then tracks target.
-	// if target dies, missile continues travelling in a straight line before fading.
 
 	public void act() {
 
-		// sprite angle derived from velocity; missile rotates to face direction of travel.
+		// sprite angle based on velocity calculations, missile rotates to face
+		// direction of travel.
 		spriteAngle = Math.atan2(velY, velX);
 
 		if (PolygonGame.gamePause)
@@ -104,6 +104,7 @@ public class AtGMissileMk1 extends Weapon {
 				spiralSpeed += 0.0001;
 				spiralAngle += spiralSpeed;
 				spiralDuration--;
+				// finds x and y based on angle and distance
 				int x = (int) (radius * Math.cos(spiralAngle) + pivotX);
 				int y = (int) (radius * Math.sin(spiralAngle) + pivotY);
 
@@ -135,8 +136,8 @@ public class AtGMissileMk1 extends Weapon {
 					velY = speed * Math.sin(targetAngle);
 					setX(getX() + (int) velX);
 					setY(getY() + (int) velY);
-					// on collision, damage target, slow it, and start fade-out explosion
-					if (collides(target) && canDamage) { 
+					// on collision, damage target, slow it, and start fade out explosion
+					if (collides(target) && canDamage) {
 						target.health -= damage;
 						setSize((int) (size * 3.5), (int) (size * 3.5));
 
@@ -151,14 +152,17 @@ public class AtGMissileMk1 extends Weapon {
 				}
 
 			}
-			// if target dies, pick new target 
+			// if target dies, pick new target
 		} else if (canDamage) {
 			if (PolygonGame.enemies.size() > 0) {
 				randomEnemy = r.nextInt(PolygonGame.enemies.size());
 				target = PolygonGame.enemies.get(randomEnemy);
 			} else {
-				// no enemies left floats around
+				// if no enemies left floats around
 				target = null;
+
+				// angle becomes locked since theres no target to check anymore, slowly expands
+				// radius which makes drift effect
 				int x = (int) (radius * Math.cos(spiralAngle) + pivotX);
 				int y = (int) (radius * Math.sin(spiralAngle) + pivotY);
 				setX(x);
@@ -166,7 +170,7 @@ public class AtGMissileMk1 extends Weapon {
 				radius += 1;
 			}
 
-		// fade-out phase: missile continues straight line and fades
+			// missile fades out
 		} else if (!canDamage) {
 			explosionDuration--;
 			setColor(new Color(255, 215, 0, 15 * explosionDuration));

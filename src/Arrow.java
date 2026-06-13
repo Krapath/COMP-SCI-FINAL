@@ -12,6 +12,8 @@ public class Arrow extends Weapon {
 	PolygonGame game;
 	public double targetAngle;
 	public double speed;
+	
+	// arrow stats
 	public int pierce = 1;
     private static final int DEFAULT_ARROW_DAMAGE = 1;
     static int damage = DEFAULT_ARROW_DAMAGE;
@@ -71,6 +73,7 @@ public class Arrow extends Weapon {
 	 * return true if the given enemy's center intersects the arrow's rotated hitbox
 	 * The arrow has an orientation offset, so the collision math
 	 * must use the same offset to remain consistent with the visible sprite.
+	 * derived from the original match hitbox calculations
 	 */
 	public boolean arrowHits(Enemy e) {
 	    // get positions directly using real double precision properties
