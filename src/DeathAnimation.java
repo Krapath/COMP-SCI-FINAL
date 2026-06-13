@@ -3,6 +3,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * handles the creation and animation of death animation which consistes of
+ * cubes spawning and dispersing
+ * Author: Raymond Tan
+ */
 public class DeathAnimation extends GameObject {
     // array of all objects in the class
     private static ArrayList<DeathAnimation> dyingParticles = new ArrayList<>();

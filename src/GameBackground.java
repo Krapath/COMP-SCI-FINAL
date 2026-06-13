@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  * draws background with polygons of random darkness levels
- * very mutuable.
+ * Author: Hugo To
  */
 public class GameBackground extends GameObject {
 	// set variables

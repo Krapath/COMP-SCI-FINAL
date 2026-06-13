@@ -7,6 +7,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+/** draws all HUD/GUI for the game, displays real time information about player
+ *  Author: Hugo To, Mohammad Sadeghi
+ */
 public class DisplayGUI extends GameObject {
 
     PolygonGame game;
@@ -27,6 +30,7 @@ public class DisplayGUI extends GameObject {
     static double radius;
 
     private Font pixelFont;
+    private Font displayDebugFont;
 
     static int borderWidth = 4;
 
@@ -43,8 +47,8 @@ public class DisplayGUI extends GameObject {
             pixelFont = new Font("Monospaced", Font.BOLD, 100);
             e.printStackTrace();
         }
+        displayDebugFont = pixelFont.deriveFont((int) radius / 4f);
     }
-
 
     public void act() {
         // reposition every tick so text stays in corner
@@ -61,7 +65,6 @@ public class DisplayGUI extends GameObject {
             xPointsHealth[i] = (int) Math.round(x + 0.0001);
             yPointsHealth[i] = (int) Math.round(y + 0.0001);
 
-    
             healthAngle += Math.PI * 2 / (Player.health + 2);
 
         }
@@ -80,9 +83,7 @@ public class DisplayGUI extends GameObject {
 
             xPointsLevel[i] = (int) Math.round(x + 0.0001);
             yPointsLevel[i] = (int) Math.round(y + 0.0001);
- 
 
-            
             levelAngle += Math.PI * 2 / (Player.level + 2);
         }
 
@@ -93,14 +94,14 @@ public class DisplayGUI extends GameObject {
     }
 
     public void paint(Graphics g) {
-        
+
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
 
         g.setColor(Color.WHITE);
         String health = String.valueOf(Player.health);
         String level = String.valueOf(Player.level);
 
-        // finds the angle between the player and the mouse cursor and displays it in degrees
+        // finds the angle between the player and the mouse cursor 
         double angle = game.getAngle(game.player.getX(), game.player.getY(), game.getMouseX(), game.getMouseY())
                 * (180 / Math.PI);
         angle = -angle; // increase counterclockwise, follows standard unit circle convention
@@ -108,22 +109,24 @@ public class DisplayGUI extends GameObject {
             angle += 360;
         }
 
-        // Set font for debug text scaled to window size
-        
-        // draw mouse and player coordinates
-        g.drawString("MOUSE    X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 10, 20);
-        g.drawString("PLAYER   X:" + game.player.getX() + "  Y:" + game.player.getY(), 10, 40);
-        //display angle from mouse cursor and player in degrees
-        g.drawString("ANGLE:" + angle, 10, 60);
-        // display the number of enemies and hp
-        g.drawString("ENEMIES: " + PolygonGame.enemies.size(), 10, 80);
-        g.drawString("KILLS: " + game.killCounter, 10, 100);
-        g.drawString("HP: " + Player.health, 10, 120);
-        // display the players xp and xp required to level up
-        g.drawString("XP: " + Player.xp + "/" + Player.xpReq, 10, 140);
-        // display the players level
-        g.drawString("LEVEL: " + Player.level, 10, 160);
+        // text scaling
+        FontMetrics debugMetrics = g.getFontMetrics(displayDebugFont);
 
+        int lineHeight = debugMetrics.getHeight();
+
+        // slight offset so it stays in corner top left
+        int startX = 10;
+        int startY = debugMetrics.getAscent() + 10;
+        g2d.setFont(displayDebugFont);
+        // draws player position, mouse position, kills, etc
+        g.drawString("MOUSE  X:" + game.getMouseX() + " Y:" + game.getMouseY(), startX, startY);
+        g.drawString("PLAYER X:" + game.player.getX() + " Y:" + game.player.getY(), startX, startY + lineHeight);
+        g.drawString("ANGLE:" + Math.round(angle), startX, startY + (lineHeight * 2));
+        g.drawString("ENEMIES:" + PolygonGame.enemies.size(), startX, startY + (lineHeight * 3));
+        g.drawString("KILLS:" + game.killCounter, startX, startY + (lineHeight * 4));
+        g.drawString("HP:" + Player.health, startX, startY + (lineHeight * 5));
+        g.drawString("XP:" + Player.xp + "/" + Player.xpReq, startX, startY + (lineHeight * 6));
+        g.drawString("LEVEL:" + Player.level, startX, startY + (lineHeight * 7));
 
         // draw healthbar
         if (xPointsHealth != null && yPointsHealth != null) {
@@ -141,7 +144,7 @@ public class DisplayGUI extends GameObject {
 
             g.drawString(health, healthX, healthY);
         }
-        // draws exp Bar
+        // draws exp bar/display
         if (xPointsLevel != null && yPointsLevel != null) {
             g2d.setStroke(new BasicStroke(4));
             g2d.setColor(Color.CYAN);

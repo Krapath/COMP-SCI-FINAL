@@ -8,7 +8,9 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 import java.awt.Image;
-
+/** creates unique enemy types, scaling and behavior of the enemies
+ * Author: Mohammad Sadeghi
+ */
 public class Enemy extends GameObject {
 
     PolygonGame game;
