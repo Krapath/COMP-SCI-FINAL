@@ -1,12 +1,7 @@
 
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-
 import java.awt.*;
-
 import javax.swing.ImageIcon;
-
 import java.awt.geom.AffineTransform;
 
 public class Glaive extends Weapon {
@@ -15,23 +10,30 @@ public class Glaive extends Weapon {
     PolygonGame game;
     Double angle;
     private static final int GLAIVE_ROTATION_FACTOR = 5;
-    int framesPerRotation = Player.speed * GLAIVE_ROTATION_FACTOR;
+    int framesPerRotation = Player.speed * GLAIVE_ROTATION_FACTOR; //numbers of acts for 1 full rotation
     Double speed = 2 * Math.PI / framesPerRotation;
     int radius;
-    public int rotationTimer = 0;
+    public int rotationTimer = 0; //how many acts the glaive had been rotating for
     static Image glaiveImage;
 
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
 
+    /**
+     * creates a glaive rotating around the player starting from given radian
+     * angle rperesenting position in circle
+     */
     public Glaive(PolygonGame game, double startingAngle) {
         super(game, "Passive", "Glaive");
         this.game = game;
+
+        //sets up starting values
         angle = startingAngle;
         radius = (game.getWindowHeight() + game.getWindowWidth()) / 30;
         x = (radius * Math.cos(angle) + game.player.x) - size / 2 + Player.size / 2;
         y = (radius * Math.sin(angle) + game.player.y) - size / 2 + Player.size / 2;
         setLocation((int) x, (int) y); // update position
         setSize(size, size); // size of the projectile
+
         setColor(Color.RED);
         Player.weapons.add(this);
         glaiveImage = new ImageIcon("Images/Sprites/GLAIVE_SPRITE.png").getImage();
@@ -59,7 +61,7 @@ public class Glaive extends Weapon {
         }
 
         spriteAngle -= 1;
-        if (rotationTimer == framesPerRotation) {
+        if (rotationTimer == framesPerRotation) {//resets glaive after a full rotation to prevent bugs
             rotationTimer = 0;
             game.createGlaive(game.numberOfGlaives);
         }
@@ -85,9 +87,7 @@ public class Glaive extends Weapon {
 
                     if (PolygonGame.enemies.get(i).health <= 0) {
 
-                        //if (hitEnemies.contains(game.enemies.get(i))) {
                         hitEnemies.remove(PolygonGame.enemies.get(i));
-                        // }
 
                         game.remove(PolygonGame.enemies.get(i)); // remove enemy if health is depleted
                         PolygonGame.enemies.remove(i); // remove enemy from the list
@@ -105,8 +105,8 @@ public class Glaive extends Weapon {
 
         }
 
+        //rotates the glaive around the circle based on speed
         angle += speed;
         rotationTimer++;
-        // move the projectile according to its velocity
     }
 }
