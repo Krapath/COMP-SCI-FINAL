@@ -20,8 +20,6 @@ public class Glaive extends Weapon {
     private static final int GLAIVE_ROTATION_FACTOR = 5;
     int framesPerRotation = Player.speed * GLAIVE_ROTATION_FACTOR;
     Double speed = 2 * Math.PI / framesPerRotation;
-    static int damage = 1;
-    static int glaiveCount = 0;
     int radius;
     public int rotationTimer = 0;
     static Image glaiveImage;
@@ -32,7 +30,7 @@ public class Glaive extends Weapon {
         super(game, "Passive", "Glaive");
         this.game = game;
         angle = startingAngle;
-        radius = (game.getWindowHeight()+game.getWindowWidth())/30;
+        radius = (game.getWindowHeight() + game.getWindowWidth()) / 30;
         x = (radius * Math.cos(angle) + game.player.x) - size / 2 + Player.size / 2;
         y = (radius * Math.sin(angle) + game.player.y) - size / 2 + Player.size / 2;
         setLocation((int) x, (int) y); // update position
