@@ -46,7 +46,6 @@ public class Enemy extends GameObject {
         this.givenX = givenX;
         this.givenY = givenY;
         healthMultiplier = (int) Math.pow(2.0, (double) (game.killCounter / 500));
-        //System.out.println(healthMultiplier); debug
         r = new Random(seed);
         size = (game.getWindowWidth() + game.getWindowHeight()) / 80; // enemy size is 1/100 of the entire window
         speed = (game.getWindowWidth() + game.getWindowHeight()) / 500; // speed is 1/100 of the entire window size
