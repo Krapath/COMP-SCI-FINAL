@@ -1,7 +1,10 @@
+
 /**
  * weapon: base class for all weapons.
+ * author: Hugo
  */
 public class Weapon extends GameObject {
+
     PolygonGame game;
 
     //default damage for weapons. 
@@ -14,8 +17,8 @@ public class Weapon extends GameObject {
     public String weaponName;
 
     /**
-     * weapon constructor.
-     * game the game instance, weaponType the weapon type, weaponName the weapon name
+     * weapon constructor. game the game instance, weaponType the weapon type,
+     * weaponName the weapon name
      */
     public Weapon(PolygonGame game, String weaponType, String weaponName) {
         this.game = game;
@@ -23,8 +26,8 @@ public class Weapon extends GameObject {
         this.weaponName = weaponName;
     }
 
-    public void act(){
-        
+    public void act() {
+
     }
 
 }

@@ -1,4 +1,7 @@
 
+/** a projectile weapon that launches in a certain direction, damaging things it hits
+ * author: Mohammad and Hugo
+ */
 import java.awt.Color;
 import java.util.ArrayList;
 

@@ -1,4 +1,7 @@
 
+/** a flying matchstick weapon which roates around the player before launching in a certain direction and returning, damaging enemies
+ * author: Hugo
+ */
 import java.awt.Color;
 import java.util.ArrayList;
 import java.awt.Graphics2D;
@@ -7,7 +10,8 @@ import java.awt.Graphics;
 import java.util.Random;
 
 /**
- * matchstick: a throwable match that aims then shoots and can return like a boomerang.
+ * matchstick: a throwable match that aims then shoots and can return like a
+ * boomerang.
  */
 public class MatchStick extends Weapon {
 
@@ -48,7 +52,6 @@ public class MatchStick extends Weapon {
     int tipWidth;
     int tipHeight;
 
-    
     public MatchStick(PolygonGame game) {
         super(game, "Passive", "MatchStick");
         this.game = game;
@@ -84,15 +87,15 @@ public class MatchStick extends Weapon {
         // negative tipHeight so it extends upwards from the top of the shaft
         g2d.fillRect(-tipWidth / 2, -shaftHeight / 2 - tipHeight, tipWidth, tipHeight);
 
-    
         g2d.setTransform(old); // restore
     }
 
-
     /**
-     * matchStickHits: return true if the enemy is inside the rotated match hitbox
-     * works by reversing the rotation on the rectangle/ applying it to the enemy then chceking if the enemy is within it
-     * custom collision detection for rotating rectangle hitbox, does not use the built in collides
+     * matchStickHits: return true if the enemy is inside the rotated match
+     * hitbox works by reversing the rotation on the rectangle/ applying it to
+     * the enemy then chceking if the enemy is within it custom collision
+     * detection for rotating rectangle hitbox, does not use the built in
+     * collides
      */
     boolean matchStickHits(Enemy e) {
         // CRITICAL precision update: using getRealX() and getRealY() for double precision
@@ -119,7 +122,6 @@ public class MatchStick extends Weapon {
                 && rotY >= (-shaftHeight / 2.0 - tipHeight - enemyRadius)
                 && rotY <= (shaftHeight / 2.0 + enemyRadius);
     }
-
 
     public void act() {
         if (PolygonGame.gamePause) {
@@ -234,7 +236,7 @@ public class MatchStick extends Weapon {
         boolean canHit = (aimingTimer == 0 && rotationTimer == 0); // can only hit while shooting or returning
 
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
-        	Enemy target = PolygonGame.enemies.get(i);
+            Enemy target = PolygonGame.enemies.get(i);
             if (canHit && matchStickHits(target)) {
                 boolean hit = false;
 
@@ -247,7 +249,7 @@ public class MatchStick extends Weapon {
                 if (!hit) { // if this enemy has not already been hit by this arrow
                     hitEnemies.add(target);
                     target.health -= damage;
-                    target.damaged=true;
+                    target.damaged = true;
 
                     if (target.health <= 0) {
                         hitEnemies.remove(target);

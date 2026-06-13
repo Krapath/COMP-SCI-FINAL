@@ -1,3 +1,7 @@
+
+/** A menu page with explainations of how to play the game
+ * author: Raymond
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -10,6 +14,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class Tutorial extends GameObject {
+
     // array list of all objects in the class
     private static ArrayList<Tutorial> tutorialButtons = new ArrayList<>();
     // set dummy constructor variables + objects
@@ -47,9 +52,10 @@ public class Tutorial extends GameObject {
         }
         // scale text to window size
         float scaleFactor = (game.getWindowHeight() + game.getWindowWidth()) / 3000f;
-        if (scaleFactor <= 0)
+        if (scaleFactor <= 0) {
             scaleFactor = 1.0f; // Prevention fail-safe
-        menuFont = menuFont.deriveFont(45 * scaleFactor);
+
+                }menuFont = menuFont.deriveFont(45 * scaleFactor);
     }
 
     public void spawnTutorial(PolygonGame game) {

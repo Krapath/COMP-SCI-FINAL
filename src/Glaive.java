@@ -1,4 +1,7 @@
 
+/** a rotating glaive that spins around the player and damages enemies hit.
+ *  author: Mohammad
+ */
 import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.ImageIcon;

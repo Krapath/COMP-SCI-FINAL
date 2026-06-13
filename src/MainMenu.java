@@ -1,4 +1,7 @@
 
+/** the main menu of the game whith buttons for starting game, tutorial, highscores and exiting game
+ * author: Raymond and Hugo
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -11,6 +14,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class MainMenu extends GameObject {
+
     // main menu variables
     private static ArrayList<MainMenu> menuButtons = new ArrayList<>();
     private Image logoImage;
@@ -59,9 +63,10 @@ public class MainMenu extends GameObject {
         logoOffsetY = game.getWindowHeight() / 12;
         // scales the menu fonts to monitor size
         float scaleFactor = (game.getWindowHeight() + game.getWindowWidth()) / 3000f;
-        if (scaleFactor <= 0)
+        if (scaleFactor <= 0) {
             scaleFactor = 1.0f; // Prevention fail-safe
-        menuFont = menuFont.deriveFont(45 * scaleFactor);
+
+                }menuFont = menuFont.deriveFont(45 * scaleFactor);
     }
 
     /**
@@ -75,7 +80,7 @@ public class MainMenu extends GameObject {
         int centerX = (game.getWindowWidth() - w) / 2; // center the boxes horizontally
         int ySlots = (int) (game.getWindowHeight() / 9 / sizeMultiplier); // gets even splits for the boxes
         int yShift = (int) (-(game.getWindowHeight() / 25.0 * ((sizeMultiplier - 1) * 2))); // shifts the boxes up a bit
-                                                                                            // so they look better
+        // so they look better
         // create play button
         MainMenu playButton = new MainMenu(game, "Play");
         playButton.setSize(w, h);
@@ -131,7 +136,7 @@ public class MainMenu extends GameObject {
             game.remove(m);
         }
         menuButtons.clear(); // clears the entire list
-        
+
     }
 
     @Override
