@@ -21,6 +21,7 @@ import javax.swing.JComponent;
  * object, and will be called every millisecond automatically by a <code>
  * Game</code> it has been added to.<br>
  * Author: Hugo To, Mohammad Sadeghi, Raymond Tan
+ *
  * @see Game#add
  */
 public abstract class GameObject extends JComponent {
@@ -208,13 +209,10 @@ public abstract class GameObject extends JComponent {
             e.printStackTrace();
         }
 
-	}
-	
-	//overloaded for random file selection
-	
-	
+    }
 
-    //mohammads methods
+    //overloaded for random file selection
+    //mohammads method's
     /**
      * sets the position of the object by rounding its double x and y values.
      * pre: x and y double values no overriden post: gameobject's coordiantes

@@ -1,10 +1,11 @@
 
-/** a projectile weapon that launches in a certain direction, damaging things it hits
- * author: Mohammad and Hugo
- */
 import java.awt.Color;
 import java.util.ArrayList;
 
+/**
+ * A projectile weapon that launches in a certain direction, damaging things it
+ * hits Author: Mohammad and Hugo
+ */
 public class Projectile extends Weapon {
 
     PolygonGame game;

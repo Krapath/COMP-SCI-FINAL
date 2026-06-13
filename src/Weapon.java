@@ -1,7 +1,7 @@
 
 /**
- * weapon: base class for all weapons.
- * author: Hugo
+ * Base class for all weapons.
+ * Author: Hugo
  */
 public class Weapon extends GameObject {
 

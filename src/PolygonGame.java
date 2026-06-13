@@ -5,7 +5,6 @@
  * End date: 
  * Project: PolygonGame - a roguelike top-down shooter.
  */
-
 // Sources
 // 2d line graphics: https://stackoverflow.com/questions/16995308
 /* Hexagon background 
@@ -14,21 +13,17 @@
  * https://docs.oracle.com/javase/8/docs/api/java/awt/Polygon.html
  */
 
-/* Text wiggle, image rotation, (arrow, missile, match stick)(vectors)
+ /* Text wiggle, image rotation, (arrow, missile, match stick)(vectors)
  * https://math.stackexchange.com/questions/190111/how-to-check-if-a-point-is-inside-a-rectangle
  * https://docs.oracle.com/javase/8/docs/api/java/awt/geom/AffineTransform.html
  * https://stackoverflow.com/questions/7517688/rotate-a-java-graphics2d-rectangle
  */
-
 // Circle calculation: https://math.libretexts.org/Bookshelves/Precalculus/Book:_Precalculus__An_Investigation_of_Functions_(Lippman_and_Rasmussen)/05:_Trigonometric_Functions_of_Angles/5.03:_Points_on_Circles_Using_Sine_and_Cosine
 // Text file: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html
-
- 
 /* Additional sources without explicit usages
  * https://stackoverflow.com/questions/54344597/pass-any-class-as-a-parameter-for-a-method
  * "A Clockwork Orange"
  */
-
 // Mouse logic: https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseListener.html
 
 /* Audio:
@@ -43,8 +38,7 @@
   * https://store.steampowered.com/app/632360/Risk_of_Rain_2/
   * https://store.steampowered.com/app/1794680/Vampire_Survivors/
   * https://store.steampowered.com/app/3405340/Megabonk/
-  */
-
+ */
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -79,7 +73,7 @@ public class PolygonGame extends Game {
     public int killCounter;
     boolean minibossSpawned = false;
 
-    HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>(); 
+    HashMap<Enemy, Integer> hitEnemies = new HashMap<Enemy, Integer>();
     // for each enemy to be hit again
     ArrayList<MainMenu> removeTheButtons = new ArrayList<MainMenu>();
     public int maxEnemiesSpawned = 200;
@@ -178,7 +172,7 @@ public class PolygonGame extends Game {
             Player.level += 1;
             Player.xpReq = Math.round(Math.floor(2 * Player.level * Math.log(Player.level + 1)));
             // 0; // debug
-            Player.health = Math.min((int)Math.ceil(0.1*Player.maxHealth+Player.health),Player.maxHealth);
+            Player.health = Math.min((int) Math.ceil(0.1 * Player.maxHealth + Player.health), Player.maxHealth);
             choosingBuff = true;
 
         }
@@ -252,15 +246,15 @@ public class PolygonGame extends Game {
      * based on the algorithmn
      */
     public void enemySpawning() {
-    	//spawns normal enemy, becoming less likely as more enemies die, min 20/10000 chance
-        if (r.nextInt(10000) < Math.max(300 - 2 * killCounter, 10)) { 
+        //spawns normal enemy, becoming less likely as more enemies die, min 20/10000 chance
+        if (r.nextInt(10000) < Math.max(300 - 2 * killCounter, 10)) {
             enemy = new Enemy(this, 0, 0, r.nextInt());
             add(enemy);
             enemies.add(enemy);
         }
-        
-      //spawn big boy every 80 enemy killed
-        if (!minibossSpawned && (killCounter + 1) % 50 == 0) { 
+
+        //spawn big boy every 80 enemy killed
+        if (!minibossSpawned && (killCounter + 1) % 50 == 0) {
             minibossSpawned = true;
             enemy = new Enemy(this, 1, 0, r.nextInt());
             add(enemy);
@@ -269,7 +263,7 @@ public class PolygonGame extends Game {
             minibossSpawned = false;
         }
 
-      //spawns hoard of normal enemies, becoming more likely over time, max 50/10000 chance
+        //spawns hoard of normal enemies, becoming more likely over time, max 50/10000 chance
         if (r.nextInt(10000) < Math.min(10 * (killCounter / 25), 100)) {
             enemySpawnSeed = r.nextInt();
             for (int i = 0; i < 10; i++) {
@@ -279,7 +273,7 @@ public class PolygonGame extends Game {
             }
         }
 
-      //spawns wave of normal enemies, becoming more likely over time, max 50/10000 chance
+        //spawns wave of normal enemies, becoming more likely over time, max 50/10000 chance
         if (r.nextInt(10000) < Math.min(10 * (killCounter / 25), 150)) {
             for (int i = 0; i < 10; i++) {
                 enemy = new Enemy(this, 0, 4, r.nextInt());
@@ -287,9 +281,9 @@ public class PolygonGame extends Game {
                 enemies.add(enemy);
             }
         }
-        
-      //spawns a bat hoards when over 40 enemies killed, 20/10000 chance
-        if (killCounter > 40 && r.nextInt(10000) < 20+killCounter/50) { 
+
+        //spawns a bat hoards when over 40 enemies killed, 20/10000 chance
+        if (killCounter > 40 && r.nextInt(10000) < 20 + killCounter / 50) {
             for (int i = 0; i < 10; i++) {
                 enemy = new Enemy(this, 4, 0, r.nextInt());
                 add(enemy);
@@ -297,8 +291,8 @@ public class PolygonGame extends Game {
             }
         }
 
-      //spawns gunner or throwing goblin when more than 80 kills, max 80/10000 chance
-        if (killCounter > 40 && r.nextInt(10000) < Math.min(10 * (killCounter / 30), 500)) { 
+        //spawns gunner or throwing goblin when more than 80 kills, max 80/10000 chance
+        if (killCounter > 40 && r.nextInt(10000) < Math.min(10 * (killCounter / 30), 500)) {
             if (r.nextInt(2) == 0) {
                 enemy = new Enemy(this, 2, 0, r.nextInt());
             } else {
@@ -311,5 +305,3 @@ public class PolygonGame extends Game {
     }
 
 }
-
-

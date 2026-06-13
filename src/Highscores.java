@@ -1,7 +1,4 @@
 
-/** a menu page with listed saved highscores
- * author: Mohammad and Raymond
- */
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -12,6 +9,9 @@ import java.awt.geom.AffineTransform;
 import java.io.*;
 import java.util.*;
 
+/**
+ * A menu page with listed saved highscores Author: Mohammad and Raymond
+ */
 public class Highscores extends GameObject {
 
     // create array list for all objects in the class

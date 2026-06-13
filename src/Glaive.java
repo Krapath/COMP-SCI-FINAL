@@ -1,12 +1,13 @@
 
-/** a rotating glaive that spins around the player and damages enemies hit.
- *  author: Mohammad
- */
 import java.util.ArrayList;
 import java.awt.*;
 import javax.swing.ImageIcon;
 import java.awt.geom.AffineTransform;
 
+/**
+ * A rotating glaive that spins around the player and damages enemies hit.
+ * Author: Mohammad
+ */
 public class Glaive extends Weapon {
 
     int size = (int) (Player.size / 1);

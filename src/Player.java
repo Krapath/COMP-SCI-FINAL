@@ -1,11 +1,11 @@
 
-/** the actual player object which can be controlled
- * author: Hugo and Mohammad
- */
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The actual player object which can be controlled Author: Hugo and Mohammad
+ */
 public class Player extends GameObject {
 
     Random r = new Random();
@@ -27,7 +27,7 @@ public class Player extends GameObject {
     static boolean dashActive = false;
     static boolean arrowSpreadActive = false;
 
-    static double xpReq = (int)Math.floor(2 * level * Math.log(level + 1));
+    static double xpReq = (int) Math.floor(2 * level * Math.log(level + 1));
 
     static boolean invulnerable = false;
     static int invulnerableDuration = 30;

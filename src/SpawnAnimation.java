@@ -1,11 +1,11 @@
 
-/** animation that plays when players spawns into the game
- * author: Raymond
- */
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Animation that plays when players spawns into the game Author: Raymond
+ */
 public class SpawnAnimation extends GameObject {
 
     // array list holding all the objects
