@@ -2,14 +2,7 @@
 import java.awt.Color;
 import java.util.Random;
 
-//types of enemies
-enum Type {
-    PEASANT,
-    BIGBOY,
-    GUNNER,
-    THROWINGGOBLIN,
-    BAT
-}
+
 
 /**
  * creates a unique enemy based on type given and handles behavior and scaling

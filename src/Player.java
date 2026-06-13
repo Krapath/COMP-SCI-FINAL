@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * The actual player object which can be controlled Author: Hugo and Mohammad
+ * The actual player object which can be controlled
+ * Author: Hugo To and Mohammad Sadeghi
  */
 public class Player extends GameObject {
 
@@ -51,12 +52,14 @@ public class Player extends GameObject {
 
     public void act() {
         if (PolygonGame.gamePause) {
-            return;// player does not move or collide with enemies while the player is choosing a buff
+            return;// player does not move or collide with enemies while the player is choosing a
+                   // buff
 
         }
-        attackTimer++; //the delay counter between attacks
+        attackTimer++; // the delay counter between attacks
 
-        //vector math for find direction of motion, preventing faster movement on diagonals
+        // vector math for find direction of motion, preventing faster movement on
+        // diagonals
         double up = 0.0, down = 0.0, left = 0.0, right = 0.0;
         if (game.AKeyPressed()) {
             left += 1;
@@ -71,12 +74,12 @@ public class Player extends GameObject {
             down += 1;
         }
 
-        //finds the angle play is moving towards and the vectors
+        // finds the angle play is moving towards and the vectors
         down -= up;
         right -= left;
         double angle = Math.atan2(down, right);
 
-        if (!(down == 0 && right == 0)) { //when vectors exists, move play based on vectors
+        if (!(down == 0 && right == 0)) { // when vectors exists, move play based on vectors
             x += Math.cos(angle) * speed;
             y += Math.sin(angle) * speed;
         }
@@ -97,7 +100,7 @@ public class Player extends GameObject {
 
         setPosition();
 
-        //damages player when collding with enemies and gives invulnerability framesd
+        // damages player when collding with enemies and gives invulnerability framesd
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
             Enemy target = PolygonGame.enemies.get(i);
             if (collides(target)) {

@@ -3,7 +3,8 @@ import java.io.*;
 import javax.sound.sampled.*;
 
 /**
- * The soundeffects that play throughout the game Author: Hugo
+ * The soundeffects that play throughout the game 
+ * Author: Hugo To
  */
 public class SoundEffects {
 

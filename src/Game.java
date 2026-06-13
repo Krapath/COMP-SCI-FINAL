@@ -40,7 +40,7 @@ import java.awt.event.MouseMotionListener;
  * allow the programmer to add any objects to the game and set them up. When the
  * game begins, the <code>act</code> method is executed every millisecond. This
  * will allow the programmer to check for user input and respond to it.
- * Author: Hugo To, Mohammad Sadeghi, Raymond Tan
+ * Contributor: Hugo To, Mohammad Sadeghi, Raymond Tan
  * @see GameObject
  */
 public abstract class Game extends JFrame {

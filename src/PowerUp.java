@@ -6,7 +6,8 @@ import javax.swing.*;
 
 /**
  * Creates a random choice boards or powerups for player to pick from when they
- * level up Author: Hugo
+ * level up 
+ * Author: Hugo To
  */
 public class PowerUp extends GameObject {
 

@@ -1,7 +1,7 @@
 
 /**
  * ability that fires multiple arrows in a spread pattern simultaneously
- * Author: Hugo To;
+ * Author: Hugo To
  */
 public class ArrowSpread extends Ability {
 

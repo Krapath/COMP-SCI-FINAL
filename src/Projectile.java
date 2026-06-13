@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 /**
  * A projectile weapon that launches in a certain direction, damaging things it
- * hits Author: Mohammad and Hugo
+ * hits 
+ * Author: Mohammad Sadeghi and Hugo To
  */
 public class Projectile extends Weapon {
 
@@ -109,14 +110,10 @@ public class Projectile extends Weapon {
     }
 
     /**
-     * damage: apply damage to enemies collided with the attacker and handle
-     * special effects.
-     *
-     * @param attacker the object causing damage
-     * @param hitEnemies list of enemies already hit by this projectile
-     * @param pierceCount how many enemies the projectile can pierce
-     * @param damage amount of damage to apply
-     * @return true if a new enemy was hit
+     * 
+     * apply damage to enemies collided with the attacker and handles pierce
+     * pre: none
+     * post: deals damage to enemies, adds enemies to arraylist hitEnemies, decreases pierce count, and activates missiles and lightning
      */
     public boolean damage(GameObject attacker, ArrayList<Enemy> hitEnemies, int pierceCount, int damage) {
 

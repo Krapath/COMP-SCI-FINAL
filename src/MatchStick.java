@@ -8,7 +8,8 @@ import java.util.Random;
 
 /**
  * atchstick: a throwable match that aims then shoots and can return like a
- * boomerang, doing damage Author: Hugo and Mohammad
+ * boomerang, doing damage
+ * Author: Hugo To and Mohammad Sadeghi
  */
 public class MatchStick extends Weapon {
 
@@ -25,7 +26,8 @@ public class MatchStick extends Weapon {
     int pierceTimer = 0;
     static int aimingTimer = 30;
 
-    public int rotationTimer = aimingTimer + r.nextInt(aimingTimer); // how long the match rotates around the player before flying off,
+    public int rotationTimer = aimingTimer + r.nextInt(aimingTimer); // how long the match rotates around the player
+                                                                     // before flying off,
     // randomize a bit so not every match is the same
     double aimOffsetX;
     double aimOffsetY;
@@ -60,7 +62,8 @@ public class MatchStick extends Weapon {
         shaftWidth = (game.getWindowHeight() + game.getWindowWidth()) / 300;
         shaftHeight = (game.getWindowHeight() + game.getWindowWidth()) / 50;
         tipWidth = (game.getWindowHeight() + game.getWindowWidth()) / 200;
-        tipHeight = (game.getWindowHeight() + game.getWindowWidth()) / 150;;
+        tipHeight = (game.getWindowHeight() + game.getWindowWidth()) / 150;
+        ;
 
     }
 
@@ -105,8 +108,10 @@ public class MatchStick extends Weapon {
 
         // subtract the PI/2 offset since spriteAngle always has it added
         // 2d rotation matrix
-        // essentially unrotate the enemy by the negative of the arrow's angle so that the arrow is axis aligned
-        // then check if the enemy's coordinates are within the bounds of the arrow's hitbox as if it were not rotated
+        // essentially unrotate the enemy by the negative of the arrow's angle so that
+        // the arrow is axis aligned
+        // then check if the enemy's coordinates are within the bounds of the arrow's
+        // hitbox as if it were not rotated
         double checkAngle = -(spriteAngle - Math.PI / 2);
         double rotX = localX * Math.cos(checkAngle) - localY * Math.sin(checkAngle);
         double rotY = localX * Math.sin(checkAngle) + localY * Math.cos(checkAngle);
@@ -143,7 +148,7 @@ public class MatchStick extends Weapon {
                 aimOffsetX = arrowCX - game.player.getX();
                 aimOffsetY = arrowCY - game.player.getY();
 
-                // find closest target 
+                // find closest target
                 closestTarget = null;
                 double closestDist = Double.MAX_VALUE;
                 for (Enemy e : PolygonGame.enemies) {
@@ -157,7 +162,8 @@ public class MatchStick extends Weapon {
 
         } else if (aimingTimer > 0) {
             --aimingTimer;
-            // keep arrow centered on player while aiming, but rotate to face the closest enemy
+            // keep arrow centered on player while aiming, but rotate to face the closest
+            // enemy
             arrowCX = game.player.getX() + aimOffsetX;
             arrowCY = game.player.getY() + aimOffsetY;
 
@@ -172,7 +178,8 @@ public class MatchStick extends Weapon {
                 for (Enemy e : PolygonGame.enemies) {
                     double dx = e.getX() - arrowCX;
                     double dy = e.getY() - arrowCY;
-                    double dist = dx * dx + dy * dy; // takes square value, since not actually using the actual distance, just comparing values 
+                    double dist = dx * dx + dy * dy; // takes square value, since not actually using the actual
+                                                     // distance, just comparing values
                     if (dist < closestDist) {
                         closestDist = dist;
                         closestTarget = e;
@@ -185,12 +192,13 @@ public class MatchStick extends Weapon {
 
                 double dx = closestTarget.getX() + closestTarget.size / 2.0 - arrowCX;
                 double dy = closestTarget.getY() + closestTarget.size / 2.0 - arrowCY;
-                // since the arrow sprite is pointing up by default, add pi/2 to the angle so its angle relative to math conventions is 0
+                // since the arrow sprite is pointing up by default, add pi/2 to the angle so
+                // its angle relative to math conventions is 0
                 spriteAngle = Math.atan2(dy, dx) + Math.PI / 2;
             }
 
             if (aimingTimer == 0 && closestTarget != null) {
-                //save the target angle from teh enemy to the arrow
+                // save the target angle from teh enemy to the arrow
                 targetAngle = Math.atan2(
                         closestTarget.getY() + closestTarget.size / 2.0 - arrowCY,
                         closestTarget.getX() + closestTarget.size / 2.0 - arrowCX);
@@ -213,7 +221,7 @@ public class MatchStick extends Weapon {
                 double playerAngle = Math.atan2(
                         game.player.getY() + Player.size / 2.0 - arrowCY,
                         game.player.getX() + Player.size / 2.0 - arrowCX);
-                //move the arrow back to the player
+                // move the arrow back to the player
                 arrowCX += Math.cos(playerAngle) * shootSpeed;
                 arrowCY += Math.sin(playerAngle) * shootSpeed;
                 spriteAngle = playerAngle + Math.PI / 2;

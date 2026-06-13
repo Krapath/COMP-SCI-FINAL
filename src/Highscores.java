@@ -10,7 +10,8 @@ import java.io.*;
 import java.util.*;
 
 /**
- * A menu page with listed saved highscores Author: Mohammad and Raymond
+ * A menu page with listed saved highscores
+ * Author: Mohammad Sadeghi and Raymond Tan
  */
 public class Highscores extends GameObject {
 

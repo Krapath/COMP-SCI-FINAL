@@ -11,8 +11,8 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 /**
- * handles the creation and animation of death screen panel UI Author: Raymond
- * Tan, Hugo To
+ * handles the creation and animation of death screen panel UI
+ * Author: Raymond Tan, Hugo To
  */
 public class DeathScreen extends GameObject {
 

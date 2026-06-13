@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 
 /**
  * A rotating glaive that spins around the player and damages enemies hit.
- * Author: Mohammad
+ * Author: Mohammad Sadeghi
  */
 public class Glaive extends Weapon {
 

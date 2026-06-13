@@ -8,7 +8,8 @@ import java.awt.BasicStroke;
 
 /**
  * visual and logic for a chaining lightning effect that damages nearby enemies
- * when triggered by projectile Author: Hugo To
+ * when triggered by projectile 
+ * Author: Hugo To
  */
 public class ChainLightning extends Weapon {
 

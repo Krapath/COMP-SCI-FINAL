@@ -11,7 +11,8 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 /**
- * A menu page with explainations of how to play the game Author: Raymond
+ * A menu page with explainations of how to play the game 
+ * Author: Raymond Tan
  */
 public class Tutorial extends GameObject {
 

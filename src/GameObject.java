@@ -20,7 +20,7 @@ import javax.swing.JComponent;
  * The <code>act</code> method can be implemented to provide a behavior for the
  * object, and will be called every millisecond automatically by a <code>
  * Game</code> it has been added to.<br>
- * Author: Hugo To, Mohammad Sadeghi, Raymond Tan
+ * Contributors: Hugo To, Mohammad Sadeghi, Raymond Tan
  *
  * @see Game#add
  */
@@ -37,8 +37,8 @@ public abstract class GameObject extends JComponent {
     /**
      * Sets the pixel width and height of the object
      *
-     * @param width	a width in pixels
-     * @param height	a height in pixels
+     * @param width  a width in pixels
+     * @param height a height in pixels
      */
     public void setSize(int width, int height) {
         super.setSize(width, height);
@@ -76,13 +76,14 @@ public abstract class GameObject extends JComponent {
         return y;
     }
 
-
     /*
-	 * Checks if the object contains a point
-	 * 
-	 * @param x		the x coordinate of the point
-	 * @param y		the y coordinate of the point
-	 * @return		<code>true</code> if the object contains the point
+     * Checks if the object contains a point
+     * 
+     * @param x the x coordinate of the point
+     * 
+     * @param y the y coordinate of the point
+     * 
+     * @return <code>true</code> if the object contains the point
      */
     public boolean contains(int x, int y) {
         return getBounds().contains(x, y);
@@ -93,7 +94,7 @@ public abstract class GameObject extends JComponent {
      *
      * Setting the x position will not affect the y position
      *
-     * @param x	the x position of the upper left corner of this object
+     * @param x the x position of the upper left corner of this object
      */
     public void setX(int x) {
         super.setLocation(x, getLocation().y);
@@ -104,7 +105,7 @@ public abstract class GameObject extends JComponent {
      *
      * Setting the y position will not affect the x position
      *
-     * @param y	the y position of the upper left corner of this object
+     * @param y the y position of the upper left corner of this object
      */
     public void setY(int y) {
         super.setLocation(getLocation().x, y);
@@ -113,14 +114,15 @@ public abstract class GameObject extends JComponent {
     /**
      * Sets the color of this object
      *
-     * @param c	the color of this object
-     * @see	java.awt.Color
+     * @param c the color of this object
+     * @see java.awt.Color
      */
     public void setColor(Color c) {
         this.c = c;
     }
 
-    /*getter for color
+    /*
+     * getter for color
      */
     public Color getColor() {
         return c;
@@ -144,8 +146,8 @@ public abstract class GameObject extends JComponent {
      * Returns <code>true</code> if this object collides with another
      * <code>GameObject</code>
      *
-     * @param o	the <code>GameObject</code> to test for collision
-     * @return		<code>true</code> if collision occurs
+     * @param o the <code>GameObject</code> to test for collision
+     * @return <code>true</code> if collision occurs
      */
     public boolean collides(GameObject o) {
         return getBounds().intersects(o.getBounds());
@@ -167,7 +169,7 @@ public abstract class GameObject extends JComponent {
         boolean isHovering = this.contains(mouseX, mouseY);
         boolean clicked = false;
 
-        //find exact moment the mouse goes from not clicked to clicked
+        // find exact moment the mouse goes from not clicked to clicked
         if (currentlyPressed && !wasPressed) {
             // only check as ready if that initial click is inside the object
             readyToApply = isHovering;
@@ -201,7 +203,8 @@ public abstract class GameObject extends JComponent {
             gainControl.setValue(volume); // Reduce volume by 10 decibels.
 
             // Source - https://stackoverflow.com/a/6707971
-            // Posted by datahaki, modified by community. See post 'Timeline' for change history
+            // Posted by datahaki, modified by community. See post 'Timeline' for change
+            // history
             // Retrieved 2026-06-11, License - CC BY-SA 3.0
             clip.start();
         } catch (Exception e) {
@@ -211,8 +214,8 @@ public abstract class GameObject extends JComponent {
 
     }
 
-    //overloaded for random file selection
-    //mohammads method's
+    // overloaded for random file selection
+    // mohammads method's
     /**
      * sets the position of the object by rounding its double x and y values.
      * pre: x and y double values no overriden post: gameobject's coordiantes

@@ -12,7 +12,8 @@ import javax.swing.ImageIcon;
 
 /**
  * The main menu of the game whith buttons for starting game, tutorial,
- * highscores and exiting game Author: Raymond and Hugo
+ * highscores and exiting game
+ * Author: Raymond Tan and Hugo To
  */
 public class MainMenu extends GameObject {
 

@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 
 /**
  * An xpOrb that allows the player to increase their xp when they collide with
- * it. Author: Hugo and Mohammad
+ * it. Author: Hugo To and Mohammad Sadeghi
  */
 public class XpOrb extends GameObject {
 

@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Animation that plays when players spawns into the game Author: Raymond
+ * Animation that plays when players spawns into the game 
+ * Author: Raymond Tan
  */
 public class SpawnAnimation extends GameObject {
 

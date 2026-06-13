@@ -2,8 +2,9 @@
 /*
  * Contributors: Hugo To, Raymond Tan, Mohammad Sadeghi
  * Start date: 5/19/2026
- * End date: 
+ * End date: 6/12/2026
  * Project: PolygonGame - a roguelike top-down shooter.
+ * Course: ICS3UE
  */
 // Sources
 // 2d line graphics: https://stackoverflow.com/questions/16995308
