@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -7,10 +8,10 @@ import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
 
 public class DeathScreen extends GameObject {
+
     // array list of all objects in the class
     private static ArrayList<DeathScreen> deathScreenButtons = new ArrayList<>();
     // set dummy constructor variables + objects
@@ -59,9 +60,10 @@ public class DeathScreen extends GameObject {
         }
         // scale font
         float scaleFactor = (game.getWindowHeight() + game.getWindowWidth()) / 3000f;
-        if (scaleFactor <= 0)
+        if (scaleFactor <= 0) {
             scaleFactor = 1.0f; // prevention fail-safe
-        menuFont = menuFont.deriveFont(45 * scaleFactor);
+
+                }menuFont = menuFont.deriveFont(45 * scaleFactor);
         // scale game over font
         gameOverFont = menuFont.deriveFont(85 * scaleFactor);
     }
@@ -158,7 +160,6 @@ public class DeathScreen extends GameObject {
             game.remove(w);
         }
 
-
         Player.weapons.clear();
         Player.abilities.clear();
         PowerUp.buffArray = new int[PowerUp.numBuffs]; // reset the buff array to all 0s
@@ -166,8 +167,6 @@ public class DeathScreen extends GameObject {
             game.remove(x);
         }
         PolygonGame.xpOrbs.clear();
-
-        
 
         // reset scaling for the enemies
         Enemy.healthMultiplier = 1;
@@ -195,7 +194,6 @@ public class DeathScreen extends GameObject {
         ChainLightning.damage = 1;
         AtGMissileMk1.damage = 1;
         Glaive.damage = 1;
-        Glaive.glaiveCount = 0;
         MatchStick.damage = 1;
         ArrowSpread.arrowCount = 5;
         ArrowSpread.damage = 1;
@@ -303,8 +301,7 @@ public class DeathScreen extends GameObject {
                 returnToZero();
                 game.menuController.spawnMyBoxes(game); // spawns the main menu buttons
 
-            }
-            // retry button
+            } // retry button
             else if (buttonName.equals("Retry")) {
                 SoundEffects("SFX/SPAWN_SOUND.wav", -4.0f);
                 returnToZero();
