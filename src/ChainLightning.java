@@ -14,7 +14,8 @@ import java.awt.BasicStroke;
 
 /**
  * chain lightning: visual and logic for a chaining lightning effect that
- * damages nearby enemies.
+ * damages nearby enemies when triggered by projectile
+ * Author: Hugo To
  */
 public class ChainLightning extends Weapon {
 
@@ -95,7 +96,7 @@ public class ChainLightning extends Weapon {
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
         g2d.setStroke(new BasicStroke(lightningSize)); // set line thickness for the lightning
         // make the lightning more transparent as it gets closer to disappearing
-        Color lightningColor = new Color(0, 255, 255, 15 * durationVisible); 
+        Color lightningColor = new Color(0, 255, 255, 15 * durationVisible);
         g2d.setColor(lightningColor);
         for (int i = 0; i < enemyDisplay.size() - 1; i++) {
             Enemy first = enemyDisplay.get(i);
@@ -114,7 +115,7 @@ public class ChainLightning extends Weapon {
 
                 int offsetX = (int) (Math.cos(randomAngle) * randomness); // random offset in the x direction
                 int offsetY = (int) (Math.sin(randomAngle) * randomness); // random offset in the y
-               
+
                 // draw the first half of the lightning with a randomoffset
                 g2d.drawLine(x1, y1, x1 + offsetX, y1 + offsetY);
 

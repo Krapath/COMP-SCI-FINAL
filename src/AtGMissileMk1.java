@@ -8,8 +8,8 @@ import javax.swing.ImageIcon;
 import java.awt.geom.AffineTransform;
 
 /**
- * atgmissilemk1: a homing missile with an initial spiral then tracking
- * behavior.
+ * homing missile that tracks a specific and deals damage to enemy
+ * Author: Hugo To
  */
 public class AtGMissileMk1 extends Weapon {
 	Random r = new Random();

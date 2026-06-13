@@ -20,7 +20,7 @@ import javax.swing.JComponent;
  * The <code>act</code> method can be implemented to provide a behavior for the
  * object, and will be called every millisecond automatically by a <code>
  * Game</code> it has been added to.<br>
- *
+ * Author: Hugo To, Mohammad Sadeghi, Raymond Tan
  * @see Game#add
  */
 public abstract class GameObject extends JComponent {

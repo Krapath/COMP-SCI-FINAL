@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
+/** handles the creation and animation of death screen panel UI 
+ *  Authors: Raymond Tan, Hugo To
+ */
 public class DeathScreen extends GameObject {
 
     // array list of all objects in the class
@@ -19,13 +22,13 @@ public class DeathScreen extends GameObject {
     private Image deathImage;
     Random r = new Random();
     PolygonGame game;
-    //set font varialbes
+    // set font varialbes
     Font menuFont;
     double hoverAngle = 0.2;
     boolean wasHoveredLastFrame = false;
     boolean tiltLeft = true;
     boolean hovered;
-    //set box placement variables
+    // set box placement variables
     int gameOverOffsetX = 0;
     int gameOverOffsetY = 0;
     int gameOverWiggleRange = 10;
@@ -63,7 +66,8 @@ public class DeathScreen extends GameObject {
         if (scaleFactor <= 0) {
             scaleFactor = 1.0f; // prevention fail-safe
 
-                }menuFont = menuFont.deriveFont(45 * scaleFactor);
+        }
+        menuFont = menuFont.deriveFont(45 * scaleFactor);
         // scale game over font
         gameOverFont = menuFont.deriveFont(85 * scaleFactor);
     }

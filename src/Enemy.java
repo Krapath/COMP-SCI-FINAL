@@ -1,6 +1,8 @@
 
 import java.awt.Color;
 import java.util.Random;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 
 public class Enemy extends GameObject {
 

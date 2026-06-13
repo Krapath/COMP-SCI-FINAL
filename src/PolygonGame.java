@@ -3,7 +3,7 @@
  * Contributors: Hugo To, Raymond Tan, Mohammad Sadeghi
  * Start date: 5/19/2026
  * End date: 
- * Project: Polygons - a roguelike top-down shooter.
+ * Project: PolygonGame - a roguelike top-down shooter.
  */
 
 // Sources
@@ -14,24 +14,36 @@
  * https://docs.oracle.com/javase/8/docs/api/java/awt/Polygon.html
  */
 
-/* Text wiggle, image rotation, (arrow, missile, match stick)
+/* Text wiggle, image rotation, (arrow, missile, match stick)(vectors)
  * https://math.stackexchange.com/questions/190111/how-to-check-if-a-point-is-inside-a-rectangle
  * https://docs.oracle.com/javase/8/docs/api/java/awt/geom/AffineTransform.html
+ * https://stackoverflow.com/questions/7517688/rotate-a-java-graphics2d-rectangle
  */
 
+// Circle calculation: https://math.libretexts.org/Bookshelves/Precalculus/Book:_Precalculus__An_Investigation_of_Functions_(Lippman_and_Rasmussen)/05:_Trigonometric_Functions_of_Angles/5.03:_Points_on_Circles_Using_Sine_and_Cosine
+// Text file: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html
+
+ 
 /* Additional sources without explicit usages
  * https://stackoverflow.com/questions/54344597/pass-any-class-as-a-parameter-for-a-method
+ * "A Clockwork Orange"
  */
 
-// circle calculation: https://math.libretexts.org/Bookshelves/Precalculus/Book:_Precalculus__An_Investigation_of_Functions_(Lippman_and_Rasmussen)/05:_Trigonometric_Functions_of_Angles/5.03:_Points_on_Circles_Using_Sine_and_Cosine
-// text file: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html
+// Mouse logic: https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseListener.html
 
 /* Audio:
- *https://kenney.nl/assets/interface-sounds
- *://stackoverflow.com/questions/953598/audio-volume-control-increase-or-decrease-in-java
- *https://opengameart.org/art-search?keys=8bit
- *https://stackoverflow.com/questions/2792977/do-i-need-to-close-an-audio-clip
+ * https://kenney.nl/assets/interface-sounds
+ * //stackoverflow.com/questions/953598/audio-volume-control-increase-or-decrease-in-java
+ * https://opengameart.org/art-search?keys=8bit
+ * https://pixabay.com/sound-effects/search/8-bit/?pagi=7
+ * https://stackoverflow.com/questions/2792977/do-i-need-to-close-an-audio-clip
  */
+
+ /* Inspiration for game
+  * https://store.steampowered.com/app/632360/Risk_of_Rain_2/
+  * https://store.steampowered.com/app/1794680/Vampire_Survivors/
+  * https://store.steampowered.com/app/3405340/Megabonk/
+  */
 
 import java.util.ArrayList;
 import java.util.HashMap;

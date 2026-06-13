@@ -2,7 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * ability: represents a timed ability with duration and cooldown.
+ * Timed ability with duration and cooldown.
+ * Author: Hugo To
  */
 public class Ability {
     // maximum duration ticks for the ability.
