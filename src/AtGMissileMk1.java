@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 
 /**
  * homing missile that tracks a specific and deals damage to enemy Author: Hugo
- * To
+ * To and Mohammad
  */
 public class AtGMissileMk1 extends Weapon {
 
