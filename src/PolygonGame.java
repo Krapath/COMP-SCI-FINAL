@@ -14,13 +14,22 @@
  * https://docs.oracle.com/javase/8/docs/api/java/awt/Polygon.html
  */
 
-/* Text wiggle, image rotation, (arrow, missile, match stick)
+/* Text wiggle, image rotation, (arrow, missile, match stick)(vectors)
  * https://math.stackexchange.com/questions/190111/how-to-check-if-a-point-is-inside-a-rectangle
  * https://docs.oracle.com/javase/8/docs/api/java/awt/geom/AffineTransform.html
+ * https://stackoverflow.com/questions/7517688/rotate-a-java-graphics2d-rectangle
  */
 
-// circle calculation: https://math.libretexts.org/Bookshelves/Precalculus/Book:_Precalculus__An_Investigation_of_Functions_(Lippman_and_Rasmussen)/05:_Trigonometric_Functions_of_Angles/5.03:_Points_on_Circles_Using_Sine_and_Cosine
-// text file: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html
+// Circle calculation: https://math.libretexts.org/Bookshelves/Precalculus/Book:_Precalculus__An_Investigation_of_Functions_(Lippman_and_Rasmussen)/05:_Trigonometric_Functions_of_Angles/5.03:_Points_on_Circles_Using_Sine_and_Cosine
+// Text file: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html
+
+ 
+/* Additional sources without explicit usages
+ * https://stackoverflow.com/questions/54344597/pass-any-class-as-a-parameter-for-a-method
+ * "A Clockwork Orange"
+ */
+
+// Mouse logic: https://docs.oracle.com/javase/8/docs/api/java/awt/event/MouseListener.html
 
 /* Audio:
  * https://kenney.nl/assets/interface-sounds
@@ -35,13 +44,6 @@
   * https://store.steampowered.com/app/1794680/Vampire_Survivors/
   * https://store.steampowered.com/app/3405340/Megabonk/
   */
-
- 
-/* Additional sources without explicit usages
- * https://stackoverflow.com/questions/54344597/pass-any-class-as-a-parameter-for-a-method
- */
-
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
