@@ -1,13 +1,14 @@
 
-/** creates a random choice boards or powerups for player to pick from when they level up
- * 	author: Hugo
- */
 import java.awt.*;
 import java.util.Random;
 import javax.swing.*;
 
 @SuppressWarnings("unused")
 
+/**
+ * Creates a random choice boards or powerups for player to pick from when they
+ * level up Author: Hugo
+ */
 public class PowerUp extends GameObject {
 
     Random r = new Random();

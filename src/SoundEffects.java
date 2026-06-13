@@ -1,11 +1,10 @@
 
-/** the soundeffects that play throughout the game
- * author: Hugo
- */
-
 import java.io.*;
 import javax.sound.sampled.*;
 
+/**
+ * The soundeffects that play throughout the game Author: Hugo
+ */
 public class SoundEffects {
 
     public static void play(String fileName, float volume) {

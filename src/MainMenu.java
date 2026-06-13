@@ -1,7 +1,4 @@
 
-/** the main menu of the game whith buttons for starting game, tutorial, highscores and exiting game
- * author: Raymond and Hugo
- */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -13,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
+/**
+ * The main menu of the game whith buttons for starting game, tutorial,
+ * highscores and exiting game Author: Raymond and Hugo
+ */
 public class MainMenu extends GameObject {
 
     // main menu variables
@@ -66,7 +67,8 @@ public class MainMenu extends GameObject {
         if (scaleFactor <= 0) {
             scaleFactor = 1.0f; // Prevention fail-safe
 
-                }menuFont = menuFont.deriveFont(45 * scaleFactor);
+        }
+        menuFont = menuFont.deriveFont(45 * scaleFactor);
     }
 
     /**

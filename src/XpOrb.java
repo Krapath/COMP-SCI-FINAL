@@ -1,11 +1,12 @@
 
-/** An xpOrb that allows the player to increase their xp when they collide with it.
- * aurthor: Hugo and Mohammad
- */
 import java.awt.*;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
+/**
+ * An xpOrb that allows the player to increase their xp when they collide with
+ * it. Author: Hugo and Mohammad
+ */
 public class XpOrb extends GameObject {
 
     Random r = new Random();
