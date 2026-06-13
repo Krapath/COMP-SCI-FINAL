@@ -286,19 +286,19 @@ public abstract class Game extends JFrame {
 						break;
 					case 27: // escape to close game
 						System.exit(0);
-					case 'P':
+					case 'P': // pauses game
 						PolygonGame.gamePause = true;
 						break;
-					case 'L':
+					case 'L': // game unpauses
 						PolygonGame.gamePause = false;
 						break;
-					case 32:
+					case 32: // for dash ability spacebar
 						spaceBar = true;
 						break;
-					case 'M':
+					case 'M': // kills player 
 						Player.health=0;
 						break;
-					case 'N':
+					case 'N': // levels up player
 						Player.xpReq =0;
 						break;
 
