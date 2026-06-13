@@ -16,22 +16,22 @@ public class Player extends GameObject {
     static int size;
     static int speed;
     static int attackTimer = 0;
-    static int attackCooldown= 10;
+    static int attackCooldown = 10;
     static int health = 10;
     static int maxHealth = 10;
     static int xp = 0;
     static int level = 1;
-    
+
     // boolea ncheck for specific buffs
-    static boolean chainLightningActive = false; 
-    static boolean atgMissileActive = false; 
-    static boolean glaiveActive = false; 
-    static boolean matchStickActive = false; 
+    static boolean chainLightningActive = false;
+    static boolean atgMissileActive = false;
+    static boolean glaiveActive = false;
+    static boolean matchStickActive = false;
     static boolean dashActive = false;
     static boolean arrowSpreadActive = false;
-    
+
     static double xpReq = Math.floor(2 * level * Math.log(level + 1));
-    
+
     static boolean invulnerable = false;
     static int invulnerableDuration = 30;
     static int invulnerableTimer = 0;
@@ -51,9 +51,7 @@ public class Player extends GameObject {
         x = getX();
         y = getY();
     }
-    
 
-	
     public void act() {
         if (PolygonGame.gamePause) {
             return;// player does not move or collide with enemies while the player is choosing a buff
@@ -65,7 +63,7 @@ public class Player extends GameObject {
 
         //setSize(size, size);
         if (game.AKeyPressed()) {
-        	
+
             left += 1;
         }
         if (game.DKeyPressed()) {
@@ -109,7 +107,7 @@ public class Player extends GameObject {
         setY((int) y);
 
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
-        	Enemy target = PolygonGame.enemies.get(i);
+            Enemy target = PolygonGame.enemies.get(i);
             if (collides(target)) {
 
                 if (!invulnerable) {

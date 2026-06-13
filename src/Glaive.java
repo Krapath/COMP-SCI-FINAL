@@ -13,9 +13,6 @@ public class Glaive extends Weapon {
 
     int size = (int) (Player.size / 1);
     PolygonGame game;
-    //double xVel;
-    //double yVel;
-    //int distanceTraveled = 0;
     Double angle;
     private static final int GLAIVE_ROTATION_FACTOR = 5;
     int framesPerRotation = Player.speed * GLAIVE_ROTATION_FACTOR;
