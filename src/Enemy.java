@@ -1,13 +1,6 @@
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 import java.util.Random;
-
-import javax.swing.ImageIcon;
-
-import java.awt.Image;
 
 public class Enemy extends GameObject {
 
@@ -62,95 +55,14 @@ public class Enemy extends GameObject {
         enemyType(type);
         damagedColor = Color.RED;
     }
-    
-
 
     public void act() {
-        if (PolygonGame.gamePause) {
+        if (PolygonGame.gamePause) { //dont do anything when paused
             return;
         }
 
         avoidCollision(); //moves away from current enemy
-
-        if (stunned) {
-            if (stunnedCounter == stunDuration) {
-                stunned = false;
-            }
-            stunnedCounter++;
-        } else {
-            //behaviour of enemies
-            switch (type) {
-                case 0: //normal and miniboss have same behaviour
-                case 1: //miniboss bahaviour
-                    //chases after the player
-                    chase(speed, game.player);
-                    setPosition();
-
-                    break;
-                case 2: //gunner behaviour
-
-                    //chases the player for set time
-                    if (displayOld < 75) {
-                        chase(speed, game.player);
-                        setPosition();
-                    } else if (displayOld == 100) { //shoots and teleports away after set time
-                        game.projectile = new Projectile(game, this.x, this.y);
-                        game.add(game.projectile);
-                        PolygonGame.projectiles.add(game.projectile);
-                        spawnEnemy(3);
-
-                    } else if (displayOld >= 100) { //blinks between cyan and color
-                        if (displayOld % 10 == 0) {
-                            setColor(Color.CYAN);
-                        } else if (displayOld % 5 == 0) {
-                            setColor(color);
-                        }
-
-                        if (displayOld == 190) { //resets
-                            displayOld = 0;
-                            setColor(color);
-                        }
-                    }
-
-                    displayOld++;
-                    break;
-                case 3: //throwing goblin behaviour
-                    //chases the player for set time so as to enter the screen
-                    if (displayOld < 75) {
-                        displayOld++;
-                        chase(speed, game.player);
-                        setPosition();
-                    } else if (x + size / 2 < 0 || y + size / 2 < 0) { //ensures center of the enmy is on screen
-                        chase(speed, game.player);
-                        setPosition();
-                    } else { //after being on sreen, randomly spawns bats that shoot at the enemy.
-
-                        if (r.nextInt(300) < 5) {
-                            game.enemy = new Enemy(game, 4, 2, game.enemySpawnSeed, this.x, this.y);
-                            game.add(game.enemy);
-                            PolygonGame.enemies.add(game.enemy);
-                        }
-                    }
-
-                    break;
-                case 4: //bat behaviour
-                    //shoots at the players location from when it was created
-                    shoot(speed, angle);
-                    setPosition();
-
-                    //ensures enemy appeared on screen
-                    if (!appearedOnGame && x > 0 && y > 0) {
-                        appearedOnGame = true;
-                    }
-                    //destory enemy when enters offscreen after having been onscreen
-                    if (appearedOnGame && (x < 0 || x > game.getFieldWidth() || y < 0 || y > game.getFieldHeight())) {
-                        game.remove(this); // Remove enemy if health is depleted
-                        PolygonGame.enemies.remove(this); // Remove enemy from the list
-                    }
-                    break;
-            }
-        }
-
+        behaviour(type); //runs the behaviour of the enemy
         damagedAffects(); //applied effects if the enemy was damaged
 
     }
@@ -164,8 +76,8 @@ public class Enemy extends GameObject {
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
             Enemy other = PolygonGame.enemies.get(i);
 
-            //
-            if (collides(other) && other != this && ((other.type == 4 && this.type == 4) || (other.type != 4 && this.type != 4))) { //if touching another enemy, moves this enemy away from the other one.
+            //if touching another enemy, moves this enemy away from the other one. bats only collide with one another
+            if (collides(other) && other != this && ((other.type == 4 && this.type == 4) || (other.type != 4 && this.type != 4))) {
                 knockBack(5.0, other);
 
             }
@@ -226,7 +138,7 @@ public class Enemy extends GameObject {
                 } while (collided);
                 break;
             case 4: //hoard spawn, helps spawn on top of each other when seed is the same
-            	int side = r.nextInt(4); // randomly picks a side of the screen to spawn on
+                int side = r.nextInt(4); // randomly picks a side of the screen to spawn on
                 if (side == 0) { // top
                     x = r.nextInt(game.getWindowWidth() - size);
                     y = (int) (0 - game.getWindowHeight() * .1);
@@ -240,7 +152,7 @@ public class Enemy extends GameObject {
                     x = (int) (0 - game.getWindowWidth() * .1);
                     y = r.nextInt(game.getWindowHeight() - size);
                 }
-                
+
         }
 
         setPosition(); //sets the starting position
@@ -323,14 +235,98 @@ public class Enemy extends GameObject {
     public void knockBack(double amount, GameObject target) {
         double playerAngle = Math.atan2(target.y - y, target.x - x);
         if (target.y == y && target.x == x) { //ensures knockback works when enemies fully on top of each other
-        	x += r.nextInt(20);
-        	y += r.nextInt(20);
+            x += r.nextInt(20);
+            y += r.nextInt(20);
         } else { //push away
-        x -= (Math.cos(playerAngle) * amount);
-        y -= (Math.sin(playerAngle) * amount);
+            x -= (Math.cos(playerAngle) * amount);
+            y -= (Math.sin(playerAngle) * amount);
+        }
+    }
+
+    /**
+     * runs the behaviour and actions of the enemy for every act pre: existence
+     * of boolean stunned, int stunndedCounter and int displayOld post: runs the
+     * movent of the enemy, wether or not it should be stunned and their attacks
+     */
+    public void behaviour(int type) {
+        if (stunned) { //stuns the enemy 
+            if (stunnedCounter == stunDuration) {
+                stunned = false;
+            }
+            stunnedCounter++;
+        } else {
+            //behaviour of enemies
+            switch (type) {
+                case 0: //normal and miniboss have same behaviour
+                case 1: //miniboss bahaviour
+                    //chases after the player
+                    chase(speed, game.player);
+                    setPosition();
+
+                    break;
+                case 2: //gunner behaviour
+
+                    //chases the player for set time
+                    if (displayOld < 75) {
+                        chase(speed, game.player);
+                        setPosition();
+                    } else if (displayOld == 100) { //shoots and teleports away after set time
+                        game.projectile = new Projectile(game, this.x, this.y);
+                        game.add(game.projectile);
+                        PolygonGame.projectiles.add(game.projectile);
+                        spawnEnemy(3);
+
+                    } else if (displayOld >= 100) { //blinks between cyan and color
+                        if (displayOld % 10 == 0) {
+                            setColor(Color.CYAN);
+                        } else if (displayOld % 5 == 0) {
+                            setColor(color);
+                        }
+
+                        if (displayOld == 190) { //resets
+                            displayOld = 0;
+                            setColor(color);
+                        }
+                    }
+
+                    displayOld++;
+                    break;
+                case 3: //throwing goblin behaviour
+                    //chases the player for set time so as to enter the screen
+                    if (displayOld < 75) {
+                        displayOld++;
+                        chase(speed, game.player);
+                        setPosition();
+                    } else if (x + size / 2 < 0 || y + size / 2 < 0) { //ensures center of the enmy is on screen
+                        chase(speed, game.player);
+                        setPosition();
+                    } else { //after being on sreen, randomly spawns bats that shoot at the enemy.
+
+                        if (r.nextInt(300) < 5) {
+                            game.enemy = new Enemy(game, 4, 2, game.enemySpawnSeed, this.x, this.y);
+                            game.add(game.enemy);
+                            PolygonGame.enemies.add(game.enemy);
+                        }
+                    }
+
+                    break;
+                case 4: //bat behaviour
+                    //shoots at the players location from when it was created
+                    shoot(speed, angle);
+                    setPosition();
+
+                    //ensures enemy appeared on screen
+                    if (!appearedOnGame && x > 0 && y > 0) {
+                        appearedOnGame = true;
+                    }
+                    //destory enemy when enters offscreen after having been onscreen
+                    if (appearedOnGame && (x < 0 || x > game.getFieldWidth() || y < 0 || y > game.getFieldHeight())) {
+                        game.remove(this); // Remove enemy if health is depleted
+                        PolygonGame.enemies.remove(this); // Remove enemy from the list
+                    }
+                    break;
+            }
         }
     }
 
 }
-
-

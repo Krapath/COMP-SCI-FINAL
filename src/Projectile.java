@@ -1,12 +1,6 @@
 
 import java.awt.Color;
-import java.io.File;
 import java.util.ArrayList;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
 
 public class Projectile extends Weapon {
 
@@ -37,7 +31,7 @@ public class Projectile extends Weapon {
 
         angle = game.getAngle(game.player.getX() + Player.size / 2,
                 game.player.getY() + Player.size / 2, game.getMouseX(), game.getMouseY());
-        double speed = (game.getWindowHeight()+game.getWindowWidth())/150; // adjust as needed
+        double speed = (game.getWindowHeight() + game.getWindowWidth()) / 150; // adjust as needed
         xVel = speed * Math.cos(angle);
         yVel = speed * Math.sin(angle);
 
@@ -47,9 +41,8 @@ public class Projectile extends Weapon {
     }
 
     /**
-     * create an unfriendly projectile spawned at given coordinates.
-     * givenX initial x coordinate
-     * givenY initial y coordinate
+     * create an unfriendly projectile spawned at given coordinates. givenX
+     * initial x coordinate givenY initial y coordinate
      */
     public Projectile(PolygonGame game, double givenX, double givenY) {
         super(game, "Cast", "Projectile");
@@ -67,7 +60,6 @@ public class Projectile extends Weapon {
         Player.weapons.add(this);
 
     }
-   
 
     public void act() {
         if (PolygonGame.gamePause) {
@@ -79,7 +71,7 @@ public class Projectile extends Weapon {
             distanceTraveled += Math.sqrt(xVel * xVel + yVel * yVel); // update distance traveled
             setLocation(getX() + (int) xVel, getY() + (int) yVel); // update position
 
-            if (distanceTraveled > (game.getWindowHeight()+game.getWindowWidth())/6) { // remove projectile after it has traveled a certain distance
+            if (distanceTraveled > (game.getWindowHeight() + game.getWindowWidth()) / 6) { // remove projectile after it has traveled a certain distance
                 game.remove(this);
                 distanceTraveled = 0; // reset distance traveled for the next projectile
             }
@@ -126,7 +118,7 @@ public class Projectile extends Weapon {
 
         boolean hit = false;
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
-        	Enemy target = PolygonGame.enemies.get(i);
+            Enemy target = PolygonGame.enemies.get(i);
             if (attacker.collides(target)) {
                 boolean alreadyHit = false;
 

@@ -5,12 +5,12 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.io.*;
 import java.util.*;
 
 public class Highscores extends GameObject {
+
     // create array list for all objects in the class
     private static ArrayList<Highscores> highscoresButtons = new ArrayList<>();
     // set variables + objects for dummy constructor
@@ -59,13 +59,13 @@ public class Highscores extends GameObject {
     }
 
     /**
-     * scans the scores of the highscores textfile and puts them into levelScores
-     * and killScores array
+     * scans the scores of the highscores textfile and puts them into
+     * levelScores and killScores array
      *
-     * pre: existence of text File highscores with 10 intgers, int[] levelScores,
-     * int[] killScores and Scanner scan
-     * post: scores will be filled with integers from the text file in order.
-     * scan will become a scanner with the text file inputted.
+     * pre: existence of text File highscores with 10 intgers, int[]
+     * levelScores, int[] killScores and Scanner scan post: scores will be
+     * filled with integers from the text file in order. scan will become a
+     * scanner with the text file inputted.
      */
     public void scanScores() {
         try {
@@ -87,10 +87,10 @@ public class Highscores extends GameObject {
     /**
      * saves the levelScores and killScores to the text file
      *
-     * pre: existence of text File highscores, int[] levelScores, int[] killScores,
-     * Filewrite fw and
-     * BufferedWriter bw post: scores will be saved to the text file, with each
-     * score on a seperate line, starting with levelScores and then killScores
+     * pre: existence of text File highscores, int[] levelScores, int[]
+     * killScores, Filewrite fw and BufferedWriter bw post: scores will be saved
+     * to the text file, with each score on a seperate line, starting with
+     * levelScores and then killScores
      */
     public void writeScores() {
         try {
@@ -121,13 +121,12 @@ public class Highscores extends GameObject {
     }
 
     /**
-     * places inputted scores within the array's levelScores and killScores based on
-     * greatest to least
+     * places inputted scores within the array's levelScores and killScores
+     * based on greatest to least
      *
-     * pre: existence of int[] levelScores, int[] killScores
-     * post: newLevelScore will be inputted into the levelScores array and
-     * newKillScore will be inputted into the killScores array, position based on
-     * greatest to least
+     * pre: existence of int[] levelScores, int[] killScores post: newLevelScore
+     * will be inputted into the levelScores array and newKillScore will be
+     * inputted into the killScores array, position based on greatest to least
      */
     public void orderScores(int newLevelScore, int newKillScore) {
         int order = -1; // position of newscore in array, -1 means not in array.
@@ -165,10 +164,11 @@ public class Highscores extends GameObject {
     }
 
     /**
-     * creates a new highscores file with the elements of levelScores and killScores
-     * 
-     * pre: existance of int[] levelScores, int[] killScores
-     * post: new highscores.txt file created with 10 scores, each on seperate lines,
+     * creates a new highscores file with the elements of levelScores and
+     * killScores
+     *
+     * pre: existance of int[] levelScores, int[] killScores post: new
+     * highscores.txt file created with 10 scores, each on seperate lines,
      * starting with levelScores and then killScores
      */
     public void createFile() {
@@ -221,9 +221,9 @@ public class Highscores extends GameObject {
 
         // dynamic scale factor based on screen height
         float scaleFactor = (game.getWindowHeight() + game.getWindowWidth()) / 3000f;
-        if (scaleFactor <= 0)
+        if (scaleFactor <= 0) {
             scaleFactor = 1.0f; // Prevention fail-safe
-
+        }
         // scaled fonts using float values
         Font scaledMenuFont = menuFont.deriveFont(45f * scaleFactor);
         Font scaledTextFont = textFont.deriveFont(100f * scaleFactor);
