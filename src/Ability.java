@@ -29,7 +29,7 @@ public class Ability {
     }
 
     /**
-     * startCooldown: activate the ability and reset timers.
+     * activate the ability and reset timers.
      */
     public void startCooldown() {
         this.isActive = true;
@@ -38,7 +38,7 @@ public class Ability {
     }
 
     /**
-     * canUse: return true if the ability is ready to be used.
+     * return true if the ability is ready to be used.
      */
     public boolean canUse() {
         // can't use if on cooldown, already active, or game is paused
@@ -46,7 +46,7 @@ public class Ability {
     }
 
     /**
-     * performAbility: trigger the ability if it can be used.
+     * trigger the ability if it can be used.
      */
     public void performAbility() {
         if (canUse()) {
@@ -55,7 +55,7 @@ public class Ability {
     }
 
     /**
-     * act: tick down duration and cooldown timers each frame.
+     * tick down duration and cooldown timers each frame.
      */
     public void act() {
         if (cooldownTimer > 0) {
@@ -72,7 +72,7 @@ public class Ability {
     }
 
     /**
-     * onDurationEnd: hook called when ability duration ends
+     * called when ability duration ends
      */
     public void onDurationEnd() {
 
