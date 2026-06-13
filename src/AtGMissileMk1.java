@@ -39,7 +39,7 @@ public class AtGMissileMk1 extends Weapon {
 	static int damage = DEFAULT_ATG_MISSILE_DAMAGE;
 
 	/**
-	 * create a new atg missile within the game
+	 * create an atg missile in game that follows enemies
 	 */
 	public AtGMissileMk1(PolygonGame game) {
 		super(game, "Cast", "AtGMissileMk1");
@@ -63,7 +63,7 @@ public class AtGMissileMk1 extends Weapon {
 		Player.weapons.add(this);
 	}
 
-	// render the missile sprite and explosion visuals.
+	// renders the missile sprite and explosion visuals.
 
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
@@ -86,25 +86,21 @@ public class AtGMissileMk1 extends Weapon {
 
 		g2d.setTransform(old);
 	}
-	// update missile movement, targeting, and explosion state each frame.
+	// updates missile movement: spirals around player, then moves randomly, then tracks target.
+	// if target dies, missile continues travelling in a straight line before fading.
 
 	public void act() {
 
-		// derived from the visual rotation from velocity so it always faces the
-		// direction it is moving
-		// this way it actively tracks the target
+		// sprite angle derived from velocity; missile rotates to face direction of travel.
 		spriteAngle = Math.atan2(velY, velX);
 
 		if (PolygonGame.gamePause)
-			return; // projectiles do not move or collide with enemies while the
-					// player is choosing
-					// a buff
+			return; // pause during buff selection
 
 		if (target != null && PolygonGame.enemies.contains(target) && canDamage) {
 
-			// spiral phase
-			if (spiralDuration > 0) { // spiral around the player for a short
-										// duration after being fired
+			// spiral phase, missile spirals around player on spawn
+			if (spiralDuration > 0) {
 				spiralSpeed += 0.0001;
 				spiralAngle += spiralSpeed;
 				spiralDuration--;
@@ -116,23 +112,19 @@ public class AtGMissileMk1 extends Weapon {
 				setX(x);
 				setY(y);
 				radius += 1;
-				// random direction phase
-			} else if (randDirectionDuration > 0) { // move in random direction
-													// after spiraling
+				// random direction phase, move randomly before tracking target
+			} else if (randDirectionDuration > 0) {
 				randDirectionDuration--;
 				double speed = 25;
 				velX = speed * Math.cos(randomAngle);
 				velY = speed * Math.sin(randomAngle);
 				setX(getX() + (int) velX);
 				setY(getY() + (int) velY);
-				// attacking phase
-				// after spiraling and moving in a random direction, move
-				// towards the random enemy target
-			} else if (randDirectionDuration <= 0 && spiralDuration <= 0) { //
+				// attacking phase, track and move toward target enemy
+			} else if (randDirectionDuration <= 0 && spiralDuration <= 0) {
 				int x = getX();
 				int y = getY();
-				// if the target enemy was destroyed before the missile could
-				// reach it, choose a new target if there are any enemies left
+				// if target still alive, track and move toward it
 				if (PolygonGame.enemies.contains(target)) {
 
 					int enemyX = target.getX();
@@ -143,7 +135,7 @@ public class AtGMissileMk1 extends Weapon {
 					velY = speed * Math.sin(targetAngle);
 					setX(getX() + (int) velX);
 					setY(getY() + (int) velY);
-					// if collides with target, damage the target and change sprite
+					// on collision, damage target, slow it, and start fade-out explosion
 					if (collides(target) && canDamage) { 
 						target.health -= damage;
 						setSize((int) (size * 3.5), (int) (size * 3.5));
@@ -159,22 +151,22 @@ public class AtGMissileMk1 extends Weapon {
 				}
 
 			}
-			// if the enemy was damaged before the arrow shoots, will find a new target
+			// if target dies, pick new target 
 		} else if (canDamage) {
 			if (PolygonGame.enemies.size() > 0) {
 				randomEnemy = r.nextInt(PolygonGame.enemies.size());
 				target = PolygonGame.enemies.get(randomEnemy);
-			} else { // continue spiraling if no enemy
+			} else {
+				// no enemies left floats around
 				target = null;
 				int x = (int) (radius * Math.cos(spiralAngle) + pivotX);
 				int y = (int) (radius * Math.sin(spiralAngle) + pivotY);
-
 				setX(x);
 				setY(y);
 				radius += 1;
 			}
 
-		// remove the object after it fades out
+		// fade-out phase: missile continues straight line and fades
 		} else if (!canDamage) {
 			explosionDuration--;
 			setColor(new Color(255, 215, 0, 15 * explosionDuration));

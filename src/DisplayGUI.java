@@ -109,7 +109,6 @@ public class DisplayGUI extends GameObject {
         }
 
         // Set font for debug text scaled to window size
-        g.setFont(pixelFont);
         
         // draw mouse and player coordinates
         g.drawString("MOUSE    X:" + game.getMouseX() + "  Y:" + game.getMouseY(), 10, 20);
@@ -123,14 +122,13 @@ public class DisplayGUI extends GameObject {
         // display the players xp and xp required to level up
         g.drawString("XP: " + Player.xp + "/" + Player.xpReq, 10, 140);
         // display the players level
-        g.drawString("LEVEL: " + Player.level, 10, 140);
-        // display the mouse cursor as a red rectangle
-        g.setColor(Color.RED);
-        g.drawRect(game.getMouseX(), game.getMouseY(), 15, 15);
+        g.drawString("LEVEL: " + Player.level, 10, 160);
+
 
         // draw healthbar
         if (xPointsHealth != null && yPointsHealth != null) {
             g2d.setStroke(new BasicStroke(4));
+            g2d.setColor(Color.RED);
             g2d.drawPolygon(xPointsHealth, yPointsHealth, nPointsHealth);
             g2d.setFont(pixelFont);
             FontMetrics metrics = g.getFontMetrics(pixelFont);
