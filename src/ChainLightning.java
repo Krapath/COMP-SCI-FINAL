@@ -22,7 +22,6 @@ public class ChainLightning extends Weapon {
     double randomAngleStatic = r.nextDouble();
     PolygonGame game;
 
-    // lightnign
     private static final int CHAIN_COUNT_DEFAULT = 3;
     static int chainCount = CHAIN_COUNT_DEFAULT;
     static int damage = 1;
@@ -36,7 +35,7 @@ public class ChainLightning extends Weapon {
     // keep track of which enemies have already been hit by the chain lightning so
     // they won't be hit again in the same chain
     ArrayList<Enemy> hitEnemies = new ArrayList<Enemy>();
-    
+
     /**
      * Creates chain lightning starting from an initial enemy.
      * Unlike normal weapons, all the damage and branching math runs instantly
@@ -93,7 +92,6 @@ public class ChainLightning extends Weapon {
         if (PolygonGame.gamePause)
             return;
 
-        // Link for 2d line graphics: https://stackoverflow.com/questions/16995308
         Graphics2D g2d = (Graphics2D) g; // cast to Graphics2D to use thicker lines
         g2d.setStroke(new BasicStroke(lightningSize)); // set line thickness for the lightning
         // make the lightning more transparent as it gets closer to disappearing

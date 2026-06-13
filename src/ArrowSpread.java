@@ -10,6 +10,7 @@ public class ArrowSpread extends Ability {
 	PolygonGame game;
 
 	Player player;
+	
 	// ability config
 	static String name = "ArrowSpread";
 	static int duration = 5;

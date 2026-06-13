@@ -7,6 +7,10 @@ import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * draws background with polygons of random darkness levels
+ * very mutuable.
+ */
 public class GameBackground extends GameObject {
 	// set variables
 	Random r = new Random();
@@ -40,9 +44,7 @@ public class GameBackground extends GameObject {
 		repaint();
 	}
 
-	// draw the grid of hexagons across the entire background, can be adjusted
-	// for a
-	// more or less dense background
+	// draw the grid of hexagons across the entire background
 	public void drawGrid() {
 		// vertical distance between hexagons, slightly overlapping due to
 		// rounding errors, but very minor
