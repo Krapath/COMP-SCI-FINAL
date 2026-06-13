@@ -6,7 +6,6 @@ import java.awt.*;
 import java.util.Random;
 import javax.swing.*;
 
-@SuppressWarnings("unused")
 
 public class PowerUp extends GameObject {
 

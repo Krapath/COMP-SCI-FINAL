@@ -4,7 +4,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
-/** creates a unique enemy based on type given and handles behavior and scaling
+/**creates a unique enemy based on type given and handles behavior and scaling
  * Author: Mohammad Sadeghi
  */
 public class Enemy extends GameObject {

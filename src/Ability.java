@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * Timed ability with duration and cooldown.
+ * timed ability with duration and cooldown.
  * Author: Hugo To
  */
 public class Ability {

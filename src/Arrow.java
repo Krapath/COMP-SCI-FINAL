@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 /**
- * arrow: a projectile weapon that travels in a straight line.
+ * a projectile weapon that travels in a straight line based on given angle
+ * Author: Hugo To
  */
 public class Arrow extends Weapon {
 
