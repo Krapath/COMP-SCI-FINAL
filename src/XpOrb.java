@@ -1,8 +1,10 @@
 
+/** An xpOrb that allows the player to increase their xp when they collide with it.
+ * aurthor: Hugo and Mohammad
+ */
 import java.awt.*;
 import java.util.Random;
 import javax.swing.ImageIcon;
-
 
 public class XpOrb extends GameObject {
 
@@ -38,9 +40,9 @@ public class XpOrb extends GameObject {
 
     public void act() {
         if (PolygonGame.gamePause) {
-            return; 
+            return;
         }
-        
+
         //calculates if player is close to exp orb to decide if it should move towards it
         if ((Math.abs(game.player.x - x) <= distanceAttraction) && (Math.abs(game.player.y - y) <= distanceAttraction)) {
             chasing = true;

@@ -1,4 +1,7 @@
 
+/** a menu page with listed saved highscores
+ * author: Mohammad and Raymond
+ */
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;

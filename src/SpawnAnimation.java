@@ -1,9 +1,13 @@
 
+/** animation that plays when players spawns into the game
+ * author: Raymond
+ */
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class SpawnAnimation extends GameObject {
+
     // array list holding all the objects
     private static ArrayList<SpawnAnimation> spawnParticles = new ArrayList<>();
     // set variables + objects for dummy constructor
@@ -93,7 +97,7 @@ public class SpawnAnimation extends GameObject {
                 spawnParticles.remove(this);
                 playerTransparency += (int) (255 / 8 - 10); // increase player transparency
                 game.player.setColor(new Color(0, 0, 255, playerTransparency));// Pretty sure the code bricks here if
-                                                                               // the player is shot while spawning
+                // the player is shot while spawning
             }
         }
         if (particleTransparency < 250) { // make particles fade it

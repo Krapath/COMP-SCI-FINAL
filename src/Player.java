@@ -1,4 +1,7 @@
 
+/** the actual player object which can be controlled
+ * author: Hugo and Mohammad
+ */
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
@@ -51,13 +54,11 @@ public class Player extends GameObject {
             return;// player does not move or collide with enemies while the player is choosing a buff
 
         }
-        attackTimer++;
+        attackTimer++; //the delay counter between attacks
 
+        //vector math for find direction of motion, preventing faster movement on diagonals
         double up = 0.0, down = 0.0, left = 0.0, right = 0.0;
-
-        //setSize(size, size);
         if (game.AKeyPressed()) {
-
             left += 1;
         }
         if (game.DKeyPressed()) {
@@ -65,20 +66,17 @@ public class Player extends GameObject {
         }
         if (game.WKeyPressed()) {
             up += 1;
-
         }
         if (game.SKeyPressed()) {
             down += 1;
         }
 
-        // normalize movement so diagonal isn't faster
-        // pressing two keys will cancel out to one component 
+        //finds the angle play is moving towards and the vectors
         down -= up;
         right -= left;
-
         double angle = Math.atan2(down, right);
 
-        if (!(down == 0 && right == 0)) {
+        if (!(down == 0 && right == 0)) { //when vectors exists, move play based on vectors
             x += Math.cos(angle) * speed;
             y += Math.sin(angle) * speed;
         }
@@ -97,9 +95,9 @@ public class Player extends GameObject {
             y = game.getFieldHeight() - size;
         }
 
-        setX((int) x);
-        setY((int) y);
+        setPosition();
 
+        //damages player when collding with enemies and gives invulnerability framesd
         for (int i = 0; i < PolygonGame.enemies.size(); i++) {
             Enemy target = PolygonGame.enemies.get(i);
             if (collides(target)) {
